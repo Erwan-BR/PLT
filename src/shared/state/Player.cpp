@@ -18,7 +18,8 @@ namespace state {
     currentResources({}),
     tokensInEmpireUnit(0)
     {
-        
+        sf::Texture texture;
+        this->profilePicture = texture;
     }
 
     /// @brief Destructor of the class Player
