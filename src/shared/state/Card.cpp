@@ -10,6 +10,7 @@ namespace state {
     victoryPoints({})
     {
     }
+
     /// @brief Create a card
     Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, std::vector<CardVictoryPoint*> victoryPoints)
     {
