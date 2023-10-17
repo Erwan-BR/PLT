@@ -50,7 +50,7 @@ namespace state {
 
     }
 
-    /// @brief Calculate the quantity of resource named "resourceToProduce" produced by the player
+    /// @brief Compute the quantity of resource named "resourceToProduce" produced by the player
     /// @param resourceToProduce Type of the resource that will be produced
     /// @return Quantity of resource "resourceToProduce" obtained by the player
     int Player::computeProduction(Resource* resourceToProduce)
@@ -58,7 +58,7 @@ namespace state {
         return 0;
     }
 
-    /// @brief Calculate the number of victory points the player has
+    /// @brief Compute the number of victory points the player has
     /// @return Number of victory points of the player on the moment
     int Player::computeVictoryPoint()
     {
@@ -89,6 +89,6 @@ namespace state {
     /// @return Boolean returned by the choice of the player (true => Colonel, false => Financier)
     bool Player::chooseColonelToken()
     {
-        return true;
+        return false;
     }
 }
