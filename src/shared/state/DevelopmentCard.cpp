@@ -52,7 +52,7 @@ namespace state {
 
     /// @brief Check if a resource can be added to the DevelopmentCard.
     /// @param resource The resource we want to know if it is addable.
-    /// @return True if the resource can be added to the Card, else either.
+    /// @return True if the resource can be added to the Card, else False.
     bool DevelopmentCard::isResourceAddable (Resource* resource)
     {
         return false;
