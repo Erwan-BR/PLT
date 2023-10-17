@@ -8,27 +8,13 @@ generate_dia_header("${CMAKE_CURRENT_SOURCE_DIR}/../state.dia")
 
 # Find all source files to compile into a library
 file(GLOB_RECURSE shared_sources *.cpp)
-list(REMOVE_ITEM shared_sources "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp")
 
 # Build the "shared" library and add required includes
 add_library(${lib_shared_target} STATIC ${shared_sources})
 add_dependencies(${lib_shared_target} generate-headers)
 target_include_directories(${lib_shared_target} PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
-   ${SFML_INCLUDE_DIR}
   )
-target_link_libraries(${lib_shared_target} PUBLIC
-  ${SFML_LIBRARIES}
-  #$<TARGET_NAME:shared_static>
-  )
-
-# Compile "client" executable
-set(shared_target state)
-add_executable(${shared_target} main.cpp)
-target_link_libraries(${shared_target} ${lib_shared_target})
-if(BUILD_CODE_COVERAGE)
-  add_dependencies(code-coverage ${shared_target})
-endif()
 
 # vim: set sw=2 sts=2 et:
 
