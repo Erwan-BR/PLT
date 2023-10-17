@@ -8,6 +8,7 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 {
   {
     DevelopmentCard* myFirstDevelopmentCard = new DevelopmentCard();
+    // To complete
   }
 
   {

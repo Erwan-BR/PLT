@@ -8,6 +8,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 {
   {
     Player* myFirstPlayer = new Player();
+    // To complete
   }
 
   {

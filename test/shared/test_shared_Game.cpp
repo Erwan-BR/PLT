@@ -8,6 +8,7 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 {
   {
     Game* myFirstGame = new Game();
+    // To complete
   }
 
   {

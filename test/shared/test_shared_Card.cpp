@@ -8,6 +8,7 @@ BOOST_AUTO_TEST_CASE(firstCardTest)
 {
   {
     Card* myFirstCard = new Card();
+    // To complete
   }
 
   {

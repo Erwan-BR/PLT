@@ -8,6 +8,7 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
 {
   {
     EmpireCard* myFirstEmpireCard = new EmpireCard();
+    // To complete
   }
 
   {
