@@ -6,10 +6,10 @@ namespace state {
     /// @brief Empty constructor for the EmpireCard class
     EmpireCard::EmpireCard() :
     Card(),
-    productiongainAdvanced({}),
+    productionGainAdvanced({}),
     victoryPointsAdvanced({})
     {
-        *(this->empire) = AFRICA;
+        this->empire = AFRICA;
     }
 
     /// @brief Full constructor for the EmpireCard class
@@ -22,10 +22,10 @@ namespace state {
     /// @param empire Region the empire belongs to
     EmpireCard::EmpireCard(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, std::vector<CardVictoryPoint*> victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, std::vector<CardVictoryPoint*> victoryPointsAdvanced, EmpireLand* empire) :
     Card(name, productionGain, design, victoryPoints),
-    productiongainAdvanced(productionGainAdvanced),
+    productionGainAdvanced(productionGainAdvanced),
     victoryPointsAdvanced(victoryPointsAdvanced)
     {
-        *(this->empire) = AFRICA;
+        this->empire = AFRICA;
     }
     
     /// @brief Destructor for the EmpireCard class

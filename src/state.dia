@@ -1620,7 +1620,7 @@
       <dia:attribute name="attributes">
         <dia:composite type="umlattribute">
           <dia:attribute name="name">
-            <dia:string>#productiongainAdvanced#</dia:string>
+            <dia:string>#productionGainAdvanced#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#std::vector&lt;ResourceToProduce*&gt;#</dia:string>
@@ -1669,7 +1669,7 @@
             <dia:string>#empire#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#EmpireLand*#</dia:string>
+            <dia:string>#EmpireLand#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
