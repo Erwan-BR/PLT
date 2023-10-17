@@ -57,7 +57,7 @@ namespace state {
     /// @return Returns the design of the card
     const sf::Texture& Card::getDesign() const
     {
-        return this-> design;
+        return this->design;
     }
 
     /// @brief Sets the design
@@ -75,9 +75,9 @@ namespace state {
     }
 
     /// @brief Sets the victoryPoints
-    /// @param victoryPoints : New victoryPoints of the card
+    /// @param victoryPoints New victoryPoints of the card
     void Card::setVictoryPoints(const std::vector<CardVictoryPoint*>& victoryPoints)
     {
-        this->victoryPoints;
+        this->victoryPoints = victoryPoints;
     }
 }
