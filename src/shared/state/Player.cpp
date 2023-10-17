@@ -3,9 +3,22 @@
 namespace state {
 
     /// @brief Constructor of the class Player
-    Player::Player()
+    Player::Player() :
+    name(""),
+    id(-1),
+    empire(EmpireCard()),
+    builtCards({}),
+    toBuildCards({}),
+    draftingCards({}),
+    draftCards({}),
+    state(PENDING),
+    financierTokensUnit(0),
+    colonelTokensUnit(0),
+    krystalliumTokensUnit(0),
+    currentResources({}),
+    tokensInEmpireUnit(0)
     {
-
+        
     }
 
     /// @brief Destructor of the class Player
