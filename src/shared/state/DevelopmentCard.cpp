@@ -3,7 +3,15 @@
 namespace state {
 
     /// @brief Empty constructor of the DevelopmentCard class.
-    DevelopmentCard::DevelopmentCard ()
+    DevelopmentCard::DevelopmentCard () :
+    Card(),
+    type(NONETYPE),
+    numberOfCopies(0),
+    costToBuild({}),
+    instantGain({}),
+    discardgain(new Resource()),
+    productionGain({}),
+    quantityResourceMissing(-1)
     {
     }
 
@@ -18,7 +26,15 @@ namespace state {
     /// @param instantGain Vector that contains all the resources won at the construction of the Card.
     /// @param discardGain Vector that contains all the resources when the Card is discarded.
     /// @param isPaid State if the Card is fully paid.
-    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<Resource*> instantGain, Resource* discardGain, bool isPaid)
+    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<Resource*> instantGain, Resource* discardGain, bool isPaid) :
+    Card(name, productionGain, design, {victoryPoints}),
+    type(NONETYPE),
+    numberOfCopies(numberOfCopies),
+    costToBuild(costToBuild),
+    instantGain(instantGain),
+    discardgain(discardGain),
+    isPaid(isPaid), // Will be deleted after the modification of the constructor with Dia.
+    quantityResourceMissing(-1) // Should be computed correctly when the code will be implemented.
     {
     }
 
