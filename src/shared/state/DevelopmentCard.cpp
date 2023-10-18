@@ -10,7 +10,6 @@ namespace state {
     costToBuild({}),
     instantGain({}),
     discardGain(new Resource()),
-    productionGain({}),
     quantityResourceMissing(-1) // Should be computed correctly when the code will be implemented.
     {
     }
