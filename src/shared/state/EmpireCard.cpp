@@ -23,9 +23,9 @@ namespace state {
     EmpireCard::EmpireCard(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, std::vector<CardVictoryPoint*> victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, std::vector<CardVictoryPoint*> victoryPointsAdvanced, EmpireLand* empire) :
     Card(name, productionGain, design, victoryPoints),
     productionGainAdvanced(productionGainAdvanced),
-    victoryPointsAdvanced(victoryPointsAdvanced)
+    victoryPointsAdvanced(victoryPointsAdvanced),
+    empire(AFRICA)
     {
-        this->empire = AFRICA;
     }
     
     /// @brief Destructor for the EmpireCard class
