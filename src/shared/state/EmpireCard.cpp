@@ -36,9 +36,8 @@ namespace state {
 
     /// @brief Convert the current EmpireCard to a readable string.
     /// @return String returned after conversion
-    std::string EmpireCard::toString ()
+    std::string EmpireCard::toString () const
     {
         return "";
     }
-
 }
