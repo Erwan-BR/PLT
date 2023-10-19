@@ -16,10 +16,9 @@ namespace state {
     colonelTokensUnit(0),
     krystalliumTokensUnit(0),
     currentResources({}),
-	resourcesInEmpireUnit(0)
+	resourcesInEmpireUnit(0),
+    profilePicture(sf::Texture())
     {
-        sf::Texture texture;
-        this->profilePicture = texture;
     }
 
     /// @brief Destructor of the class Player
