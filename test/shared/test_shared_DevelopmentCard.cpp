@@ -12,7 +12,7 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
   {
     DevelopmentCard* myFirstDevelopmentCard = new DevelopmentCard();
 
-    /*
+    /* Adding some of those lines if somes getters are done.
     // Checking default value given by the empty constructor.
     // Checking values from the empty Card constructor.
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getName(), "");
@@ -46,11 +46,52 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 
     delete myFirstDevelopmentCard;
   }
+  
   {
-    DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard();
+    // Elements to create for testing the full constructor.
+    Resource* firstResource = new Resource{SCIENCE, sf::Texture()};
+    Resource* secondResource = new Resource{GOLD, sf::Texture()};
+    Resource* thirdResource = new Resource{EXPLORATION, sf::Texture()};
+    Resource* fourthResource = new Resource{COLONEL, sf::Texture()};
 
-    /*
+    ResourceToPay* firstResourceToPay = new ResourceToPay{firstResource, false};
+    ResourceToPay* secondResourceToPay = new ResourceToPay{secondResource, false};
+    ResourceToPay* thirdResourceToPay = new ResourceToPay{thirdResource, false};
+    ResourceToPay* fourthResourceToPay = new ResourceToPay{fourthResource, false};
+
+    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{fourthResource, 2, state::CardType::VEHICLE};
+    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{firstResource, 3, state::CardType::PROJECT};
+
+    // Elements to pass to the constructor.
+    std::string name = "myName";
+
+    std::vector<ResourceToProduce*> productionGain;
+    productionGain.push_back(firstResourceToProduce);
+    productionGain.push_back(secondResourceToProduce);
+
+    sf::Texture design = sf::Texture();
+
+    std::vector<CardVictoryPoint*> victoryPoints;
+
+    state::CardType type = PROJECT;
+    
+    int numberOfCopies = 2;
+
+    std::vector<ResourceToPay*> costToBuild;
+    costToBuild.push_back(firstResourceToPay);
+    costToBuild.push_back(secondResourceToPay);
+
+    std::vector<Resource*> instantGain;
+    instantGain.push_back(firstResource);
+    instantGain.push_back(thirdResource);
+
+    Resource* discardGain = firstResource;
+    
+    DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard(name, productionGain, design, victoryPoints, type, numberOfCopies, costToBuild, instantGain, discardGain);
+
+    /* Adding some of those lines if somes getters are done.
     // Checking default value given by the empty constructor.
+
     // Checking values from the empty Card constructor.
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getName(), "");
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getProductionGain(), {});
@@ -69,6 +110,21 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getQuantityResourceMissing(), -1);
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getIsPaid(), false);
     */
+
+   delete firstResource;
+   delete secondResource;
+   delete thirdResource;
+   delete fourthResource;
+
+    delete firstResourceToPay;
+    delete secondResourceToPay;
+    delete thirdResourceToPay;
+    delete fourthResourceToPay;
+
+    delete firstResourceToProduce;
+    delete secondResourceToProduce;
+
+    delete mySecondDevelopmentCard;
   }
 }
 
