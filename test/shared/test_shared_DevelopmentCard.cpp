@@ -10,6 +10,7 @@ using namespace ::state;
 BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 {
   {
+    // Testing the empty constructor of DevelopmentCard 
     DevelopmentCard* myFirstDevelopmentCard = new DevelopmentCard();
 
     /* Adding some of those lines if somes getters are done.
@@ -33,9 +34,10 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getIsPaid(), false);
     */
 
+    // Creation of a resource to test methods.
     Resource* resource = new Resource();
 
-    // Calling method of DevelopmentCard.
+    // Calling methods of DevelopmentCard.
     myFirstDevelopmentCard->addResource(resource);
     bool resourceAddable = myFirstDevelopmentCard->isResourceAddable(resource);
     std::string cardToString = myFirstDevelopmentCard->toString();
@@ -44,7 +46,9 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     BOOST_CHECK_EQUAL(resourceAddable, false);
     BOOST_CHECK_EQUAL(cardToString, "");
 
+    // Delete pointers that won't be used anymore.
     delete myFirstDevelopmentCard;
+    delete resource;
   }
   
   {
@@ -87,6 +91,7 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 
     Resource* discardGain = firstResource;
     
+    // Testing the full constructor of DevelopmentCard.
     DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard(name, productionGain, design, victoryPoints, type, numberOfCopies, costToBuild, instantGain, discardGain);
 
     /* Adding some of those lines if somes getters are done.
@@ -111,10 +116,11 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getIsPaid(), false);
     */
 
-   delete firstResource;
-   delete secondResource;
-   delete thirdResource;
-   delete fourthResource;
+    // Delete pointers that won't be used anymore.
+    delete firstResource;
+    delete secondResource;
+    delete thirdResource;
+    delete fourthResource;
 
     delete firstResourceToPay;
     delete secondResourceToPay;
