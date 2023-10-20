@@ -1832,7 +1832,7 @@
                 <dia:string>#empire#</dia:string>
               </dia:attribute>
               <dia:attribute name="type">
-                <dia:string>#EmpireLand*#</dia:string>
+                <dia:string>#EmpireLand#</dia:string>
               </dia:attribute>
               <dia:attribute name="value">
                 <dia:string>##</dia:string>
