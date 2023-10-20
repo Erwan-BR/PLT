@@ -27,11 +27,11 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 	BOOST_CHECK_EQUAL(gameToString, "Game");
 
 	//Test produceResource(Resource* toProduce)
-	Resource* firstResource = new Resource(SCIENCE, sf::Texture());
+	Resource* firstResource = new Resource{SCIENCE, sf::Texture()};
 	myFirstGame->produceResource(firstResource);
 
 	//Test sendResourceToPlayer
-	Resource* secondResource = new Resource(GOLD, sf::Texture());
+	Resource* secondResource = new Resource{GOLD, sf::Texture()};
 	Player* firstPlayer = new Player();
 	myFirstGame->sendResourceToPlayer(secondResource, firstPlayer);
 
