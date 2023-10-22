@@ -1,6 +1,5 @@
 # List of test functions
 
-add_custom_test(shared_dummy)
 add_custom_test(shared_Card)
 add_custom_test(shared_DevelopmentCard)
 add_custom_test(shared_EmpireCard)
