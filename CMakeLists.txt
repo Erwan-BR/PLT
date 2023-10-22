@@ -115,9 +115,6 @@ add_subdirectory(src/shared)
 add_subdirectory(src/client)
 #add_subdirectory(src/server)
 
-# Rapport generation
-add_subdirectory(rapport)
-
 # Unit tests
 # Set BUILD_TESTING to OFF in CMakeCache to disable tests
 set(BUILD_TESTING ON CACHE BOOL
