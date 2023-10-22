@@ -35,7 +35,7 @@ Il y a deux états possible pour un joueur :
 
 ### PENDING
 
-Cet état est actif si un joueur lorsqu'il a terminé de jouer ([choix de la carte de draft / choix des cartes à défausser / placement des ressources] terminé). Il est dans cette état lorsqu'il a validé ses actions, et qu'au moins un autre joueur n'a pas terminé les siennes. Une fois que tous les joeuurs sont dans cet état, la partie va alors effectuer l'action suivante quelle que soit la phase, et mettre chaque joueur dans l'état PLAYING.
+Cet état est actif si lorsqu'un joueur a terminé de jouer ([choix de la carte de draft / choix des cartes à défausser / placement des ressources] terminé). Il est dans cette état lorsqu'il a validé ses actions, et qu'au moins un autre joueur n'a pas terminé les siennes. Une fois que tous les joeuurs sont dans cet état, la partie va alors effectuer l'action suivante quelle que soit la phase, et mettre chaque joueur dans l'état PLAYING.
 
 ### PLAYING
 
