@@ -16,10 +16,9 @@ namespace state {
     colonelTokensUnit(0),
     krystalliumTokensUnit(0),
     currentResources({}),
-	resourcesInEmpireUnit(0)
+	resourcesInEmpireUnit(0),
+    profilePicture(sf::Texture())
     {
-        sf::Texture texture;
-        this->profilePicture = texture;
     }
 
     /// @brief Destructor of the class Player
@@ -60,7 +59,7 @@ namespace state {
 
     /// @brief Compute the number of victory points the player has
     /// @return Number of victory points of the player on the moment
-    int Player::computeVictoryPoint()
+    int Player::computeVictoryPoint() const
     {
         return 0;
     }
@@ -87,8 +86,15 @@ namespace state {
 
     /// @brief Return the selected token by the player (Colonel/Financier)
     /// @return Boolean returned by the choice of the player (true => Colonel, false => Financier)
-    bool Player::chooseColonelToken()
+    bool Player::chooseColonelToken() const
     {
         return false;
+    }
+
+    /// @brief Transform the Player to a readable string.
+    /// @return Readable string that represents the information of the Player.
+    std::string Player::toString () const
+    {
+        return "";
     }
 }

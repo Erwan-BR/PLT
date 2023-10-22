@@ -102,16 +102,15 @@ namespace state {
 	///@brief Send a resource earned by a player to let him use it
 	///@param resource Pointer which designate the type of resource sent
 	///@param player Pointer which designate the player who receive the resource
-	void Game::sendResourceToPlayer (Resource* resource, Player* player)
+	void Game::sendResourceToPlayer (Resource* resource, Player* player) const
 	{
 
 	}
 
 	///@brief Debug method to check the state of the instance of Game
 	///@return String explaining the state of Game
-	std::string toString ()
+	std::string Game::toString () const
 	{
 		return "Game";
 	}
-
 }
