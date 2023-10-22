@@ -15,7 +15,7 @@ Pendant la partie, il y a trois phases possibles :
 Pendant cette phase, il va y avoir 7 étapes consécutives qui seront les mêmes, à la différence près du nombre de cartes.
 
 Chaque joueur voit afficher à son écran 7 cartes, et il doit en choisir une qu'il décidera d'ajouter à son empire par la suite. Une fois que chaque joueur a fait et validé son choix, les mains tournent dans le sens horaire (ou anti-horaire selon le numéro du tour actuel), puis chaque joueur doit faire un choix similaire avec 6 cartes, puis 5, etc.
-Une fois toutes les cartes sélctionnées, on passe automatiquement en phase de PLANIFICATION.
+Une fois toutes les cartes sélectionnées, on passe automatiquement en phase de PLANIFICATION.
 
 ### Phase de PLANIFICATION
 
