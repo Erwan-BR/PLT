@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 
     sf::Texture design = sf::Texture();
 
-    CardVictoryPoint* victoryPoints;
+    CardVictoryPoint* victoryPoints = new CardVictoryPoint();
 
     state::CardType type = PROJECT;
     

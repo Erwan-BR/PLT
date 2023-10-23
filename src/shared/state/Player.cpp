@@ -6,6 +6,7 @@ namespace state {
     Player::Player() :
     name(""),
     id(-1),
+    profilePicture(sf::Texture()),
     empire(new EmpireCard()),
     builtCards({}),
     toBuildCards({}),
@@ -16,8 +17,7 @@ namespace state {
     colonelTokensUnit(0),
     krystalliumTokensUnit(0),
     currentResources({}),
-	resourcesInEmpireUnit(0),
-    profilePicture(sf::Texture())
+	resourcesInEmpireUnit(0)
     {
     }
 

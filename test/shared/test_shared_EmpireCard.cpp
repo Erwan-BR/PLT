@@ -53,13 +53,13 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
 
     sf::Texture design = sf::Texture();
 
-    CardVictoryPoint* victoryPoints;
+    CardVictoryPoint* victoryPoints = new CardVictoryPoint();
 
     std::vector<ResourceToProduce*> productionGainAdvanced;
     productionGainAdvanced.push_back(firstResourceToProduce);
     productionGainAdvanced.push_back(secondResourceToProduce);
 
-    CardVictoryPoint* victoryPointsAdvanced;
+    CardVictoryPoint* victoryPointsAdvanced  = new CardVictoryPoint();
 
     EmpireLand empire = AZTEC;
     

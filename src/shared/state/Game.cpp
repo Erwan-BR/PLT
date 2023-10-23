@@ -5,11 +5,11 @@
 namespace state {
 	///@brief Create an instance of the class Game
 	Game::Game() :
+		players(),
 		turn(0),
 		phase(DRAFT),
-		isClockwise(true),
-		players({}),
-		deck({})
+		deck(),
+		isClockwise(true)
 	{
 
 	}
@@ -17,11 +17,11 @@ namespace state {
 	///@brief Create an instance of the class Game with players specified
 	///@param players Vector of pointers which designate the players of the game
 	Game::Game(std::vector<Player*> players) :
+		players(players),
 		turn(0),
 		phase(DRAFT),
-		isClockwise(true),
-		players(players),
-		deck({})
+		deck(),
+		isClockwise(true)
 	{
 
 	}
