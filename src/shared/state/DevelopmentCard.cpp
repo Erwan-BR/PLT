@@ -5,7 +5,7 @@ namespace state {
     /// @brief Empty constructor of the DevelopmentCard class.
     DevelopmentCard::DevelopmentCard () :
     Card(),
-    type(NONETYPE),
+    type(CardType::NONETYPE),
     numberOfCopies(0),
     costToBuild({}),
     instantGain({}),
@@ -24,9 +24,9 @@ namespace state {
     /// @param costToBuild Vector that contains all the resources to pay to build the Card.
     /// @param instantGain Vector that contains all the resources won at the construction of the Card.
     /// @param discardGain Pointers to the resources you get when the Card is discarded.
-    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, std::vector<CardVictoryPoint*> victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<Resource*> instantGain, Resource* discardGain) :
+    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<Resource*> instantGain, Resource* discardGain) :
     Card(name, productionGain, design, victoryPoints),
-    type(NONETYPE),
+    type(CardType::NONETYPE),
     numberOfCopies(numberOfCopies),
     costToBuild(costToBuild),
     instantGain(instantGain),

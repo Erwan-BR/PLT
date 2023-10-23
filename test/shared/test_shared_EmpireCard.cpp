@@ -36,18 +36,13 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
   
   {
     // Elements to create for testing the full constructor.
-    Resource* firstResource = new Resource{SCIENCE, sf::Texture()};
-    Resource* secondResource = new Resource{GOLD, sf::Texture()};
-    Resource* thirdResource = new Resource{EXPLORATION, sf::Texture()};
-    Resource* fourthResource = new Resource{COLONEL, sf::Texture()};
+    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::ENERGY, false};
+    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::COLONEL, false};
+    ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::SCIENCE, false};
+    ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::MATERIAL, false};
 
-    ResourceToPay* firstResourceToPay = new ResourceToPay{firstResource, false};
-    ResourceToPay* secondResourceToPay = new ResourceToPay{secondResource, false};
-    ResourceToPay* thirdResourceToPay = new ResourceToPay{thirdResource, false};
-    ResourceToPay* fourthResourceToPay = new ResourceToPay{fourthResource, false};
-
-    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{fourthResource, 2, state::CardType::VEHICLE};
-    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{firstResource, 3, state::CardType::PROJECT};
+    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::KRYSTALLIUM, 2, state::CardType::VEHICLE};
+    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::GOLD, 3, state::CardType::PROJECT};
 
     // Elements to pass to the constructor.
     std::string name = "myName";
@@ -58,13 +53,13 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
 
     sf::Texture design = sf::Texture();
 
-    std::vector<CardVictoryPoint*> victoryPoints;
+    CardVictoryPoint* victoryPoints;
 
     std::vector<ResourceToProduce*> productionGainAdvanced;
     productionGainAdvanced.push_back(firstResourceToProduce);
     productionGainAdvanced.push_back(secondResourceToProduce);
 
-    std::vector<CardVictoryPoint*> victoryPointsAdvanced;
+    CardVictoryPoint* victoryPointsAdvanced;
 
     EmpireLand empire = AZTEC;
     
@@ -86,11 +81,6 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
     */
 
     // Delete pointers that won't be used anymore.
-    delete firstResource;
-    delete secondResource;
-    delete thirdResource;
-    delete fourthResource;
-
     delete firstResourceToPay;
     delete secondResourceToPay;
     delete thirdResourceToPay;

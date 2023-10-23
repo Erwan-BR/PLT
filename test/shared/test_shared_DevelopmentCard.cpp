@@ -55,16 +55,14 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     // Elements to create for testing the full constructor.
     Resource* firstResource = new Resource{SCIENCE, sf::Texture()};
     Resource* secondResource = new Resource{GOLD, sf::Texture()};
-    Resource* thirdResource = new Resource{EXPLORATION, sf::Texture()};
-    Resource* fourthResource = new Resource{COLONEL, sf::Texture()};
 
-    ResourceToPay* firstResourceToPay = new ResourceToPay{firstResource, false};
-    ResourceToPay* secondResourceToPay = new ResourceToPay{secondResource, false};
-    ResourceToPay* thirdResourceToPay = new ResourceToPay{thirdResource, false};
-    ResourceToPay* fourthResourceToPay = new ResourceToPay{fourthResource, false};
+    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::FINANCIER, false};
+    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::COLONEL, false};
+    ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::GOLD, false};
+    ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::KRYSTALLIUM, false};
 
-    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{fourthResource, 2, state::CardType::VEHICLE};
-    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{firstResource, 3, state::CardType::PROJECT};
+    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::VEHICLE};
+    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 3, state::CardType::PROJECT};
 
     // Elements to pass to the constructor.
     std::string name = "myName";
@@ -75,7 +73,7 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 
     sf::Texture design = sf::Texture();
 
-    std::vector<CardVictoryPoint*> victoryPoints;
+    CardVictoryPoint* victoryPoints;
 
     state::CardType type = PROJECT;
     
@@ -87,7 +85,7 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 
     std::vector<Resource*> instantGain;
     instantGain.push_back(firstResource);
-    instantGain.push_back(thirdResource);
+    instantGain.push_back(secondResource);
 
     Resource* discardGain = firstResource;
     
@@ -119,8 +117,6 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     // Delete pointers that won't be used anymore.
     delete firstResource;
     delete secondResource;
-    delete thirdResource;
-    delete fourthResource;
 
     delete firstResourceToPay;
     delete secondResourceToPay;

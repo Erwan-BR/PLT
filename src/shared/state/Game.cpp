@@ -111,6 +111,6 @@ namespace state {
 	///@return String explaining the state of Game
 	std::string Game::toString () const
 	{
-		return "Game";
+		return "";
 	}
 }
