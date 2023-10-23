@@ -1,6 +1,6 @@
 # PLT
 
-[![Actions Status](https://github.com/Erwan-BR/PLT/workflows/PLT%20build/badge.svg)](https://github.com/Erwan-BR/PLT/actions)
+[![Actions Status](https://github.com/Erwan-BR/PLT/workflows/PLT%20build/badge.svg)](https://github.com/Erwan-BR/PLT/actions) [![codecov](https://codecov.io/gh/Erwan-BR/PLT/graph/badge.svg?token=1MESYSIBL5)](https://codecov.io/gh/Erwan-BR/PLT)
 
 ## Introduction
 
