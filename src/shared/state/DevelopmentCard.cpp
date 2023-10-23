@@ -40,11 +40,41 @@ namespace state {
     {
     }
 
-    /// @brief Add a ressource into the Card. The resource must be addable.
+    /// @brief Add a ressource into the Card. The resource must be addable. Should also update the quantity and the isPaid value.
     /// @param resource Resource that will be added to the Card.
-    void DevelopmentCard::addResource (Resource* resource)
+    /// @return True if the card is just payed. False either.
+    bool DevelopmentCard::addResource (Resource* resource)
     {
-        return;
+        for (ResourceToPay* resourceToPay : this->costToBuild)
+        {
+            // Checking if the current resource is not paid, and if the type is the one of the input parameter.
+            if ((!resourceToPay->isPaid) && (resourceToPay->type == resource->type))
+            {
+                resourceToPay->isPaid = true;
+                return (this->decreaseResourceUnitNeeded());
+            } 
+        }
+        // The following line should never be reached.
+        return false;
+    }
+
+    /// @brief Add a krystallium ressource into a Card. A resource should be replaced. 
+    /// @param resourceToReplace Resource that will be replaced by a krystallium.
+    /// @return True if the card is just payed. False either.
+    bool DevelopmentCard::addKrystallium (Resource* resourceToReplace)
+    {
+        // Iterating among all resources that should be paid
+        for (ResourceToPay* resourceToPay : this->costToBuild)
+        {
+            // Checking if the current resource is not paid, and if the type is the one we want to replace.
+            if ((!resourceToPay->isPaid) && (resourceToPay->type == resourceToReplace->type))
+            {
+                resourceToPay->isPaid = true;
+                return (this->decreaseResourceUnitNeeded());
+            } 
+        }
+        // The following line should never be reached.
+        return false;
     }
 
     /// @brief Check if a resource can be added to the DevelopmentCard.
@@ -52,7 +82,52 @@ namespace state {
     /// @return True if the resource can be added to the Card, else False.
     bool DevelopmentCard::isResourceAddable (Resource* resource) const
     {
+        // First, if a card is Paid, ressources can't be added.
+        if (this->isPaid)
+        {
+            return false;
+        }
+        // If this line is reached, the card is not paid.
+
+        // Iterating among all resources that should be paid
+        for (ResourceToPay* resourceToPay : this->costToBuild)
+        {
+            // If the current ressource is not paid, we check if the resource can be added.
+            if (!resourceToPay->isPaid)
+            {
+                // If both types are the same, resource can be added.
+                if (resourceToPay->type == resource->type)
+                {
+                    return true;
+                }
+                // If the input resource is a krysallium, and the resourceToPay is not Colonel / Financier, it can be paid.
+                if ((resource->type == ResourceType::KRYSTALLIUM) &&
+                (resourceToPay->type == ResourceType::MATERIAL ||
+                resourceToPay->type == ResourceType::ENERGY ||
+                resourceToPay->type == ResourceType::SCIENCE ||
+                resourceToPay->type == ResourceType::GOLD ||
+                resourceToPay->type == ResourceType::EXPLORATION))
+                {
+                    return true;
+                }
+            }
+        }
+        // If this line is reached, it means that none of the ressources to pay may be paid. 
         return false;
+    }
+    
+    /// @brief Decrease the amount of resource of unit needed. Also update the isPaid boolean if needed.
+    /// @return True if the card is just payed. False either.
+    bool DevelopmentCard::decreaseResourceUnitNeeded ()
+    {
+        // Decrease the quantity of ressource which are missing.
+        this->quantityResourceMissing--;
+
+        // Update the isPaid attribute according to the quantity of ressources that must be paid.
+        this->isPaid = (this->quantityResourceMissing == 0);
+        
+        // Return the boolean isPaid to know if everything as been paid.
+        return this->isPaid; 
     }
 
     /// @brief Convert the DevelopmentCard to a readable string.
