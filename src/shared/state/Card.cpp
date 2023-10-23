@@ -12,7 +12,7 @@ namespace state {
     }
 
     /// @brief Create a card
-    Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, std::vector<CardVictoryPoint*> victoryPoints)
+    Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints)
     {
         this->name = name;
         this->productionGain = productionGain;
@@ -24,6 +24,12 @@ namespace state {
     Card::~Card()
     {
     }
+
+    /*
+
+    The following lines were used when dia2code automatically generated setters and getters. As we no longer wish to do this, we'll comment on these lines.
+    These lines can be uncommented if required.
+
 
     /// @brief Gets the name
     /// @return Returns the name of the card
@@ -69,15 +75,17 @@ namespace state {
 
     /// @brief Gets the victoryPoints
     /// @return Returns the victoryPoints of the card
-    const std::vector<CardVictoryPoint*>& Card::getVictoryPoints() const
+    const CardVictoryPoint*& Card::getVictoryPoints() const
     {
-        return this->victoryPoints;
+        return (const CardVictoryPoint*&)(this->victoryPoints);
     }
 
     /// @brief Sets the victoryPoints
     /// @param victoryPoints New victoryPoints of the card
-    void Card::setVictoryPoints(const std::vector<CardVictoryPoint*>& victoryPoints)
+    void Card::setVictoryPoints(const CardVictoryPoint*& victoryPoints)
     {
-        this->victoryPoints = victoryPoints;
+        this->victoryPoints = (CardVictoryPoint*)victoryPoints;
     }
+
+    */
 }

@@ -493,7 +493,8 @@ gen_class (umlclassnode *node)
                     umla = umla->next;
                     continue;
                 }
-                add_setter_getter(node,umla->key.type,umla->key.name);
+                // For the moment, we don't want to have automatic Setters and Getters.
+                // add_setter_getter(node,umla->key.type,umla->key.name);
                 
                 umla = umla->next;
             }
