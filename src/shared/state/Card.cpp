@@ -5,19 +5,19 @@ namespace state {
     /// @brief Create an empty card
     Card::Card() :
     name(""),
-    productionGain({}),
+    productionGain(),
     design(sf::Texture()),
-    victoryPoints({})
+    victoryPoints()
     {
     }
 
     /// @brief Create a card
-    Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints)
+    Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints) :
+    name(name),
+    productionGain(productionGain),
+    design(design),
+    victoryPoints(victoryPoints)
     {
-        this->name = name;
-        this->productionGain = productionGain;
-        this->design = design;
-        this->victoryPoints = victoryPoints;
     }
 
     /// @brief Card destructor
