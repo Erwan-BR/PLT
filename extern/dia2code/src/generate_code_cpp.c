@@ -373,7 +373,7 @@ gen_class (umlclassnode *node)
             while (umla != NULL) {
                 check_visibility (&tmpv, umla->key.visibility);
                 if (strlen(umla->key.comment)) {
-                    print("/// %s\n", umla->key.comment);
+                    print("/// @brief %s\n", umla->key.comment);
                 }
                 print ("");
                 if (umla->key.isstatic) {
@@ -598,6 +598,10 @@ gen_decl (declaration *d)
         while (umla != NULL) {
             char *literal = umla->key.name;
             check_umlattr (&umla->key, name);
+            /* print comments on enum */
+            if (strlen(umla->key.comment)) {
+                print("/// @brief %s\n", umla->key.comment);
+            }
             if (strlen (umla->key.type) > 0)
                 fprintf (stderr, "%s/%s: ignoring type\n", name, literal);
             print ("%s", literal);
@@ -615,6 +619,10 @@ gen_decl (declaration *d)
         print ("struct %s {\n", name);
         indentlevel++;
         while (umla != NULL) {
+            /* print comments on enum */
+            if (strlen(umla->key.comment)) {
+                print("/// @brief %s\n", umla->key.comment);
+            }
             check_umlattr (&umla->key, name);
             print ("%s %s", cppname (umla->key.type), umla->key.name);
             if (strlen (umla->key.value) > 0)
@@ -961,8 +969,6 @@ gen_namespace(batch *b, declaration *nsd) {
 #ifdef ENABLE_FILE_UPDATE_ON_CHANGE
         update_file_if_changed(b, filename);
 #endif
-
-        /////////////////////////////////////
         // Source file
         
         sprintf(filename, "%s/%s.cpp", nsname, name);
@@ -975,7 +981,6 @@ gen_namespace(batch *b, declaration *nsd) {
             fclose(sourceFile);
         }
         
-        /////////////////////////////////////
         // Source file (generate new)
         if (!exists) {
             /*printf("Create '%s'\n",newfilename);
@@ -986,7 +991,6 @@ gen_namespace(batch *b, declaration *nsd) {
             }
             fclose(spec);*/
         }
-        /////////////////////////////////////
         // Source file (update existing)
         else {
             
