@@ -10,7 +10,7 @@ namespace state {
     costToBuild({}),
     instantGain({}),
     discardGain(new Resource()),
-    quantityResourceMissing(-1) // Should be computed correctly when the code will be implemented.
+    quantityResourceMissing(-1) // "Error" value : Empty constructor should never be used.
     {
     }
 
@@ -31,7 +31,7 @@ namespace state {
     costToBuild(costToBuild),
     instantGain(instantGain),
     discardGain(discardGain),
-    quantityResourceMissing(-1) // Should be computed correctly when the code will be implemented.
+    quantityResourceMissing(costToBuild.size()) // Because no resource is paid and the size is never 0.
     {
     }
 
@@ -134,6 +134,27 @@ namespace state {
     /// @return Readable string that contains the information concerning DevelopmentCard.
     std::string DevelopmentCard::toString () const
     {
-        return "";
+        // Instantiation of a string to return.
+        std::string returnValue = "Name: " + this->name + "\n";
+        
+        // Adding some info to returnValue.
+        returnValue += "Type: " + std::to_string(this->type) + "\n";
+        returnValue += "Number Of Copies: " + std::to_string(this->numberOfCopies) + "\n";
+        
+        // Adding a diffeent sentence depending on if the card is paid or not.
+        if (this->isPaid)
+        {
+            returnValue += "This card is paid.\n";
+        }
+        else
+        {
+            returnValue += "Resouces missing: " + std::to_string(this->quantityResourceMissing);
+        }
+
+        // Adding some other info to returnValue.
+        returnValue += "Discard gain: " + std::to_string(this->discardGain->type) + "\n";
+        
+        // Return the constructed string.
+        return returnValue;
     }
 }

@@ -469,6 +469,8 @@ gen_class (umlclassnode *node)
         }
     }
 
+    /* For the moment, we do not want to use automatic Setters and Getters.
+    
     print ("// Setters and Getters\n");
     if (node->associations != NULL) {
         umlassoclist assoc = node->associations;
@@ -493,13 +495,13 @@ gen_class (umlclassnode *node)
                     umla = umla->next;
                     continue;
                 }
-                // For the moment, we don't want to have automatic Setters and Getters.
-                // add_setter_getter(node,umla->key.type,umla->key.name);
+                For the moment, we don't want to have automatic Setters and Getters.
+                add_setter_getter(node,umla->key.type,umla->key.name);
                 
                 umla = umla->next;
             }
         }
-    }
+    } */
     
     
     if (node->key->attributes != NULL && is_valuetype) {
