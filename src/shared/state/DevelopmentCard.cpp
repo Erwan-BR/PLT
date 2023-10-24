@@ -157,4 +157,13 @@ namespace state {
         // Return the constructed string.
         return returnValue;
     }
+
+    /************************************* Setters & Getters *************************************/
+
+    /// @brief Get the discard Gain. USefull for the Player class.
+    /// @return Pointer to the ressource of the discard gain.
+    Resource* DevelopmentCard::getDiscardGain () const
+    {
+        return this->discardGain;
+    }
 }
