@@ -166,4 +166,11 @@ namespace state {
     {
         return this->discardGain;
     }
+
+    /// @brief Getter for the type attribute
+    /// @return type attribute.
+    CardType DevelopmentCard::getType() const
+    {
+        return this->type;
+    }
 }
