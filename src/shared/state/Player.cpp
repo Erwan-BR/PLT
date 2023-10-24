@@ -31,7 +31,7 @@ namespace state {
     /// @param cardToBuild The card to build
     void Player::construct(DevelopmentCard* cardToBuid)
     {
-
+	return;
     }
 
     /// @brief Add a resource "resource" to the card "card"
