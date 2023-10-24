@@ -35,7 +35,8 @@ namespace state {
 	///@brief Initialize the game
 	void Game::initGame ()
 	{
-
+		Game();
+		startGame();
 	}
 
 	///@brief Create and Initialize the Cards for the game
@@ -59,13 +60,32 @@ namespace state {
 	///@brief Manage the progress of the game and start the next phase among Draft, Planification and Production
 	void Game::nextPhase ()
 	{
-
+		if(phase == DRAFT)
+		{
+			phase = PLANIFICATION;
+		}
+		if(phase == PLANIFICATION)
+		{
+			phase = PRODUCTION;
+		}
+		if(phase == PRODUCTION)
+		{
+			phase = DRAFT;
+		}		
 	}
 
 	///@brief Start one of the four turn of the game
 	void Game::newTurn ()
 	{
-
+		turn = turn + 1;
+		if (turn%2 == 1)
+		{
+			isClockwise = true;
+		}
+		else
+		{
+			isClockwise = false;
+		}
 	}
 
 	///@brief Initialize the Draft part of the game during which players select their cards
@@ -96,6 +116,7 @@ namespace state {
 	///@param toProduceResource Pointer which designate the type of resource currently to produce
 	void Game::produceResource (Resource* toProduceResource)
 	{
+
 
 	}
 
