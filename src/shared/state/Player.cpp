@@ -52,7 +52,7 @@ namespace state {
     /// @brief Compute the quantity of resource named "resourceToProduce" produced by the player
     /// @param resourceToProduce Type of the resource that will be produced
     /// @return Quantity of resource "resourceToProduce" obtained by the player
-    int Player::computeProduction(Resource* resourceToProduce)
+    int Player::computeProduction(ResourceType resourceToProduce)
     {
         return 0;
     }

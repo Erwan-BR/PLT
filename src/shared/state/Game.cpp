@@ -1,12 +1,14 @@
-//Written by Adrien MILLASSEAU
+//Written by Adrien MILLASSEAU and Onur DEMIRBAS
 
 #include "Game.h"
+#include <algorithm>
+#include <random>
 
 namespace state {
 	///@brief Create an instance of the class Game
 	Game::Game() :
 		players(),
-		turn(0),
+		turn(-1),
 		phase(DRAFT),
 		deck(),
 		isClockwise(true)
@@ -18,7 +20,7 @@ namespace state {
 	///@param players Vector of pointers which designate the players of the game
 	Game::Game(std::vector<Player*> players) :
 		players(players),
-		turn(0),
+		turn(-1),
 		phase(DRAFT),
 		deck(),
 		isClockwise(true)
@@ -36,25 +38,32 @@ namespace state {
 	void Game::initGame ()
 	{
 		Game();
+		initEmpire();
+		initCards();
+		//initPlayers();
+		initDraft();
 		startGame();
 	}
 
 	///@brief Create and Initialize the Cards for the game
 	void Game::initCards ()
 	{
-
+		// To do: Create the deck
+		auto rng = std::default_random_engine {};
+		std::shuffle(std::begin(deck), std::end(deck), rng);
 	}
 
 	///@brief Create and Initialize the Empire for the game
 	void Game::initEmpire ()
 	{
-
+		// To do: Create the empires (A and/or B ?) + create a deck to shuffle
+		
 	}
 
 	///@brief Start the game
 	void Game::startGame ()
 	{
-
+		newTurn();
 	}
 
 	///@brief Manage the progress of the game and start the next phase among Draft, Planification and Production
@@ -63,6 +72,7 @@ namespace state {
 		if(phase == DRAFT)
 		{
 			phase = PLANIFICATION;
+			initPlanification();
 		}
 		if(phase == PLANIFICATION)
 		{
@@ -70,7 +80,9 @@ namespace state {
 		}
 		if(phase == PRODUCTION)
 		{
+			newTurn();
 			phase = DRAFT;
+			initDraft();
 		}		
 	}
 
@@ -86,24 +98,40 @@ namespace state {
 		{
 			isClockwise = false;
 		}
+		if(turn == 5)
+		{
+			//endGame(); // Ends the game by counting every player's victory points and comparing them
+		}
 	}
 
 	///@brief Initialize the Draft part of the game during which players select their cards
 	void Game::initDraft ()
 	{
+		for(Player* player : players)
+		{
 
+		}
 	}
 
 	///@brief Start a Draft
 	void Game::nextDraft ()
 	{
+		// 7 drafted cards
+		for(int i=0;i<7;i++)
+		{
+			for(Player* player : players)
+			{
+
+			}
+		}
+		endDraft();
 
 	}
 
 	///@brief End the current Draft phase
 	void Game::endDraft ()
 	{
-
+		nextPhase();
 	}
 
 	///@brief Initialize the Planification phase during which players choose the cards they will try to build
