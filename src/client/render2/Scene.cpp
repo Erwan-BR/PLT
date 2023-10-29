@@ -5,27 +5,67 @@
 
 namespace render2 {
 
+	/// @brief Empty constructor of the Scene class.
     Scene::Scene (){
+    	//Creation of the Window
+    	sf::RenderWindow window(sf::VideoMode(200,200),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+    	//Storage of the window in the class attribute
+    	this->window = &window;
+
+    	//Creation and initialisation of the background texture
     	this->background_texture =sf::Texture();
-    	//(this->background_texture).loadFromFile("file");
+    	(this->background_texture).loadFromFile("./background.png");
+
+    	//Creation and initialisation of the background sprite
     	this->background=sf::Sprite();
     	(this->background).setTexture(this->background_texture);
+
     	/*TODO PlayerRenderer*/
     }
 
+    /// @brief Full constructor of the Scene class.
+    /// @param game Pointer on the Game coresponding to this Renderer
+    Scene::Scene (state::Game* game){
+    	//Storage of the Game Class
+		this->game = game;
+
+		//Creation of the Window
+		sf::RenderWindow window(sf::VideoMode(200,200),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+		//Storage of the window in the class attribute
+		this->window = &window;
+
+		//Creation and initialisation of the background texture
+		this->background_texture =sf::Texture();
+		(this->background_texture).loadFromFile("./background.png");
+
+		//Creation and initialisation of the background sprite
+		this->background=sf::Sprite();
+		(this->background).setTexture(this->background_texture);
+
+		/*TODO PlayerRenderer*/
+	}
+
+    /// @brief Full destructor of the Scene class.
     Scene::~Scene (){
 
     }
 
-    void Scene::displayDraftCard (){
+    void Scene::displayDraftCard (){	//Unused
 
     }
 
+    /// @brief Display of the Scene.
+    /// @param window Game window where the Scene will be displayed
     void Scene::draw (){
-    	(this->window).draw((this->background));
-    	(this->own_player_renderer).draw(&(this->window));
+    	//Display background
+    	(this->window)->draw((this->background));
+
+    	//Display of the user's board
+    	(this->own_player_renderer).draw(this->window);
+
+    	//Display of other player's board
     	for (PlayerRenderer p : (this->other_player_renderer)) {
-    		p.draw(&(this->window));
+    		p.draw(this->window);
     	}
     }
 
