@@ -25,11 +25,11 @@ namespace render2 {
 
 	}
     
-	/// @brief Display of the PlayerRenderer class.
+	/// @brief Draw of the PlayerRenderer class.
 	/// @param window Game window where the Sprite will be displayed
 	void PlayerRenderer::draw (sf::RenderWindow* window){
 
-		//Display the Sprite
+		//draw the Sprite
 		window->draw(this->player_Sprite);
 	}
 

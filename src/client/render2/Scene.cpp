@@ -30,8 +30,8 @@ namespace render2 {
 		this->game = game;
 
 		//Creation of the Window
-		sf::RenderWindow window(sf::VideoMode(200,200),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
-		//Storage of the window in the class attribute
+		sf::RenderWindow window(sf::VideoMode(1920,1080),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+		//Storage of the window in the class' attribute
 		this->window = &window;
 
 		//Creation and initialisation of the background texture
@@ -54,8 +54,7 @@ namespace render2 {
 
     }
 
-    /// @brief Display of the Scene.
-    /// @param window Game window where the Scene will be displayed
+    /// @brief Draw of the Scene in the window.
     void Scene::draw (){
     	//Display background
     	(this->window)->draw((this->background));
@@ -67,6 +66,23 @@ namespace render2 {
     	for (PlayerRenderer p : (this->other_player_renderer)) {
     		p.draw(this->window);
     	}
+    }
+
+    /// @brief Erase the current content of the window.
+    void Scene::erase (){
+    	//Clear the window in the color black.
+    	(this->window)->clear(sf::Color::Black);
+    }
+
+    /// @brief Display the windows on the screen.
+    void Scene::display (){
+    	(this->window)->display();
+    }
+
+    /// @brief Check if the window is still open.
+    /// @return true if the window is open, false else.
+    bool Scene::isOpen (){
+    	return (this->window)->isOpen();
     }
 
 
