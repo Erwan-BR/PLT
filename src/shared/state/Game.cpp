@@ -87,9 +87,51 @@ namespace state {
 
 	///@brief Create and Initialize the Empire for the game
 	std::vector<EmpireCard*> Game::initEmpire ()
-	{
-		// To do: Create the empires (choose face A and/or B ?) + create a deck to shuffle
+	{	
+		// empire AFRICA
+		ResourceToProduce* firstResourceToProduceAFRICA = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
+    	ResourceToProduce* secondResourceToProduceAFRICA = new ResourceToProduce{ResourceType::EXPLORATION, 1, state::CardType::NONETYPE};
+		std::vector<ResourceToProduce*> productionGain = {firstResourceToProduceAFRICA,secondResourceToProduceAFRICA};
+		sf::Texture design;
+   		CardVictoryPoint* victoryPoints  = new CardVictoryPoint{3,state::CardType::DISCOVERY};
+		EmpireCard* africa = new EmpireCard("AFRICA", productionGain, design, victoryPoints, {/*prob face B*/}, {/*victorypoints face B*/}, AFRICA);
+	
+		// empire NORAM
+		ResourceToProduce* firstResourceToProduceNORAM = new ResourceToProduce{ResourceType::MATERIAL, 3, state::CardType::NONETYPE};
+    	ResourceToProduce* secondResourceToProduceNORAM = new ResourceToProduce{ResourceType::GOLD, 1, state::CardType::NONETYPE};
+		std::vector<ResourceToProduce*> productionGain = {firstResourceToProduceNORAM,secondResourceToProduceNORAM};
+		sf::Texture design;
+   		CardVictoryPoint* victoryPoints  = new CardVictoryPoint{1,state::ResourceType::FINANCIER};
+		EmpireCard* noram = new EmpireCard("NORAM", productionGain, design, victoryPoints, {/*prob face B*/}, {/*victorypoints face B*/}, NORAM);
 		
+		// empire ASIA
+		ResourceToProduce* firstResourceToProduceASIA = new ResourceToProduce{ResourceType::MATERIAL, 1, state::CardType::NONETYPE};
+    	ResourceToProduce* secondResourceToProduceASIA = new ResourceToProduce{ResourceType::GOLD, 2, state::CardType::NONETYPE};
+		std::vector<ResourceToProduce*> productionGain = {firstResourceToProduceASIA,secondResourceToProduceASIA};
+		sf::Texture design;
+   		CardVictoryPoint* victoryPoints  = new CardVictoryPoint{2,state::CardType::PROJECT};
+		EmpireCard* asia = new EmpireCard("ASIA", productionGain, design, victoryPoints, {/*prob face B*/}, {/*victorypoints face B*/}, ASIA);
+		
+		// empire EUROPE
+		ResourceToProduce* firstResourceToProduceEUROPE = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
+    	ResourceToProduce* secondResourceToProduceEUROPE = new ResourceToProduce{ResourceType::ENERGY, 1, state::CardType::NONETYPE};
+    	ResourceToProduce* thirdResourceToProduceEUROPE = new ResourceToProduce{ResourceType::SCIENCE, 1, state::CardType::NONETYPE};
+		std::vector<ResourceToProduce*> productionGain = {firstResourceToProduceEUROPE,secondResourceToProduceEUROPE,thirdResourceToProduceEUROPE};
+		sf::Texture design;
+   		CardVictoryPoint* victoryPoints  = new CardVictoryPoint{1,state::ResourceType::COLONEL};
+		EmpireCard* europe = new EmpireCard("EUROPE", productionGain, design, victoryPoints, {/*prob face B*/}, {/*victorypoints face B*/}, EUROPE);
+		
+		// empire AZTEC
+		ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
+    	ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::SCIENCE, 2, state::CardType::NONETYPE};
+		std::vector<ResourceToProduce*> productionGain = {firstResourceToProduceAZTEC,secondResourceToProduceAZTEC};
+		sf::Texture design;
+   		CardVictoryPoint* victoryPoints  = new CardVictoryPoint{2,state::CardType::RESEARCH};
+		EmpireCard* aztec = new EmpireCard("AZTEC", productionGain, design, victoryPoints, {/*prob face B*/}, {/*victorypoints face B*/}, AZTEC);
+
+		std::vector<EmpireCard*> empires = {africa,noram,asia,europe,aztec};
+		auto rng = std::default_random_engine {};
+		std::shuffle(std::begin(empires), std::end(empires), rng);
 	}
 
 	///@brief Start the game
