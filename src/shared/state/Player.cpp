@@ -147,7 +147,7 @@ namespace state {
         int victoryPoints = 0;
         for(DevelopmentCard* card : this->builtCards)
         {
-            CardVictoryPoint* cardVictoryPoints = card->getvictoryPoints();
+            CardVictoryPoint* cardVictoryPoints = card->getVictoryPoints();
 
             if(cardVictoryPoints->cardOrResourceType == 0)
             {
@@ -167,7 +167,7 @@ namespace state {
             }
         }
 
-        CardVictoryPoint* empireVictoryPoints = this->empire->getvictoryPoints();
+        CardVictoryPoint* empireVictoryPoints = this->empire->getVictoryPoints();
         if(empireVictoryPoints->cardOrResourceType == 0)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints;
