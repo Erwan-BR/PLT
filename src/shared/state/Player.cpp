@@ -106,42 +106,109 @@ namespace state {
                 }
             } 
         }
+
+        for(ResourceToProduce* resource : empire->getProductionGain())
+        {
+            if(resource->type == resourceToProduce)
+            {
+                if(resource->cardType != NONETYPE)
+                {
+                    productionValue += (resource->quantity)*cardsTypeList[resource->cardType];
+                }
+            }
+            else
+            {
+                    productionValue += resource->quantity;           
+            }
+        } 
+
         return productionValue;
     }
 
     /// @brief Compute the number of victory points the player has
     /// @return Number of victory points of the player on the moment
-    int Player::computeVictoryPoint() const
+    int Player::computeVictoryPoint()
     {
-        return 0;
+        int victoryPoints = 0;
+        for(DevelopmentCard* card : builtCards)
+        {
+            CardVictoryPoint* cardVictoryPoints = card->getVictoryPoint();
+
+            if(cardVictoryPoints->cardOrResourceType == 0)
+            {
+                victoryPoints += cardVictoryPoints->numberOfPoints;
+            }
+            else if(cardVictoryPoints->cardOrResourceType == COLONEL)
+            {
+                victoryPoints += cardVictoryPoints->numberOfPoints * colonelTokensUnit;
+            }
+            else if(cardVictoryPoints->cardOrResourceType == FINANCIER)
+            {
+                victoryPoints += cardVictoryPoints->numberOfPoints * financierTokensUnit;
+            }
+            else if(20 < cardVictoryPoints->cardOrResourceType < 30)
+            {
+                victoryPoints += (cardVictoryPoints->numberOfPoints) * cardsTypeList[(CardType) cardVictoryPoints->cardOrResourceType];
+            }
+        }
+
+        CardVictoryPoint empireVictoryPoints = empire->getVictoryPoint();
+        if(empireVictoryPoints->cardOrResourceType == 0)
+        {
+            victoryPoints += empireVictoryPoints->numberOfPoints;
+        }
+        else if(empireVictoryPoints->cardOrResourceType == COLONEL)
+        {
+            victoryPoints += empireVictoryPoints->numberOfPoints * colonelTokensUnit;
+        }
+        else if(empireVictoryPoints->cardOrResourceType == FINANCIER)
+        {
+            victoryPoints += empireVictoryPoints->numberOfPoints * financierTokensUnit;
+        }
+        else if(20 < empireVictoryPoints->cardOrResourceType < 30)
+        {
+            victoryPoints += (empireVictoryPoints->numberOfPoints) * cardsTypeList[(CardType) empireVictoryPoints->cardOrResourceType];
+        }
+
+        return victoryPoints;
     }
 
     /// @brief Take a resource produced by the player and place it on the Empire of the player
     /// @param resource Type of resource that one will be send to the empire card of the player
     void Player::sendResourceToEmpire(Resource* resource)
     {
-
+        resourcesInEmpireUnit++;
+        delete(resource);
     }
 
     /// @brief Converts the empire's resources into a krystallium when it reaches 5 resources
     void Player::convertToKrystallium()
     {
-
+        if(resourcesInEmpireUnit == 5)
+        {
+            resourcesInEmpireUnit -= 5;
+            krystalliumTokensUnit++;
+        }
     }
 
     /// @brief Add the selected card "card" from the drafting deck to the selected one
     /// @param card Card choosed by the player
     void Player::chooseDraftCard(DevelopmentCard* card)
     {
-
+            draftCards.push_back(card);
+            auto cardPos = std::find(draftingCards.begin(), draftingCards.end(), card);
+            draftingCards.erase(cardPos);
+            state = PENDING;
     }
 
     /// @brief Return the selected token by the player (Colonel/Financier)
+    /// Not implementable as it ask to know on which one does the player clicks.
     /// @return Boolean returned by the choice of the player (true => Colonel, false => Financier)
     bool Player::chooseColonelToken() const
     {
         return false;
     }
+   
 
     /// @brief Transform the Player to a readable string.
     /// @return Readable string that represents the information of the Player.
