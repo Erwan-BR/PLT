@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->construct(cardTest);
     myFirstPlayer->addResource(resourceTest, cardTest);
     myFirstPlayer->discardCard(cardTest);
-    int production = myFirstPlayer->computeProduction(resourceTest);
+    int production = myFirstPlayer->computeProduction(GOLD);
     int victoryPoints = myFirstPlayer->computeVictoryPoint();
     myFirstPlayer->sendResourceToEmpire(resourceTest);
     myFirstPlayer->convertToKrystallium();
