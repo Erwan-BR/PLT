@@ -51,6 +51,12 @@ namespace state {
 		std::shuffle(std::begin(deck), std::end(deck), rng);
 	}
 
+	/// @brief Import all Cards from the CSV file.
+	void importCardsFromCsv ()
+	{
+
+	}
+
 	///@brief Create and Initialize the Empire for the game
 	std::vector<EmpireCard*> Game::initEmpire ()
 	{
