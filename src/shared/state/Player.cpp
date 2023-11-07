@@ -43,9 +43,9 @@ namespace state {
     /// @param cardToBuild The card to build
     void Player::construct(DevelopmentCard* cardToBuid)
     {
-        builtCards.push_back(cardToBuid);
-        toBuildCards.erase(std::remove(toBuildCards.begin(), toBuildCards.end(), cardToBuid), toBuildCards.end());
-        cardsTypeList[cardToBuid->getType()]++;
+        this->builtCards.push_back(cardToBuid);
+        this->toBuildCards.erase(std::remove(this->toBuildCards.begin(), this->toBuildCards.end(), cardToBuid), this->toBuildCards.end());
+        this->cardsTypeList[cardToBuid->getType()]++;
         updateProduction();
         
     }
@@ -70,16 +70,31 @@ namespace state {
     /// @param toDiscardCard Card that is going to be discarded
     void Player::discardCard(DevelopmentCard* toDiscardCard)
     {
-
-	}
+        auto cardPos = std::find(this->draftCards.begin(), this->draftCards.end(), toDiscardCard);
+        if(cardPos != this->draftCards.end())
+        {
+            this->currentResources.push_back(toDiscardCard->getDiscardGain());
+            this->draftCards.erase(cardPos);
+        }
+        else
+        {
+            cardPos = std::find(this->toBuildCards.begin(), this->toBuildCards.end(), toDiscardCard);
+            if(cardPos != this->toBuildCards.end())
+            {
+                sendResourceToEmpire(toDiscardCard->getDiscardGain());
+                convertToKrystallium();
+                this->toBuildCards.erase(cardPos);
+            }
+        }
+    }
 
     void Player::updateProduction()
     {
-        resourcesProduction[MATERIAL] = computeProduction(MATERIAL);
-        resourcesProduction[ENERGY] = computeProduction(ENERGY);
-        resourcesProduction[SCIENCE] = computeProduction(SCIENCE);
-        resourcesProduction[GOLD] = computeProduction(GOLD);
-        resourcesProduction[EXPLORATION] = computeProduction(EXPLORATION);
+        this->resourcesProduction[MATERIAL] = computeProduction(MATERIAL);
+        this->resourcesProduction[ENERGY] = computeProduction(ENERGY);
+        this->resourcesProduction[SCIENCE] = computeProduction(SCIENCE);
+        this->resourcesProduction[GOLD] = computeProduction(GOLD);
+        this->resourcesProduction[EXPLORATION] = computeProduction(EXPLORATION);
     }
 
     /// @brief Compute the quantity of resource named "resourceToProduce" produced by the player
@@ -88,7 +103,7 @@ namespace state {
     int Player::computeProduction(ResourceType resourceToProduce)
     {
         int productionValue = 0;
-        for(DevelopmentCard* card : builtCards)
+        for(DevelopmentCard* card : this->builtCards)
         {
             for(ResourceToProduce* resource : card->getProductionGain())
             {
@@ -107,13 +122,13 @@ namespace state {
             } 
         }
 
-        for(ResourceToProduce* resource : empire->getProductionGain())
+        for(ResourceToProduce* resource : this->empire->getProductionGain())
         {
             if(resource->type == resourceToProduce)
             {
                 if(resource->cardType != NONETYPE)
                 {
-                    productionValue += (resource->quantity)*cardsTypeList[resource->cardType];
+                    productionValue += (resource->quantity)*cardsTypeList.at(resource->cardType);
                 }
             }
             else
@@ -127,10 +142,10 @@ namespace state {
 
     /// @brief Compute the number of victory points the player has
     /// @return Number of victory points of the player on the moment
-    int Player::computeVictoryPoint()
+    int Player::computeVictoryPoint() const
     {
         int victoryPoints = 0;
-        for(DevelopmentCard* card : builtCards)
+        for(DevelopmentCard* card : this->builtCards)
         {
             CardVictoryPoint* cardVictoryPoints = card->getVictoryPoint();
 
@@ -140,34 +155,34 @@ namespace state {
             }
             else if(cardVictoryPoints->cardOrResourceType == COLONEL)
             {
-                victoryPoints += cardVictoryPoints->numberOfPoints * colonelTokensUnit;
+                victoryPoints += cardVictoryPoints->numberOfPoints * this->colonelTokensUnit;
             }
             else if(cardVictoryPoints->cardOrResourceType == FINANCIER)
             {
-                victoryPoints += cardVictoryPoints->numberOfPoints * financierTokensUnit;
+                victoryPoints += cardVictoryPoints->numberOfPoints * this->financierTokensUnit;
             }
-            else if(20 < cardVictoryPoints->cardOrResourceType < 30)
+            else if(20 < cardVictoryPoints->cardOrResourceType and cardVictoryPoints->cardOrResourceType < 30)
             {
-                victoryPoints += (cardVictoryPoints->numberOfPoints) * cardsTypeList[(CardType) cardVictoryPoints->cardOrResourceType];
+                victoryPoints += (cardVictoryPoints->numberOfPoints) * this->cardsTypeList.at((state::CardType)(cardVictoryPoints->cardOrResourceType));
             }
         }
 
-        CardVictoryPoint empireVictoryPoints = empire->getVictoryPoint();
+        CardVictoryPoint* empireVictoryPoints = this->empire->getVictoryPoint();
         if(empireVictoryPoints->cardOrResourceType == 0)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints;
         }
         else if(empireVictoryPoints->cardOrResourceType == COLONEL)
         {
-            victoryPoints += empireVictoryPoints->numberOfPoints * colonelTokensUnit;
+            victoryPoints += empireVictoryPoints->numberOfPoints * this->colonelTokensUnit;
         }
         else if(empireVictoryPoints->cardOrResourceType == FINANCIER)
         {
-            victoryPoints += empireVictoryPoints->numberOfPoints * financierTokensUnit;
+            victoryPoints += empireVictoryPoints->numberOfPoints * this->financierTokensUnit;
         }
-        else if(20 < empireVictoryPoints->cardOrResourceType < 30)
+        else if(20 < empireVictoryPoints->cardOrResourceType and empireVictoryPoints->cardOrResourceType < 30)
         {
-            victoryPoints += (empireVictoryPoints->numberOfPoints) * cardsTypeList[(CardType) empireVictoryPoints->cardOrResourceType];
+            victoryPoints += (empireVictoryPoints->numberOfPoints) * this->cardsTypeList.at((state::CardType)empireVictoryPoints->cardOrResourceType);
         }
 
         return victoryPoints;
@@ -177,17 +192,17 @@ namespace state {
     /// @param resource Type of resource that one will be send to the empire card of the player
     void Player::sendResourceToEmpire(Resource* resource)
     {
-        resourcesInEmpireUnit++;
+        this->resourcesInEmpireUnit++;
         delete(resource);
     }
 
     /// @brief Converts the empire's resources into a krystallium when it reaches 5 resources
     void Player::convertToKrystallium()
     {
-        if(resourcesInEmpireUnit == 5)
+        if(this->resourcesInEmpireUnit == 5)
         {
-            resourcesInEmpireUnit -= 5;
-            krystalliumTokensUnit++;
+            this->resourcesInEmpireUnit -= 5;
+            this->krystalliumTokensUnit++;
         }
     }
 
@@ -195,10 +210,10 @@ namespace state {
     /// @param card Card choosed by the player
     void Player::chooseDraftCard(DevelopmentCard* card)
     {
-            draftCards.push_back(card);
-            auto cardPos = std::find(draftingCards.begin(), draftingCards.end(), card);
-            draftingCards.erase(cardPos);
-            state = PENDING;
+            this->draftCards.push_back(card);
+            auto cardPos = std::find(this->draftingCards.begin(), this->draftingCards.end(), card);
+            this->draftingCards.erase(cardPos);
+            this->state = PENDING;
     }
 
     /// @brief Return the selected token by the player (Colonel/Financier)
