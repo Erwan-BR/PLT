@@ -3,6 +3,7 @@
 #include "Game.h"
 #include <algorithm>
 #include <random>
+#include <fstream>
 
 namespace state {
 	///@brief Create an instance of the class Game
@@ -52,9 +53,36 @@ namespace state {
 	}
 
 	/// @brief Import all Cards from the CSV file.
-	void importCardsFromCsv ()
+	void Game::importCardsFromCsv ()
 	{
+		// Instantiation of a fstream object which is a file.
+		std::fstream readingFile;
 
+		// Opening the file in reading mode.
+		readingFile.open("listAllDevelopmentCards.csv", std::ios::in);
+
+		// Checking if the file is correctly opened.
+		if (readingFile.is_open())
+		{
+			// Instantiation of a string that will represent the successive lines.
+			std::string currentLine;
+
+			// Looping while we can get the following line (while another exists in fact).
+			while(getline(readingFile, currentLine))
+			{
+				// Call a private function that add a developmentCard to the deck.
+				this->addSingleCardToDeck(currentLine);
+			}
+			// Closing the file because we do not need it anymore.
+			readingFile.close();
+		}
+	}
+
+	/// @brief Add a card to the deck, from a line of the CSV file.
+	/// @param lineFromCsvFile Line from the CSV that contains data of a DevelopmentCard.
+	void Game::addSingleCardToDeck (std::string lineFromCsvFile)
+	{
+		return ;
 	}
 
 	///@brief Create and Initialize the Empire for the game
@@ -169,6 +197,7 @@ namespace state {
 	{
 		return "";
 	}
+
 	/// @brief Distributes the empires to the players
 	void initPlayers (std::vector<EmpireCard*> empires)
 	{
