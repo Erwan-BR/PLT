@@ -9,7 +9,7 @@ namespace render2 {
 
 	/// @brief Full constructor of the PlayerRenderer class.
 	/// @param player Pointer on the Player coresponding to this Renderer
-	PlayerRenderer::PlayerRenderer(state::Player* player){
+	PlayerRenderer::PlayerRenderer(state::Player* player,int index){
 		//Creation of the texture
 		this->texture =sf::Texture();
 		//Set the texture from the image file
@@ -25,12 +25,10 @@ namespace render2 {
 
 	}
     
-	/// @brief Draw of the PlayerRenderer class.
-	/// @param window Game window where the Sprite will be displayed
-	void PlayerRenderer::draw (sf::RenderWindow* window){
-
-		//draw the Sprite
-		window->draw(this->player_Sprite);
+	/// @brief Getter Sprite of PlayerRenderer class.
+	/// @return The sprite corresponding of the background of the player part.
+	sf::Sprite PlayerRenderer::getSprite(){
+		return (this->player_Sprite);
 	}
 
 };

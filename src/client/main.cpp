@@ -34,20 +34,38 @@ int main(int argc,char* argv[])
 	//Creation of the instance of the Scene class
 	Scene scene = Scene(game);
 
-	//Enter the Displaying loop
-	while (scene.isOpen())
+	//Creation of the window
+	sf::RenderWindow window(sf::VideoMode(1920,1080),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+
+	//Creation of the instance of sf::Event class that will received user's inputs.
+	sf::Event event;
+
+	//Main Loop active while the window is still open
+	while (window.isOpen())
 		{
-			//Erase the content of the window
-			scene.erase();
+			//Clear the content of the window
+			window.clear();
 
+			//Test if an event happens and save it in "event"
+			while (window.pollEvent(event))
+			{
+				//Command to close the window
+				if (event.type == sf::Event::Closed){
+					window.close();}
+				/*TODO USER INPUT
+				 if (event.type == sf::Event::KeyPressed) {
+					c = event.text.unicode;
+					if (event.key.code <= 36){
+	                input += KEY_NAMES[event.key.code];}
+	            */
+			}
 
-			//Redraw the new content of the window
-			scene.draw();
+			//Draw the differents sprite in the window
+			window.draw(scene.getBackground());
 
 			//Display the new content of the window
-			scene.display();
+			window.display();
 		}
-
     cout << "It worked !" << endl;
 
     return 0;
