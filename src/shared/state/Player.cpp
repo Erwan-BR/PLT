@@ -100,7 +100,7 @@ namespace state {
     /// @brief Compute the quantity of resource named "resourceToProduce" produced by the player
     /// @param resourceToProduce Type of the resource that will be produced
     /// @return Quantity of resource "resourceToProduce" obtained by the player
-    int Player::computeProduction(ResourceType resourceToProduce)
+    int Player::computeProduction(ResourceType resourceToProduce) const
     {
         int productionValue = 0;
         for(DevelopmentCard* card : this->builtCards)
@@ -111,7 +111,7 @@ namespace state {
                 {
                     if(resource->cardType != NONETYPE)
                     {
-                        productionValue += (resource->quantity)*cardsTypeList[resource->cardType];
+                        productionValue += (resource->quantity)*cardsTypeList.at(resource->cardType);
                     }
                 }
                 else
@@ -147,7 +147,7 @@ namespace state {
         int victoryPoints = 0;
         for(DevelopmentCard* card : this->builtCards)
         {
-            CardVictoryPoint* cardVictoryPoints = card->getVictoryPoint();
+            CardVictoryPoint* cardVictoryPoints = card->getvictoryPoints();
 
             if(cardVictoryPoints->cardOrResourceType == 0)
             {
@@ -167,7 +167,7 @@ namespace state {
             }
         }
 
-        CardVictoryPoint* empireVictoryPoints = this->empire->getVictoryPoint();
+        CardVictoryPoint* empireVictoryPoints = this->empire->getvictoryPoints();
         if(empireVictoryPoints->cardOrResourceType == 0)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints;
