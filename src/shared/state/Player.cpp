@@ -229,6 +229,22 @@ namespace state {
     /// @return Readable string that represents the information of the Player.
     std::string Player::toString () const
     {
-        return "";
+        std::string returnValue = "Name: " + this->name + "\n";
+        
+        returnValue += "Id: " + std::to_string(this->id) + "\n";
+        returnValue += "-----Empire informations:-----\n " + empire->toString() + "\n";
+        returnValue += "builtCards length: " + std::to_string(this->builtCards.size()) + "\n";
+        returnValue += "toBuildCards length: " + std::to_string(this->toBuildCards.size()) + "\n";
+        returnValue += "draftingCards length: " + std::to_string(this->draftingCards.size()) + "\n";
+        returnValue += "dratfCards length: " + std::to_string(this->draftCards.size()) + "\n";
+        returnValue += "State: " + std::to_string(this->state) + "\n";
+        returnValue += "financierTokensUnit: " + std::to_string(this->financierTokensUnit) + "\n";
+        returnValue += "colonelTokensUnit: " + std::to_string(this->colonelTokensUnit) + "\n";
+        returnValue += "krystalliumTokensUnit: " + std::to_string(this->krystalliumTokensUnit) + "\n";
+        returnValue += "currentResources length: " + std::to_string(this->currentResources.size()) + "\n";
+        returnValue += "resourcesInEmpireUnit: " + std::to_string(this->resourcesInEmpireUnit) + "\n";
+
+
+        return returnValue;
     }
 }
