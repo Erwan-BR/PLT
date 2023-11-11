@@ -1,6 +1,6 @@
 #include "CardRenderer.h"
 
-namespace render2 {
+namespace render {
 
 	/// @brief Empty constructor of the CardRenderer class.
 	CardRenderer::CardRenderer(){
@@ -14,7 +14,7 @@ namespace render2 {
 	CardRenderer::CardRenderer(std::string path){
 		//Creation and Initialisation of card texture
 		this->texture =sf::Texture();
-		this->texture.loadFromFile(path);
+		this->texture.loadFromFile("../resources/img/ExampleCards/"+path);
 
 		//Creation and Initialisation of card sprite
 		this->card_Sprite=sf::Sprite();

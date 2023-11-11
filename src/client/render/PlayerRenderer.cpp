@@ -1,6 +1,6 @@
 #include "PlayerRenderer.h"
 
-namespace render2 {
+namespace render {
 
 	/// @brief Empty constructor of the PlayerRenderer class.
 	PlayerRenderer::PlayerRenderer(){

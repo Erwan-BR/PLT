@@ -3,7 +3,7 @@
 
 #include "Scene.h"
 
-namespace render2 {
+namespace render {
 
 	/// @brief Empty constructor of the Scene class.
     Scene::Scene (){
@@ -32,7 +32,10 @@ namespace render2 {
 		this->background=sf::Sprite();
 		(this->background).setTexture(this->background_texture);
 
-		//TODO Creation of the player renderers.
+		/*std::vector<state::Player*> p = (this->game)->getPlayers();
+		for (int i=0;i<p.size();i++){
+			player_renderer.push_back(new PlayerRenderer(p[i],i));
+		}*/
 	}
 
     /// @brief Full destructor of the Scene class.
@@ -49,7 +52,7 @@ namespace render2 {
     /// @brief Getter of the player renderer.
     /// @param index corresponding of the wanted player renderer in the vector player_renderer
 	/// @return The player renderer corresponding of the index.
-	PlayerRenderer Scene::getPlayerRenderer (int index){
-		return (this->player_renderer[index]);
+	PlayerRenderer* Scene::getPlayerRenderer (int index){
+		return ((this->player_renderer)[index]);
 	}
 };
