@@ -46,30 +46,30 @@ int main(int argc,char* argv[])
 	float win_heigth_scale = (win_heigth*1.0f)/(1080.0f);
 	sf::Transform tr_scale = sf::Transform().scale(win_length_scale, win_heigth_scale);
 
-	//Creation of PlayerRenderer for the user
-	PlayerRenderer* own_renderer = new PlayerRenderer();
+	//Creation of token indicating the resource production
+	sf::CircleShape token = sf::CircleShape(25.0f,100);
+	token.setFillColor(sf::Color::White);
+	token.setPosition(685.0f,585.0f);
+
+	//Creation of token's Transform
+	sf::Transform tr_token = sf::Transform(tr_scale);
 
 	//Creation of Transform (Own PlayerRenderer Position)
-	sf::Transform tr_own_renderer = sf::Transform(tr_scale).translate(525.0f,780.0f);
+	sf::Transform tr_renderer_p1 = sf::Transform(tr_scale).translate(525.0f,780.0f);
 
-	//Creation of Cards
-	CardRenderer* c1 = new CardRenderer("card1.png");
-	CardRenderer* c2 = new CardRenderer("card2.png");
-	CardRenderer* c3 = new CardRenderer("card3.png");
-	CardRenderer* c4 = new CardRenderer("card4.png");
-	CardRenderer* c5 = new CardRenderer("card5.png");
-	CardRenderer* c6 = new CardRenderer("card6.png");
+	//Creation of PlayerRenderer for the user
+	PlayerRenderer* renderer_p1 = new PlayerRenderer(tr_renderer_p1);
 
-	//Creation of Transform (Card Slots)
-	sf::Transform tr_car_1 = sf::Transform(tr_own_renderer).translate(350.f,48.f).scale(0.2f, 0.2f);
-	sf::Transform tr_car_2 = sf::Transform(tr_own_renderer).translate(420.f,48.f).scale(0.2f, 0.2f);;
-	sf::Transform tr_car_3 = sf::Transform(tr_own_renderer).translate(490.f,48.f).scale(0.2f, 0.2f);;
-	sf::Transform tr_car_4 = sf::Transform(tr_own_renderer).translate(560.f,48.f).scale(0.2f, 0.2f);;
-	sf::Transform tr_car_5 = sf::Transform(tr_own_renderer).translate(630.f,48.f).scale(0.2f, 0.2f);;
-	sf::Transform tr_car_6 = sf::Transform(tr_own_renderer).translate(700.f,48.f).scale(0.2f, 0.2f);;
+	//Creation of Transform (Own PlayerRenderer Position)
+	sf::Transform tr_renderer_p2 = sf::Transform(tr_scale).translate(525.0f,0.0f);
+
+	//Creation of PlayerRenderer for the user
+	PlayerRenderer* renderer_p2 = new PlayerRenderer(tr_renderer_p2);
 
 	//Creation of the instance of sf::Event class that will received user's inputs.
 	sf::Event event;
+
+	int i;
 
 	//Main Loop active while the window is still open
 	while (window.isOpen())
@@ -92,13 +92,15 @@ int main(int argc,char* argv[])
 
 			//Draw the differents sprite in the window
 			window.draw(scene.getBackground(),tr_scale);		//Background
-			window.draw(own_renderer->getSprite(),tr_own_renderer); //own renderer
-			window.draw(c1->getSprite(),tr_car_1);			//Card 1
-			window.draw(c2->getSprite(),tr_car_2);			//Card 2
-			window.draw(c3->getSprite(),tr_car_3);			//Card 3
-			window.draw(c4->getSprite(),tr_car_4);			//Card 4
-			window.draw(c5->getSprite(),tr_car_5);			//Card 5
-			window.draw(c6->getSprite(),tr_car_6);			//Card 6
+			window.draw(token,tr_token);						//Token
+
+			for (i = 0; i < renderer_p1->getNumberDrawable();i++){
+				window.draw(*(renderer_p1->getSprite(i)),renderer_p1->getTransform(i));
+			}
+			for (i = 0; i < renderer_p2->getNumberDrawable();i++){
+				window.draw(*(renderer_p2->getSprite(i)),renderer_p2->getTransform(i));
+			}
+
 
 			//Display the new content of the window
 			window.display();
