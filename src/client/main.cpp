@@ -46,13 +46,29 @@ int main(int argc,char* argv[])
 	float win_heigth_scale = (win_heigth*1.0f)/(1080.0f);
 	sf::Transform tr_scale = sf::Transform().scale(win_length_scale, win_heigth_scale);
 
-	//Creation of token indicating the resource production
+	//Creation of the Font for the Texts
+	sf::Font font;
+	font.loadFromFile("../resources/font/arial.ttf");
+
+	//Creation of token indicating the resource production (with its Transform)
 	sf::CircleShape token = sf::CircleShape(25.0f,100);
 	token.setFillColor(sf::Color::White);
 	token.setPosition(685.0f,585.0f);
-
-	//Creation of token's Transform
 	sf::Transform tr_token = sf::Transform(tr_scale);
+
+	//Creation of the Text indicating the turn (with its Transform)
+	sf::Text turn_indicator = sf::Text();
+	turn_indicator.setFont(font);
+	turn_indicator.setString("TURN 1 \nDraft");
+	turn_indicator.setCharacterSize(30);
+	turn_indicator.setFillColor(sf::Color::White);
+	sf::Transform tr_turn_indicator = sf::Transform(tr_scale).translate(810.f,430.0f);
+
+	//Creation of symbol of turn (with its Transform)
+	sf::Texture texture_turn_even;texture_turn_even.loadFromFile("../resources/img/evenarrow.png");
+	sf::Texture texture_turn_odd;texture_turn_odd.loadFromFile("../resources/img/oddarrow.png");
+	sf::Sprite turn_symbol;turn_symbol.setTexture(texture_turn_even);
+	sf::Transform tr_turn_symbol = sf::Transform(tr_scale).translate(1030.f,420.0f).scale(0.8f,0.8f);
 
 	//Creation of Transform (Own PlayerRenderer Position)
 	sf::Transform tr_renderer_p1 = sf::Transform(tr_scale).translate(525.0f,780.0f);
@@ -93,6 +109,8 @@ int main(int argc,char* argv[])
 			//Draw the differents sprite in the window
 			window.draw(scene.getBackground(),tr_scale);		//Background
 			window.draw(token,tr_token);						//Token
+			window.draw(turn_indicator,tr_turn_indicator);		//Turn Text
+			window.draw(turn_symbol,tr_turn_symbol);			//Turn Symbol
 
 			for (i = 0; i < renderer_p1->getNumberDrawable();i++){
 				window.draw(*(renderer_p1->getSprite(i)),renderer_p1->getTransform(i));
