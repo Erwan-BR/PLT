@@ -30,8 +30,8 @@ namespace render {
 	}
 
 	/// @brief Full constructor of the PlayerRenderer class.
-	/// @param Transform indicating the position of the Renderer and passing the scale of the windows.
-	/// @param Window that will received this PlayerRenderer
+	/// @param transform indicating the position of the Renderer and passing the scale of the windows.
+	/// @param window that will received this PlayerRenderer
 	PlayerRenderer::PlayerRenderer(sf::Transform transform,Window window){
 		//Creation of the Font for the Texts
 		sf::Font f;
@@ -234,14 +234,14 @@ namespace render {
 	}
     
 	/// @brief Getter Sprite of PlayerRenderer class.
-	///	@param i, the position of the wanted Sprite in the vector
+	///	@param i the position of the wanted Sprite in the vector
 	/// @return The Sprite corresponding
 	sf::Sprite* PlayerRenderer::getSprite(int i){
 		return (this->sprites)[i];
 	}
 
 	/// @brief Getter Transform of PlayerRenderer class.
-	///	@param i, the position of the wanted transform in the vector
+	///	@param i the position of the wanted transform in the vector
 	/// @return The transform corresponding.
 	sf::Transform PlayerRenderer::getSpriteTransform(int i){
 		return (this->sprite_transforms)[i];
@@ -254,14 +254,14 @@ namespace render {
 	}
 
 	/// @brief Getter Text of PlayerRenderer class.
-	///	@param i, the position of the wanted text in the vector
+	///	@param i the position of the wanted text in the vector
 	/// @return The text corresponding
 	sf::Text* PlayerRenderer::getText(int i){
 		return (this->texts)[i];
 	}
 
 	/// @brief Getter Transform of PlayerRenderer class.
-	///	@param i, the position of the wanted transform in the vector
+	///	@param i the position of the wanted transform in the vector
 	/// @return The transform corresponding.
 	sf::Transform PlayerRenderer::getTextTransform(int i){
 		return (this->text_transforms)[i];
@@ -283,15 +283,15 @@ namespace render {
 	}
 
 	/// @brief Setter Name (position 0 in vector texts)
-	///	@param New name
+	///	@param name New name
 	void PlayerRenderer::changeName(std::string name){
 		//TODO Check name to avoid too long string and/or problems.
 		(this->texts[0])->setString(name);
 	}
 
 	/// @brief Setter for a numerical value (position 1 to 13 in vector texts)
-	///	@param determines the number to change (from top left (0) to right bottom(12))
-	/// @param New value
+	///	@param index determines the number to change (from top left (0) to right bottom(12))
+	/// @param value New value
 	void PlayerRenderer::changeNumbers(int index,int value){
 		//TODO Check value to avoid too long string and/or problems.
 		if (index<14 and index>=0){
