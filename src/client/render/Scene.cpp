@@ -21,29 +21,6 @@ namespace render {
     	/*TODO PlayerRenderer*/
     }
 
-    /// @brief Full constructor of the Scene class.
-    /// @param game Pointer on the Game coresponding to this Renderer
-    Scene::Scene (state::Game* game){
-    	//Storage of the Game Class
-		this->game = game;
-
-		//Creation and initialisation of the background texture
-		this->background_texture = sf::Texture();
-		(this->background_texture).loadFromFile("../resources/img/background.png");
-
-		//Creation and initialisation of the background sprite
-		this->background=sf::Sprite();
-		(this->background).setTexture(this->background_texture);
-
-		//Set Starting Window
-		this->current_window = MAIN_WINDOW;
-
-		/*std::vector<state::Player*> p = (this->game)->getPlayers();
-		for (int i=0;i<p.size();i++){
-			player_renderer.push_back(new PlayerRenderer(p[i],i));
-		}*/
-	}
-
     /// @brief Full destructor of the Scene class.
     Scene::~Scene (){
 
