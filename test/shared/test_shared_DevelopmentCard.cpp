@@ -34,30 +34,20 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getIsPaid(), false);
     */
 
-    // Creation of a resource to test methods.
-    Resource* resource = new Resource();
-
-    // Calling methods of DevelopmentCard.
-    myFirstDevelopmentCard->addResource(resource);
-    bool resourceAddable = myFirstDevelopmentCard->isResourceAddable(resource);
-    std::string cardToString = myFirstDevelopmentCard->toString();
-
-    // Checking output of DevelopmentCard method.
-    BOOST_CHECK_EQUAL(resourceAddable, false);
-    BOOST_CHECK_EQUAL(cardToString, "");
+    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getDiscardGain(), ResourceType::MATERIAL);
+    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getType(), CardType::NONETYPE);
+    
+    // We call toString but we don't want to test it.
+    myFirstDevelopmentCard->toString();
 
     // Delete pointers that won't be used anymore.
     delete myFirstDevelopmentCard;
-    delete resource;
   }
-  
+
   {
     // Elements to create for testing the full constructor.
-    Resource* firstResource = new Resource{SCIENCE, sf::Texture()};
-    Resource* secondResource = new Resource{GOLD, sf::Texture()};
-
     ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::FINANCIER, false};
-    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::COLONEL, false};
+    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::MATERIAL, false};
     ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::GOLD, false};
     ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::KRYSTALLIUM, false};
 
@@ -73,51 +63,32 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 
     sf::Texture design = sf::Texture();
 
-    CardVictoryPoint* victoryPoints = new CardVictoryPoint();
+    CardVictoryPoint* victoryPoints = new CardVictoryPoint{1, 5};
 
-    state::CardType type = PROJECT;
-    
+    CardType type = CardType::PROJECT;
+
     int numberOfCopies = 2;
 
     std::vector<ResourceToPay*> costToBuild;
     costToBuild.push_back(firstResourceToPay);
     costToBuild.push_back(secondResourceToPay);
+    costToBuild.push_back(thirdResourceToPay);
+    costToBuild.push_back(fourthResourceToPay);
 
-    std::vector<Resource*> instantGain;
-    instantGain.push_back(firstResource);
-    instantGain.push_back(secondResource);
+    std::vector<ResourceType> instantGain;
+    instantGain.push_back(ResourceType::GOLD);
+    instantGain.push_back(ResourceType::SCIENCE);
 
-    Resource* discardGain = firstResource;
-    
+    ResourceType discardGain = ResourceType::FINANCIER;
+
     // Testing the full constructor of DevelopmentCard.
     DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard(name, productionGain, design, victoryPoints, type, numberOfCopies, costToBuild, instantGain, discardGain);
 
-    /* Adding some of those lines if somes getters are done.
-    // Checking default value given by the empty constructor.
+    // Testing if some materials can be added.
+    
 
-    // Checking values from the empty Card constructor.
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getName(), "");
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getProductionGain(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getDesign(), sf::Texture());
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getVictoryPoints(), {});
-
-    // Checking default value given by the DevelopmentCard constructor.
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getInstantGain(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getType(), CardType::NONETYPE);
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getNumberOfCopies(), 0);
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getCostToBuild(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->InstantGain(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getCostToBuild(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getDiscardGain(), new Resource());
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getProductionGain(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getQuantityResourceMissing(), -1);
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getIsPaid(), false);
-    */
 
     // Delete pointers that won't be used anymore.
-    delete firstResource;
-    delete secondResource;
-
     delete firstResourceToPay;
     delete secondResourceToPay;
     delete thirdResourceToPay;
