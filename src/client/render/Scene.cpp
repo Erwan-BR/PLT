@@ -15,6 +15,9 @@ namespace render {
     	this->background=sf::Sprite();
     	(this->background).setTexture(this->background_texture);
 
+    	//Set Starting Window
+    	this->current_window = MAIN_WINDOW;
+
     	/*TODO PlayerRenderer*/
     }
 
@@ -31,6 +34,9 @@ namespace render {
 		//Creation and initialisation of the background sprite
 		this->background=sf::Sprite();
 		(this->background).setTexture(this->background_texture);
+
+		//Set Starting Window
+		this->current_window = MAIN_WINDOW;
 
 		/*std::vector<state::Player*> p = (this->game)->getPlayers();
 		for (int i=0;i<p.size();i++){
@@ -54,5 +60,13 @@ namespace render {
 	/// @return The player renderer corresponding of the index.
 	PlayerRenderer* Scene::getPlayerRenderer (int index){
 		return ((this->player_renderer)[index]);
+	}
+
+	void Scene::changeWindow(Window window){
+		this->current_window = window;
+	}
+
+	Window Scene::getWindow(){
+		return (this->current_window);
 	}
 };

@@ -31,71 +31,121 @@ namespace render {
 
 	/// @brief Current constructor of the PlayerRenderer class.
 	/// @param Transform indicating the position of the Renderer and passing the scale of the windows.
-	PlayerRenderer::PlayerRenderer(sf::Transform transform){
+	PlayerRenderer::PlayerRenderer(sf::Transform transform,Window window){
 		//Creation of the Font for the Texts
 		sf::Font f;
 		f.loadFromFile("../resources/font/arial.ttf");
 		this->font = f;
 
-		//Enter Player board (position 0 in sprites)
-		sf::Texture* texture = new sf::Texture();
-		texture->loadFromFile("../resources/img/player.png");
-		this->textures.push_back(texture);					//Texture
-		sf::Sprite* sprite= new sf::Sprite();
-		sprite->setTexture(*(this->textures[0]));
-		this->sprites.push_back(sprite);					//Sprite
-		this->sprite_transforms.push_back(transform);				//Transform
-
-		//Enter Player Profile Picture (position 1 in sprites)
-		texture = new sf::Texture();
-		texture->loadFromFile("../resources/img/default_pfp.png");
-		this->textures.push_back(texture);					//Texture
-		sprite= new sf::Sprite();
-		sprite->setTexture(*(this->textures[1]));
-		this->sprites.push_back(sprite);					//Sprite
-		this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(20.f,20.f));				//Transform
-
-		//Enter Cards (position 2 to 16 in sprites)
 		int i;
-		for (i=0;i<14;i++){
+		sf::Texture* texture;
+		sf::Sprite* sprite;
+		sf::Text* text;
+
+		switch (window){
+		case MAIN_WINDOW:
+			//Enter Player board (position 0 in sprites)
 			texture = new sf::Texture();
-			texture->loadFromFile("../resources/img/ExampleCards/card"+std::to_string(i%6)+".png");
-			this->textures.push_back(texture);	//Texture
+			texture->loadFromFile("../resources/img/player.png");
+			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
-			sprite->setTexture(*(this->textures[i+2]));
-			this->sprites.push_back(sprite);	//Sprite
-			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f));		//Transform
-		}
+			sprite->setTexture(*(this->textures[0]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(transform);				//Transform
 
-		//Enter Player Name (position 0 in texts)
-		sf::Text* text = new sf::Text();
-		text->setFont(font);
-		text->setString("Nom");
-		text->setCharacterSize(30);
-		text->setFillColor(sf::Color::White);
-		this->texts.push_back(text);			//Text
-		this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(140.f,30.0f));		//Transform
+			//Enter Player Profile Picture (position 1 in sprites)
+			texture = new sf::Texture();
+			texture->loadFromFile("../resources/img/default_pfp.png");
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[1]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(20.f,20.f));				//Transform
 
-		//Enter Resources/Constructions Count (position 1 to 10)
-		for (i=0;i<10;i++){
+			//Enter Cards (position 2 to 16 in sprites)
+			for (i=0;i<14;i++){
+				texture = new sf::Texture();
+				texture->loadFromFile("../resources/img/ExampleCards/card"+std::to_string(i%6)+".png");
+				this->textures.push_back(texture);	//Texture
+				sprite= new sf::Sprite();
+				sprite->setTexture(*(this->textures[i+2]));
+				this->sprites.push_back(sprite);	//Sprite
+				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f));		//Transform
+			}
+
+			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();
 			text->setFont(font);
-			text->setString("x0");
-			text->setCharacterSize(10);
+			text->setString("Nom");
+			text->setCharacterSize(30);
 			text->setFillColor(sf::Color::White);
 			this->texts.push_back(text);			//Text
-			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(40.f+80.f*(i/5),140.0f+30.0f*(i%5)));	//Transform
-		}
+			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(140.f,30.0f));		//Transform
 
-		//Enter Victory Point / Token Count (position 11 to 13)
-		for (i=0;i<3;i++){
+			//Enter Resources/Constructions Count (position 1 to 10)
+			for (i=0;i<10;i++){
+				text = new sf::Text();
+				text->setFont(font);
+				text->setString("x0");
+				text->setCharacterSize(10);
+				text->setFillColor(sf::Color::White);
+				this->texts.push_back(text);			//Text
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(40.f+80.f*(i/5),140.0f+30.0f*(i%5)));	//Transform
+			}
+
+			//Enter Victory Point / Token Count (position 11 to 13)
+			for (i=0;i<3;i++){
+				text = new sf::Text();
+				text->setFont(font);
+				text->setString("x0");
+				text->setCharacterSize(10);
+				text->setFillColor(sf::Color::White);
+				this->texts.push_back(text);				//Text
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(200.0f,140.0f+30.0f*(i)));		//Transform
+			}
+			break;
+		case DRAFTING_WINDOW:
+			//Enter Player board (position 0 in sprites)
+			texture = new sf::Texture();
+			texture->loadFromFile("../resources/img/player_draft.png");
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[0]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(transform);				//Transform
+
+			//Enter Player Profile Picture (position 1 in sprites)
+			texture = new sf::Texture();
+			texture->loadFromFile("../resources/img/default_pfp.png");
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[1]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
+
+			//Enter Cards (position 2 to 9 in sprites)
+			for (i=0;i<7;i++){
+				texture = new sf::Texture();
+				texture->loadFromFile("../resources/img/ExampleCards/card"+std::to_string(i%6)+".png");
+				this->textures.push_back(texture);	//Texture
+				sprite= new sf::Sprite();
+				sprite->setTexture(*(this->textures[i+2]));
+				this->sprites.push_back(sprite);	//Sprite
+				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f));		//Transform
+			}
+
+			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();
 			text->setFont(font);
-			text->setString("x0");
-			text->setCharacterSize(10);
+			text->setString("Nom");
+			text->setCharacterSize(30);
 			text->setFillColor(sf::Color::White);
-			this->texts.push_back(text);				//Text
-			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(200.0f,140.0f+30.0f*(i)));		//Transform
+			this->texts.push_back(text);			//Text
+			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,10.0f));		//Transform
+
+			break;
+		default:
+			break;
 		}
 	}
 
