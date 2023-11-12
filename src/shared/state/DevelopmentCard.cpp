@@ -9,7 +9,7 @@ namespace state {
     numberOfCopies(0),
     costToBuild({}),
     instantGain({}),
-    discardGain(new Resource()),
+    discardGain(ResourceType::MATERIAL),
     quantityResourceMissing(-1) // "Error" value : Empty constructor should never be used.
     {
     }
@@ -24,7 +24,7 @@ namespace state {
     /// @param costToBuild Vector that contains all the resources to pay to build the Card.
     /// @param instantGain Vector that contains all the resources won at the construction of the Card.
     /// @param discardGain Pointers to the resources you get when the Card is discarded.
-    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<Resource*> instantGain, Resource* discardGain) :
+    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
     Card(name, productionGain, design, victoryPoints),
     type(CardType::NONETYPE),
     numberOfCopies(numberOfCopies),
@@ -43,12 +43,12 @@ namespace state {
     /// @brief Add a ressource into the Card. The resource must be addable. Should also update the quantity and the isPaid value.
     /// @param resource Resource that will be added to the Card.
     /// @return True if the card is just payed. False either.
-    bool DevelopmentCard::addResource (Resource* resource)
+    bool DevelopmentCard::addResource (ResourceType resource)
     {
         for (ResourceToPay* resourceToPay : this->costToBuild)
         {
             // Checking if the current resource is not paid, and if the type is the one of the input parameter.
-            if ((!resourceToPay->isPaid) && (resourceToPay->type == resource->type))
+            if ((!resourceToPay->isPaid) && (resourceToPay->type == resource))
             {
                 resourceToPay->isPaid = true;
                 return (this->decreaseResourceUnitNeeded());
@@ -61,13 +61,13 @@ namespace state {
     /// @brief Add a krystallium ressource into a Card. A resource should be replaced. 
     /// @param resourceToReplace Resource that will be replaced by a krystallium.
     /// @return True if the card is just payed. False either.
-    bool DevelopmentCard::addKrystallium (Resource* resourceToReplace)
+    bool DevelopmentCard::addKrystallium (ResourceType resourceToReplace)
     {
         // Iterating among all resources that should be paid
         for (ResourceToPay* resourceToPay : this->costToBuild)
         {
             // Checking if the current resource is not paid, and if the type is the one we want to replace.
-            if ((!resourceToPay->isPaid) && (resourceToPay->type == resourceToReplace->type))
+            if ((!resourceToPay->isPaid) && (resourceToPay->type == resourceToReplace))
             {
                 resourceToPay->isPaid = true;
                 return (this->decreaseResourceUnitNeeded());
@@ -80,7 +80,7 @@ namespace state {
     /// @brief Check if a resource can be added to the DevelopmentCard.
     /// @param resource The resource we want to know if it is addable.
     /// @return True if the resource can be added to the Card, else False.
-    bool DevelopmentCard::isResourceAddable (Resource* resource) const
+    bool DevelopmentCard::isResourceAddable (ResourceType resource) const
     {
         // First, if a card is Paid, ressources can't be added.
         if (this->isPaid)
@@ -96,12 +96,12 @@ namespace state {
             if (!resourceToPay->isPaid)
             {
                 // If both types are the same, resource can be added.
-                if (resourceToPay->type == resource->type)
+                if (resourceToPay->type == resource)
                 {
                     return true;
                 }
                 // If the input resource is a krysallium, and the resourceToPay is not Colonel / Financier, it can be paid.
-                if ((resource->type == ResourceType::KRYSTALLIUM) &&
+                if ((resource == ResourceType::KRYSTALLIUM) &&
                 (resourceToPay->type == ResourceType::MATERIAL ||
                 resourceToPay->type == ResourceType::ENERGY ||
                 resourceToPay->type == ResourceType::SCIENCE ||
@@ -141,7 +141,7 @@ namespace state {
         returnValue += "Type: " + std::to_string(this->type) + "\n";
         returnValue += "Number Of Copies: " + std::to_string(this->numberOfCopies) + "\n";
         
-        // Adding a diffeent sentence depending on if the card is paid or not.
+        // Adding a different sentence depending on if the card is paid or not.
         if (this->isPaid)
         {
             returnValue += "This card is paid.\n";
@@ -152,9 +152,25 @@ namespace state {
         }
 
         // Adding some other info to returnValue.
-        returnValue += "Discard gain: " + std::to_string(this->discardGain->type) + "\n";
+        returnValue += "Discard gain: " + std::to_string(this->discardGain) + "\n";
         
         // Return the constructed string.
         return returnValue;
+    }
+
+    /************************************* Setters & Getters *************************************/
+
+    /// @brief Get the discard Gain. USefull for the Player class.
+    /// @return Pointer to the ressource of the discard gain.
+    ResourceType DevelopmentCard::getDiscardGain () const
+    {
+        return this->discardGain;
+    }
+
+    /// @brief Getter for the type attribute
+    /// @return type attribute.
+    CardType DevelopmentCard::getType() const
+    {
+        return this->type;
     }
 }

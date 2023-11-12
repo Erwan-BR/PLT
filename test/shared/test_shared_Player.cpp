@@ -37,17 +37,22 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->construct(cardTest);
     myFirstPlayer->addResource(resourceTest, cardTest);
     myFirstPlayer->discardCard(cardTest);
-    int production = myFirstPlayer->computeProduction(resourceTest);
+    
+    int production = myFirstPlayer->computeProduction(GOLD);
     int victoryPoints = myFirstPlayer->computeVictoryPoint();
+    
     myFirstPlayer->sendResourceToEmpire(resourceTest);
     myFirstPlayer->convertToKrystallium();
     myFirstPlayer->chooseDraftCard(cardTest);
+    
     bool colonelChoosed = myFirstPlayer->chooseColonelToken();
     std::string PlayerToString = myFirstPlayer->toString();
 
+    myFirstPlayer->updateProduction();
+
     // Checking output of Player methods.
-    BOOST_CHECK_EQUAL(production, 0);
-    BOOST_CHECK_EQUAL(victoryPoints, 0);
+    BOOST_CHECK_EQUAL(production, -1);
+    BOOST_CHECK_EQUAL(victoryPoints, -1);
     BOOST_CHECK_EQUAL(colonelChoosed, false);
     BOOST_CHECK_EQUAL(PlayerToString, "");
 
