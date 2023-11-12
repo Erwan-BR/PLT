@@ -5,8 +5,8 @@ namespace state {
     /// @brief Empty constructor for the EmpireCard class
     EmpireCard::EmpireCard() :
     Card(),
-    productionGainAdvanced({}),
-    victoryPointsAdvanced({}),
+    productionGainAdvanced(),
+    victoryPointsAdvanced(),
     empire(EmpireLand::AFRICA)
     {
     }

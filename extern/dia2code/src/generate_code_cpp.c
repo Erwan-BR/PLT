@@ -373,7 +373,7 @@ gen_class (umlclassnode *node)
             while (umla != NULL) {
                 check_visibility (&tmpv, umla->key.visibility);
                 if (strlen(umla->key.comment)) {
-                    print("/// %s\n", umla->key.comment);
+                    print("/// @brief %s\n", umla->key.comment);
                 }
                 print ("");
                 if (umla->key.isstatic) {
@@ -469,6 +469,8 @@ gen_class (umlclassnode *node)
         }
     }
 
+    /* For the moment, we do not want to use automatic Setters and Getters.
+    
     print ("// Setters and Getters\n");
     if (node->associations != NULL) {
         umlassoclist assoc = node->associations;
@@ -493,13 +495,13 @@ gen_class (umlclassnode *node)
                     umla = umla->next;
                     continue;
                 }
-                // For the moment, we don't want to have automatic Setters and Getters.
-                // add_setter_getter(node,umla->key.type,umla->key.name);
+                For the moment, we don't want to have automatic Setters and Getters.
+                add_setter_getter(node,umla->key.type,umla->key.name);
                 
                 umla = umla->next;
             }
         }
-    }
+    } */
     
     
     if (node->key->attributes != NULL && is_valuetype) {
@@ -598,6 +600,10 @@ gen_decl (declaration *d)
         while (umla != NULL) {
             char *literal = umla->key.name;
             check_umlattr (&umla->key, name);
+            /* print comments on enum */
+            if (strlen(umla->key.comment)) {
+                print("/// @brief %s\n", umla->key.comment);
+            }
             if (strlen (umla->key.type) > 0)
                 fprintf (stderr, "%s/%s: ignoring type\n", name, literal);
             print ("%s", literal);
@@ -615,6 +621,10 @@ gen_decl (declaration *d)
         print ("struct %s {\n", name);
         indentlevel++;
         while (umla != NULL) {
+            /* print comments on enum */
+            if (strlen(umla->key.comment)) {
+                print("/// @brief %s\n", umla->key.comment);
+            }
             check_umlattr (&umla->key, name);
             print ("%s %s", cppname (umla->key.type), umla->key.name);
             if (strlen (umla->key.value) > 0)
@@ -955,14 +965,13 @@ gen_namespace(batch *b, declaration *nsd) {
         print("};\n\n");
 
         indentlevel = 0; /* just for safety (should be 0 already) */
-        print("#endif\n");
+        // print("#endif\n");
+        print("#endif /* %s__%s__H */\n", tmpnsname, tmpname);
         fclose(spec);
 
 #ifdef ENABLE_FILE_UPDATE_ON_CHANGE
         update_file_if_changed(b, filename);
 #endif
-
-        /////////////////////////////////////
         // Source file
         
         sprintf(filename, "%s/%s.cpp", nsname, name);
@@ -975,7 +984,6 @@ gen_namespace(batch *b, declaration *nsd) {
             fclose(sourceFile);
         }
         
-        /////////////////////////////////////
         // Source file (generate new)
         if (!exists) {
             /*printf("Create '%s'\n",newfilename);
@@ -986,7 +994,6 @@ gen_namespace(batch *b, declaration *nsd) {
             }
             fclose(spec);*/
         }
-        /////////////////////////////////////
         // Source file (update existing)
         else {
             
@@ -1109,7 +1116,7 @@ generate_code_cpp (batch *b)
         gen_decl (d);
 
         indentlevel = 0;  /* just for safety (should be 0 already) */
-        print("#endif\n");
+        print("\n#endif /* __%s__H */\n", tmpname);
         fclose (spec);
 
 #ifdef ENABLE_FILE_UPDATE_ON_CHANGE

@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(firstCardTest)
   {
     // Testing the explicit constructor
     std::string name = "Name";
-    CardVictoryPoint* victoryPoints;
+    CardVictoryPoint* victoryPoints = new CardVictoryPoint();
     sf::Texture design = sf::Texture();
     const std::vector<ResourceToProduce*>&  secondResourceToProduce = {new ResourceToProduce{ResourceType::GOLD, 2, state::CardType::VEHICLE}};
 
