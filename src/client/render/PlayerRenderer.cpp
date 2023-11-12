@@ -144,6 +144,84 @@ namespace render {
 			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,10.0f));		//Transform
 
 			break;
+		case PLAYER_INFO:
+			//Enter Player board (position 0 in sprites)
+			texture = new sf::Texture();
+			texture->loadFromFile("../resources/img/player_full.png");
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[0]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(transform);				//Transform
+
+			//Enter Player Profile Picture (position 1 in sprites)
+			texture = new sf::Texture();
+			texture->loadFromFile("../resources/img/default_pfp.png");
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[1]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,50.f).scale(2.f,2.f));				//Transform
+
+			//Enter Cards (position 2 to 58 in sprites)
+			for (i=0;i<56;i++){
+				texture = new sf::Texture();
+				texture->loadFromFile("../resources/img/ExampleCards/card"+std::to_string(i%6)+".png");
+				this->textures.push_back(texture);	//Texture
+				sprite= new sf::Sprite();
+				sprite->setTexture(*(this->textures[i+2]));
+				this->sprites.push_back(sprite);	//Sprite
+				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));		//Transform
+			}
+
+			//Enter Player Name (position 0 in texts)
+			text = new sf::Text();
+			text->setFont(font);
+			text->setString("Nom");
+			text->setCharacterSize(50);
+			text->setFillColor(sf::Color::White);
+			this->texts.push_back(text);			//Text
+			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(300.f,50.0f));		//Transform
+
+			//Enter Resources/Constructions Count (position 1 to 10)
+			for (i=0;i<10;i++){
+				text = new sf::Text();
+				text->setFont(font);
+				text->setString("x0");
+				text->setCharacterSize(50);
+				text->setFillColor(sf::Color::White);
+				this->texts.push_back(text);			//Text
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+200.f*(i%5),125.0f+75.0f*(i/5)));	//Transform
+			}
+
+			//Enter Victory Point / Token Count (position 11 to 13)
+			for (i=0;i<3;i++){
+				text = new sf::Text();
+				text->setFont(font);
+				text->setString("x0");
+				text->setCharacterSize(50);
+				text->setFillColor(sf::Color::White);
+				this->texts.push_back(text);				//Text
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(1300.0f+200.f*(i),125.0f));		//Transform
+			}
+
+			//Enter Information Texts (position 14 to 15)
+			text = new sf::Text();
+			text->setFont(font);
+			text->setString("Cards Built");
+			text->setCharacterSize(40);
+			text->setFillColor(sf::Color::White);
+			this->texts.push_back(text);				//Text
+			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.0f,300.f));		//Transform
+
+			text = new sf::Text();
+			text->setFont(font);
+			text->setString("Cards in construction");
+			text->setCharacterSize(40);
+			text->setFillColor(sf::Color::White);
+			this->texts.push_back(text);				//Text
+			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,670.f));		//Transform
+			break;
 		default:
 			break;
 		}

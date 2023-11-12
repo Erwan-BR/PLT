@@ -31,6 +31,9 @@ int main(int argc,char* argv[])
 	cout<<"*Main Window Commands*"<<endl;
 	cout<<"K/M - Change position of Token"<<endl;
 	cout<<"O/L - Change Turn"<<endl;
+	cout<<"*Player Info Commands*"<<endl;
+	cout<<"Q - Display Player 1"<<endl;
+	cout<<"S - Display Player 2"<<endl;
 
 	/* TODO Solve problem of compatibility between state and render to use this --Observer???
 	//Creation of testing instances of Player class
@@ -93,10 +96,10 @@ int main(int argc,char* argv[])
 	//Creation of PlayerRenderer for the user
 	PlayerRenderer* renderer_p1 = new PlayerRenderer(tr_renderer_p1,MAIN_WINDOW);
 
-	//Creation of Transform (Own PlayerRenderer Position)
+	//Creation of Transform (oposent PlayerRenderer Position)
 	sf::Transform tr_renderer_p2 = sf::Transform(tr_scale).translate(525.0f,0.0f);
 
-	//Creation of PlayerRenderer for the user
+	//Creation of PlayerRenderer for the oposent
 	PlayerRenderer* renderer_p2 = new PlayerRenderer(tr_renderer_p2,MAIN_WINDOW);
 
 	//For DRAFTING_WINDOW
@@ -112,11 +115,18 @@ int main(int argc,char* argv[])
 	//Creation of PlayerRenderer for the Draft Hand
 	PlayerRenderer* renderer_d = new PlayerRenderer(tr_renderer_d,DRAFTING_WINDOW);
 
-	//Creation of Transform (Own PlayerRenderer Position)
+	//Creation of Transform (Oposent PlayerRenderer Position)
 	sf::Transform tr_renderer_p2_d = sf::Transform(tr_scale).translate(0.0f,0.0f);
 
-	//Creation of PlayerRenderer for the user
+	//Creation of PlayerRenderer for the oposent
 	PlayerRenderer* renderer_p2_d = new PlayerRenderer(tr_renderer_p2_d,DRAFTING_WINDOW);
+
+	//For PLAYER_INFO
+	//Creation of Transform (Own PlayerRenderer Position)
+	sf::Transform tr_renderer_f = sf::Transform(tr_scale).translate(0.0f,0.0f);
+
+	//Creation of PlayerRenderer for the user
+	PlayerRenderer* renderer_f = new PlayerRenderer(tr_renderer_f,PLAYER_INFO);
 
 	//Change the default values of Renderers
 	renderer_p1->changeName("Joueur 1");		renderer_p1_d->changeName("Joueur 1");
@@ -125,9 +135,12 @@ int main(int argc,char* argv[])
 	renderer_p2->changeProfilePicture("pfp_2");	renderer_p2_d->changeProfilePicture("pfp_2");
 	renderer_d->changeName("Drafting Hand");
 	renderer_d->changeProfilePicture("pfp_draft");
+	renderer_f->changeName("Joueur 1");
+	renderer_f->changeProfilePicture("pfp_1");
 	for(i=0;i<13;i++){
 		renderer_p1->changeNumbers(i,i);
-		renderer_p2->changeNumbers(i,(7*i)%3);
+		renderer_p2->changeNumbers(i,(3*i)%7);
+		renderer_f->changeNumbers(i,i);
 	}
 
 
@@ -181,6 +194,17 @@ int main(int argc,char* argv[])
 						if (turn%2){turn_symbol.setTexture(texture_turn_odd);}			//Update Symbol
 						else {turn_symbol.setTexture(texture_turn_even);}
 					}
+
+					if (event.key.code == 16 and (scene.getWindow()==PLAYER_INFO)){		//Key Q in PLAYER_INFO
+						renderer_f->changeName("Joueur 1");						//Update Name
+						renderer_f->changeProfilePicture("pfp_1");				//Update Pfp
+						for(i=0;i<13;i++){renderer_f->changeNumbers(i,i);}		//Update Values
+					}
+					if (event.key.code == 18 and (scene.getWindow()==PLAYER_INFO)){		//Key S in PLAYER_INFO
+						renderer_f->changeName("Joueur 2");						//Update Name
+						renderer_f->changeProfilePicture("pfp_2");				//Update Pfp
+						for(i=0;i<13;i++){renderer_f->changeNumbers(i,(3*i)%7);}		//Update Values
+					}
 				}
 			}
 
@@ -225,6 +249,13 @@ int main(int argc,char* argv[])
 					window.draw(*(renderer_d->getText(i)),renderer_d->getTextTransform(i));
 				}
 				break;
+			case PLAYER_INFO:
+				for (i = 0; i < renderer_f->getNumberSprite();i++){
+					window.draw(*(renderer_f->getSprite(i)),renderer_f->getSpriteTransform(i));
+				}
+				for (i = 0; i < renderer_f->getNumberText();i++){
+					window.draw(*(renderer_f->getText(i)),renderer_f->getTextTransform(i));
+				}
 			default:
 				break;
 			}
