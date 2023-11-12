@@ -56,12 +56,14 @@ int main(int argc,char* argv[])
 	sf::CircleShape token = sf::CircleShape(25.0f,100);
 	token.setFillColor(sf::Color::White);
 	token.setPosition(685.0f,585.0f);
+	int token_offset = 0;
 	sf::Transform tr_token = sf::Transform(tr_scale);
 
 	//Creation of the Text indicating the turn (with its Transform)
 	sf::Text turn_indicator = sf::Text();
+	int turn = 1;
 	turn_indicator.setFont(font);
-	turn_indicator.setString("TURN 1 \nDraft");
+	turn_indicator.setString("TURN "+to_string(turn)+" \nDraft");
 	turn_indicator.setCharacterSize(30);
 	turn_indicator.setFillColor(sf::Color::White);
 	sf::Transform tr_turn_indicator = sf::Transform(tr_scale).translate(810.f,430.0f);
@@ -69,7 +71,7 @@ int main(int argc,char* argv[])
 	//Creation of symbol of turn (with its Transform)
 	sf::Texture texture_turn_even;texture_turn_even.loadFromFile("../resources/img/evenarrow.png");
 	sf::Texture texture_turn_odd;texture_turn_odd.loadFromFile("../resources/img/oddarrow.png");
-	sf::Sprite turn_symbol;turn_symbol.setTexture(texture_turn_even);
+	sf::Sprite turn_symbol;turn_symbol.setTexture(texture_turn_odd);
 	sf::Transform tr_turn_symbol = sf::Transform(tr_scale).translate(1030.f,420.0f).scale(0.8f,0.8f);
 
 	//Creation of Transform (Own PlayerRenderer Position)
@@ -111,12 +113,31 @@ int main(int argc,char* argv[])
 			{
 				//Command to close the window
 				if (event.type == sf::Event::Closed){
-					window.close();}
-				//TODO USER INPUT
-				 //if (event.type == sf::Event::KeyPressed) {
-					//c = event.text.unicode;
-					//if (event.key.code <= 36){
-	                //input += KEY_NAMES[event.key.code];}
+					window.close();
+				}
+				if (event.type == sf::Event::KeyPressed) {
+					//cout<<to_string(event.key.code)<<endl; //Debug Print the code of pressed key
+					if (event.key.code == 10){		//Key K
+						if (token_offset != 0){token_offset--;}		//Decrease toke_offset if not minimal
+						tr_token = sf::Transform(tr_scale).translate(125.0f*token_offset,0.0f);		//Update Transform
+					}
+					if (event.key.code == 12){		//Key M
+						if (token_offset != 4){token_offset++;}		//Increase token_offset if not maximal
+						tr_token = sf::Transform(tr_scale).translate(125.0f*token_offset,0.0f);		//Update Transform
+					}
+					if (event.key.code == 11){		//Key L
+						if (turn != 1){turn--;}		//Decrease turn if not minimal
+						turn_indicator.setString("TURN "+to_string(turn)+" \nDraft");		//Update Text
+						if (turn%2){turn_symbol.setTexture(texture_turn_odd);}				//Update Symbol
+						else {turn_symbol.setTexture(texture_turn_even);}
+					}
+					if (event.key.code == 14){		//Key O
+						if (turn != 4){turn++;}		//Increase turn if not maximal
+						turn_indicator.setString("TURN "+to_string(turn)+" \nDraft");		//Update Text
+						if (turn%2){turn_symbol.setTexture(texture_turn_odd);}			//Update Symbol
+						else {turn_symbol.setTexture(texture_turn_even);}
+					}
+				}
 			}
 
 			//Draw the differents sprite in the window
