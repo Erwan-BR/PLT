@@ -20,7 +20,7 @@ using namespace render;
 
 int main(int argc,char* argv[])
 {
-	/* TODO Solve problem of compatibility between state and render to use this
+	/* TODO Solve problem of compatibility between state and render to use this --Observer???
 	//Creation of testing instances of Player class
 	state::Player* player1 = new state::Player();
 	state::Player* player2 = new state::Player();
@@ -32,6 +32,8 @@ int main(int argc,char* argv[])
 
 	//Creation of the instance of the Game class
 	state::Game* game = new state::Game(players);*/
+
+	int i;
 
 	//Creation of the instance of the Scene class
 	Scene scene = Scene(/*game*/);
@@ -82,10 +84,21 @@ int main(int argc,char* argv[])
 	//Creation of PlayerRenderer for the user
 	PlayerRenderer* renderer_p2 = new PlayerRenderer(tr_renderer_p2);
 
+	//Change the default values of Renderers
+	renderer_p1->changeName("Joueur 1");
+	renderer_p1->changeProfilePicture("pfp_1");
+	renderer_p2->changeName("Joueur 2");
+	renderer_p2->changeProfilePicture("pfp_2");
+	for(i=0;i<13;i++){
+		renderer_p1->changeNumbers(i,i);
+		renderer_p2->changeNumbers(i,(7*i)%3);
+	}
+
+
 	//Creation of the instance of sf::Event class that will received user's inputs.
 	sf::Event event;
 
-	int i;
+
 
 	//Main Loop active while the window is still open
 	while (window.isOpen())
@@ -112,11 +125,17 @@ int main(int argc,char* argv[])
 			window.draw(turn_indicator,tr_turn_indicator);		//Turn Text
 			window.draw(turn_symbol,tr_turn_symbol);			//Turn Symbol
 
-			for (i = 0; i < renderer_p1->getNumberDrawable();i++){
-				window.draw(*(renderer_p1->getSprite(i)),renderer_p1->getTransform(i));
+			for (i = 0; i < renderer_p1->getNumberSprite();i++){
+				window.draw(*(renderer_p1->getSprite(i)),renderer_p1->getSpriteTransform(i));
 			}
-			for (i = 0; i < renderer_p2->getNumberDrawable();i++){
-				window.draw(*(renderer_p2->getSprite(i)),renderer_p2->getTransform(i));
+			for (i = 0; i < renderer_p2->getNumberSprite();i++){
+				window.draw(*(renderer_p2->getSprite(i)),renderer_p2->getSpriteTransform(i));
+			}
+			for (i = 0; i < renderer_p1->getNumberText();i++){
+				window.draw(*(renderer_p1->getText(i)),renderer_p1->getTextTransform(i));
+			}
+			for (i = 0; i < renderer_p2->getNumberText();i++){
+				window.draw(*(renderer_p2->getText(i)),renderer_p2->getTextTransform(i));
 			}
 
 
