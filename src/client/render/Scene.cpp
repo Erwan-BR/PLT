@@ -62,10 +62,14 @@ namespace render {
 		return ((this->player_renderer)[index]);
 	}
 
+	/// @brief Setter for current_window
+	/// @param window new window
 	void Scene::changeWindow(Window window){
 		this->current_window = window;
 	}
 
+	/// @brief Getter for current_window
+	/// @return value of current_window
 	Window Scene::getWindow(){
 		return (this->current_window);
 	}

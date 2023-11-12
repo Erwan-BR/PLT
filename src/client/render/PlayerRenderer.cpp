@@ -29,8 +29,9 @@ namespace render {
 		this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(20.f,20.f));				//Transform
 	}
 
-	/// @brief Current constructor of the PlayerRenderer class.
+	/// @brief Full constructor of the PlayerRenderer class.
 	/// @param Transform indicating the position of the Renderer and passing the scale of the windows.
+	/// @param Window that will received this PlayerRenderer
 	PlayerRenderer::PlayerRenderer(sf::Transform transform,Window window){
 		//Creation of the Font for the Texts
 		sf::Font f;
@@ -225,12 +226,6 @@ namespace render {
 		default:
 			break;
 		}
-	}
-
-	/// @brief Full constructor of the PlayerRenderer class.
-	/// @param player Pointer on the Player coresponding to this Renderer
-	PlayerRenderer::PlayerRenderer(state::Player* player,int index){
-
 	}
 
 	/// @brief Full destructor of the PlayerRenderer class.
