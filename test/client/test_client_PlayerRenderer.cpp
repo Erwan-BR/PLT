@@ -2,17 +2,19 @@
 
 #include "../../src/client/render/PlayerRenderer.h"
 
+
 using namespace ::render;
 
 BOOST_AUTO_TEST_CASE(fullPlayerRendererTest)
 {
   {
-	sf::Transform* tr =new sf::Transform();
+	sf::Transform* tr = new sf::Transform();
 
-	// Creation of instances of PlayerRenderer
-    PlayerRenderer* myPRMain = new PlayerRenderer(tr,MAIN_WINDOW);
-    PlayerRenderer* myPRDraft = new PlayerRenderer(tr,DRAFTING_WINDOW);
-    PlayerRenderer* myPRInfo = new PlayerRenderer(tr,PLAYER_INFO);
+	// Creation of instances of PlayerRenderer for each case
+    PlayerRenderer* myPRMain = new PlayerRenderer(*tr,MAIN_WINDOW);
+    PlayerRenderer* myPRDraft = new PlayerRenderer(*tr,DRAFTING_WINDOW);
+    PlayerRenderer* myPRInfo = new PlayerRenderer(*tr,PLAYER_INFO);
+    PlayerRenderer* myPRDefault = new PlayerRenderer(*tr,NONE);
 
     //Test getSprite
     sf::Sprite* sprite = myPRMain->getSprite(1);
@@ -32,7 +34,7 @@ BOOST_AUTO_TEST_CASE(fullPlayerRendererTest)
 
 	//Test getNumberText
 	int n = myPRInfo->getNumberText();
-	BOOST_CHECK_EQUAL(n, 15);
+	BOOST_CHECK_EQUAL(n, 16);
 
 	//Test getNumberText
 	int m = myPRInfo->getNumberSprite();
@@ -50,27 +52,12 @@ BOOST_AUTO_TEST_CASE(fullPlayerRendererTest)
 	delete sprite;
 	delete text;
   }
-
   {
-	// Test Full constructor
+	  //Create Empty PlayerRenderer
+	  PlayerRenderer* myPREmpty = new PlayerRenderer();
 
-	// Creation Arguments
-	Player* firstPlayer = new Player();
-	Player* secondPlayer = new Player();
-	Player* thirdPlayer = new Player();
-	std::vector<Player*> players;
-	players.push_back(firstPlayer);
-	players.push_back(secondPlayer);
-	players.push_back(thirdPlayer);
-
-	// Call Constructor
-	Game* mySecondGame = new Game(players);
-
-	// Delete pointers
-	delete mySecondGame;
-	delete firstPlayer;
-	delete secondPlayer;
-	delete thirdPlayer;
+	  // Delete pointers
+	  delete myPREmpty;
   }
 }
 

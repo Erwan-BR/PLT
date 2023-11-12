@@ -9,7 +9,7 @@ namespace render {
     Scene::Scene (){
        	//Creation and initialisation of the background texture
     	this->background_texture =sf::Texture();
-    	(this->background_texture).loadFromFile("../resources/img/background.png");
+    	(this->background_texture).loadFromFile("./resources/img/background.png");
 
     	//Creation and initialisation of the background sprite
     	this->background=sf::Sprite();
@@ -18,7 +18,7 @@ namespace render {
     	//Set Starting Window
     	this->current_window = MAIN_WINDOW;
 
-    	/*TODO PlayerRenderer*/
+    	this->player_renderer.push_back(new PlayerRenderer(sf::Transform(),MAIN_WINDOW));
     }
 
     /// @brief Full destructor of the Scene class.

@@ -11,16 +11,14 @@ BOOST_AUTO_TEST_CASE(SceneTest)
     Scene* myScene = new Scene();
 
 	// Test getBackground()
-	sf::Sprite* sprite = myScene->getBackground();
-	BOOST_CHECK_EQUAL(1, 1);
+	(void)myScene->getBackground();
 
 	// Test getPlayerRenderer
-	PlayerRenderer* renderer = myScene->getPlayerRenderer(1);
-	BOOST_CHECK_EQUAL(1, 1);
+	(void)myScene->getPlayerRenderer(0);
 
 	// Test setWindow
 	Window w = PLAYER_INFO;
-	myScene->setWindow(w);
+	myScene->changeWindow(w);
 
 	// Test getWindow
 	Window w2 = myScene->getWindow();
@@ -28,8 +26,6 @@ BOOST_AUTO_TEST_CASE(SceneTest)
 
 	// Delete pointers
 	delete myScene;
-	delete sprite;
-	delete renderer;
   }
 }
 

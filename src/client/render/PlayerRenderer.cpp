@@ -7,12 +7,12 @@ namespace render {
 	PlayerRenderer::PlayerRenderer(){
 		//Creation of the Font for the Texts
 		sf::Font f;
-		f.loadFromFile("../resources/font/arial.ttf");
+		f.loadFromFile("./resources/font/arial.ttf");
 		this->font = f;
 
 		//Enter Player board (position 0)
 		sf::Texture* texture = new sf::Texture();
-		texture->loadFromFile("../resources/img/player.png");
+		texture->loadFromFile("./resources/img/player.png");
 		this->textures.push_back(texture);					//Texture
 		sf::Sprite* sprite= new sf::Sprite();
 		sprite->setTexture(*(this->textures[0]));
@@ -21,7 +21,7 @@ namespace render {
 
 		//Enter Player Profile Picture (position 1)
 		texture = new sf::Texture();
-		texture->loadFromFile("../resources/img/default_pfp.png");
+		texture->loadFromFile("./resources/img/default_pfp.png");
 		this->textures.push_back(texture);					//Texture
 		sprite= new sf::Sprite();
 		sprite->setTexture(*(this->textures[1]));
@@ -35,7 +35,7 @@ namespace render {
 	PlayerRenderer::PlayerRenderer(sf::Transform transform,Window window){
 		//Creation of the Font for the Texts
 		sf::Font f;
-		f.loadFromFile("../resources/font/arial.ttf");
+		f.loadFromFile("./resources/font/arial.ttf");
 		this->font = f;
 
 		int i;
@@ -47,7 +47,7 @@ namespace render {
 		case MAIN_WINDOW:
 			//Enter Player board (position 0 in sprites)
 			texture = new sf::Texture();
-			texture->loadFromFile("../resources/img/player.png");
+			texture->loadFromFile("./resources/img/player.png");
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[0]));
@@ -56,7 +56,7 @@ namespace render {
 
 			//Enter Player Profile Picture (position 1 in sprites)
 			texture = new sf::Texture();
-			texture->loadFromFile("../resources/img/default_pfp.png");
+			texture->loadFromFile("./resources/img/default_pfp.png");
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));
@@ -66,12 +66,12 @@ namespace render {
 			//Enter Cards (position 2 to 16 in sprites)
 			for (i=0;i<14;i++){
 				texture = new sf::Texture();
-				texture->loadFromFile("../resources/img/ExampleCards/card"+std::to_string(i%6)+".png");
+				texture->loadFromFile("./resources/img/DevelopmentCards/image_"+std::to_string(i%78+1)+".png");
 				this->textures.push_back(texture);	//Texture
 				sprite= new sf::Sprite();
 				sprite->setTexture(*(this->textures[i+2]));
 				this->sprites.push_back(sprite);	//Sprite
-				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f));		//Transform
+				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));		//Transform
 			}
 
 			//Enter Player Name (position 0 in texts)
@@ -108,7 +108,7 @@ namespace render {
 		case DRAFTING_WINDOW:
 			//Enter Player board (position 0 in sprites)
 			texture = new sf::Texture();
-			texture->loadFromFile("../resources/img/player_draft.png");
+			texture->loadFromFile("./resources/img/player_draft.png");
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[0]));
@@ -117,7 +117,7 @@ namespace render {
 
 			//Enter Player Profile Picture (position 1 in sprites)
 			texture = new sf::Texture();
-			texture->loadFromFile("../resources/img/default_pfp.png");
+			texture->loadFromFile("./resources/img/default_pfp.png");
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));
@@ -127,12 +127,12 @@ namespace render {
 			//Enter Cards (position 2 to 9 in sprites)
 			for (i=0;i<7;i++){
 				texture = new sf::Texture();
-				texture->loadFromFile("../resources/img/ExampleCards/card"+std::to_string(i%6)+".png");
+				texture->loadFromFile("./resources/img/DevelopmentCards/image_"+std::to_string(i%78+1)+".png");
 				this->textures.push_back(texture);	//Texture
 				sprite= new sf::Sprite();
 				sprite->setTexture(*(this->textures[i+2]));
 				this->sprites.push_back(sprite);	//Sprite
-				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f));		//Transform
+				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));		//Transform
 			}
 
 			//Enter Player Name (position 0 in texts)
@@ -148,7 +148,7 @@ namespace render {
 		case PLAYER_INFO:
 			//Enter Player board (position 0 in sprites)
 			texture = new sf::Texture();
-			texture->loadFromFile("../resources/img/player_full.png");
+			texture->loadFromFile("./resources/img/player_full.png");
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[0]));
@@ -157,17 +157,17 @@ namespace render {
 
 			//Enter Player Profile Picture (position 1 in sprites)
 			texture = new sf::Texture();
-			texture->loadFromFile("../resources/img/default_pfp.png");
+			texture->loadFromFile("./resources/img/default_pfp.png");
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));
 			this->sprites.push_back(sprite);					//Sprite
-			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,50.f).scale(2.f,2.f));				//Transform
+			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,50.f).scale(2.f,2.f).scale(1.f,(431.f/375.f)));				//Transform
 
 			//Enter Cards (position 2 to 58 in sprites)
 			for (i=0;i<56;i++){
 				texture = new sf::Texture();
-				texture->loadFromFile("../resources/img/ExampleCards/card"+std::to_string(i%6)+".png");
+				texture->loadFromFile("./resources/img/DevelopmentCards/image_"+std::to_string(i%78+1)+".png");
 				this->textures.push_back(texture);	//Texture
 				sprite= new sf::Sprite();
 				sprite->setTexture(*(this->textures[i+2]));
@@ -277,7 +277,7 @@ namespace render {
 	///	@param Name of png file from resource/img without extension
 	void PlayerRenderer::changeProfilePicture(std::string path){
 		sf::Texture* texture = new sf::Texture();
-		texture->loadFromFile("../resources/img/"+path+".png");
+		texture->loadFromFile("./resources/img/"+path+".png");
 		this->textures[1] = texture;
 		(this->sprites[1])->setTexture(*(this->textures[1]));
 	}

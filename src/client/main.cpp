@@ -65,7 +65,7 @@ int main(int argc,char* argv[])
 
 	//Creation of the Font for the Texts
 	sf::Font font;
-	font.loadFromFile("../resources/font/arial.ttf");
+	font.loadFromFile("./resources/font/arial.ttf");
 
 	//Creation of token indicating the resource production (with its Transform)
 	sf::CircleShape token = sf::CircleShape(25.0f,100);
@@ -84,8 +84,8 @@ int main(int argc,char* argv[])
 	sf::Transform tr_turn_indicator = sf::Transform(tr_scale).translate(810.f,430.0f);
 
 	//Creation of symbol of turn (with its Transform)
-	sf::Texture texture_turn_even;texture_turn_even.loadFromFile("../resources/img/evenarrow.png");
-	sf::Texture texture_turn_odd;texture_turn_odd.loadFromFile("../resources/img/oddarrow.png");
+	sf::Texture texture_turn_even;texture_turn_even.loadFromFile("./resources/img/evenarrow.png");
+	sf::Texture texture_turn_odd;texture_turn_odd.loadFromFile("./resources/img/oddarrow.png");
 	sf::Sprite turn_symbol;turn_symbol.setTexture(texture_turn_odd);
 	sf::Transform tr_turn_symbol = sf::Transform(tr_scale).translate(1030.f,420.0f).scale(0.8f,0.8f);
 
