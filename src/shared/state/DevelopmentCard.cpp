@@ -141,7 +141,7 @@ namespace state {
         returnValue += "Type: " + std::to_string(this->type) + "\n";
         returnValue += "Number Of Copies: " + std::to_string(this->numberOfCopies) + "\n";
         
-        // Adding a diffeent sentence depending on if the card is paid or not.
+        // Adding a different sentence depending on if the card is paid or not.
         if (this->isPaid)
         {
             returnValue += "This card is paid.\n";

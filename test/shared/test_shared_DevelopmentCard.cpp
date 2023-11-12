@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getType(), CardType::NONETYPE);
     
     // We call toString but we don't want to test it.
-    myFirstDevelopmentCard->toString();
+    (void)myFirstDevelopmentCard->toString();
 
     // Delete pointers that won't be used anymore.
     delete myFirstDevelopmentCard;
@@ -85,8 +85,35 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard(name, productionGain, design, victoryPoints, type, numberOfCopies, costToBuild, instantGain, discardGain);
 
     // Testing if some materials can be added.
-    
+    bool isColonelAddable = mySecondDevelopmentCard->isResourceAddable(ResourceType::COLONEL);
+    bool isKrystalliumAddable = mySecondDevelopmentCard->isResourceAddable(ResourceType::KRYSTALLIUM);
 
+    BOOST_CHECK_EQUAL(isColonelAddable, false);
+    BOOST_CHECK_EQUAL(isKrystalliumAddable, true);
+
+    // Adding some resources to the card (resources that can be added)
+    bool isCardFinishedFirst = mySecondDevelopmentCard->addKrystallium(ResourceType::GOLD);
+    bool isCardFinishedSecond = mySecondDevelopmentCard->addResource(ResourceType::MATERIAL);
+    bool isCardFinishedThird = mySecondDevelopmentCard->addResource(ResourceType::KRYSTALLIUM);
+
+    BOOST_CHECK_EQUAL(isCardFinishedFirst, false);
+    BOOST_CHECK_EQUAL(isCardFinishedSecond, false);
+    BOOST_CHECK_EQUAL(isCardFinishedThird, false);
+
+    // Checking if krystallium is addable. Should return false because krystallium doesn't replace FINANCIER / COLONEL.
+    bool isKrystalliumAddableSecond = mySecondDevelopmentCard->isResourceAddable(ResourceType::KRYSTALLIUM);
+    BOOST_CHECK_EQUAL(isKrystalliumAddableSecond, false);
+
+    // Adding krystallium to complete the card.
+    bool isCardFinishedFourth = mySecondDevelopmentCard->addResource(ResourceType::FINANCIER);
+    BOOST_CHECK_EQUAL(isCardFinishedFourth, true);
+
+    // Checking if a resource can be added once the card is completed.
+    bool isMaterialAddable = mySecondDevelopmentCard->isResourceAddable(ResourceType::MATERIAL);
+    BOOST_CHECK_EQUAL(isMaterialAddable, false);
+
+    // Calling the toString method.
+    (void)mySecondDevelopmentCard->toString();
 
     // Delete pointers that won't be used anymore.
     delete firstResourceToPay;
