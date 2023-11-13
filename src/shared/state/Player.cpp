@@ -36,6 +36,14 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
+        delete(this->empire);
+        this->builtCards.clear();
+        this->toBuildCards.clear();
+        this->draftingCards.clear();
+        this->draftCards.clear();
+        this->currentResources.clear();
+        this->resourcesProduction.clear();
+        this->cardsTypeList.clear();
 
     }
 
