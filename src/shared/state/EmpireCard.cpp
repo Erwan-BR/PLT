@@ -30,7 +30,8 @@ namespace state {
     /// @brief Destructor for the EmpireCard class
     EmpireCard::~EmpireCard ()
     {
-
+        delete(this->victoryPointsAdvanced);
+        this->productionGainAdvanced.clear();
     }
 
     /// @brief Convert the current EmpireCard to a readable string.
