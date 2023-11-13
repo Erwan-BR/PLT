@@ -23,6 +23,8 @@ namespace state {
     /// @brief Card destructor
     Card::~Card()
     {
+        delete(this->victoryPoints);
+        this->productionGain.clear();
     }
 
     /*
