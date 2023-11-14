@@ -189,8 +189,13 @@ namespace state {
 			// Initialise the cards that will be given to the players
 			std::vector<DevelopmentCard*> draft;
 			int i;
-			for(i=0;i<)
-			draft.push_back(deck.pop());
+			for(i=0;i<6;i++)
+			{
+				draft.push_back(deck.back());
+				deck.pop_back();
+			}
+			//setDraftingCars(draft);
+
 		}
 	}
 
