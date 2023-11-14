@@ -187,6 +187,10 @@ namespace state {
 		for(Player* player : this->players)
 		{
 			// Initialise the cards that will be given to the players
+			std::vector<DevelopmentCard*> draft;
+			int i;
+			for(i=0;i<)
+			draft.push_back(deck.pop());
 		}
 	}
 
@@ -249,6 +253,6 @@ namespace state {
 	/// @brief Ends the game, counts every player's victory points and compares them tp give a podium
 	void endGame ()
 	{
-
+		return ;
 	}
 }
