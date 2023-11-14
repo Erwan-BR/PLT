@@ -37,11 +37,22 @@ namespace state {
     Player::~Player()
     {
         delete(this->empire);
+        
+        for(DevelopmentCard* card : builtCards)delete(card);
         this->builtCards.clear();
-        this->toBuildCards.clear();
-        this->draftingCards.clear();
-        this->draftCards.clear();
-        this->currentResources.clear();
+
+        for(DevelopmentCard* card : toBuildCards)delete(card);
+        this->builtCards.clear();
+
+        for(DevelopmentCard* card : draftingCards)delete(card);
+        this->builtCards.clear();
+
+        for(DevelopmentCard* card : draftCards)delete(card);
+        this->builtCards.clear();
+
+        for(Resource* resource : currentResources)delete(resource);
+        this->builtCards.clear();
+
         this->resourcesProduction.clear();
         this->cardsTypeList.clear();
 

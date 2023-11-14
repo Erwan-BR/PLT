@@ -31,7 +31,7 @@ namespace state {
     EmpireCard::~EmpireCard ()
     {
         delete(this->victoryPointsAdvanced);
-        this->productionGainAdvanced.clear();
+        for(ResourceToProduce* resource : productionGainAdvanced)delete(resource);
     }
 
     /// @brief Convert the current EmpireCard to a readable string.

@@ -24,7 +24,7 @@ namespace state {
     Card::~Card()
     {
         delete(this->victoryPoints);
-        this->productionGain.clear();
+        for(ResourceToProduce* resource : productionGain)delete(resource);
     }
 
     /*
