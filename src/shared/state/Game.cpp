@@ -184,34 +184,38 @@ namespace state {
 	///@brief Initialize the Draft part of the game during which players select their cards
 	void Game::initDraft ()
 	{
+		std::vector<std::vector<DevelopmentCard*>> draftDeck;
+		int i,j=0;
+
 		for(Player* player : this->players)
 		{
 			// Initialise the cards that will be given to the players
 			std::vector<DevelopmentCard*> draft;
-			int i;
-			for(i=0;i<6;i++)
+			for(i=0;i<8;i++)
 			{
 				draft.push_back(deck.back());
 				deck.pop_back();
 			}
-			//setDraftingCars(draft);
-
+			draftDeck.push_back(draft);
+			player->setDraftingCards(draftDeck[j]);
+			j++;
 		}
 	}
 
 	///@brief Start a Draft
 	void Game::nextDraft ()
 	{
-		// 7 drafted cards
-		for(int i=0;i<7;i++)
+		int n = draftDeck[0].size();
+		int m = players.size(); 
+		if(n == 0)
 		{
-			for(Player* player : this->players)
-			{
-
-			}
+			endDraft();
 		}
-		endDraft();
-
+		int i=0;
+		for(Player* player : this->players)
+		{
+			player->setDraftingCards(draftDeck[(i-(m-n))%m]);
+		}
 	}
 
 	///@brief End the current Draft phase
@@ -223,14 +227,14 @@ namespace state {
 	///@brief Initialize the Planification phase during which players choose the cards they will try to build
 	void Game::initPlanification ()
 	{
-
+		return;
 	}
 
 	///@brief Manage the phase of production for all player and one resource
 	///@param toProduceResource Pointer which designate the type of resource currently to produce
 	void Game::produceResource (Resource* toProduceResource)
 	{
-
+		return;
 
 	}
 
@@ -239,7 +243,7 @@ namespace state {
 	///@param player Pointer which designate the player who receive the resource
 	void Game::sendResourceToPlayer (Resource* resource, Player* player) const
 	{
-
+		return;
 	}
 
 	///@brief Debug method to check the state of the instance of Game
@@ -250,13 +254,13 @@ namespace state {
 	}
 
 	/// @brief Distributes the empires to the players
-	void initPlayers (std::vector<EmpireCard*> empires)
+	void Game::initPlayers (std::vector<EmpireCard*> empires)
 	{
-
+		return;
 	}
 
 	/// @brief Ends the game, counts every player's victory points and compares them tp give a podium
-	void endGame ()
+	void Game::endGame ()
 	{
 		return ;
 	}
