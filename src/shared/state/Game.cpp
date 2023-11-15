@@ -215,6 +215,7 @@ namespace state {
 		for(Player* player : this->players)
 		{
 			player->setDraftingCards(draftDeck[(i-(m-n))%m]);
+			i++;
 		}
 	}
 
@@ -256,12 +257,25 @@ namespace state {
 	/// @brief Distributes the empires to the players
 	void Game::initPlayers (std::vector<EmpireCard*> empires)
 	{
+
+		for(Player* player : this->players)
+		{
+			// Initialise the cards that will be given to the players
+			int i = 0;
+			player->setEmpire(empires[i]);
+			i++;
+		}
 		return;
 	}
 
-	/// @brief Ends the game, counts every player's victory points and compares them tp give a podium
+	/// @brief Ends the game, counts every player's victory points and compares them to give a podium
 	void Game::endGame ()
 	{
+		std::vector<int> points;
+		for(Player* player : this->players)
+		{
+			points.push_back(player->computeVictoryPoint());
+		}
 		return ;
 	}
 }
