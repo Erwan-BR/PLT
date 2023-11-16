@@ -50,8 +50,8 @@ namespace state {
         for(DevelopmentCard* card : draftCards)delete(card);
         this->builtCards.clear();
 
-        for(Resource* resource : currentResources)delete(resource);
-        this->builtCards.clear();
+        //for(ResourceType resource : currentResources)delete(resource);
+        //this->builtCards.clear();
 
         this->resourcesProduction.clear();
         this->cardsTypeList.clear();
@@ -72,13 +72,13 @@ namespace state {
     /// @brief Add a resource "resource" to the card "card"
     /// @param resource Resource placed on the card "card"
     /// @param card Card that will receive the resource "resource"
-    void Player::addResource(Resource* resource, DevelopmentCard* card)
+    void Player::addResource(ResourceType resource, DevelopmentCard* card)
     {
         //Check if the resource is addable to the designated card
-        if(card->isResourceAddable(resource->type))
+        if(card->isResourceAddable(resource))
         {
             //Adding the resource to the card, and building it if there are all the resources required on it.
-            if(card->addResource(resource->type))
+            if(card->addResource(resource))
             {
                 construct(card);
             }

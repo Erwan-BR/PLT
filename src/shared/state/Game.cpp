@@ -132,6 +132,7 @@ namespace state {
 		std::vector<EmpireCard*> empires = {africa,noram,asia,europe,aztec};
 		auto rng = std::default_random_engine {};
 		std::shuffle(std::begin(empires), std::end(empires), rng);
+		return(empires);
 	}
 
 	///@brief Start the game
@@ -214,8 +215,17 @@ namespace state {
 		int i=0;
 		for(Player* player : this->players)
 		{
-			player->setDraftingCards(draftDeck[(i-(m-n))%m]);
-			i++;
+			if(this->isClockwise)
+			{
+				player->setDraftingCards(draftDeck[(i-(m-n))%m]);
+				i++;
+			}
+			else
+			{
+				player->setDraftingCards(draftDeck[((m-n)-i)%m]);
+				i++;
+			}
+			
 		}
 	}
 
@@ -233,8 +243,13 @@ namespace state {
 
 	///@brief Manage the phase of production for all player and one resource
 	///@param toProduceResource Pointer which designate the type of resource currently to produce
-	void Game::produceResource (Resource* toProduceResource)
+	void Game::produceResource (ResourceType toProduceResource)
 	{
+		std::vector<int> playerProduction;
+		for(Player* player : this->players)
+			{
+				playerProduction.push_back(player->computeProduction(toProduceResource));
+			}
 		return;
 
 	}
@@ -244,6 +259,12 @@ namespace state {
 	///@param player Pointer which designate the player who receive the resource
 	void Game::sendResourceToPlayer (Resource* resource, Player* player) const
 	{
+			for(Player* player : this->players)
+		{
+			int i=0;
+			//player->set playerProduction(i);
+			i++;
+		}
 		return;
 	}
 

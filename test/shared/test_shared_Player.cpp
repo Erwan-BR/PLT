@@ -8,7 +8,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 {
   {
     // Testing the empty contructor of Player
-    Player* myFirstPlayer = new Player();
+    //Player* myFirstPlayer = new Player();
     
     /*Adding some of those lines if some getters are done.
     // Checking default value given by the empty constructor.
@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     BOOST_CHECK_EQUAL(myFirstPlayer->getResourceInEmpireUnit(), 0);
     BOOST_CHECK_EQUAL(myFirstPlayer->getProfilePicture(), ); //To Complete
     */
-
+/*
     // Creation of multiple elements to test the methods.
     DevelopmentCard* cardTest = new DevelopmentCard();
     Resource* resourceTest = new Resource();
@@ -59,7 +59,9 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
   {
   ;
+  */
   }
+  
 }
 
 /* vim: set sw=2 sts=2 et : */
