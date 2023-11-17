@@ -7,14 +7,13 @@ using namespace ::state;
 BOOST_AUTO_TEST_CASE(firstGameTest)
 {
   {
-	/*
+	
 	// Creation of the instance of Game
     Game* myFirstGame = new Game();
 
     // Testing void-void methods
 	myFirstGame->initGame();
 	myFirstGame->initCards();
-	myFirstGame->initEmpire();
 	myFirstGame->startGame();
 	myFirstGame->nextPhase();
 	myFirstGame->newTurn();
@@ -22,38 +21,33 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 	myFirstGame->nextDraft();
 	myFirstGame->endDraft();
 	myFirstGame->initPlanification();
+    myFirstGame->endGame();
+
+
+	ResourceType toProduceResource = ENERGY;
+	ResourceType resource = MATERIAL;
+	Player* firstPlayer = new Player();
+    myFirstGame->produceResource (toProduceResource);
+
+	std::vector<EmpireCard*> empires = myFirstGame->initEmpire();
+    myFirstGame->initPlayers (empires);
+
 
 	// Test toString()
 	std::string gameToString = myFirstGame->toString();
-	//BOOST_CHECK_EQUAL(gameToString, "");
+	BOOST_CHECK_EQUAL(gameToString, "");
 
-	// Test produceResource(Resource* toProduce)
-	Resource* firstResource = new Resource{SCIENCE, sf::Texture()};
+	// Test produceResource(ResourceType toProduce)
+	ResourceType firstResource = SCIENCE;
 	myFirstGame->produceResource(firstResource);
 
 	// Test sendResourceToPlayer
-	Resource* secondResource = new Resource{GOLD, sf::Texture()};
-	Player* firstPlayer = new Player();
-	myFirstGame->sendResourceToPlayer(secondResource, firstPlayer);
-
-	// Testing initPlayers
-	std::vector<EmpireCard*> empires;
-	EmpireCard* firstEmpire ;
-	EmpireCard* secondEmpire ;
-	empires.push_back(firstEmpire);
-	empires.push_back(secondEmpire);
-
-	myFirstGame->initPlayers(empires);
-
-	// Calling methods of the Game class
-	myFirstGame->importCardsFromCsv();
-	myFirstGame->endGame();
+	ResourceType secondResource = GOLD;
+	myFirstGame->produceResource(secondResource);
 
 	// Delete pointers
-	delete firstResource;
-	delete secondResource;
-	delete firstPlayer;
 	delete myFirstGame;
+	delete firstPlayer;
   }
 
   {
@@ -76,7 +70,7 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 	delete firstPlayer;
 	delete secondPlayer;
 	delete thirdPlayer;
-	*/
+	
   }
 }
 

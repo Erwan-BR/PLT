@@ -52,6 +52,13 @@ namespace state {
 		std::shuffle(std::begin(deck), std::end(deck), rng);
 	}
 
+	/// @brief 
+	/// @return 
+	void Game::createCards()
+	{
+		return;
+	}
+
 	///@brief Create and Initialize the Empire for the game
 	std::vector<EmpireCard*> Game::initEmpire ()
 	{	
