@@ -26,4 +26,18 @@ namespace state {
         delete(this->victoryPoints);
         for(ResourceToProduce* resource : productionGain)delete(resource);
     }
+
+    /// @brief 
+    /// @return 
+    std::vector<ResourceToProduce*> Card::getProductionGain () const
+    {
+        return this->productionGain;
+    }
+
+    /// @brief 
+    /// @return 
+    CardVictoryPoint* Card::getVictoryPoints () const
+    {
+        return this->victoryPoints;
+    }
 }
