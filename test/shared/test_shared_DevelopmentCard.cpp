@@ -1,7 +1,6 @@
 #include <boost/test/unit_test.hpp>
 
 #include "../../src/shared/state/DevelopmentCard.h"
-#include "../../src/shared/state/Resource.h"
 
 #include <string>
 
@@ -11,9 +10,10 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
 {
   {
     // Testing the empty constructor of DevelopmentCard 
-    //DevelopmentCard* myFirstDevelopmentCard = new DevelopmentCard();
+    DevelopmentCard* myFirstDevelopmentCard = new DevelopmentCard();
 
-    /* Adding some of those lines if somes getters are done.
+    /*
+    // Adding some of those lines if somes getters are done.
     // Checking default value given by the empty constructor.
     // Checking values from the empty Card constructor.
     BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getName(), "");
@@ -125,7 +125,6 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     delete secondResourceToProduce;
 
     delete mySecondDevelopmentCard;
-    */
   }
 }
 
