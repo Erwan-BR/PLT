@@ -965,7 +965,8 @@ gen_namespace(batch *b, declaration *nsd) {
         print("};\n\n");
 
         indentlevel = 0; /* just for safety (should be 0 already) */
-        print("#endif\n");
+        // print("#endif\n");
+        print("#endif /* %s__%s__H */\n", tmpnsname, tmpname);
         fclose(spec);
 
 #ifdef ENABLE_FILE_UPDATE_ON_CHANGE
@@ -1115,7 +1116,7 @@ generate_code_cpp (batch *b)
         gen_decl (d);
 
         indentlevel = 0;  /* just for safety (should be 0 already) */
-        print("#endif\n");
+        print("\n#endif /* __%s__H */\n", tmpname);
         fclose (spec);
 
 #ifdef ENABLE_FILE_UPDATE_ON_CHANGE
