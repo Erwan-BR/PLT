@@ -32,32 +32,24 @@ namespace state {
 	///@brief Destructor of the Class Game
 	Game::~Game ()
 	{
-
+		// To-do
 	}
 
 	///@brief Initialize the game
 	void Game::initGame ()
 	{
-		return ;
+		std::vector<EmpireCard*> empires = initEmpire();
+		initCards();
+		initPlayers(empires);
+		startGame();
 	}
 
 	///@brief Create and Initialize the Cards for the game
 	void Game::initCards ()
 	{
-		return ;
-	}
-
-	/// @brief Import all Cards from the CSV file.
-	void Game::importCardsFromCsv ()
-	{
-		return ;
-	}
-
-	/// @brief Add a card to the deck, from a line of the CSV file.
-	/// @param lineFromCsvFile Line from the CSV that contains data of a DevelopmentCard.
-	void Game::addSingleCardToDeck (std::string lineFromCsvFile)
-	{
-		return ;
+		this->createCards();
+		auto rng = std::default_random_engine {};
+		std::shuffle(std::begin(deck), std::end(deck), rng);
 	}
 
 	///@brief Create and Initialize the Empire for the game
@@ -120,13 +112,40 @@ namespace state {
 	///@brief Manage the progress of the game and start the next phase among Draft, Planification and Production
 	void Game::nextPhase ()
 	{
-		return ;
+		if(DRAFT == this->phase)
+		{
+			this->phase = PLANIFICATION;
+			initPlanification();
+		}
+		else if(PLANIFICATION == this->phase)
+		{
+			this->phase = PRODUCTION;
+		}
+		else if(PRODUCTION == this->phase)
+		{
+			newTurn();
+			this->phase = DRAFT;
+			initDraft();
+		}
 	}
 
 	///@brief Start one of the four turn of the game
 	void Game::newTurn ()
 	{
-		return ;
+		turn = turn + 1;
+		if(turn == 5)
+		{
+			endGame();
+		}
+
+		if (turn%2 == 1)
+		{
+			isClockwise = true;
+		}
+		else
+		{
+			isClockwise = false;
+		}
 	}
 
 	///@brief Initialize the Draft part of the game during which players select their cards
@@ -139,7 +158,7 @@ namespace state {
 		{
 			// Initialise the cards that will be given to the players
 			std::vector<DevelopmentCard*> draft;
-			for(i=0;i<8;i++)
+			for(i = 0; i < 8; i++)
 			{
 				draft.push_back(deck.back());
 				deck.pop_back();
@@ -155,7 +174,7 @@ namespace state {
 	{
 		int n = draftDeck[0].size();
 		int m = players.size(); 
-		if(n == 0)
+		if(0 == n)
 		{
 			endDraft();
 		}
@@ -179,7 +198,7 @@ namespace state {
 	///@brief End the current Draft phase
 	void Game::endDraft ()
 	{
-		return ;
+		nextPhase();
 	}
 
 	///@brief Initialize the Planification phase during which players choose the cards they will try to build
@@ -192,32 +211,15 @@ namespace state {
 	///@param toProduceResource Pointer which designate the type of resource currently to produce
 	void Game::produceResource (ResourceType toProduceResource)
 	{
-		std::vector<int> playerProduction;
+		int playerProduction;
 		for(Player* player : this->players)
-			{
-				playerProduction.push_back(player->computeProduction(toProduceResource));
-			}
-		return;
-	}
-
-	///@brief Send a resource earned by a player to let him use it
-	///@param resource Pointer which designate the type of resource sent
-	///@param player Pointer which designate the player who receive the resource
-	void Game::sendResourceToPlayer (Resource* resource, Player* player) const
-	{
-			for(Player* player : this->players)
 		{
-			int i=0;
-			//player->set playerProduction(i);
-			i++;
-		}
-	}
+			playerProduction = player->getProductionGain(toProduceResource);
 
-	///@brief Debug method to check the state of the instance of Game
-	///@return String explaining the state of Game
-	std::string Game::toString () const
-	{
-		return "";
+			player->receiveResources(toProduceResource, playerProduction);
+		}
+
+		// Checking who won's the most of this resources for the bonus.
 	}
 
 	/// @brief Distributes the empires to the players
@@ -241,5 +243,12 @@ namespace state {
 		{
 			points.push_back(player->computeVictoryPoint());
 		}
+	}
+
+	///@brief Debug method to check the state of the instance of Game
+	///@return String explaining the state of Game
+	std::string Game::toString () const
+	{
+		return "";
 	}
 }
