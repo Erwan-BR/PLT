@@ -36,6 +36,25 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
+        delete(this->empire);
+        
+        for(DevelopmentCard* card : builtCards)delete(card);
+        this->builtCards.clear();
+
+        for(DevelopmentCard* card : toBuildCards)delete(card);
+        this->builtCards.clear();
+
+        for(DevelopmentCard* card : draftingCards)delete(card);
+        this->builtCards.clear();
+
+        for(DevelopmentCard* card : draftCards)delete(card);
+        this->builtCards.clear();
+
+        //for(ResourceType resource : currentResources)delete(resource);
+        //this->builtCards.clear();
+
+        this->resourcesProduction.clear();
+        this->cardsTypeList.clear();
 
     }
 
@@ -49,7 +68,7 @@ namespace state {
     /// @brief Add a resource "resource" to the card "card"
     /// @param resource Resource placed on the card "card"
     /// @param card Card that will receive the resource "resource"
-    void Player::addResource(Resource* resource, DevelopmentCard* card)
+    void Player::addResource(ResourceType resource, DevelopmentCard* card)
     {
 		return ;
     }
@@ -83,8 +102,9 @@ namespace state {
 
     /// @brief Take a resource produced by the player and place it on the Empire of the player
     /// @param resource Type of resource that one will be send to the empire card of the player
-    void Player::sendResourceToEmpire(Resource* resource)
+    void Player::sendResourceToEmpire(ResourceType resource)
     {
+        this->resourcesInEmpireUnit++;
         return ;
     }
 

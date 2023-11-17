@@ -2,6 +2,7 @@
 
 namespace state {
 
+    ResourceType resource;
     /// @brief Empty constructor of the DevelopmentCard class.
     DevelopmentCard::DevelopmentCard () :
     Card(),

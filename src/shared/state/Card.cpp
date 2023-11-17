@@ -23,5 +23,7 @@ namespace state {
     /// @brief Card destructor
     Card::~Card()
     {
+        delete(this->victoryPoints);
+        for(ResourceToProduce* resource : productionGain)delete(resource);
     }
 }
