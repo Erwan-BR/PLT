@@ -32,6 +32,39 @@ namespace state {
         cardsTypeList[PROJECT] = 0;
         cardsTypeList[DISCOVERY] = 0;
     }
+    
+    /// @brief Constructor of the player, with some parameters.
+    /// @param name Name of the player
+    /// @param id Id of the player
+    /// @param profilePicture Profile Picture of the player
+    Player::Player(std::string name, int id, sf::Texture profilePicture) :
+    name(name),
+    id(id),
+    profilePicture(profilePicture),
+    empire(new EmpireCard()),
+    builtCards({}),
+    toBuildCards({}),
+    draftingCards({}),
+    draftCards({}),
+    state(PENDING),
+    financierTokensUnit(0),
+    colonelTokensUnit(0),
+    krystalliumTokensUnit(0),
+    currentResources({}),
+	resourcesInEmpireUnit(0)
+    {
+        resourcesProduction[MATERIAL] = 0;
+        resourcesProduction[ENERGY] = 0;
+        resourcesProduction[SCIENCE] = 0;
+        resourcesProduction[GOLD] = 0;
+        resourcesProduction[EXPLORATION] = 0;
+
+        cardsTypeList[STRUCTURE] = 0;
+        cardsTypeList[VEHICLE] = 0;
+        cardsTypeList[RESEARCH] = 0;
+        cardsTypeList[PROJECT] = 0;
+        cardsTypeList[DISCOVERY] = 0;
+    }
 
     /// @brief Destructor of the class Player
     Player::~Player()
