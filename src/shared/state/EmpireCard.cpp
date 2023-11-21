@@ -23,7 +23,7 @@ namespace state {
     Card(name, productionGain, design, victoryPoints),
     productionGainAdvanced(productionGainAdvanced),
     victoryPointsAdvanced(victoryPointsAdvanced),
-    empire(EmpireLand::NONELAND)
+    empire(empire)
     {
     }
     
