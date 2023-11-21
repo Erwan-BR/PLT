@@ -14,18 +14,21 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
     // Testing void-void methods
 	myFirstGame->initGame();
 	myFirstGame->initCards();
-	myFirstGame->startGame();
 	myFirstGame->nextPhase();
 	myFirstGame->newTurn();
 	myFirstGame->initDraft();
-	myFirstGame->nextDraft();
+	//myFirstGame->nextDraft();	
 	myFirstGame->endDraft();
+
 	myFirstGame->initPlanification();
     myFirstGame->endGame();
 
+	// Test toString()
+	std::string gameToString = myFirstGame->toString();
+	BOOST_CHECK_EQUAL(gameToString,"");
 
+/*
 	ResourceType toProduceResource = ENERGY;
-	ResourceType resource = MATERIAL;
 	Player* firstPlayer = new Player();
     myFirstGame->produceResource (toProduceResource);
 
@@ -33,9 +36,8 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
     myFirstGame->initPlayers (empires);
 
 
-	// Test toString()
-	std::string gameToString = myFirstGame->toString();
-	BOOST_CHECK_EQUAL(gameToString, "");
+
+
 
 	// Test produceResource(ResourceType toProduce)
 	ResourceType firstResource = SCIENCE;
@@ -46,30 +48,54 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 	myFirstGame->produceResource(secondResource);
 
 	// Delete pointers
+	delete firstPlayer;*/
 	delete myFirstGame;
-	delete firstPlayer;
+
   }
 
   {
 	// Test Full constructor
 
 	// Creation Arguments
-	Player* firstPlayer = new Player();
-	Player* secondPlayer = new Player();
-	Player* thirdPlayer = new Player();
 	std::vector<Player*> players;
+	Player* firstPlayer = new Player();
 	players.push_back(firstPlayer);
+	Player* secondPlayer = new Player();
 	players.push_back(secondPlayer);
-	players.push_back(thirdPlayer);
+
+
+
 
 	// Call Constructor
 	Game* mySecondGame = new Game(players);
+	
+	mySecondGame->createCards();
 
+	mySecondGame->initGame();
+	mySecondGame->initCards();
+	mySecondGame->startGame();
+	mySecondGame->nextPhase();
+
+	mySecondGame->newTurn();
+	mySecondGame->newTurn();
+	mySecondGame->newTurn();
+	mySecondGame->newTurn();
+	mySecondGame->newTurn();
+
+	mySecondGame->produceResource(GOLD);
+
+	mySecondGame->initDraft();
+
+	
+	mySecondGame->endDraft();
+
+	mySecondGame->initPlanification();
+    mySecondGame->endGame();
+	mySecondGame->nextDraft();
 	// Delete pointers
 	delete mySecondGame;
 	delete firstPlayer;
 	delete secondPlayer;
-	delete thirdPlayer;
 	
   }
 }

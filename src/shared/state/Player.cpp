@@ -36,34 +36,36 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
-        delete(this->empire);
+        this->empire->~EmpireCard();
         
         for(DevelopmentCard* card : builtCards)
         {
-            delete(card);
+            card->~DevelopmentCard();
         }
         this->builtCards.clear();
 
         for(DevelopmentCard* card : toBuildCards)
         {
-            delete(card);
+            card->~DevelopmentCard();
         }
         this->toBuildCards.clear();
 
         for(DevelopmentCard* card : draftingCards)
         {
-            delete(card);
+            card->~DevelopmentCard();
         }
         this->draftingCards.clear();
 
         for(DevelopmentCard* card : draftCards)
         {
-            delete(card);
+            card->~DevelopmentCard();
         }
         this->draftCards.clear();
 
         this->resourcesProduction.clear();
         this->cardsTypeList.clear();
+
+        delete(this);
     }
 
     /// @brief Construct the card "cardToBuild"
@@ -81,13 +83,19 @@ namespace state {
     /// @param card Card that will receive the resource "resource"
     void Player::addResource(ResourceType resource, DevelopmentCard* card)
     {
-		//Check if the resource is addable to the designated card
-        if(card->isResourceAddable(resource))
+
+		auto cardPos = std::find(this->toBuildCards.begin(), this->toBuildCards.end(), card);
+		if(cardPos != toBuildCards.end())
         {
-            //Adding the resource to the card, and building it if there are all the resources required on it.
-            if(card->addResource(resource))
+            //Check if the resource is addable to the designated card
+            if((*cardPos)->isResourceAddable(resource))
             {
-                construct(card);
+                //Adding the resource to the card, and building it if there are all the resources required on it.
+                if((*cardPos)->addResource(resource))
+                {
+                    construct(*cardPos);
+                    toBuildCards.erase(cardPos);
+                }
             }
         }
     }
@@ -252,10 +260,13 @@ namespace state {
     /// @param card Card choosed by the player
     void Player::chooseDraftCard(DevelopmentCard* card)
     {
-		this->draftCards.push_back(card);
         auto cardPos = std::find(this->draftingCards.begin(), this->draftingCards.end(), card);
-        this->draftingCards.erase(cardPos);
-        this->state = PENDING;
+        if(cardPos != draftingCards.end())
+        {
+            this->draftCards.push_back(card);
+            this->draftingCards.erase(cardPos);
+            this->state = PENDING;
+        }
     }
 
     /// @brief Return the selected token by the player (Colonel/Financier)
