@@ -172,7 +172,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     //Testing method getProductionGain :
     (void)myFirstPlayer->getProductionGain(MATERIAL);
-
+/*
     // Delete pointers that won't be used anymore.
     delete africa;
     delete victoryPointsAFRICA;
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     delete cardTest1;
     delete victoryPoints1;
     delete paiement1;
-    delete production1;
+    delete production1;*/
   }
 }
 

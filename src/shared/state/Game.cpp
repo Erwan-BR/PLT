@@ -8,6 +8,7 @@
 namespace state {
 	///@brief Create an instance of the class Game
 	Game::Game() :
+		Observable(),
 		players(),
 		turn(0),
 		phase(PRODUCTION),
@@ -20,6 +21,7 @@ namespace state {
 	///@brief Create an instance of the class Game with players specified
 	///@param players Vector of pointers which designate the players of the game
 	Game::Game(std::vector<Player*> players) :
+		Observable(),
 		players(players),
 		turn(0),
 		phase(PRODUCTION),
@@ -56,7 +58,13 @@ namespace state {
 	/// @return 
 	void Game::createCards()
 	{
+		for(int i = 0;i<14;i++)
+		{
+			DevelopmentCard* createdCard = new DevelopmentCard();
+			this->deck.push_back(createdCard);
+		}
 		return;
+
 	}
 
 	///@brief Create and Initialize the Empire for the game
@@ -179,13 +187,14 @@ namespace state {
 	///@brief Start a Draft
 	void Game::nextDraft ()
 	{
-		int n = draftDeck[0].size();
-		int m = players.size(); 
-		if(0 == n)
+		int n = (int) (draftDeck[0]).size();
+
+		if(n == 0)
 		{
 			endDraft();
 		}
 		int i=0;
+		int m = players.size(); 
 		for(Player* player : this->players)
 		{
 			if(this->isClockwise)
