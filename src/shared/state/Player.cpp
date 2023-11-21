@@ -122,8 +122,8 @@ namespace state {
         }
     }
 
-    /// @brief 
-    /// @param toKeepCard 
+    /// @brief Function called when the player wants to keep a card from the drafting phase.
+    /// @param toKeepCard Card to keep
     void Player::keepCard(DevelopmentCard* toKeepCard)
     {
         auto cardPos = std::find(this->draftCards.begin(), this->draftCards.end(), toKeepCard);
@@ -134,7 +134,7 @@ namespace state {
         }
     }
 
-    /// @brief 
+    /// @briefUpdate the production of every tokens
     void Player::updateProduction()
     {
         this->resourcesProduction[MATERIAL] = computeProduction(MATERIAL);
@@ -277,16 +277,16 @@ namespace state {
         return false ;
     }
     
-    /// @brief Add one resource of th specified type to the placable resouces
-    /// @param resourceToReceive the type of resource to add
+    /// @brief Receive resource from the game.
+    /// @param resourceToReceive Resource to add to the player.
     void Player::receiveResource (ResourceType resourceToReceive)
     {
         this->currentResources.push_back(resourceToReceive);
     }
     
-    /// @brief Add the number of resource specified to the placable resources
-    /// @param resourceToReceive the type of resource to add
-    /// @param numberOfResources the number of the type to add
+    /// @brief Receive multiple resources from the game
+    /// @param resourceToReceive Type of the resource to receive.
+    /// @param numberOfResources Number of ressources to receive.
     void Player::receiveResources (ResourceType resourceToReceive, int numberOfResources)
     {
         for (int i = 0; i < numberOfResources ; i++)
@@ -337,11 +337,116 @@ namespace state {
         }
     }
 
-    /// @brief 
-    /// @param resource 
-    /// @return 
+    /// @brief Get the production of a given resource.
+    /// @param resource Resource which the production quantity is asked.
+    /// @return Production of this resource.
     int Player::getProductionGain (ResourceType resource) const
     {
         return this->resourcesProduction.at(resource);
+    }
+
+    /// @brief Get the name of the player
+    /// @return Name of the player
+    std::string Player::getName () const
+    {
+        return this->name;
+    }
+
+    /// @brief Get the profile picture of the player, to display it
+    /// @return Profile picture of the player
+    sf::Texture Player::getProfilePicture () const
+    {
+        return this->profilePicture;
+    }
+
+    /// @brief Get the empire card of the player.
+    /// @return Empire Card of the player.
+    EmpireCard* Player::getEmpire () const
+    {
+        return this->empire;
+    }
+
+    /// @brief Get the cards that are already built by the player.
+    /// @return Vector of cards built by the player.
+    std::vector<DevelopmentCard*> Player::getBuiltCards () const
+    {
+        return this->builtCards;
+    }
+
+    /// @brief Get the cards that are not already built by the player.
+    /// @return Vector of cards not built by the player.
+    std::vector<DevelopmentCard*> Player::getToBuildCards () const
+    {
+        return this->toBuildCards;
+    }
+
+    /// @brief Get the cards that are in the hand of the player, and he has to choose one.
+    /// @return Vector of cards that the player can choose.
+    std::vector<DevelopmentCard*> Player::getDraftingCards () const
+    {
+        return this->draftingCards;
+    }
+
+    /// @brief Get the cards that the player choosed during the drafting phase.
+    /// @return Vector of cards that the player choosed during the drafing phase.
+    std::vector<DevelopmentCard*> Player::getDraftCards () const
+    {
+        return this->draftCards;
+    }
+
+    /// @brief Get the State of the player (PENDING, PLAYING)
+    /// @return State of the player
+    PlayerState Player::getState () const
+    {
+        return this->state;
+    }
+
+    /// @brief Get the quantity of Financier tokens that the player has.
+    /// @return Quantity of Financier tokens that the player has.
+    int Player::getFinancierTokensUnit () const
+    {
+        return this->financierTokensUnit;
+    }
+
+    /// @brief Get the quantity of Colonel tokens that the player has.
+    /// @return Quantity of Colonel tokens that the player has.
+    int Player::getColonelTokensUnit () const
+    {
+        return this->colonelTokensUnit;
+    }
+
+    /// @brief Get the quantity of Krystallium tokens that the player has.
+    /// @return Quantity of Krystallium tokens that the player has.
+    int Player::getKrystalliumTokensUnit () const
+    {
+        return this->krystalliumTokensUnit;
+    }
+
+    /// @brief Get the ressources that the player has and can play now.
+    /// @return Vector of ressources that the player can play.
+    std::vector<ResourceType> Player::getCurrentResources () const
+    {
+        return this->currentResources;
+    }
+
+    /// @brief Get the quantity of ressources in the empire (to convert to Krystallium)
+    /// @return Quantity of ressources in the empire.
+    int Player::getResourcesInEmpireUnit () const
+    {
+        return this->resourcesInEmpireUnit;
+    }
+
+    /// @brief Get the resources production of all types.
+    /// @return Map of every production by the player.
+    std::map<ResourceType,int> Player::getResourcesProduction () const
+    {
+        return this->resourcesProduction;
+    }
+
+    /// @brief Get how much built cards of each type the player has build
+    /// @return Map of evry card type built by the player
+    std::map<CardType,int> Player::getCardsTypeList () const
+    {
+        return this->cardsTypeList;
     }
 }

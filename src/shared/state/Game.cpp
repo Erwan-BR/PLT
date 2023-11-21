@@ -1,5 +1,3 @@
-//Written by Adrien MILLASSEAU and Onur DEMIRBAS
-
 #include "Game.h"
 #include <algorithm>
 #include <random>
@@ -54,8 +52,7 @@ namespace state {
 		std::shuffle(std::begin(deck), std::end(deck), rng);
 	}
 
-	/// @brief 
-	/// @return 
+	/// @brief Create all cards of the game and add them to the deck.
 	void Game::createCards()
 	{
 		for(int i = 0;i<14;i++)
@@ -166,25 +163,27 @@ namespace state {
 	///@brief Initialize the Draft part of the game during which players select their cards
 	void Game::initDraft ()
 	{
-		std::vector<std::vector<DevelopmentCard*>> draftDeck;
-		int i,j=0;
+		// Deck of cards to send to a player.
+		std::vector<DevelopmentCard*> draftDeck;
 
 		for(Player* player : this->players)
 		{
-			// Initialise the cards that will be given to the players
-			std::vector<DevelopmentCard*> draft;
-			for(i = 0; i < 8; i++)
+			// Re-Initialise the cards that will be given to the players
+			draftDeck = {};
+
+			for(int i = 0; i < 7; i++)
 			{
-				draft.push_back(deck.back());
-				deck.pop_back();
+				// Add a card to draft and delete it from the deck.
+				draftDeck.push_back(this->deck.back());
+				this->deck.pop_back();
 			}
-			draftDeck.push_back(draft);
-			player->setDraftingCards(draftDeck[j]);
-			j++;
+			
+			// Send cards to players.
+			player->setDraftingCards(draftDeck);
 		}
 	}
 
-	///@brief Start a Draft
+	///@brief Launch the next draft.
 	void Game::nextDraft ()
 	{
 		int n = (int) (draftDeck[0]).size();
@@ -228,14 +227,65 @@ namespace state {
 	void Game::produceResource (ResourceType toProduceResource)
 	{
 		int playerProduction;
+
+		// Two integers to find the players that win the most of a resources to give him a bonus.
+		int playerIndexBiggestProduction = -1;
+		int biggestProduction = -1;
+		bool multipleBiggestProduction = false;
+
+		int index = 0;
+
+		// Iterating among all players.
 		for(Player* player : this->players)
 		{
 			playerProduction = player->getProductionGain(toProduceResource);
 
 			player->receiveResources(toProduceResource, playerProduction);
+
+			if (playerProduction > biggestProduction)
+			{
+				// Updating who won the most of the current produced ressource.
+				playerIndexBiggestProduction = index;
+				biggestProduction = playerProduction;
+				multipleBiggestProduction = false;
+			}
+			else if (playerProduction > biggestProduction)
+			{
+				playerIndexBiggestProduction = -1;
+				multipleBiggestProduction = true;
+			}
+			index++;
 		}
 
 		// Checking who won's the most of this resources for the bonus.
+		if (!multipleBiggestProduction)
+		{
+			// Send the financier token
+			if (ResourceType::MATERIAL == toProduceResource || ResourceType::GOLD == toProduceResource)
+			{
+				this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::FINANCIER);
+			}
+			// Send the colonel token
+			else if (ResourceType::ENERGY == toProduceResource || ResourceType::EXPLORATION == toProduceResource)
+			{
+				this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::COLONEL);
+			}
+			// Send the token choosen by the player
+			else
+			{
+				// Retrieve which token the player wants to get.
+				bool chooseColonel = this->players[playerIndexBiggestProduction]->chooseColonelToken();
+
+				if (chooseColonel)
+				{
+					this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::COLONEL);
+				}
+				else
+				{
+					this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::FINANCIER);
+				}
+			}
+		}
 	}
 
 	/// @brief Distributes the empires to the players
@@ -266,5 +316,28 @@ namespace state {
 	std::string Game::toString () const
 	{
 		return "";
+	}
+
+    /************************************* Setters & Getters *************************************/
+
+	/// @brief Get Players in the game.
+	/// @return All players inside the game.
+	std::vector<Player*> Game::getPlayers () const
+	{
+		return this->players;
+	}
+
+    /// @brief Get the number of the turn (1 to 4)
+    /// @return Number of the turn.
+    int Game::getTurn () const
+	{
+		return this->turn;
+	}
+
+    /// @brief Get the phase of the game (planificiation, production, draft)
+    /// @return Current phase of the game.
+    GamePhase Game::getPhase () const
+	{
+		return this->phase;
 	}
 }
