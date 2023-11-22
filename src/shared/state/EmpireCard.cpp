@@ -21,20 +21,17 @@ namespace state {
     /// @param empire Region the empire belongs to
     EmpireCard::EmpireCard(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, CardVictoryPoint* victoryPointsAdvanced, EmpireLand empire) :
     Card(name, productionGain, design, victoryPoints),
-    productionGainAdvanced(productionGainAdvanced),
     victoryPointsAdvanced(victoryPointsAdvanced),
     empire(empire)
     {
+        for(ResourceToProduce* resource : productionGainAdvanced){this->productionGainAdvanced.push_back(resource);}
     }
     
     /// @brief Destructor for the EmpireCard class
     EmpireCard::~EmpireCard ()
     {
         delete(this->victoryPointsAdvanced);
-        for(ResourceToProduce* resource : productionGainAdvanced)
-        {
-            delete(resource);
-        }
+        for(ResourceToProduce* resource : productionGainAdvanced)delete(resource);
     }
 
     /// @brief Convert the current EmpireCard to a readable string.

@@ -51,28 +51,16 @@ namespace state {
     {
         this->empire->~EmpireCard();
         
-        for(DevelopmentCard* card : builtCards)
-        {
-            card->~DevelopmentCard();
-        }
+        for(DevelopmentCard* card : this->builtCards)card->~DevelopmentCard();
         this->builtCards.clear();
 
-        for(DevelopmentCard* card : toBuildCards)
-        {
-            card->~DevelopmentCard();
-        }
+        for(DevelopmentCard* card : this->toBuildCards)card->~DevelopmentCard();
         this->toBuildCards.clear();
 
-        for(DevelopmentCard* card : draftingCards)
-        {
-            card->~DevelopmentCard();
-        }
+        for(DevelopmentCard* card : this->draftingCards)card->~DevelopmentCard();
         this->draftingCards.clear();
 
-        for(DevelopmentCard* card : draftCards)
-        {
-            card->~DevelopmentCard();
-        }
+        for(DevelopmentCard* card : this->draftCards)card->~DevelopmentCard();
         this->draftCards.clear();
 
         this->resourcesProduction.clear();
