@@ -1,5 +1,6 @@
 # PLT
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5c57e663698d4805bb27e62c792d5ba6)](https://app.codacy.com/gh/Erwan-BR/PLT?utm_source=github.com&utm_medium=referral&utm_content=Erwan-BR/PLT&utm_campaign=Badge_Grade)
 [![Actions Status](https://github.com/Erwan-BR/PLT/workflows/PLT%20build/badge.svg)](https://github.com/Erwan-BR/PLT/actions) [![codecov](https://codecov.io/gh/Erwan-BR/PLT/graph/badge.svg?token=1MESYSIBL5)](https://codecov.io/gh/Erwan-BR/PLT)
 
 ## Introduction
