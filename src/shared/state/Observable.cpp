@@ -1,23 +1,30 @@
 #include "Observable.h"
 
-using namespace state;
-
 namespace state{
-    Observable::Observable(){
+    
+    /// @brief Construct an Observable with an empty vector
+    Observable::Observable()
+    {
     }
 
-    Observable::~Observable(){
-
+    /// @brief Destructor of the observable class. Delete nothing for the moment because pointers can be shared.
+    Observable::~Observable()
+    {
     }
 
-    void Observable::addObserver(Observer* observerToAdd){
+    /// @brief Add an observer to this observable object.
+    /// @param observerToAdd Observer to add to the vector.
+    void Observable::addObserver(Observer* observerToAdd)
+    {
         this->observers.push_back(observerToAdd);
     }
 
-    void Observable::notifyObservers() const{
-        for(Observer* observer : this->observers){
-            (*observer).update();
+    /// @brief Notify all observers that the current Observable has a significant change.
+    void Observable::notifyObservers() const
+    {
+        for(Observer* observer : this->observers)
+        {
+            observer->update();
         }
     }
 }
-

@@ -7,32 +7,26 @@ namespace state {
 	///@brief Create an instance of the class Game
 	Game::Game() :
 		Observable(),
-		players(),
-		turn(0),
-		phase(PRODUCTION),
-		deck(),
-		isClockwise(true)
+		players()
 	{
-
 	}
 
 	///@brief Create an instance of the class Game with players specified
 	///@param players Vector of pointers which designate the players of the game
 	Game::Game(std::vector<Player*> players) :
 		Observable(),
-		players(players),
-		turn(0),
-		phase(PRODUCTION),
-		deck(),
-		isClockwise(true)
+		players(players)
 	{
-
 	}
 
 	///@brief Destructor of the Class Game
 	Game::~Game ()
 	{
-		// To-do
+		// Delete all cards from the deck.
+		for (DevelopmentCard* card : this->deck)
+		{
+			delete card;
+		}
 	}
 
 	///@brief Initialize the game
@@ -164,49 +158,48 @@ namespace state {
 	void Game::initDraft ()
 	{
 		// Deck of cards to send to a player.
-		std::vector<DevelopmentCard*> draftDeck;
+		std::vector<DevelopmentCard*> draftingDeck;
 
 		for(Player* player : this->players)
 		{
 			// Re-Initialise the cards that will be given to the players
-			draftDeck = {};
+			draftingDeck = {};
 
 			for(int i = 0; i < 7; i++)
 			{
 				// Add a card to draft and delete it from the deck.
-				draftDeck.push_back(this->deck.back());
+				draftingDeck.push_back(this->deck.back());
 				this->deck.pop_back();
 			}
 			
 			// Send cards to players.
-			player->setDraftingCards(draftDeck);
+			player->setDraftingCards(draftingDeck);
 		}
 	}
 
 	///@brief Launch the next draft.
 	void Game::nextDraft ()
 	{
-		int n = (int) (draftDeck[0]).size();
+		int n = (int) (this->draftDeck[0]).size();
 
 		if(n == 0)
 		{
 			endDraft();
 		}
-		int i=0;
+		int i = 0;
 		int m = players.size(); 
 		for(Player* player : this->players)
 		{
 			if(this->isClockwise)
 			{
-				player->setDraftingCards(draftDeck[(i-(m-n))%m]);
+				player->setDraftingCards(this->draftDeck[(i-(m-n))%m]);
 				i++;
 			}
 			else
 			{
-				player->setDraftingCards(draftDeck[((m-n)-i)%m]);
+				player->setDraftingCards(this->draftDeck[((m-n)-i)%m]);
 				i++;
 			}
-			
 		}
 	}
 

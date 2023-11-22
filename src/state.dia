@@ -2194,7 +2194,7 @@
             <dia:string>#EmpireCard*#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#new EmpireCard()#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Empire of the player, that allows different abilities.#</dia:string>
@@ -2217,7 +2217,7 @@
             <dia:string>#std::vector&lt;DevelopmentCard*&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#{}#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#DevelopmentCard that have been fully paid.#</dia:string>
@@ -2240,7 +2240,7 @@
             <dia:string>#std::vector&lt;DevelopmentCard*&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#{}#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#DevelopmentCard that are not fully paid yet.#</dia:string>
@@ -2263,7 +2263,7 @@
             <dia:string>#std::vector&lt;DevelopmentCard*&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#{}#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Cards that the player is drafting. He has to choose one.#</dia:string>
@@ -2286,7 +2286,7 @@
             <dia:string>#std::vector&lt;DevelopmentCard*&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#{}#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Cards that the player just choose from the drafting phase.#</dia:string>
@@ -2309,7 +2309,7 @@
             <dia:string>#PlayerState#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#PlayerState::PENDING#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#PENDING if the player is waiting for others to finish, PLAYING if he hasn't finished playing.#</dia:string>
@@ -2332,7 +2332,7 @@
             <dia:string>#int#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#0#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Quantity of financier token that the player has.#</dia:string>
@@ -2355,7 +2355,7 @@
             <dia:string>#int#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#0#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Quantity of financier token that the player has.#</dia:string>
@@ -2378,7 +2378,7 @@
             <dia:string>#int#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#0#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Quantity of krystallium token that the player has.#</dia:string>
@@ -2401,7 +2401,7 @@
             <dia:string>#std::vector&lt;ResourceType&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#{}#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Ressources that the player can play at this turn. He can also choose to send them to the Empire.#</dia:string>
@@ -2424,7 +2424,7 @@
             <dia:string>#int#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#0#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Quantity of krystallium token that the player has in his empire.#</dia:string>
@@ -3851,16 +3851,16 @@
         <dia:point val="27.97,-29.0129"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="27.92,-29.0629;49.31,-3.9629"/>
+        <dia:rectangle val="27.92,-29.0629;51.235,-4.7629"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="27.97,-29.0129"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="21.289999999999999"/>
+        <dia:real val="23.215"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="25.000000000000007"/>
+        <dia:real val="24.200000000000006"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#Game#</dia:string>
@@ -3984,7 +3984,7 @@
             <dia:string>#int#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#0#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Int between 1  and 4 that indicate the number of the current turn.#</dia:string>
@@ -4007,7 +4007,7 @@
             <dia:string>#GamePhase#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#GamePhase::PRODUCTION#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Phase of the game, usefull for the client.#</dia:string>
@@ -4030,7 +4030,7 @@
             <dia:string>#std::vector&lt;DevelopmentCard*&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#{}#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#List of all drawable cards.#</dia:string>
@@ -4053,7 +4053,7 @@
             <dia:string>#bool#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#true#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Boolean to know if the cards should turn clockwise during the draft phase.#</dia:string>
@@ -4099,33 +4099,10 @@
             <dia:string>#std::vector&lt;std::vector&lt;DevelopmentCard*&gt;&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#{}#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
-            <dia:string>#Deck of drafting cards deck#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="visibility">
-            <dia:enum val="1"/>
-          </dia:attribute>
-          <dia:attribute name="abstract">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="class_scope">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="umlattribute">
-          <dia:attribute name="name">
-            <dia:string>#playerProduction#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#std::vector&lt;int&gt;#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="value">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>#Players production of the current ressource.#</dia:string>
+            <dia:string>#Deck of drafting cards deck. Used when we switch cards from hands.#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="1"/>
@@ -6304,18 +6281,18 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O14">
       <dia:attribute name="obj_pos">
-        <dia:point val="49.26,-27.1129"/>
+        <dia:point val="51.185,-27.1129"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="49.21,-28.8579;87.9768,-25.7798"/>
+        <dia:rectangle val="51.135,-28.8579;87.9768,-25.7798"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="49.26,-27.1129"/>
-        <dia:point val="50.31,-27.1129"/>
-        <dia:point val="50.31,-28.1129"/>
+        <dia:point val="51.185,-27.1129"/>
+        <dia:point val="52.235,-27.1129"/>
+        <dia:point val="52.235,-28.1129"/>
         <dia:point val="87.5268,-28.1129"/>
         <dia:point val="87.5268,-26.2298"/>
       </dia:attribute>
@@ -6360,16 +6337,16 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O15">
       <dia:attribute name="obj_pos">
-        <dia:point val="49.26,-25.5129"/>
+        <dia:point val="51.185,-25.5129"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="49.21,-26.2579;63.6858,-21.4994"/>
+        <dia:rectangle val="51.135,-26.2579;63.6858,-21.4994"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="49.26,-25.5129"/>
+        <dia:point val="51.185,-25.5129"/>
         <dia:point val="63.2358,-25.5129"/>
         <dia:point val="63.2358,-21.9494"/>
       </dia:attribute>
@@ -7425,18 +7402,18 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O35">
       <dia:attribute name="obj_pos">
-        <dia:point val="38.615,-4.0129"/>
+        <dia:point val="39.5775,-4.8129"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="28.8653,-4.0629;38.665,18.1236"/>
+        <dia:rectangle val="28.8653,-4.8629;39.6275,18.1236"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="38.615,-4.0129"/>
-        <dia:point val="38.615,6.63035"/>
-        <dia:point val="29.3153,6.63035"/>
+        <dia:point val="39.5775,-4.8129"/>
+        <dia:point val="39.5775,6.23035"/>
+        <dia:point val="29.3153,6.23035"/>
         <dia:point val="29.3153,17.6736"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -8014,15 +7991,15 @@
         <dia:point val="24.2838,-31.1053"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="24.2338,-31.9553;38.665,-28.9629"/>
+        <dia:rectangle val="24.2338,-31.9553;39.6275,-28.9629"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
         <dia:point val="24.2838,-31.1053"/>
-        <dia:point val="38.615,-31.1053"/>
-        <dia:point val="38.615,-29.0129"/>
+        <dia:point val="39.5775,-31.1053"/>
+        <dia:point val="39.5775,-29.0129"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>

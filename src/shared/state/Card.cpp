@@ -4,6 +4,7 @@ namespace state {
 
     /// @brief Create an empty card
     Card::Card() :
+    Observable(),
     name(""),
     productionGain(),
     design(sf::Texture()),
@@ -13,6 +14,7 @@ namespace state {
 
     /// @brief Create a card with all informations.
     Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints) :
+    Observable(),
     name(name),
     productionGain(productionGain),
     design(design),
