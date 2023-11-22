@@ -29,16 +29,17 @@ namespace state {
     Card(name, productionGain, design, victoryPoints),
     type(CardType::NONETYPE),
     numberOfCopies(numberOfCopies),
-    costToBuild(costToBuild),
-    instantGain(instantGain),
+        instantGain(instantGain),
     discardGain(discardGain),
     quantityResourceMissing(costToBuild.size()) // Because no resource is paid and the size is never 0.
     {
+        for(ResourceToPay* resource : costToBuild){this->costToBuild.push_back(resource);}
     }
 
     /// @brief Destructor of the DevelopmentCard class.
     DevelopmentCard::~DevelopmentCard ()
     {
+        for(ResourceToPay* resource : this->costToBuild){delete(resource);}
     }
 
     /// @brief Add a ressource into the Card. The resource must be addable. Should also update the quantity and the isPaid value.
@@ -170,10 +171,17 @@ namespace state {
         return this->discardGain;
     }
 
-    /// @brief Getter for the type attribute
+    /// @brief Getter for the type attribute.
     /// @return type attribute.
     CardType DevelopmentCard::getType() const
     {
         return this->type;
+    }
+
+    /// @brief Getter for the cost to build.
+    /// @return Cost to build.
+    std::vector<ResourceToPay*> DevelopmentCard::getCostToBuild() const
+    {
+        return this->costToBuild;
     }
 }

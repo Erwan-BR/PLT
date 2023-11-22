@@ -16,17 +16,16 @@ namespace state {
     Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints) :
     Observable(),
     name(name),
-    productionGain(productionGain),
     design(design),
     victoryPoints(victoryPoints)
     {
+        for(ResourceToProduce* resource : productionGain){this->productionGain.push_back(resource);}
     }
 
     /// @brief Card destructor
     Card::~Card()
     {
-        delete(this->victoryPoints);
-        for(ResourceToProduce* resource : productionGain)delete(resource);
+        for(ResourceToProduce* resource : this->productionGain)delete(resource);
     }
 
     /************************************* Setters & Getters *************************************/
