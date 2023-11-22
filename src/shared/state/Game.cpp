@@ -32,10 +32,10 @@ namespace state {
 	///@brief Initialize the game
 	void Game::initGame ()
 	{
-		std::vector<EmpireCard*> empires = initEmpire();
-		initCards();
-		initPlayers(empires);
-		startGame();
+		std::vector<EmpireCard*> empires = this->initEmpire();
+		this->initCards();
+		this->initPlayers(empires);
+		this->startGame();
 	}
 
 	///@brief Create and Initialize the Cards for the game
