@@ -10,7 +10,9 @@ namespace render
         this->sprite->setTexture(*(this->texture));
         
         this->texture = new sf::Texture();
-        this->texture = &(this->card->getDesign());
+        sf::Texture cardDesign = this->card->getDesign();
+        this->texture = &cardDesign;
+
         this->vectorOfCrossesSprite = {};
 
         // Creating textures for paid and not paid resources.
@@ -37,14 +39,23 @@ namespace render
     /// @brief Update the render of the Renderer of Card.
     void DevelopmentCardRenderer::update ()
     {
-        // Coordinate of the current cross to put.
-        int xPosition;
-        int yPosition;
-
-        // Iterating among all resource that needs to be paid.
-        for (state::ResourceToPay* resourceToPay : this->card->getCostToBuild())
+        // Retrieve the elements to pay.
+        std::vector<state::ResourceToPay*> vectorOfElementsToPay = this->card->getCostToBuild();
+        
+        // Iterating among all resources that needs to be paid.
+        for (long unsigned int index = 0; index < vectorOfCrossesSprite.size(); index++)
         {
-            ;
+            if (vectorOfElementsToPay[index]->isPaid)
+            {
+                this->vectorOfCrossesSprite[index]->setTexture(*(this->paidTexture));
+            }
         }
+    }
+
+    /************************************* Setters & Getters *************************************/
+
+    std::vector<sf::Sprite*> DevelopmentCardRenderer::getVectorOfCrossesSprite () const
+    {
+        return this->vectorOfCrossesSprite;
     }
 }
