@@ -170,10 +170,17 @@ namespace state {
         return this->discardGain;
     }
 
-    /// @brief Getter for the type attribute
+    /// @brief Getter for the type attribute.
     /// @return type attribute.
     CardType DevelopmentCard::getType() const
     {
         return this->type;
+    }
+
+    /// @brief Getter for the cost to build.
+    /// @return Cost to build.
+    std::vector<ResourceToPay*> DevelopmentCard::getCostToBuild() const
+    {
+        return this->costToBuild;
     }
 }
