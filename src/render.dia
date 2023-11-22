@@ -846,7 +846,7 @@
             <dia:string>#player#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#Player*#</dia:string>
+            <dia:string>#state::Player*#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
@@ -2413,7 +2413,7 @@
             <dia:string>#game#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#Game*#</dia:string>
+            <dia:string>#state::Game*#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
@@ -2815,7 +2815,7 @@
             <dia:string>#card#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#Card*#</dia:string>
+            <dia:string>#state::Card*#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
