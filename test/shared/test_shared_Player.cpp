@@ -9,6 +9,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
   {
     // Testing the empty contructor of Player
     Player* myFirstPlayer = new Player();
+    myFirstPlayer = new Player("Maxime", 1, sf::Texture());
 
     //Elements to test the methods :
     std::vector<ResourceToProduce*> resourceProd1;
@@ -20,7 +21,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     std::vector<ResourceType> instantGain1;
     instantGain1.push_back(SCIENCE);
     CardVictoryPoint* victoryPoints1 = new CardVictoryPoint{2,NONETYPE};
-    DevelopmentCard* cardTest1 = new DevelopmentCard ("CardTest1", resourceProd1, sf::Texture(), victoryPoints1, STRUCTURE, 1, resourcePay1, instantGain1, GOLD);
+    DevelopmentCard* cardTest1 = new DevelopmentCard("CardTest1", resourceProd1, sf::Texture(), victoryPoints1, STRUCTURE, 1, resourcePay1, instantGain1, GOLD);
 
     std::vector<ResourceToProduce*> resourceProd2;
     ResourceToProduce* production2 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
@@ -31,7 +32,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     std::vector<ResourceType> instantGain2;
     instantGain2.push_back(GOLD);
     CardVictoryPoint* victoryPoints2 = new CardVictoryPoint{1,FINANCIER};
-    DevelopmentCard* cardTest2 = new DevelopmentCard ("CardTest2", resourceProd2, sf::Texture(), victoryPoints2, PROJECT, 2, resourcePay2, instantGain2, SCIENCE);
+    DevelopmentCard* cardTest2 = new DevelopmentCard("CardTest2", resourceProd2, sf::Texture(), victoryPoints2, PROJECT, 2, resourcePay2, instantGain2, SCIENCE);
     
     
     std::vector<ResourceToProduce*> resourceProd3;
@@ -43,7 +44,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     std::vector<ResourceType> instantGain3;
     instantGain3.push_back(GOLD);
     CardVictoryPoint* victoryPoints3 = new CardVictoryPoint{1,FINANCIER};
-    DevelopmentCard* cardTest3 = new DevelopmentCard ("CardTest3", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
+    DevelopmentCard* cardTest3 = new DevelopmentCard("CardTest3", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
     
     
     std::vector<ResourceToProduce*> resourceProd4;
@@ -55,14 +56,14 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     std::vector<ResourceType> instantGain4;
     instantGain4.push_back(GOLD);
     CardVictoryPoint* victoryPoints4 = new CardVictoryPoint{1,COLONEL};
-    DevelopmentCard* cardTest4 = new DevelopmentCard ("CardTest4", resourceProd4, sf::Texture(), victoryPoints4, STRUCTURE, 2, resourcePay4, instantGain4, SCIENCE);
+    DevelopmentCard* cardTest4 = new DevelopmentCard("CardTest4", resourceProd4, sf::Texture(), victoryPoints4, STRUCTURE, 2, resourcePay4, instantGain4, SCIENCE);
     
-    DevelopmentCard* cardTest5 = new DevelopmentCard ("CardTest5", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
-    DevelopmentCard* cardTest6 = new DevelopmentCard ("CardTest6", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
-    DevelopmentCard* cardTest7 = new DevelopmentCard ("CardTest6", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
+    DevelopmentCard* cardTest5 = new DevelopmentCard("CardTest5", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
+    DevelopmentCard* cardTest6 = new DevelopmentCard("CardTest6", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
+    DevelopmentCard* cardTest7 = new DevelopmentCard();
  
     CardVictoryPoint* victoryPoints8 = new CardVictoryPoint{1,STRUCTURE};
-    DevelopmentCard* cardTest8 = new DevelopmentCard ("CardTest6", resourceProd3, sf::Texture(), victoryPoints8, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
+    DevelopmentCard* cardTest8 = new DevelopmentCard("CardTest6", resourceProd3, sf::Texture(), victoryPoints8, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
 
     std::vector<DevelopmentCard*> draftingDeck;
     draftingDeck.push_back(cardTest1);
@@ -73,7 +74,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     draftingDeck.push_back(cardTest6);
     draftingDeck.push_back(cardTest7);
     draftingDeck.push_back(cardTest8);
-
+    
 
     //Testing method setDraftinCards :
     myFirstPlayer->setDraftingCards(draftingDeck);
@@ -170,36 +171,27 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     //Testing method toString :
     (void)myFirstPlayer->toString();
 
-    //Testing method getProductionGain :
+    //Testing getters:
     (void)myFirstPlayer->getProductionGain(MATERIAL);
-/*
+    (void)myFirstPlayer->getName();
+    (void)myFirstPlayer->getProfilePicture();
+    (void)myFirstPlayer->getEmpire();
+    (void)myFirstPlayer->getBuiltCards();
+    (void)myFirstPlayer->getToBuildCards();
+    (void)myFirstPlayer->getDraftingCards();
+    (void)myFirstPlayer->getDraftCards();
+    (void)myFirstPlayer->getState();
+    (void)myFirstPlayer->getFinancierTokensUnit();
+    (void)myFirstPlayer->getColonelTokensUnit();
+    (void)myFirstPlayer->getKrystalliumTokensUnit();
+    (void)myFirstPlayer->getCurrentResources();
+    (void)myFirstPlayer->getResourcesInEmpireUnit();
+    (void)myFirstPlayer->getResourcesProduction();
+    (void)myFirstPlayer->getCardsTypeList();
+
+
     // Delete pointers that won't be used anymore.
-    delete africa;
-    delete victoryPointsAFRICA;
-    delete firstResourceToProduceAFRICA;
-    delete secondResourceToProduceAFRICA;
-    for(ResourceToProduce* resource : productionGainAFRICA)
-    {
-      delete resource;
-    }
-
-    delete cardTest6;
-    delete cardTest5;
-    delete cardTest4;
-    delete cardTest3;
-    delete victoryPoints3;
-    delete paiement3;
-    delete production3;
-
-    delete cardTest2;
-    delete victoryPoints2;
-    delete paiement2;
-    delete production2;
-
-    delete cardTest1;
-    delete victoryPoints1;
-    delete paiement1;
-    delete production1;*/
+    myFirstPlayer->~Player();
   }
 }
 
