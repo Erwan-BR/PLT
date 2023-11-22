@@ -54,6 +54,8 @@ namespace render
 
     /************************************* Setters & Getters *************************************/
 
+    /// @brief Get the vector of sprites that shows if a resource is paid or not.
+    /// @return Vector of sprites.
     std::vector<sf::Sprite*> DevelopmentCardRenderer::getVectorOfCrossesSprite () const
     {
         return this->vectorOfCrossesSprite;
