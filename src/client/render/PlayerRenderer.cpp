@@ -298,5 +298,10 @@ namespace render {
 		(this->texts[index+1])->setString("x"+std::to_string(value));
 		}
 	}
+
+	void PlayerRenderer::update()
+	{
+		
+	}
 };
 
