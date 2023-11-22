@@ -52,6 +52,7 @@ namespace state {
             if ((!resourceToPay->isPaid) && (resourceToPay->type == resource))
             {
                 resourceToPay->isPaid = true;
+                this->notifyObservers();
                 return (this->decreaseResourceUnitNeeded());
             } 
         }
@@ -71,6 +72,7 @@ namespace state {
             if ((!resourceToPay->isPaid) && (resourceToPay->type == resourceToReplace))
             {
                 resourceToPay->isPaid = true;
+                this->notifyObservers();
                 return (this->decreaseResourceUnitNeeded());
             } 
         }

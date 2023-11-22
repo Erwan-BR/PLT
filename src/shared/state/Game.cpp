@@ -133,6 +133,8 @@ namespace state {
 			this->phase = DRAFT;
 			initDraft();
 		}
+
+		this->notifyObservers();
 	}
 
 	///@brief Start one of the four turn of the game
@@ -152,6 +154,8 @@ namespace state {
 		{
 			isClockwise = false;
 		}
+
+		this->notifyObservers();
 	}
 
 	///@brief Initialize the Draft part of the game during which players select their cards
@@ -175,6 +179,7 @@ namespace state {
 			// Send cards to players.
 			player->setDraftingCards(draftingDeck);
 		}
+		this->notifyObservers();
 	}
 
 	///@brief Launch the next draft.
@@ -201,6 +206,8 @@ namespace state {
 				i++;
 			}
 		}
+
+		this->notifyObservers();
 	}
 
 	///@brief End the current Draft phase
