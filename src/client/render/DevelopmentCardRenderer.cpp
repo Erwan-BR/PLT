@@ -3,20 +3,29 @@
 namespace render
 {
     /// @brief Constructor of the card renderer.
-    DevelopmentCardRenderer::DevelopmentCardRenderer ()
-    {
-        this->card = new state::DevelopmentCard();
-        this->texture = new sf::Texture();
-        this->sprite = new sf::Sprite();
-    }
-
-    /// @brief Constructor of the card renderer.
     /// @param card Card to render.
     DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card) :
-        card(card),
-        texture(&(card->getDesign()))
+        card(card)
     {
         this->sprite->setTexture(*(this->texture));
+        
+        this->texture = new sf::Texture();
+        this->texture = &(this->card->getDesign());
+        this->vectorOfCrossesSprite = {};
+
+        // Creating textures for paid and not paid resources.
+        this->paidTexture = new sf::Texture();
+		this->paidTexture->loadFromFile("./resources/img/resourcesPaid.png");
+        this->notPaidTexture = new sf::Texture();
+		this->notPaidTexture->loadFromFile("./resources/img/resourcesNotPaid.png");
+
+        long unsigned int numberOfSprites = this->card->getCostToBuild().size();
+
+        for (long unsigned int index = 0; index < numberOfSprites; index++)
+        {
+            vectorOfCrossesSprite.push_back(new sf::Sprite());
+            vectorOfCrossesSprite[index]->setTexture(*(this->notPaidTexture));
+        }
     }
 
     /// @brief Destructor of the card renderer.
