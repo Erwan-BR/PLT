@@ -88,7 +88,9 @@ namespace state {
         this->builtCards.push_back(cardToBuid);
         this->toBuildCards.erase(std::remove(this->toBuildCards.begin(), this->toBuildCards.end(), cardToBuid), this->toBuildCards.end());
         this->cardsTypeList[cardToBuid->getType()]++;
-        updateProduction();
+        this->updateProduction();
+
+        this->notifyObservers();
     }
 
     /// @brief Add a resource "resource" to the card "card"
@@ -133,6 +135,8 @@ namespace state {
                 this->toBuildCards.erase(cardPos);
             }
         }
+
+        this->notifyObservers();
     }
 
     /// @brief Function called when the player wants to keep a card from the drafting phase.
@@ -145,6 +149,8 @@ namespace state {
             this->toBuildCards.push_back(toKeepCard);
             this->draftCards.erase(cardPos);
         }
+
+        this->notifyObservers();
     }
 
     /// @briefUpdate the production of every tokens
@@ -155,6 +161,8 @@ namespace state {
         this->resourcesProduction[SCIENCE] = computeProduction(SCIENCE);
         this->resourcesProduction[GOLD] = computeProduction(GOLD);
         this->resourcesProduction[EXPLORATION] = computeProduction(EXPLORATION);
+
+        this->notifyObservers();
     }
 
     /// @brief Compute the quantity of resource named "resourceToProduce" produced by the player
@@ -254,15 +262,15 @@ namespace state {
     {
         this->resourcesInEmpireUnit++;
 
-        convertToKrystallium();
+        this->convertToKrystallium();
 
-        return ;
+        this->notifyObservers();
     }
 
     /// @brief Converts the empire's resources into a krystallium when it reaches 5 resources
     void Player::convertToKrystallium()
     {
-        if(this->resourcesInEmpireUnit == 5)
+        if(5 == this->resourcesInEmpireUnit)
         {
             this->resourcesInEmpireUnit = 0;
             this->krystalliumTokensUnit++;
@@ -280,6 +288,8 @@ namespace state {
             this->draftingCards.erase(cardPos);
             this->state = PENDING;
         }
+
+        this->notifyObservers();
     }
 
     /// @brief Return the selected token by the player (Colonel/Financier)
@@ -295,6 +305,8 @@ namespace state {
     void Player::receiveResource (ResourceType resourceToReceive)
     {
         this->currentResources.push_back(resourceToReceive);
+
+        this->notifyObservers();
     }
     
     /// @brief Receive multiple resources from the game
@@ -306,6 +318,8 @@ namespace state {
         {
             this->currentResources.push_back(resourceToReceive);
         }
+
+        this->notifyObservers();
     }
 
     /// @brief Transform the Player to a readable string.
@@ -338,6 +352,8 @@ namespace state {
     void Player::setEmpire(EmpireCard* empire)
     {
         this->empire = empire;
+
+        this->notifyObservers();
     }
 
     /// @brief Setter for the drafting deck
@@ -348,6 +364,8 @@ namespace state {
         {
             this->draftingCards.push_back(card);
         }
+
+        this->notifyObservers();
     }
 
     /// @brief Get the production of a given resource.
