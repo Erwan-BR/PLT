@@ -28,7 +28,12 @@ namespace render
     /// @brief Update the render of the Renderer of Card.
     void DevelopmentCardRenderer::update ()
     {
-        for (auto element : card->get)
+        // Coordinate of the current cross to put.
+        int xPosition;
+        int yPosition;
+
+        // Iterating among all resource that needs to be paid.
+        for (state::ResourceToPay* resourceToPay : this->card->getCostToBuild())
         {
             ;
         }
