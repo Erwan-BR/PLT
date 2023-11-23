@@ -46,16 +46,31 @@ namespace state {
 		std::shuffle(std::begin(deck), std::end(deck), rng);
 	}
 
+	/// @brief Distributes the empires to the players
+	void Game::initPlayers (std::vector<EmpireCard*> empires)
+	{
+		// Checking if the number of players is inferior of the number of empires. We should always enter inside.
+		if (this->players.size() <= empires.size())
+		{
+			for(Player* player : this->players)
+			{
+				// Initialise the empires that will be given to the players
+				int empireIndex = 0;
+				player->setEmpire(empires[empireIndex]);
+				empireIndex++;
+			}
+		}
+	}
+
 	/// @brief Create all cards of the game and add them to the deck.
 	void Game::createCards()
 	{
-		for(int i = 0;i<14;i++)
+		// To-Do : modify once cards are correctly scanned.
+		for(int i = 0; i < 14; i++)
 		{
 			DevelopmentCard* createdCard = new DevelopmentCard();
 			this->deck.push_back(createdCard);
 		}
-		return;
-
 	}
 
 	///@brief Create and Initialize the Empire for the game
@@ -112,48 +127,42 @@ namespace state {
 	///@brief Start the game
 	void Game::startGame ()
 	{
-		nextPhase();
+		this->nextPhase();
 	}
 
 	///@brief Manage the progress of the game and start the next phase among Draft, Planification and Production
 	void Game::nextPhase ()
 	{
-		if(DRAFT == this->phase)
+		if(GamePhase::DRAFT == this->phase)
 		{
-			this->phase = PLANIFICATION;
-			initPlanification();
+			this->phase = GamePhase::PLANIFICATION;
+			this->initPlanification();
 		}
-		else if(PLANIFICATION == this->phase)
+		else if(GamePhase::PLANIFICATION == this->phase)
 		{
-			this->phase = PRODUCTION;
+			this->phase = GamePhase::PRODUCTION;
+			this->initProduction();
 		}
-		else if(PRODUCTION == this->phase)
+		else if(GamePhase::PRODUCTION == this->phase)
 		{
-			newTurn();
-			this->phase = DRAFT;
-			initDraft();
+			this->newTurn();
+			this->phase = GamePhase::DRAFT;
+			this->initDraft();
 		}
-
 		this->notifyObservers();
 	}
 
 	///@brief Start one of the four turn of the game
 	void Game::newTurn ()
 	{
-		turn = turn + 1;
-		if(turn == 5)
+		this->turn ++;
+		if(5 == this->turn)
 		{
-			endGame();
+			this->endGame();
 		}
 
-		if (turn%2 == 1)
-		{
-			isClockwise = true;
-		}
-		else
-		{
-			isClockwise = false;
-		}
+		// Invert the sens for the draft phase
+		this->isClockwise = ! this->isClockwise;
 
 		this->notifyObservers();
 	}
@@ -185,35 +194,54 @@ namespace state {
 	///@brief Launch the next draft.
 	void Game::nextDraft ()
 	{
-		int n = (int) (this->draftDeck[0]).size();
+		// Retrieve the number of cards to draft.
 
-		if(n == 0)
+		int numberOfCardsToDraft = this->players[0]->getDraftingCards().size();
+
+		// If there is no cards left, we can continue to play.
+		if(0 == numberOfCardsToDraft)
 		{
-			endDraft();
-		}
-		int i = 0;
-		int m = players.size(); 
-		for(Player* player : this->players)
-		{
-			if(this->isClockwise)
-			{
-				player->setDraftingCards(this->draftDeck[(i-(m-n))%m]);
-				i++;
-			}
-			else
-			{
-				player->setDraftingCards(this->draftDeck[((m-n)-i)%m]);
-				i++;
-			}
+			this->endDraft();
 		}
 
+		// According of how we are turning cards, behaviour are differents.
+		if (this->isClockwise)
+		{
+			// Memorize the first player deck to give it to the last player.
+			std::vector<DevelopmentCard*> firstPlayerDeck = this->players[0]->getDraftingCards();
+
+			// Iterating among all players (except the last one) to make the draft.
+			for (long unsigned int playerIndex = 0; playerIndex < this->players.size() - 1; playerIndex++)
+			{
+				this->players[playerIndex]->setDraftingCards(this->players[(playerIndex + 1)]->getDraftingCards());
+			}
+
+			// Giving the deck of the first player to the last one.
+			this->players[this->players.size()]->setDraftingCards(firstPlayerDeck);
+		}
+		else
+		{
+			// Memorize the last player deck to give it to the first player.
+			std::vector<DevelopmentCard*> lastPlayerDeck = this->players[this->players.size()]->getDraftingCards();
+
+			// Iterating among all players (except the first one) to make the draft.
+			for (long unsigned int playerIndex = this->players.size(); playerIndex > 0; playerIndex--)
+			{
+				this->players[playerIndex]->setDraftingCards(this->players[(playerIndex - 1)]->getDraftingCards());
+			}
+
+			// Giving the deck of the first player to the last one.
+			this->players[0]->setDraftingCards(lastPlayerDeck);
+		}
+
+		// Notify observers that the draft is done.
 		this->notifyObservers();
 	}
 
 	///@brief End the current Draft phase
 	void Game::endDraft ()
 	{
-		nextPhase();
+		this->nextPhase();
 	}
 
 	///@brief Initialize the Planification phase during which players choose the cards they will try to build
@@ -222,25 +250,73 @@ namespace state {
 		return;
 	}
 
-	///@brief Manage the phase of production for all player and one resource
-	///@param toProduceResource Pointer which designate the type of resource currently to produce
-	void Game::produceResource (ResourceType toProduceResource)
+	/// @brief End the planification phase to start the next phase.
+	void Game::endPlanification ()
 	{
+		this->nextPhase();
+	}
+
+	/// @brief Init the production phase.
+	void Game::initProduction ()
+	{
+		this->phase = GamePhase::PRODUCTION;
+		this->resourceProducing = ResourceType::MATERIAL;
+		this->notifyObservers();
+		this->nextProduction();
+	}
+
+	/// @brief Launch the next production phase if a production phase arrives, launch the next draft phase if not.
+	void Game::nextProduction ()
+	{
+		switch (this->resourceProducing)
+		{
+			case (ResourceType::MATERIAL) :
+				this->produceResource();
+				this->resourceProducing = ResourceType::ENERGY;
+				break;
+			case(ResourceType::ENERGY) :
+				this->produceResource();
+				this->resourceProducing = ResourceType::SCIENCE;
+				break;
+			case(ResourceType::SCIENCE) :
+				this->produceResource();
+				this->resourceProducing = ResourceType::GOLD;
+				break;
+			case(ResourceType::GOLD) :
+				this->produceResource();
+				this->resourceProducing = ResourceType::EXPLORATION;
+				break;
+			case(ResourceType::EXPLORATION) :
+				this->produceResource();
+				this->resourceProducing = ResourceType::KRYSTALLIUM;
+				break;
+			default :
+				break;
+		}
+		this->notifyObservers();
+	}
+
+	///@brief Manage the phase of production for all player and one resource
+	void Game::produceResource ()
+	{
+		// Production of the player in the following loop.
 		int playerProduction;
 
 		// Two integers to find the players that win the most of a resources to give him a bonus.
 		int playerIndexBiggestProduction = -1;
 		int biggestProduction = -1;
+		
 		bool multipleBiggestProduction = false;
 
+		// Current index of the loop - to update the plkayer with the biggest production
 		int index = 0;
 
 		// Iterating among all players.
 		for(Player* player : this->players)
 		{
-			playerProduction = player->getProductionGain(toProduceResource);
+			playerProduction = player->getProductionGain(this->resourceProducing);
 
-			player->receiveResources(toProduceResource, playerProduction);
+			player->receiveResources(this->resourceProducing, playerProduction);
 
 			if (playerProduction > biggestProduction)
 			{
@@ -261,12 +337,12 @@ namespace state {
 		if (!multipleBiggestProduction)
 		{
 			// Send the financier token
-			if (ResourceType::MATERIAL == toProduceResource || ResourceType::GOLD == toProduceResource)
+			if (ResourceType::MATERIAL == this->resourceProducing || ResourceType::GOLD == this->resourceProducing)
 			{
 				this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::FINANCIER);
 			}
 			// Send the colonel token
-			else if (ResourceType::ENERGY == toProduceResource || ResourceType::EXPLORATION == toProduceResource)
+			else if (ResourceType::ENERGY == this->resourceProducing || ResourceType::EXPLORATION == this->resourceProducing)
 			{
 				this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::COLONEL);
 			}
@@ -288,17 +364,10 @@ namespace state {
 		}
 	}
 
-	/// @brief Distributes the empires to the players
-	void Game::initPlayers (std::vector<EmpireCard*> empires)
+	/// @brief End the production phase.
+	void Game::endProduction ()
 	{
-		for(Player* player : this->players)
-		{
-			// Initialise the cards that will be given to the players
-			int i = 0;
-			player->setEmpire(empires[i]);
-			i++;
-		}
-		return;
+		this->nextPhase();
 	}
 
 	/// @brief Ends the game, counts every player's victory points and compares them to give a podium
