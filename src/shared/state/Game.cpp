@@ -409,4 +409,11 @@ namespace state {
 	{
 		return this->phase;
 	}
+
+	/// @brief Allows to get the resource that is produced. Returns Krystallium if production is finished.
+	/// @return Resource produced / Next one to be produced according to the moment.
+	ResourceType Game::getResourceProducing () const
+	{
+		return this->resourceProducing;
+	}
 }
