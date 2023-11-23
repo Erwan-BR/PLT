@@ -134,7 +134,7 @@
         <dia:point val="71.8926,9.19227"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="71.8426,8.14227;85.7069,54.9115"/>
+        <dia:rectangle val="71.8426,8.14227;85.707,54.9115"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -739,7 +739,7 @@
         <dia:point val="25.3391,22.2918"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.2891,22.2418;49.7591,40.9418"/>
+        <dia:rectangle val="25.2891,22.2418;49.7591,42.5418"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="25.3391,22.2918"/>
@@ -748,7 +748,7 @@
         <dia:real val="24.369999999999997"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="18.600000000000001"/>
+        <dia:real val="20.200000000000003"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#PlayerRenderer#</dia:string>
@@ -1017,6 +1017,52 @@
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="1"/>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+        </dia:composite>
+        <dia:composite type="umlattribute">
+          <dia:attribute name="name">
+            <dia:string>#devCardRenderers#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#std::vector&lt;DevelopmentCardRenderer*&gt;#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="value">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="1"/>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+        </dia:composite>
+        <dia:composite type="umlattribute">
+          <dia:attribute name="name">
+            <dia:string>#devCardRenderer_transform#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#std::vector&lt;sf::Transform&gt;#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="value">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="0"/>
           </dia:attribute>
           <dia:attribute name="abstract">
             <dia:boolean val="false"/>
@@ -1810,18 +1856,18 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O8">
       <dia:attribute name="obj_pos">
-        <dia:point val="49.7594,31.5918"/>
+        <dia:point val="49.7595,32.3918"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="49.7094,30.8468;79.9043,34.2953"/>
+        <dia:rectangle val="49.7095,31.6468;79.9044,34.2953"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="49.7594,31.5918"/>
-        <dia:point val="79.4543,31.5918"/>
-        <dia:point val="79.4543,33.8453"/>
+        <dia:point val="49.7595,32.3918"/>
+        <dia:point val="79.4544,32.3918"/>
+        <dia:point val="79.4544,33.8453"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -1855,7 +1901,7 @@
         <dia:color val="#000000ff"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O4" connection="48"/>
+        <dia:connection handle="0" to="O4" connection="52"/>
         <dia:connection handle="1" to="O5" connection="1"/>
       </dia:connections>
     </dia:object>
@@ -2289,7 +2335,7 @@
         <dia:point val="2.10941,22.1291"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.05941,22.0791;24.2194,41.5791"/>
+        <dia:rectangle val="2.05941,22.0791;24.2194,43.9791"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="2.10941,22.1291"/>
@@ -2298,7 +2344,7 @@
         <dia:real val="22.059999999999999"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="19.400000000000006"/>
+        <dia:real val="21.800000000000008"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#GameRenderer#</dia:string>
@@ -2397,6 +2443,29 @@
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#state::Game*#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="value">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="1"/>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+        </dia:composite>
+        <dia:composite type="umlattribute">
+          <dia:attribute name="name">
+            <dia:string>#font#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#sf::Font#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
@@ -2554,7 +2623,7 @@
         </dia:composite>
         <dia:composite type="umlattribute">
           <dia:attribute name="name">
-            <dia:string>#boardGoldprite#</dia:string>
+            <dia:string>#boardGoldSprite#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#sf::Sprite*#</dia:string>
@@ -2750,7 +2819,7 @@
             <dia:string>##</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
-            <dia:enum val="0"/>
+            <dia:enum val="1"/>
           </dia:attribute>
           <dia:attribute name="abstract">
             <dia:boolean val="false"/>
@@ -2808,6 +2877,52 @@
         <dia:composite type="umlattribute">
           <dia:attribute name="name">
             <dia:string>#boardTurnTransform#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#sf::Transform#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="value">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="1"/>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+        </dia:composite>
+        <dia:composite type="umlattribute">
+          <dia:attribute name="name">
+            <dia:string>#phaseIndicator#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#sf::Text*#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="value">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="1"/>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+        </dia:composite>
+        <dia:composite type="umlattribute">
+          <dia:attribute name="name">
+            <dia:string>#phaseIndicatorTransform#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#sf::Transform#</dia:string>
@@ -3675,16 +3790,16 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O20">
       <dia:attribute name="obj_pos">
-        <dia:point val="37.5241,40.8918"/>
+        <dia:point val="37.5241,42.4918"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="37.4741,40.8418;51.9367,44.5549"/>
+        <dia:rectangle val="37.4741,42.3291;51.9367,44.5549"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="37.5241,40.8918"/>
+        <dia:point val="37.5241,42.4918"/>
         <dia:point val="37.5241,43.1661"/>
         <dia:point val="43.889,43.1661"/>
         <dia:point val="43.889,42.9821"/>
