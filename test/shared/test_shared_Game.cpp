@@ -11,44 +11,15 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 	// Creation of the instance of Game
     Game* myFirstGame = new Game();
 
-    // Testing void-void methods
-	myFirstGame->initGame();
-	myFirstGame->initCards();
-	myFirstGame->nextPhase();
-	myFirstGame->newTurn();
-	myFirstGame->initDraft();
-	//myFirstGame->nextDraft();	
-	myFirstGame->endDraft();
-
-	myFirstGame->initPlanification();
-    myFirstGame->endGame();
-
 	// Test toString()
 	std::string gameToString = myFirstGame->toString();
 	BOOST_CHECK_EQUAL(gameToString,"");
 
-/*
-	ResourceType toProduceResource = ENERGY;
-	Player* firstPlayer = new Player();
-    myFirstGame->produceResource (toProduceResource);
-
-	std::vector<EmpireCard*> empires = myFirstGame->initEmpire();
-    myFirstGame->initPlayers (empires);
-
-
-
-
-
-	// Test produceResource(ResourceType toProduce)
-	ResourceType firstResource = SCIENCE;
-	myFirstGame->produceResource(firstResource);
-
-	// Test sendResourceToPlayer
-	ResourceType secondResource = GOLD;
-	myFirstGame->produceResource(secondResource);
+	myFirstGame->getTurn();
+	myFirstGame->getPhase();
+	myFirstGame->getResourceProducing();
 
 	// Delete pointers
-	delete firstPlayer;*/
 	delete myFirstGame;
 
   }
@@ -57,10 +28,11 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 	// Test Full constructor
 
 	// Creation Arguments
+	sf::Texture profilePicture;
 	std::vector<Player*> players;
-	Player* firstPlayer = new Player();
+	Player* firstPlayer = new Player("Maxime", 1, profilePicture);
 	players.push_back(firstPlayer);
-	Player* secondPlayer = new Player();
+	Player* secondPlayer = new Player("Adrien", 2, profilePicture);
 	players.push_back(secondPlayer);
 
 
@@ -68,30 +40,79 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 
 	// Call Constructor
 	Game* mySecondGame = new Game(players);
-	
-	mySecondGame->createCards();
 
 	mySecondGame->initGame();
-	mySecondGame->initCards();
-	mySecondGame->startGame();
-	mySecondGame->nextPhase();
+	for(int index1 = 1; index1 < 4; index1++)
+	{
+		for (int index2 = 0 ; index2 < 8; index2++)
+		{
+			mySecondGame->getPlayers()[0]->chooseDraftCard(mySecondGame->getPlayers()[0]->getDraftingCards()[0]);
+			mySecondGame->getPlayers()[1]->chooseDraftCard(mySecondGame->getPlayers()[1]->getDraftingCards()[0]);
+			mySecondGame->nextDraft();
+		}
+		mySecondGame->nextProduction();
+		mySecondGame->nextProduction();
+		mySecondGame->nextProduction();
+		mySecondGame->nextProduction();
+	}
+    // Elements to create for testing the full constructor.
+    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::FINANCIER, false};
+    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::MATERIAL, false};
+    ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::GOLD, false};
+    ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::KRYSTALLIUM, false};
 
-	mySecondGame->newTurn();
-	mySecondGame->newTurn();
-	mySecondGame->newTurn();
-	mySecondGame->newTurn();
-	mySecondGame->newTurn();
+    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::VEHICLE};
+    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 3, state::CardType::PROJECT};
 
-	mySecondGame->produceResource(GOLD);
+    // Elements to pass to the constructor.
+    std::string name = "myName";
 
-	mySecondGame->initDraft();
+    std::vector<ResourceToProduce*> productionGain;
+    productionGain.push_back(firstResourceToProduce);
+    productionGain.push_back(secondResourceToProduce);
 
+    sf::Texture design = sf::Texture();
+
+    CardVictoryPoint* victoryPoints = new CardVictoryPoint{1, 5};
+
+    CardType type = CardType::PROJECT;
+
+    int numberOfCopies = 2;
+
+    std::vector<ResourceToPay*> costToBuild;
+    costToBuild.push_back(firstResourceToPay);
+    costToBuild.push_back(secondResourceToPay);
+    costToBuild.push_back(thirdResourceToPay);
+    costToBuild.push_back(fourthResourceToPay);
+
+    std::vector<ResourceType> instantGain;
+    instantGain.push_back(ResourceType::GOLD);
+    instantGain.push_back(ResourceType::SCIENCE);
+
+    ResourceType discardGain = ResourceType::FINANCIER;
+
+    // Testing the full constructor of DevelopmentCard.
+    DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard(name, productionGain, design, victoryPoints, type, numberOfCopies, costToBuild, instantGain, discardGain);
+
+	for (int index2 = 0 ; index2 < 8; index2++)
+	{
+		mySecondGame->getPlayers()[0]->chooseDraftCard(mySecondGame->getPlayers()[0]->getDraftingCards()[0]);
+		mySecondGame->getPlayers()[1]->chooseDraftCard(mySecondGame->getPlayers()[1]->getDraftingCards()[0]);
+		mySecondGame->nextDraft();
+	}
+	mySecondGame->getPlayers()[1]->construct(mySecondDevelopmentCard);
+	mySecondGame->getPlayers()[0]->construct(mySecondDevelopmentCard);
+	mySecondGame->nextProduction();
+	mySecondGame->getPlayers()[0]->construct(mySecondDevelopmentCard);
+	mySecondGame->nextProduction();
+	mySecondGame->nextProduction();
+	mySecondGame->nextProduction();
 	
-	mySecondGame->endDraft();
+	mySecondGame->newTurn();
+	mySecondGame->newTurn();
+	mySecondGame->newTurn();
+	mySecondGame->newTurn();
 
-	mySecondGame->initPlanification();
-    mySecondGame->endGame();
-	mySecondGame->nextDraft();
 	// Delete pointers
 	delete mySecondGame;
 	delete firstPlayer;

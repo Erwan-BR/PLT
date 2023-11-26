@@ -348,6 +348,7 @@ namespace state {
     /// @param draft drafting deck to give to the player
     void Player::setDraftingCards(std::vector<DevelopmentCard*> draft)
     {
+        this->draftingCards = {};
         for(DevelopmentCard* card : draft)
         {
             this->draftingCards.push_back(card);
