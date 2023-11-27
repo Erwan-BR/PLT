@@ -45,8 +45,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     instantGain3.push_back(GOLD);
     CardVictoryPoint* victoryPoints3 = new CardVictoryPoint{1,FINANCIER};
     DevelopmentCard* cardTest3 = new DevelopmentCard("CardTest3", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
-    
-    
+  
     std::vector<ResourceToProduce*> resourceProd4;
     ResourceToProduce* production4 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
     resourceProd4.push_back(production4);
@@ -57,13 +56,61 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     instantGain4.push_back(GOLD);
     CardVictoryPoint* victoryPoints4 = new CardVictoryPoint{1,COLONEL};
     DevelopmentCard* cardTest4 = new DevelopmentCard("CardTest4", resourceProd4, sf::Texture(), victoryPoints4, STRUCTURE, 2, resourcePay4, instantGain4, SCIENCE);
+      
+    std::vector<ResourceToProduce*> resourceProd5;
+    ResourceToProduce* production5 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
+    resourceProd5.push_back(production5);
+    std::vector<ResourceToPay*> resourcePay5;
+    ResourceToPay* paiement5 = new ResourceToPay{EXPLORATION, true};
+    resourcePay5.push_back(paiement5);
+    std::vector<ResourceType> instantGain5;
+    instantGain5.push_back(GOLD);
+    CardVictoryPoint* victoryPoints5 = new CardVictoryPoint{1,FINANCIER};
+    DevelopmentCard* cardTest5 = new DevelopmentCard("CardTest5", resourceProd5, sf::Texture(), victoryPoints5, PROJECT, 2, resourcePay5, instantGain5, SCIENCE);
     
-    DevelopmentCard* cardTest5 = new DevelopmentCard("CardTest5", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
-    DevelopmentCard* cardTest6 = new DevelopmentCard("CardTest6", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
-    DevelopmentCard* cardTest7 = new DevelopmentCard();
+    std::vector<ResourceToProduce*> resourceProd6;
+    ResourceToProduce* production6 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
+    resourceProd6.push_back(production6);
+    std::vector<ResourceToPay*> resourcePay6;
+    ResourceToPay* paiement6 = new ResourceToPay{EXPLORATION, true};
+    resourcePay6.push_back(paiement6);
+    std::vector<ResourceType> instantGain6;
+    instantGain6.push_back(GOLD);
+    CardVictoryPoint* victoryPoints6 = new CardVictoryPoint{1,FINANCIER};
+    DevelopmentCard* cardTest6 = new DevelopmentCard("CardTest6", resourceProd6, sf::Texture(), victoryPoints6, PROJECT, 2, resourcePay6, instantGain6, SCIENCE);
+    
+    std::vector<ResourceToProduce*> resourceProd7;
+    ResourceToProduce* production7 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
+    resourceProd7.push_back(production7);
+    std::vector<ResourceToPay*> resourcePay7;
+    ResourceToPay* paiement7 = new ResourceToPay{EXPLORATION, true};
+    resourcePay7.push_back(paiement7);
+    std::vector<ResourceType> instantGain7;
+    instantGain7.push_back(GOLD);
+    CardVictoryPoint* victoryPoints7 = new CardVictoryPoint{1,FINANCIER};
+    DevelopmentCard* cardTest7 = new DevelopmentCard("CardTest7", resourceProd7, sf::Texture(), victoryPoints7, PROJECT, 2, resourcePay7, instantGain7, SCIENCE);
  
+    std::vector<ResourceToProduce*> resourceProd9;
+    ResourceToProduce* production9 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
+    resourceProd9.push_back(production9);
+    std::vector<ResourceToPay*> resourcePay9;
+    ResourceToPay* paiement9 = new ResourceToPay{EXPLORATION, true};
+    resourcePay9.push_back(paiement9);
+    std::vector<ResourceType> instantGain9;
+    instantGain9.push_back(GOLD);
+    CardVictoryPoint* victoryPoints9 = new CardVictoryPoint{1,STRUCTURE};
+    DevelopmentCard* cardTest9 = new DevelopmentCard("CardTest9", resourceProd9, sf::Texture(), victoryPoints9, PROJECT, 2, resourcePay9, instantGain9, SCIENCE);
+
+    std::vector<ResourceToProduce*> resourceProd8;
+    ResourceToProduce* production8 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
+    resourceProd8.push_back(production8);
+    std::vector<ResourceToPay*> resourcePay8;
+    ResourceToPay* paiement8 = new ResourceToPay{EXPLORATION, true};
+    resourcePay8.push_back(paiement8);
+    std::vector<ResourceType> instantGain8;
+    instantGain8.push_back(GOLD);
     CardVictoryPoint* victoryPoints8 = new CardVictoryPoint{1,STRUCTURE};
-    DevelopmentCard* cardTest8 = new DevelopmentCard("CardTest6", resourceProd3, sf::Texture(), victoryPoints8, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
+    DevelopmentCard* cardTest8 = new DevelopmentCard("CardTest8", resourceProd8, sf::Texture(), victoryPoints8, PROJECT, 2, resourcePay8, instantGain8, SCIENCE);
 
     std::vector<DevelopmentCard*> draftingDeck;
     draftingDeck.push_back(cardTest1);
@@ -74,6 +121,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     draftingDeck.push_back(cardTest6);
     draftingDeck.push_back(cardTest7);
     draftingDeck.push_back(cardTest8);
+    draftingDeck.push_back(cardTest9);
     
 
     //Testing method setDraftinCards :
@@ -98,6 +146,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->chooseDraftCard(cardTest5);
     myFirstPlayer->chooseDraftCard(cardTest6);
     myFirstPlayer->chooseDraftCard(cardTest8);
+    myFirstPlayer->chooseDraftCard(cardTest9);
 
 
     //Testing method keepCard :
@@ -106,28 +155,34 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->keepCard(cardTest3);
     myFirstPlayer->keepCard(cardTest4);
     myFirstPlayer->keepCard(cardTest8);
+    myFirstPlayer->keepCard(cardTest9);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 2);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 6);
 
 
     //Testing method discardCard :
-    myFirstPlayer->discardCard(cardTest2);
     myFirstPlayer->discardCard(cardTest6);
+    myFirstPlayer->discardCard(cardTest9);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 5);
+
 
 
     //Testing method addResource :
     myFirstPlayer->addResource(MATERIAL, cardTest1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 4);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getBuiltCards().size(), 1);
 
 
     //Testing method construct :
-    myFirstPlayer->construct(cardTest1);
     myFirstPlayer->construct(cardTest3);
     myFirstPlayer->construct(cardTest4);
     myFirstPlayer->construct(cardTest8);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getBuiltCards().size(), 4);
 
 
     //Testing method receiveResource and receiveResources:
     myFirstPlayer->receiveResources(GOLD,3);
-    myFirstPlayer->receiveResource(GOLD);
-     
 
 
     //Testing method chooseColonelToken :
@@ -138,17 +193,17 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     (void)myFirstPlayer->computeVictoryPoint();
 
     victoryPointsAFRICA  = new CardVictoryPoint{1,state::ResourceType::COLONEL};
-		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {/*prob face B*/}, {/*victorypoints face B*/}, AFRICA); 
+		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
 		myFirstPlayer->setEmpire(africa);
     (void)myFirstPlayer->computeVictoryPoint();
 
     victoryPointsAFRICA  = new CardVictoryPoint{1,state::ResourceType::FINANCIER};
-		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {/*prob face B*/}, {/*victorypoints face B*/}, AFRICA); 
+		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
 		myFirstPlayer->setEmpire(africa);
     (void)myFirstPlayer->computeVictoryPoint();
 
     victoryPointsAFRICA  = new CardVictoryPoint{1,state::CardType::NONETYPE};
-		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {/*prob face B*/}, {/*victorypoints face B*/}, AFRICA); 
+		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
 		myFirstPlayer->setEmpire(africa);
     (void)myFirstPlayer->computeVictoryPoint();
 
@@ -163,7 +218,6 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     //Testing method convertToKrystallium :
     myFirstPlayer->convertToKrystallium();
-
 
     //Testing method updateProduction :
     myFirstPlayer->updateProduction();
