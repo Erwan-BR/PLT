@@ -49,17 +49,21 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
+        this->resourcesProduction.clear();
+        this->cardsTypeList.clear();
         delete this->empire;
         
-        /*for(DevelopmentCard* card : this->builtCards)
+        for(DevelopmentCard* card : this->builtCards)
         {
             delete card;
-        }*/
+        }
+
 
         for(DevelopmentCard* card : this->toBuildCards)
         {
             delete card;
         }
+
 
         for(DevelopmentCard* card : this->draftingCards)
         {
@@ -70,17 +74,21 @@ namespace state {
         {
             delete card;
         }
+
     }
 
     /// @brief Construct the card "cardToBuild"
     /// @param cardToBuild The card to build
-    void Player::construct(DevelopmentCard* cardToBuid)
+    void Player::construct(DevelopmentCard* cardToBuild)
     {
-        this->builtCards.push_back(cardToBuid);
-        this->toBuildCards.erase(std::remove(this->toBuildCards.begin(), this->toBuildCards.end(), cardToBuid), this->toBuildCards.end());
-        this->cardsTypeList[cardToBuid->getType()]++;
-        this->updateProduction();
+        auto cardPos = std::find(this->toBuildCards.begin(), this->toBuildCards.end(), cardToBuild);
+        if(cardPos != this->toBuildCards.end())
+        {
+            this->builtCards.push_back(cardToBuild);
+            this->toBuildCards.erase(cardPos);
+        }
 
+        this->updateProduction();
         this->notifyObservers();
     }
 
@@ -99,8 +107,7 @@ namespace state {
                 //Adding the resource to the card, and building it if there are all the resources required on it.
                 if((*cardPos)->addResource(resource))
                 {
-                    construct(*cardPos);
-                    toBuildCards.erase(cardPos);
+                    this->construct(*cardPos);
                 }
             }
         }
