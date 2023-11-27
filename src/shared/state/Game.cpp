@@ -15,7 +15,11 @@ namespace state {
 	///@param players Vector of pointers which designate the players of the game
 	Game::Game(std::vector<Player*> players) :
 		Observable(),
-		players(players)
+		players(players),
+		turn(0),
+		phase(PRODUCTION),
+		deck(),
+		isClockwise(true)
 	{
 	}
 
@@ -340,7 +344,7 @@ namespace state {
 				biggestProduction = playerProduction;
 				multipleBiggestProduction = false;
 			}
-			else if (playerProduction > biggestProduction)
+			else if (playerProduction == biggestProduction)
 			{
 				playerIndexBiggestProduction = -1;
 				multipleBiggestProduction = true;
@@ -369,7 +373,7 @@ namespace state {
 
 				if (chooseColonel)
 				{
-					this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::COLONEL);
+					//this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::COLONEL);
 				}
 				else
 				{

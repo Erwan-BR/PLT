@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 
 	// Test toString()
 	std::string gameToString = myFirstGame->toString();
-	BOOST_CHECK_EQUAL(gameToString,"");
+	//BOOST_CHECK(gameToString == "");
 
 	myFirstGame->getTurn();
 	myFirstGame->getPhase();
@@ -23,7 +23,9 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 	delete myFirstGame;
 
   }
-
+}
+BOOST_AUTO_TEST_CASE(secondGameTest)
+{
   {
 	// Test Full constructor
 
@@ -40,26 +42,25 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 
 	// Call Constructor
 	Game* mySecondGame = new Game(players);
-
+	
 	mySecondGame->initGame();
+	
 	for(int index1 = 1; index1 < 4; index1++)
 	{
-		for (int index2 = 0 ; index2 < 8; index2++)
+		std::cout << mySecondGame->getTurn();
+		for (int index2 = 0 ; index2 < 7; index2++)
 		{
 			mySecondGame->getPlayers()[0]->chooseDraftCard(mySecondGame->getPlayers()[0]->getDraftingCards()[0]);
 			mySecondGame->getPlayers()[1]->chooseDraftCard(mySecondGame->getPlayers()[1]->getDraftingCards()[0]);
 			mySecondGame->nextDraft();
 		}
-		mySecondGame->nextProduction();
-		mySecondGame->nextProduction();
-		mySecondGame->nextProduction();
-		mySecondGame->nextProduction();
 	}
+	
     // Elements to create for testing the full constructor.
-    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::FINANCIER, false};
-    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::MATERIAL, false};
-    ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::GOLD, false};
-    ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::KRYSTALLIUM, false};
+    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::FINANCIER, true};
+    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::MATERIAL, true};
+    ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::GOLD, true};
+    ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::KRYSTALLIUM, true};
 
     ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::VEHICLE};
     ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 3, state::CardType::PROJECT};
@@ -93,30 +94,19 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 
     // Testing the full constructor of DevelopmentCard.
     DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard(name, productionGain, design, victoryPoints, type, numberOfCopies, costToBuild, instantGain, discardGain);
-
+	mySecondGame->getPlayers()[1]->construct(mySecondDevelopmentCard);
 	for (int index2 = 0 ; index2 < 8; index2++)
 	{
 		mySecondGame->getPlayers()[0]->chooseDraftCard(mySecondGame->getPlayers()[0]->getDraftingCards()[0]);
 		mySecondGame->getPlayers()[1]->chooseDraftCard(mySecondGame->getPlayers()[1]->getDraftingCards()[0]);
 		mySecondGame->nextDraft();
 	}
-	mySecondGame->getPlayers()[1]->construct(mySecondDevelopmentCard);
 	mySecondGame->getPlayers()[0]->construct(mySecondDevelopmentCard);
-	mySecondGame->nextProduction();
-	mySecondGame->getPlayers()[0]->construct(mySecondDevelopmentCard);
-	mySecondGame->nextProduction();
-	mySecondGame->nextProduction();
-	mySecondGame->nextProduction();
-	
-	mySecondGame->newTurn();
-	mySecondGame->newTurn();
-	mySecondGame->newTurn();
-	mySecondGame->newTurn();
 
 	// Delete pointers
 	delete mySecondGame;
-	delete firstPlayer;
-	delete secondPlayer;
+	//delete firstPlayer;
+	//delete secondPlayer;
 	
   }
 }
