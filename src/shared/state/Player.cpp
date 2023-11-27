@@ -49,24 +49,27 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
-        this->empire->~EmpireCard();
+        delete this->empire;
         
-        for(DevelopmentCard* card : this->builtCards)card->~DevelopmentCard();
-        this->builtCards.clear();
+        /*for(DevelopmentCard* card : this->builtCards)
+        {
+            delete card;
+        }*/
 
-        for(DevelopmentCard* card : this->toBuildCards)card->~DevelopmentCard();
-        this->toBuildCards.clear();
+        for(DevelopmentCard* card : this->toBuildCards)
+        {
+            delete card;
+        }
 
-        for(DevelopmentCard* card : this->draftingCards)card->~DevelopmentCard();
-        this->draftingCards.clear();
+        for(DevelopmentCard* card : this->draftingCards)
+        {
+            delete card;
+        }
 
-        for(DevelopmentCard* card : this->draftCards)card->~DevelopmentCard();
-        this->draftCards.clear();
-
-        this->resourcesProduction.clear();
-        this->cardsTypeList.clear();
-
-        delete(this);
+        for(DevelopmentCard* card : this->draftCards)
+        {
+            delete card;
+        }
     }
 
     /// @brief Construct the card "cardToBuild"
