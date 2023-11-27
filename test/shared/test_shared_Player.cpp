@@ -191,7 +191,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
 
     // Delete pointers that won't be used anymore.
-    myFirstPlayer->~Player();
+    delete myFirstPlayer;
   }
 }
 
