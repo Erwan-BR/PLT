@@ -103,4 +103,60 @@ namespace render
                 break;
         }
     }
+    sf::Sprite* GameRenderer::getBoardMaterialSprite ()
+    {
+        return this->boardMaterialSprite;
+    }
+    sf::Transform GameRenderer::getBoardMaterialTransform ()
+    {
+        return this->boardMaterialTransform;
+    }
+    sf::Sprite* GameRenderer::getBoardEnergySprite ()
+    {
+        return this->boardEnergySprite;
+    }
+    sf::Transform GameRenderer::getBoardEnergyTransform ()
+    {
+        return this->boardEnergyTransform;
+    }
+    sf::Sprite* GameRenderer::getBoardGoldSprite ()
+    {
+        return this->boardGoldSprite;
+    }
+    sf::Transform GameRenderer::getBoardGoldTransform ()
+    {
+        return this->boardGoldTransform;
+    }
+    sf::Sprite* GameRenderer::getBoardScienceSprite ()
+    {
+        return this->boardScienceSprite;
+    }
+    sf::Transform GameRenderer::getBoardScienceTransform ()
+    {
+        return this->boardScienceTransform;
+    }
+    sf::Sprite* GameRenderer::getBoardExplorationSprite ()
+    {
+        return this->boardExplorationSprite;
+    }
+    sf::Transform GameRenderer::getBoardExplorationTransform ()
+    {
+        return this->boardExplorationTransform;
+    }
+    sf::Sprite* GameRenderer::getBoardTurnSprite ()
+    {
+        return this->boardTurnSprite;
+    }
+    sf::Transform GameRenderer::getBoardTurnTransform ()
+    {
+        return this->boardTurnTransform;
+    }
+    sf::Text* GameRenderer::getPhaseIndicator ()
+    {
+        return this->phaseIndicator;
+    }
+    sf::Transform GameRenderer::getPhaseIndicatorTransform ()
+    {
+        return this->phaseIndicatorTransform;
+    }
 }
