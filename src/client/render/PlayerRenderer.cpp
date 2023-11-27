@@ -11,18 +11,17 @@ namespace render {
 		f.loadFromFile("./resources/font/arial.ttf");
 		this->font = f;
 
-
 		this->player = player;
+
+		std::vector<state::DevelopmentCard*> tobuild = player->getToBuildCards();
+		std::vector<state::DevelopmentCard*> built = player->getBuiltCards();
+		std::vector<state::DevelopmentCard*> drafted = player->getDraftCards();
 
 		int i;
 		sf::Texture* texture;
 		sf::Sprite* sprite;
 		sf::Text* text;
-		DevelopmentCardRenderer cRenderer;
-		
-		std::vector<state::DevelopmentCard*> tobuild = player->getToBuildCards();
-		std::vector<state::DevelopmentCard*> build = player->getBuiltCards();
-		std::vector<state::DevelopmentCard*> drafted = player->getDraftCards();
+		DevelopmentCardRenderer* cRenderer;
 
 		switch (window){
 		case MAIN_WINDOW:
@@ -45,9 +44,8 @@ namespace render {
 
 			//Enter Cards (position 2 to 16 in sprites)
 			for (i=0;i<14 and i<tobuild.size();i++){
-				cRenderer = new DevelopmentCardRenderer(tobuild[i]);
-				this->devCardRenderer.push_back(cRenderer);	//Card Renderer
-				this->devCardRenderer_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));		//Transform
+				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
 			//Enter Player Name (position 0 in texts)
@@ -101,9 +99,8 @@ namespace render {
 
 			//Enter Cards (position 2 to 9 in sprites)
 			for (i=0;i<7 and i<drafted.size();i++){
-				cRenderer = new DevelopmentCardRenderer(drafted[i]);
-				this->devCardRenderer.push_back(cRenderer);	//Card Renderer
-				this->devCardRenderer_transform.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));		//Transform
+				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
 			//Enter Player Name (position 0 in texts)
@@ -135,15 +132,13 @@ namespace render {
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,50.f).scale(2.f,2.f).scale(1.f,(431.f/375.f)));				//Transform
 
 			//Enter Cards (position 2 to 58 in sprites)
-			for (i=0;i<28 and i<build.size();i++){
-				cRenderer = new DevelopmentCardRenderer(tobuild[i]);
-				this->devCardRenderer.push_back(cRenderer);	//Card Renderer
-				this->devCardRenderer_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));		//Transform
+			for (i=0;i<28 and i<built.size();i++){
+				cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 			for (i=28;i<56 and i<28+tobuild.size();i++){
-				cRenderer = new DevelopmentCardRenderer(tobuild[i]);
-				this->devCardRenderer.push_back(cRenderer);	//Card Renderer
-				this->devCardRenderer_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));		//Transform
+				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
 			//Enter Player Name (position 0 in texts)
@@ -244,6 +239,13 @@ namespace render {
 		return (this->texts).size();
 	}
 
+	DevelopmentCardRenderer* PlayerRenderer::getCardRenderer(int i){
+		return (this->devCardRenderers)[i];
+	}
+
+	int PlayerRenderer::getNumberCardRenderer(){
+		return (this->devCardRenderers).size();
+	}
 	/// @brief Setter Sprite & Texture (position 1 in vector sprites)
 	///	@param Name of png file from resource/img without extension
 	void PlayerRenderer::changeProfilePicture(std::string path){

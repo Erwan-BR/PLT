@@ -5,8 +5,8 @@
 
 namespace render {
 
-	/// @brief Empty constructor of the Scene class.
-    Scene::Scene (){
+	/// @brief Full constructor of the Scene class.
+    Scene::Scene(state::Game* game,sf::Transform transform){
        	//Creation and initialisation of the background texture
     	this->background_texture =sf::Texture();
     	(this->background_texture).loadFromFile("./resources/img/background.png");
@@ -18,8 +18,16 @@ namespace render {
     	//Set Starting Window
     	this->current_window = MAIN_WINDOW;
 
-    	this->player_renderer.push_back(new PlayerRenderer(sf::Transform(),MAIN_WINDOW));
-    }
+		for (state::Player* player: game->getPlayers()){
+    		this->player_renderer.push_back(new PlayerRenderer(player,transform,MAIN_WINDOW));
+		}
+		for (state::Player* player: game->getPlayers()){
+    		this->player_renderer.push_back(new PlayerRenderer(player,transform,DRAFTING_WINDOW));
+		}
+		this->player_renderer.push_back(new PlayerRenderer(game->getPlayers()[0],transform,PLAYER_INFO));
+
+		this->game_renderer = new GameRenderer(game,transform);
+	}
 
     /// @brief Full destructor of the Scene class.
     Scene::~Scene (){
@@ -35,8 +43,8 @@ namespace render {
     /// @brief Getter of the player renderer.
     /// @param index corresponding of the wanted player renderer in the vector player_renderer
 	/// @return The player renderer corresponding of the index.
-	PlayerRenderer* Scene::getPlayerRenderer (int index){
-		return ((this->player_renderer)[index]);
+	PlayerRenderer* Scene::getPlayerRenderer (){
+		return (this->player_renderer);
 	}
 
 	/// @brief Setter for current_window

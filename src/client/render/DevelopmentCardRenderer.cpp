@@ -4,16 +4,19 @@ namespace render
 {
     /// @brief Constructor of the card renderer.
     /// @param card Card to render.
-    DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card) :
+    DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card,sf::Transform transform) :
         card(card)
     {
-        this->sprite->setTexture(*(this->texture));
-        
         this->texture = new sf::Texture();
         sf::Texture cardDesign = this->card->getDesign();
         this->texture = &cardDesign;
 
+        this->sprite->setTexture(*(this->texture));
+
+        this->transform = transform;
+
         this->vectorOfCrossesSprite = {};
+        this->vectorOfCrossesTransform = {};
 
         // Creating textures for paid and not paid resources.
         this->paidTexture = new sf::Texture();
@@ -27,6 +30,7 @@ namespace render
         {
             vectorOfCrossesSprite.push_back(new sf::Sprite());
             vectorOfCrossesSprite[index]->setTexture(*(this->notPaidTexture));
+            vectorOfCrossesTransform.push_back(sf::Transform(transform).translate(0.0f,0.0f+10.0f*index));
         }
     }
 
@@ -59,5 +63,14 @@ namespace render
     std::vector<sf::Sprite*> DevelopmentCardRenderer::getVectorOfCrossesSprite () const
     {
         return this->vectorOfCrossesSprite;
+    }
+
+    sf::Sprite* DevelopmentCardRenderer::getSprite(){
+        return this->sprite;
+    }
+
+    std::vector<sf::Transform> DevelopmentCardRenderer::getVectorOfCrossesTransform ()
+    {
+        return this->vectorOfCrossesTransform;
     }
 }
