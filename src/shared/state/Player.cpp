@@ -291,15 +291,6 @@ namespace state {
         return false ;
     }
     
-    /// @brief Receive resource from the game.
-    /// @param resourceToReceive Resource to add to the player.
-    void Player::receiveResource (ResourceType resourceToReceive)
-    {
-        this->currentResources.push_back(resourceToReceive);
-
-        this->notifyObservers();
-    }
-    
     /// @brief Receive multiple resources from the game
     /// @param resourceToReceive Type of the resource to receive.
     /// @param numberOfResources Number of ressources to receive.
