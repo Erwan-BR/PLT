@@ -43,7 +43,7 @@ namespace render {
     /// @brief Getter of the player renderer.
     /// @param index corresponding of the wanted player renderer in the vector player_renderer
 	/// @return The player renderer corresponding of the index.
-	PlayerRenderer* Scene::getPlayerRenderer (){
+	std::vector<PlayerRenderer*> Scene::getPlayerRenderer (){
 		return (this->player_renderer);
 	}
 

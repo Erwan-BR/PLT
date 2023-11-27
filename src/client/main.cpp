@@ -47,7 +47,7 @@ int main(int argc,char* argv[])
 	//Creation of the instance of the Game class
 	state::Game* game = new state::Game(players);
 
-	int i,j;
+	int i,j,k;
 
 	//Creation of the instance of the Scene class
 	Scene scene = Scene(game);
@@ -70,6 +70,8 @@ int main(int argc,char* argv[])
 	sf::Event event;
 
 	PlayerRenderer* pRenderer;
+	DevelopmentCardRenderer* cRenderer;
+	GameRenderer* gRenderer;
 
 	//Main Loop active while the window is still open
 	while (window.isOpen())
@@ -102,7 +104,16 @@ int main(int argc,char* argv[])
 			switch (scene.getWindow()){
 			case MAIN_WINDOW:
 				window.draw(scene.getBackground(),tr_scale);		//Background
-				//TODO Display GameRenderer
+				//Display GameRenderer
+				gRenderer = scene.getGameRenderer();
+				window.draw(*(gRenderer->getBoardMaterialSprite()),gRenderer->getBoardMaterialTransform());
+				window.draw(*(gRenderer->getBoardEnergySprite()),gRenderer->getBoardEnergyTransform());
+				window.draw(*(gRenderer->getBoardScienceSprite()),gRenderer->getBoardScienceTransform());
+				window.draw(*(gRenderer->getBoardGoldSprite()),gRenderer->getBoardGoldTransform());
+				window.draw(*(gRenderer->getBoardExplorationSprite()),gRenderer->getBoardExplorationTransform());
+				window.draw(*(gRenderer->getBoardTurnSprite()),gRenderer->getBoardTurnTransform());
+				window.draw(*(gRenderer->getPhaseIndicator()),gRenderer->getPhaseIndicatorTransform());
+
 				
 				for (i=0; i < (scene.getPlayerRenderer().size()-1)/2; i++){
 					pRenderer =	scene.getPlayerRenderer()[i];
@@ -113,37 +124,47 @@ int main(int argc,char* argv[])
 						window.draw(*(pRenderer->getText(i)),pRenderer->getTextTransform(i));
 					}
 					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
-						cRenderer = getCardRenderer(i);
-						window.draw(*(cRenderer->),pRenderer->getCardRendererTransform(i));
+						cRenderer = pRenderer->getCardRenderer(j);
+						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
+						for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
+						}
 					}
 				}
 				break;
 			case DRAFTING_WINDOW:
-				for (i = 0; i < renderer_p1_d->getNumberSprite();i++){
-					window.draw(*(renderer_p1_d->getSprite(i)),renderer_p1_d->getSpriteTransform(i));
+				for (i=(scene.getPlayerRenderer().size()+1)/2; i < scene.getPlayerRenderer().size()-1; i++){
+					pRenderer =	scene.getPlayerRenderer()[i];
+					for (j = 0; j < pRenderer->getNumberSprite() ;j++){
+						window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j));
+					}
+					for (j = 0; j < pRenderer->getNumberText() ;j++){
+						window.draw(*(pRenderer->getText(j)),pRenderer->getTextTransform(j));
+					}
+					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
+						cRenderer = pRenderer->getCardRenderer(j);
+						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
+						for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
+						}
+					}
 				}
-				for (i = 0; i < renderer_p2_d->getNumberSprite();i++){
-					window.draw(*(renderer_p2_d->getSprite(i)),renderer_p2_d->getSpriteTransform(i));
-				}
-				for (i = 0; i < renderer_p1_d->getNumberText();i++){
-					window.draw(*(renderer_p1_d->getText(i)),renderer_p1_d->getTextTransform(i));
-				}
-				for (i = 0; i < renderer_p2_d->getNumberText();i++){
-					window.draw(*(renderer_p2_d->getText(i)),renderer_p2_d->getTextTransform(i));
-				}
-				for (i = 0; i < renderer_d->getNumberSprite();i++){
-					window.draw(*(renderer_d->getSprite(i)),renderer_d->getSpriteTransform(i));
-				}
-				for (i = 0; i < renderer_d->getNumberText();i++){
-					window.draw(*(renderer_d->getText(i)),renderer_d->getTextTransform(i));
-				}
+				//TODO Drafting HAND
 				break;
 			case PLAYER_INFO:
-				for (i = 0; i < renderer_f->getNumberSprite();i++){
-					window.draw(*(renderer_f->getSprite(i)),renderer_f->getSpriteTransform(i));
+				pRenderer =	scene.getPlayerRenderer()[scene.getPlayerRenderer().size()-1];
+				for (j = 0; j < pRenderer->getNumberSprite() ;j++){
+					window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j));
 				}
-				for (i = 0; i < renderer_f->getNumberText();i++){
-					window.draw(*(renderer_f->getText(i)),renderer_f->getTextTransform(i));
+				for (j = 0; j < pRenderer->getNumberText() ;j++){
+					window.draw(*(pRenderer->getText(j)),pRenderer->getTextTransform(j));
+				}
+				for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
+					cRenderer = pRenderer->getCardRenderer(j);
+					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
+					for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
+					}
 				}
 			default:
 				break;

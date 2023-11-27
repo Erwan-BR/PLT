@@ -73,4 +73,8 @@ namespace render
     {
         return this->vectorOfCrossesTransform;
     }
+
+    sf::Transform DevelopmentCardRenderer::getTransform(){
+        return this->transform;
+    }
 }
