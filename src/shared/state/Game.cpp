@@ -15,7 +15,11 @@ namespace state {
 	///@param players Vector of pointers which designate the players of the game
 	Game::Game(std::vector<Player*> players) :
 		Observable(),
-		players(players)
+		players(players),
+		turn(0),
+		phase(PRODUCTION),
+		deck(),
+		isClockwise(true)
 	{
 	}
 
@@ -66,7 +70,7 @@ namespace state {
 	void Game::createCards()
 	{
 		// To-Do : modify once cards are correctly scanned.
-		for(int i = 0; i < 14; i++)
+		for(int i = 0; i < 150; i++)
 		{
 			DevelopmentCard* createdCard = new DevelopmentCard();
 			this->deck.push_back(createdCard);
@@ -76,13 +80,19 @@ namespace state {
 	///@brief Create and Initialize the Empire for the game
 	std::vector<EmpireCard*> Game::initEmpire ()
 	{	
+		// face B
+		ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
+    	ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 1, state::CardType::NONETYPE};
+    	ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 1, state::CardType::NONETYPE};
+		std::vector<ResourceToProduce*> productionGainB = {firstResourceToProduce,secondResourceToProduce,thirdResourceToProduce};		
+
 		// empire AFRICA
 		ResourceToProduce* firstResourceToProduceAFRICA = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceAFRICA = new ResourceToProduce{ResourceType::EXPLORATION, 1, state::CardType::NONETYPE};
+    	ResourceToProduce* secondResourceToProduceAFRICA = new ResourceToProduce{ResourceType::SCIENCE, 2, state::CardType::NONETYPE};
 		std::vector<ResourceToProduce*> productionGainAFRICA = {firstResourceToProduceAFRICA,secondResourceToProduceAFRICA};
 		sf::Texture designAFRICA;
-   		CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{3,state::CardType::DISCOVERY};
-		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {/*prob face B*/}, {/*victorypoints face B*/}, AFRICA);
+   		CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,state::CardType::RESEARCH};
+		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, productionGainB, {0}, AFRICA);
 	
 		// empire NORAM
 		ResourceToProduce* firstResourceToProduceNORAM = new ResourceToProduce{ResourceType::MATERIAL, 3, state::CardType::NONETYPE};
@@ -90,7 +100,7 @@ namespace state {
 		std::vector<ResourceToProduce*> productionGainNORAM = {firstResourceToProduceNORAM,secondResourceToProduceNORAM};
 		sf::Texture designNORAM;
    		CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1,state::ResourceType::FINANCIER};
-		EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, designNORAM, victoryPointsNORAM, {/*prob face B*/}, {/*victorypoints face B*/}, NORAM);
+		EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, designNORAM, victoryPointsNORAM, productionGainB, {0}, NORAM);
 		
 		// empire ASIA
 		ResourceToProduce* firstResourceToProduceASIA = new ResourceToProduce{ResourceType::MATERIAL, 1, state::CardType::NONETYPE};
@@ -98,7 +108,7 @@ namespace state {
 		std::vector<ResourceToProduce*> productionGainASIA = {firstResourceToProduceASIA,secondResourceToProduceASIA};
 		sf::Texture designASIA;
    		CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2,state::CardType::PROJECT};
-		EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, designASIA, victoryPointsASIA, {/*prob face B*/}, {/*victorypoints face B*/}, ASIA);
+		EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, designASIA, victoryPointsASIA, productionGainB, {0}, ASIA);
 		
 		// empire EUROPE
 		ResourceToProduce* firstResourceToProduceEUROPE = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
@@ -107,15 +117,15 @@ namespace state {
 		std::vector<ResourceToProduce*> productionGainEUROPE = {firstResourceToProduceEUROPE,secondResourceToProduceEUROPE,thirdResourceToProduceEUROPE};
 		sf::Texture designEUROPE;
    		CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1,state::ResourceType::COLONEL};
-		EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, designEUROPE, victoryPointsEUROPE, {/*prob face B*/}, {/*victorypoints face B*/}, EUROPE);
+		EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, designEUROPE, victoryPointsEUROPE, productionGainB, {0}, EUROPE);
 		
 		// empire AZTEC
-		ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::SCIENCE, 2, state::CardType::NONETYPE};
+		ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 2, state::CardType::NONETYPE};
+    	ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::EXPLORATION, 1, state::CardType::NONETYPE};
 		std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC,secondResourceToProduceAZTEC};
 		sf::Texture designAZTEC;
-   		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{2,state::CardType::RESEARCH};
-		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, {/*prob face B*/}, {/*victorypoints face B*/}, AZTEC);
+   		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3,state::CardType::DISCOVERY};
+		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC);
 
 		std::vector<EmpireCard*> empires = {africa,noram,asia,europe,aztec};
 		auto rng = std::default_random_engine {};
@@ -155,8 +165,8 @@ namespace state {
 	///@brief Start one of the four turn of the game
 	void Game::newTurn ()
 	{
-		this->turn ++;
-		if(5 == this->turn)
+		this->turn= (this->turn + 1);
+		if(1 == this->turn)
 		{
 			this->endGame();
 		}
@@ -189,13 +199,13 @@ namespace state {
 			player->setDraftingCards(draftingDeck);
 		}
 		this->notifyObservers();
+		this->nextDraft ();
 	}
 
 	///@brief Launch the next draft.
 	void Game::nextDraft ()
 	{
 		// Retrieve the number of cards to draft.
-
 		int numberOfCardsToDraft = this->players[0]->getDraftingCards().size();
 
 		// If there is no cards left, we can continue to play.
@@ -217,15 +227,15 @@ namespace state {
 			}
 
 			// Giving the deck of the first player to the last one.
-			this->players[this->players.size()]->setDraftingCards(firstPlayerDeck);
+			this->players[this->players.size()-1]->setDraftingCards(firstPlayerDeck);
 		}
 		else
 		{
 			// Memorize the last player deck to give it to the first player.
-			std::vector<DevelopmentCard*> lastPlayerDeck = this->players[this->players.size()]->getDraftingCards();
+			std::vector<DevelopmentCard*> lastPlayerDeck = this->players[(this->players.size()-1)]->getDraftingCards();
 
 			// Iterating among all players (except the first one) to make the draft.
-			for (long unsigned int playerIndex = this->players.size(); playerIndex > 0; playerIndex--)
+			for (long unsigned int playerIndex = (this->players.size()-1); playerIndex > 0; playerIndex--)
 			{
 				this->players[playerIndex]->setDraftingCards(this->players[(playerIndex - 1)]->getDraftingCards());
 			}
@@ -247,7 +257,8 @@ namespace state {
 	///@brief Initialize the Planification phase during which players choose the cards they will try to build
 	void Game::initPlanification ()
 	{
-		return;
+		//to do
+		this->endPlanification();
 	}
 
 	/// @brief End the planification phase to start the next phase.
@@ -259,7 +270,6 @@ namespace state {
 	/// @brief Init the production phase.
 	void Game::initProduction ()
 	{
-		this->phase = GamePhase::PRODUCTION;
 		this->resourceProducing = ResourceType::MATERIAL;
 		this->notifyObservers();
 		this->nextProduction();
@@ -268,32 +278,41 @@ namespace state {
 	/// @brief Launch the next production phase if a production phase arrives, launch the next draft phase if not.
 	void Game::nextProduction ()
 	{
-		switch (this->resourceProducing)
+		if (ResourceType::MATERIAL == this->resourceProducing)
 		{
-			case (ResourceType::MATERIAL) :
-				this->produceResource();
-				this->resourceProducing = ResourceType::ENERGY;
-				break;
-			case(ResourceType::ENERGY) :
-				this->produceResource();
-				this->resourceProducing = ResourceType::SCIENCE;
-				break;
-			case(ResourceType::SCIENCE) :
-				this->produceResource();
-				this->resourceProducing = ResourceType::GOLD;
-				break;
-			case(ResourceType::GOLD) :
-				this->produceResource();
-				this->resourceProducing = ResourceType::EXPLORATION;
-				break;
-			case(ResourceType::EXPLORATION) :
-				this->produceResource();
-				this->resourceProducing = ResourceType::KRYSTALLIUM;
-				break;
-			default :
-				break;
+			this->produceResource();
+			this->resourceProducing = ResourceType::ENERGY;
+			this->notifyObservers();
+			this->nextProduction ();
 		}
-		this->notifyObservers();
+		else if (ResourceType::ENERGY == this->resourceProducing)
+		{
+			this->produceResource();
+			this->resourceProducing = ResourceType::SCIENCE;
+			this->notifyObservers();
+			this->nextProduction ();
+		}
+		else if (ResourceType::SCIENCE == this->resourceProducing)
+		{
+			this->produceResource();
+			this->resourceProducing = ResourceType::GOLD;
+			this->notifyObservers();
+			this->nextProduction ();
+		}
+		else if (ResourceType::GOLD == this->resourceProducing)
+		{
+			this->produceResource();
+			this->resourceProducing = ResourceType::EXPLORATION;
+			this->notifyObservers();
+			this->nextProduction ();
+		}
+		else
+		{
+			this->produceResource();
+			this->resourceProducing = ResourceType::KRYSTALLIUM;
+			this->notifyObservers();
+			this->endProduction();
+		}
 	}
 
 	///@brief Manage the phase of production for all player and one resource
@@ -325,7 +344,7 @@ namespace state {
 				biggestProduction = playerProduction;
 				multipleBiggestProduction = false;
 			}
-			else if (playerProduction > biggestProduction)
+			else if (playerProduction == biggestProduction)
 			{
 				playerIndexBiggestProduction = -1;
 				multipleBiggestProduction = true;

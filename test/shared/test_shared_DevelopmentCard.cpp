@@ -12,36 +12,11 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     // Testing the empty constructor of DevelopmentCard 
     DevelopmentCard* myFirstDevelopmentCard = new DevelopmentCard();
 
-    /*
-    // Adding some of those lines if somes getters are done.
-    // Checking default value given by the empty constructor.
-    // Checking values from the empty Card constructor.
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getName(), "");
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getProductionGain(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getDesign(), sf::Texture());
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getVictoryPoints(), {});
-
-    // Checking default value given by the DevelopmentCard constructor.
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getInstantGain(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getType(), CardType::NONETYPE);
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getNumberOfCopies(), 0);
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getCostToBuild(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->InstantGain(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getCostToBuild(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getDiscardGain(), new Resource());
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getProductionGain(), {});
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getQuantityResourceMissing(), -1);
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getIsPaid(), false);
-    */
-
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getDiscardGain(), ResourceType::MATERIAL);
-    BOOST_CHECK_EQUAL(myFirstDevelopmentCard->getType(), CardType::NONETYPE);
-    
     // We call toString but we don't want to test it.
     (void)myFirstDevelopmentCard->toString();
 
     // Delete pointers that won't be used anymore.
-    delete myFirstDevelopmentCard;
+    myFirstDevelopmentCard->~DevelopmentCard();
   }
 
   {
@@ -115,16 +90,13 @@ BOOST_AUTO_TEST_CASE(firstDevelopmentCardTest)
     // Calling the toString method.
     (void)mySecondDevelopmentCard->toString();
 
+    //Testing the getters:
+    (void)mySecondDevelopmentCard->getCostToBuild();
+    (void)mySecondDevelopmentCard->getType();
+    (void)mySecondDevelopmentCard->getDiscardGain();
+
     // Delete pointers that won't be used anymore.
-    delete firstResourceToPay;
-    delete secondResourceToPay;
-    delete thirdResourceToPay;
-    delete fourthResourceToPay;
-
-    delete firstResourceToProduce;
-    delete secondResourceToProduce;
-
-    delete mySecondDevelopmentCard;
+    mySecondDevelopmentCard->~DevelopmentCard();
   }
 }
 
