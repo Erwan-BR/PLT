@@ -13,6 +13,7 @@ void testSFML() {
 #include <state.h>
 #include <render.h>
 #include "../shared/state.h"
+#include "render.h"
 
 using namespace std;
 using namespace state;
@@ -22,35 +23,12 @@ int main(int argc,char* argv[])
 {
 
 	//Print Temporary Manual Commands
-
 	cout<<"**Temporary Manual Commands**"<<endl;
 	cout<<"*Change Window Commands*"<<endl;
 	cout<<"A - Main Window"<<endl;
 	cout<<"Z - Drafting Window"<<endl;
 	cout<<"E - Player Full Window"<<endl;
-	cout<<"*Main Window Commands*"<<endl;
-	cout<<"K/M - Change position of Token"<<endl;
-	cout<<"O/L - Change Turn"<<endl;
-	cout<<"*Player Info Commands*"<<endl;
-	cout<<"Q - Display Player 1"<<endl;
-	cout<<"S - Display Player 2"<<endl;
 
-	//Creation of testing instances of Player class
-	state::Player* player1 = new state::Player();
-	state::Player* player2 = new state::Player();
-
-	//Creation of the vector players
-	vector<state::Player*> players;
-	players.push_back(player1);
-	players.push_back(player2);
-
-	//Creation of the instance of the Game class
-	state::Game* game = new state::Game(players);
-
-	int i,j,k;
-
-	//Creation of the instance of the Scene class
-	Scene scene = Scene(game);
 
 	//Creation of the window
 	int win_length = 1820;
@@ -61,6 +39,30 @@ int main(int argc,char* argv[])
 	float win_length_scale = (win_length*1.0f)/(1920.0f);
 	float win_heigth_scale = (win_heigth*1.0f)/(1080.0f);
 	sf::Transform tr_scale = sf::Transform().scale(win_length_scale, win_heigth_scale);
+
+
+	sf::Texture* t = new sf::Texture();
+	sf::Texture* t2 = new sf::Texture();
+	//Creation of testing instances of Player class
+	t->loadFromFile("./resources/img/pfp_1.png");
+	state::Player* player1 = new state::Player("MOI",0,t);
+	t2->loadFromFile("./resources/img/pfp_2.png");
+	state::Player* player2 = new state::Player("TOI",1,t2);
+
+	//Creation of the vector players
+	vector<state::Player*> players;
+	players.push_back(player1);
+	players.push_back(player2);
+
+	//Creation of the instance of the Game class
+	state::Game game = state::Game(players);
+
+	game.initGame();
+	//endDraft - endPlanification - 
+	int i,j,k;
+
+	//Creation of the instance of the Scene class
+	Scene scene = Scene(&game,tr_scale);
 
 	//Creation of the Font for the Texts
 	sf::Font font;
@@ -96,7 +98,8 @@ int main(int argc,char* argv[])
 					}
 					if (event.key.code == 4){		//Key E
 						scene.changeWindow(PLAYER_INFO); //Change the window to PLAYER_INFO
-					}					
+					}
+						
 				}
 			}
 
@@ -115,13 +118,13 @@ int main(int argc,char* argv[])
 				window.draw(*(gRenderer->getPhaseIndicator()),gRenderer->getPhaseIndicatorTransform());
 
 				
-				for (i=0; i < (scene.getPlayerRenderer().size()-1)/2; i++){
-					pRenderer =	scene.getPlayerRenderer()[i];
+				for (i=0; i < 2; i++){
+					pRenderer =	scene.getPlayerRenderer(i);
 					for (j = 0; j < pRenderer->getNumberSprite() ;j++){
-						window.draw(*(pRenderer->getSprite(i)),pRenderer->getSpriteTransform(i));
+						window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j));
 					}
 					for (j = 0; j < pRenderer->getNumberText() ;j++){
-						window.draw(*(pRenderer->getText(i)),pRenderer->getTextTransform(i));
+						window.draw(*(pRenderer->getText(j)),pRenderer->getTextTransform(j));
 					}
 					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 						cRenderer = pRenderer->getCardRenderer(j);
@@ -133,8 +136,8 @@ int main(int argc,char* argv[])
 				}
 				break;
 			case DRAFTING_WINDOW:
-				for (i=(scene.getPlayerRenderer().size()+1)/2; i < scene.getPlayerRenderer().size()-1; i++){
-					pRenderer =	scene.getPlayerRenderer()[i];
+				for (i=2; i < 4; i++){
+					pRenderer =	scene.getPlayerRenderer(i);
 					for (j = 0; j < pRenderer->getNumberSprite() ;j++){
 						window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j));
 					}
@@ -152,7 +155,7 @@ int main(int argc,char* argv[])
 				//TODO Drafting HAND
 				break;
 			case PLAYER_INFO:
-				pRenderer =	scene.getPlayerRenderer()[scene.getPlayerRenderer().size()-1];
+				pRenderer =	scene.getPlayerRenderer(4);
 				for (j = 0; j < pRenderer->getNumberSprite() ;j++){
 					window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j));
 				}

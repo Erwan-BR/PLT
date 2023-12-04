@@ -17,11 +17,18 @@ namespace render {
 		std::vector<state::DevelopmentCard*> built = player->getBuiltCards();
 		std::vector<state::DevelopmentCard*> drafted = player->getDraftCards();
 
+		this->sprites = {};
+		this->sprite_transforms = {};
+		this->devCardRenderers = {};
+		this->texts = {};
+		this->text_transforms = {};
+
 		int i;
 		sf::Texture* texture;
 		sf::Sprite* sprite;
 		sf::Text* text;
 		DevelopmentCardRenderer* cRenderer;
+		this->sprites = {};
 
 		switch (window){
 		case MAIN_WINDOW:
@@ -35,7 +42,7 @@ namespace render {
 			this->sprite_transforms.push_back(transform);				//Transform
 
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = new sf::Texture(player->getProfilePicture());
+			texture = player->getProfilePicture();
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));
@@ -76,7 +83,7 @@ namespace render {
 				text->setCharacterSize(10);
 				text->setFillColor(sf::Color::White);
 				this->texts.push_back(text);				//Text
-				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(200.0f,140.0f+30.0f*(i)));		//Transform
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(200.0f,140.0f+60.0f*(i)));		//Transform
 			}
 			break;
 		case DRAFTING_WINDOW:
@@ -90,7 +97,7 @@ namespace render {
 			this->sprite_transforms.push_back(transform);				//Transform
 
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = new sf::Texture(player->getProfilePicture());
+			texture = player->getProfilePicture();
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));
@@ -124,7 +131,7 @@ namespace render {
 			this->sprite_transforms.push_back(transform);				//Transform
 
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = new sf::Texture(player->getProfilePicture());
+			texture = player->getProfilePicture();
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));

@@ -83,7 +83,7 @@ namespace render
                 break;
             case state::PRODUCTION:
                 this->phaseIndicator->setString("PRODUCTION");
-                /*switch (this->game->getResourceProducing()){
+                switch (this->game->getResourceProducing()){
                     case state::MATERIAL:
                         this->boardMaterialSprite->setColor(sf::Color::Gray);
                         break;
@@ -99,7 +99,7 @@ namespace render
                     case state::EXPLORATION:
                         this->boardExplorationSprite->setColor(sf::Color::Gray);
                         break;
-                }*/
+                }
                 break;
         }
     }
