@@ -8,7 +8,7 @@ namespace state {
     Observable(),
     name(""),
     id(-1),
-    profilePicture(sf::Texture())
+    profilePicture(new sf::Texture())
     {
         resourcesProduction[MATERIAL] = 0;
         resourcesProduction[ENERGY] = 0;
@@ -27,7 +27,7 @@ namespace state {
     /// @param name Name of the player
     /// @param id Id of the player
     /// @param profilePicture Profile Picture of the player
-    Player::Player(std::string name, int id, sf::Texture profilePicture) :
+    Player::Player(std::string name, int id, sf::Texture* profilePicture) :
     Observable(),
     name(name),
     id(id),
@@ -49,24 +49,27 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
-        this->empire->~EmpireCard();
+        delete this->empire;
         
-        for(DevelopmentCard* card : this->builtCards)card->~DevelopmentCard();
-        this->builtCards.clear();
+        /*for(DevelopmentCard* card : this->builtCards)
+        {
+            delete card;
+        }*/
 
-        for(DevelopmentCard* card : this->toBuildCards)card->~DevelopmentCard();
-        this->toBuildCards.clear();
+        for(DevelopmentCard* card : this->toBuildCards)
+        {
+            delete card;
+        }
 
-        for(DevelopmentCard* card : this->draftingCards)card->~DevelopmentCard();
-        this->draftingCards.clear();
+        for(DevelopmentCard* card : this->draftingCards)
+        {
+            delete card;
+        }
 
-        for(DevelopmentCard* card : this->draftCards)card->~DevelopmentCard();
-        this->draftCards.clear();
-
-        this->resourcesProduction.clear();
-        this->cardsTypeList.clear();
-
-        delete(this);
+        for(DevelopmentCard* card : this->draftCards)
+        {
+            delete card;
+        }
     }
 
     /// @brief Construct the card "cardToBuild"
@@ -286,15 +289,6 @@ namespace state {
     bool Player::chooseColonelToken() const
     {
         return false ;
-    }
-    
-    /// @brief Receive resource from the game.
-    /// @param resourceToReceive Resource to add to the player.
-    void Player::receiveResource (ResourceType resourceToReceive)
-    {
-        this->currentResources.push_back(resourceToReceive);
-
-        this->notifyObservers();
     }
     
     /// @brief Receive multiple resources from the game
