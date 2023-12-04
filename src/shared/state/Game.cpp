@@ -339,12 +339,12 @@ namespace state {
 			// Send the financier token
 			if (ResourceType::MATERIAL == this->resourceProducing || ResourceType::GOLD == this->resourceProducing)
 			{
-				this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::FINANCIER);
+				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER,1);
 			}
 			// Send the colonel token
 			else if (ResourceType::ENERGY == this->resourceProducing || ResourceType::EXPLORATION == this->resourceProducing)
 			{
-				this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::COLONEL);
+				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL,1);
 			}
 			// Send the token choosen by the player
 			else
@@ -354,11 +354,11 @@ namespace state {
 
 				if (chooseColonel)
 				{
-					this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::COLONEL);
+					this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL,1);
 				}
 				else
 				{
-					this->players[playerIndexBiggestProduction]->receiveResource(ResourceType::FINANCIER);
+					this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER,1);
 				}
 			}
 		}
