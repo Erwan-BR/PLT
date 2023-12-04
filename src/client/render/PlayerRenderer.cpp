@@ -83,7 +83,7 @@ namespace render {
 				text->setCharacterSize(10);
 				text->setFillColor(sf::Color::White);
 				this->texts.push_back(text);				//Text
-				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(200.0f,140.0f+60.0f*(i)));		//Transform
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(200.0f,140.0f+50.0f*(i)));		//Transform
 			}
 			break;
 		case DRAFTING_WINDOW:

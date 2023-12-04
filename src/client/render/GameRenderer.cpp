@@ -85,19 +85,19 @@ namespace render
                 this->phaseIndicator->setString("PRODUCTION");
                 switch (this->game->getResourceProducing()){
                     case state::MATERIAL:
-                        this->boardMaterialSprite->setColor(sf::Color::Gray);
+                        this->boardMaterialSprite->setColor(sf::Color(127,127,127));
                         break;
                     case state::ENERGY:
-                        this->boardEnergySprite->setColor(sf::Color::Gray);
+                        this->boardEnergySprite->setColor(sf::Color(127,127,127));
                         break;
                     case state::SCIENCE:
-                        this->boardScienceSprite->setColor(sf::Color::Gray);
+                        this->boardScienceSprite->setColor(sf::Color(127,127,127));
                         break;
                     case state::GOLD:
-                        this->boardGoldSprite->setColor(sf::Color::Gray);
+                        this->boardGoldSprite->setColor(sf::Color(127,127,127));
                         break;
                     case state::EXPLORATION:
-                        this->boardExplorationSprite->setColor(sf::Color::Gray);
+                        this->boardExplorationSprite->setColor(sf::Color(127,127,127));
                         break;
                 }
                 break;
