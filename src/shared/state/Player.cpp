@@ -367,7 +367,7 @@ namespace state {
 
     /// @brief Get the profile picture of the player, to display it
     /// @return Profile picture of the player
-    sf::Texture Player::getProfilePicture () const
+    sf::Texture* Player::getProfilePicture () const
     {
         return this->profilePicture;
     }
