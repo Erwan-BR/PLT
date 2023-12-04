@@ -8,7 +8,7 @@ namespace state {
     Observable(),
     name(""),
     id(-1),
-    profilePicture(sf::Texture())
+    profilePicture(new sf::Texture())
     {
         resourcesProduction[MATERIAL] = 0;
         resourcesProduction[ENERGY] = 0;
@@ -27,7 +27,7 @@ namespace state {
     /// @param name Name of the player
     /// @param id Id of the player
     /// @param profilePicture Profile Picture of the player
-    Player::Player(std::string name, int id, sf::Texture profilePicture) :
+    Player::Player(std::string name, int id, sf::Texture* profilePicture) :
     Observable(),
     name(name),
     id(id),

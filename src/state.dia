@@ -2198,7 +2198,7 @@
             <dia:string>#profilePicture#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#sf::Texture#</dia:string>
+            <dia:string>#sf::Texture*#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
@@ -2645,7 +2645,7 @@
                 <dia:string>#profilePicture#</dia:string>
               </dia:attribute>
               <dia:attribute name="type">
-                <dia:string>#sf::Texture#</dia:string>
+                <dia:string>#sf::Texture*#</dia:string>
               </dia:attribute>
               <dia:attribute name="value">
                 <dia:string>##</dia:string>
