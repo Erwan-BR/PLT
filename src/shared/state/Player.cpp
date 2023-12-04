@@ -358,6 +358,14 @@ namespace state {
         this->notifyObservers();
     }
 
+        /// @brief Setter for the drafting deck
+    /// @param draft drafting deck to give to the player
+    void Player::setState(PlayerState state)
+    {
+        this->state = state;
+        this->notifyObservers();
+    }
+
     /// @brief Get the production of a given resource.
     /// @param resource Resource which the production quantity is asked.
     /// @return Production of this resource.
