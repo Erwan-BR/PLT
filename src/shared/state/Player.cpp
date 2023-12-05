@@ -8,7 +8,7 @@ namespace state {
     Observable(),
     name(""),
     id(-1),
-    profilePicture(sf::Texture())
+    profilePicture(new sf::Texture())
     {
         resourcesProduction[MATERIAL] = 0;
         resourcesProduction[ENERGY] = 0;
@@ -27,7 +27,7 @@ namespace state {
     /// @param name Name of the player
     /// @param id Id of the player
     /// @param profilePicture Profile Picture of the player
-    Player::Player(std::string name, int id, sf::Texture profilePicture) :
+    Player::Player(std::string name, int id, sf::Texture* profilePicture) :
     Observable(),
     name(name),
     id(id),
@@ -49,17 +49,21 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
+        this->resourcesProduction.clear();
+        this->cardsTypeList.clear();
         delete this->empire;
         
-        /*for(DevelopmentCard* card : this->builtCards)
+        for(DevelopmentCard* card : this->builtCards)
         {
             delete card;
-        }*/
+        }
+
 
         for(DevelopmentCard* card : this->toBuildCards)
         {
             delete card;
         }
+
 
         for(DevelopmentCard* card : this->draftingCards)
         {
@@ -70,17 +74,21 @@ namespace state {
         {
             delete card;
         }
+
     }
 
     /// @brief Construct the card "cardToBuild"
     /// @param cardToBuild The card to build
-    void Player::construct(DevelopmentCard* cardToBuid)
+    void Player::construct(DevelopmentCard* cardToBuild)
     {
-        this->builtCards.push_back(cardToBuid);
-        this->toBuildCards.erase(std::remove(this->toBuildCards.begin(), this->toBuildCards.end(), cardToBuid), this->toBuildCards.end());
-        this->cardsTypeList[cardToBuid->getType()]++;
-        this->updateProduction();
+        auto cardPos = std::find(this->toBuildCards.begin(), this->toBuildCards.end(), cardToBuild);
+        if(cardPos != this->toBuildCards.end())
+        {
+            this->builtCards.push_back(cardToBuild);
+            this->toBuildCards.erase(cardPos);
+        }
 
+        this->updateProduction();
         this->notifyObservers();
     }
 
@@ -99,8 +107,7 @@ namespace state {
                 //Adding the resource to the card, and building it if there are all the resources required on it.
                 if((*cardPos)->addResource(resource))
                 {
-                    construct(*cardPos);
-                    toBuildCards.erase(cardPos);
+                    this->construct(*cardPos);
                 }
             }
         }
@@ -342,11 +349,20 @@ namespace state {
     /// @param draft drafting deck to give to the player
     void Player::setDraftingCards(std::vector<DevelopmentCard*> draft)
     {
+        this->draftingCards = {};
         for(DevelopmentCard* card : draft)
         {
             this->draftingCards.push_back(card);
         }
 
+        this->notifyObservers();
+    }
+
+        /// @brief Setter for the drafting deck
+    /// @param draft drafting deck to give to the player
+    void Player::setState(PlayerState state)
+    {
+        this->state = state;
         this->notifyObservers();
     }
 
@@ -367,7 +383,7 @@ namespace state {
 
     /// @brief Get the profile picture of the player, to display it
     /// @return Profile picture of the player
-    sf::Texture Player::getProfilePicture () const
+    sf::Texture* Player::getProfilePicture () const
     {
         return this->profilePicture;
     }
