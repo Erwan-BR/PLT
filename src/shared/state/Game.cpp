@@ -721,8 +721,8 @@ namespace state {
 	{	
 		// face B
 		ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
-    	ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
+		ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
+		ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
 		std::vector<ResourceToProduce*> productionGainB = {firstResourceToProduce,secondResourceToProduce, thirdResourceToProduce};		
 
 		// empire AFRICA
@@ -732,8 +732,8 @@ namespace state {
 		sf::Texture designAFRICA;
 		designAFRICA.loadFromFile("./resources/img/Cards/Empire_Face_A/Panafricaine.png");
 		sf::Texture designAFRICA_FaceB;
-		//designAFRICA_FaceB.loadFromFile("./resources/img/Cards/Empire_Face_B/Panafricaine.png");
-   		CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,CardType::RESEARCH};
+		designAFRICA_FaceB.loadFromFile("./resources/img/Cards/Empire_Face_B/Panafricaine.png");
+		CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,CardType::RESEARCH};
 		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, productionGainB, {0}, AFRICA, designAFRICA_FaceB);
 	
 		// empire NORAM
@@ -743,8 +743,8 @@ namespace state {
 		sf::Texture designNORAM;
 		designNORAM.loadFromFile("./resources/img/Cards/Empire_Face_A/Noram.png");
 		sf::Texture designNORAM_FaceB;
-		//designNORAM_FaceB.loadFromFile("./resources/img/Cards/Empire_Face_B/Noram.png");
-   		CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1, ResourceType::FINANCIER};
+		designNORAM_FaceB.loadFromFile("./resources/img/Cards/Empire_Face_B/Noram.png");
+		CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1, ResourceType::FINANCIER};
 		EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, designNORAM, victoryPointsNORAM, productionGainB, {0}, NORAM, designNORAM_FaceB);
 		
 		// empire ASIA
@@ -754,8 +754,8 @@ namespace state {
 		sf::Texture designASIA;
 		designASIA.loadFromFile("./resources/img/Cards/Empire_Face_A/Asia.png");
 		sf::Texture designASIA_FaceB;
-		//designASIA_FaceB.loadFromFile("./resources/img/Cards/Empire_Face_B/Asia.png");
-   		CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2, CardType::PROJECT};
+		designASIA_FaceB.loadFromFile("./resources/img/Cards/Empire_Face_B/Asia.png");
+		CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2, CardType::PROJECT};
 		EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, designASIA, victoryPointsASIA, productionGainB, {0}, ASIA, designASIA_FaceB);
 		
 		// empire EUROPE
@@ -766,8 +766,8 @@ namespace state {
 		sf::Texture designEUROPE;
 		designEUROPE.loadFromFile("./resources/img/Cards/Empire_Face_A/Europa.png");
 		sf::Texture designEUROPE_FaceB;
-		//designEUROPE_FaceB.loadFromFile("./resources/img/Cards/Empire_Face_B/Europa.png");
-   		CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
+		designEUROPE_FaceB.loadFromFile("./resources/img/Cards/Empire_Face_B/Europa.png");
+		CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
 		EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, designEUROPE, victoryPointsEUROPE, productionGainB, {0}, EUROPE, designEUROPE_FaceB);
 		
 		// empire AZTEC
@@ -777,8 +777,8 @@ namespace state {
 		sf::Texture designAZTEC;
 		designAZTEC.loadFromFile("./resources/img/Cards/Empire_Face_A/Azteca.png");
 		sf::Texture designAZTEC_FaceB;
-		//designAZTEC.loadFromFile("./resources/img/Cards/Empire_Face_B/Azteca.png");
-   		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
+		designAZTEC.loadFromFile("./resources/img/Cards/Empire_Face_B/Azteca.png");
+		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
 		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB);
 
 		std::vector<EmpireCard*> empires = {africa, noram, asia, europe, aztec};
