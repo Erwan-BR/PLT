@@ -28,7 +28,6 @@ namespace render {
 		sf::Sprite* sprite;
 		sf::Text* text;
 		DevelopmentCardRenderer* cRenderer;
-		this->sprites = {};
 
 		switch (window){
 		case MAIN_WINDOW:

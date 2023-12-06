@@ -169,6 +169,7 @@ int main(int argc,char* argv[])
 						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 					}
 				}
+				cout<<player1->toString()<<endl;
 			default:
 				break;
 			}
