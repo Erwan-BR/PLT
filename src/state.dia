@@ -2115,7 +2115,7 @@
         <dia:point val="75.1493,-26.2298"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="75.0993,-26.2798;99.9543,17.2202"/>
+        <dia:rectangle val="75.0993,-26.2798;99.9543,18.0202"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="75.1493,-26.2298"/>
@@ -2124,7 +2124,7 @@
         <dia:real val="24.755000000000003"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="43.40000000000002"/>
+        <dia:real val="44.200000000000024"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#Player#</dia:string>
@@ -5682,7 +5682,7 @@
             <dia:string>#21#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
-            <dia:string>##</dia:string>
+            <dia:string>#Grey cards.#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="0"/>
@@ -5705,7 +5705,7 @@
             <dia:string>#22#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
-            <dia:string>##</dia:string>
+            <dia:string>#Black cards.#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="0"/>
@@ -5728,7 +5728,7 @@
             <dia:string>#23#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
-            <dia:string>##</dia:string>
+            <dia:string>#Green cards.#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="0"/>
@@ -5751,7 +5751,7 @@
             <dia:string>#24#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
-            <dia:string>##</dia:string>
+            <dia:string>#Yellow cards.#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="0"/>
@@ -5774,7 +5774,7 @@
             <dia:string>#25#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
-            <dia:string>##</dia:string>
+            <dia:string>#Blue cards.#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="0"/>
