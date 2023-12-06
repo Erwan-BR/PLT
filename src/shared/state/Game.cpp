@@ -300,7 +300,7 @@ namespace state {
 		// Train magnetique
 		sf::Texture designTrainMagnetique;
 		designTrainMagnetique.loadFromFile("./resources/img/Cards/Development_Cards/train_magnetique.png");
-		DevelopmentCard* tourGeante = new DevelopmentCard ("Train magnetique",
+		DevelopmentCard* trainMagnetique = new DevelopmentCard ("Train magnetique",
 		{new ResourceToProduce{ResourceType::GOLD, 1, CardType::STRUCTURE}},
 		designTrainMagnetique,
 		new CardVictoryPoint{2, (int) CardType::NONETYPE},
@@ -309,7 +309,7 @@ namespace state {
 		{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},
 		{ResourceType::FINANCIER, ResourceType::FINANCIER},
 		ResourceType::GOLD);
-		this->deck.push_back(tourGeante);
+		this->deck.push_back(trainMagnetique);
 
 		// Universite
 		sf::Texture designUniversite;
@@ -407,6 +407,300 @@ namespace state {
 		{ResourceType::FINANCIER, ResourceType::FINANCIER},
 		ResourceType::SCIENCE);
 		this->deck.push_back(ameliorationGenetique);
+
+		// Animorphes
+		sf::Texture designAnimorphes;
+		designAnimorphes.loadFromFile("./resources/img/Cards/Development_Cards/animorphes.png");
+		DevelopmentCard* animorphes = new DevelopmentCard ("Animorphes",
+		{new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE}},
+		designAnimorphes,
+		new CardVictoryPoint{2, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{ResourceType::COLONEL},
+		ResourceType::ENERGY);
+		this->deck.push_back(animorphes);
+
+		// Aquaculture
+		sf::Texture designAquaculture;
+		designAquaculture.loadFromFile("./resources/img/Cards/Development_Cards/aquaculture.png");
+		DevelopmentCard* aquaculture = new DevelopmentCard ("Aquaculture",
+		{},
+		designAquaculture,
+		new CardVictoryPoint{1, (int) ResourceType::FINANCIER},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},
+		{ResourceType::COLONEL},
+		ResourceType::SCIENCE);
+		this->deck.push_back(aquaculture);
+
+		// Automates de controle
+		sf::Texture designAutomateControle;
+		designAutomateControle.loadFromFile("./resources/img/Cards/Development_Cards/automates_de_controle.png");
+		DevelopmentCard* automateControle = new DevelopmentCard ("Automates de controle",
+		{},
+		designAutomateControle,
+		new CardVictoryPoint{1, (int) ResourceType::COLONEL},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},
+		{},
+		ResourceType::GOLD);
+		this->deck.push_back(automateControle);
+
+		// Clonage humain
+		sf::Texture designClonageHumain;
+		designClonageHumain.loadFromFile("./resources/img/Cards/Development_Cards/clonage_humain.png");
+		DevelopmentCard* clonageHumain = new DevelopmentCard ("Clonage Humain",
+		{new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},
+		designClonageHumain,
+		new CardVictoryPoint{1, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},
+		{ResourceType::FINANCIER},
+		ResourceType::GOLD);
+		this->deck.push_back(clonageHumain);
+
+		// Cryogenisation
+		sf::Texture designCryogenisation;
+		designCryogenisation.loadFromFile("./resources/img/Cards/Development_Cards/cryogenisation.png");
+		DevelopmentCard* cryogenisation = new DevelopmentCard ("Cryogenisation",
+		{},
+		designCryogenisation,
+		new CardVictoryPoint{1, (int) ResourceType::FINANCIER},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{ResourceType::FINANCIER},
+		ResourceType::GOLD);
+		this->deck.push_back(cryogenisation);
+
+		// Generateur quantique
+		sf::Texture designGenerateurQuantique;
+		designGenerateurQuantique.loadFromFile("./resources/img/Cards/Development_Cards/generateur_quantique.png");
+		DevelopmentCard* generateurQuantique = new DevelopmentCard ("Generateur quantique",
+		{new ResourceToProduce{ResourceType::ENERGY, 3, CardType::NONETYPE}},
+		designGenerateurQuantique,
+		new CardVictoryPoint{1, (int) CardType::VEHICLE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{},
+		ResourceType::ENERGY);
+		this->deck.push_back(generateurQuantique);
+
+		// Greffes bioniques
+		sf::Texture designGreffesBionique;
+		designGreffesBionique.loadFromFile("./resources/img/Cards/Development_Cards/greffes_bioniques.png");
+		DevelopmentCard* greffesBioniques = new DevelopmentCard ("Greffes bioniques",
+		{new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE}},
+		designGreffesBionique,
+		new CardVictoryPoint{4, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{ResourceType::COLONEL},
+		ResourceType::MATERIAL);
+		this->deck.push_back(greffesBioniques);
+
+		// Inverseur de gravite
+		sf::Texture designInverseurGravite;
+		designInverseurGravite.loadFromFile("./resources/img/Cards/Development_Cards/inverseur_de_gravite.png");
+		DevelopmentCard* inverseurGravite = new DevelopmentCard ("Inverseur de gravite",
+		{},
+		designInverseurGravite,
+		new CardVictoryPoint{2, (int) CardType::PROJECT},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::KRYSTALLIUM, false}},
+		{ResourceType::FINANCIER},
+		ResourceType::SCIENCE);
+		this->deck.push_back(inverseurGravite);
+
+		// Mega bombe
+		sf::Texture designMegaBombe;
+		designMegaBombe.loadFromFile("./resources/img/Cards/Development_Cards/mega_bombe.png");
+		DevelopmentCard* megaBombe = new DevelopmentCard ("Mega bombe",
+		{},
+		designMegaBombe,
+		new CardVictoryPoint{3, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{ResourceType::COLONEL, ResourceType::COLONEL},
+		ResourceType::ENERGY);
+		this->deck.push_back(megaBombe);
+
+		// Neuroscience
+		sf::Texture designNeuroscience;
+		designNeuroscience.loadFromFile("./resources/img/Cards/Development_Cards/neuroscience.png");
+		DevelopmentCard* neuroscience = new DevelopmentCard ("Neuroscience",
+		{new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::RESEARCH}},
+		designNeuroscience,
+		new CardVictoryPoint{1, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{},
+		ResourceType::SCIENCE);
+		this->deck.push_back(neuroscience);
+
+		// Realite virtuelle
+		sf::Texture designRealiteVirtuelle;
+		designRealiteVirtuelle.loadFromFile("./resources/img/Cards/Development_Cards/realite_virtuelle.png");
+		DevelopmentCard* realiteVirtuelle = new DevelopmentCard ("Realite virtuelle",
+		{new ResourceToProduce{ResourceType::GOLD, 1, CardType::RESEARCH}},
+		designRealiteVirtuelle,
+		new CardVictoryPoint{2, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{},
+		ResourceType::GOLD);
+		this->deck.push_back(realiteVirtuelle);
+
+		// Robots de compagnie
+		sf::Texture designRobotsCompagnie;
+		designRobotsCompagnie.loadFromFile("./resources/img/Cards/Development_Cards/robots_de_compagnie.png");
+		DevelopmentCard* robotsCompagnie = new DevelopmentCard ("Robots de compagnie",
+		{new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::STRUCTURE}},
+		designRobotsCompagnie,
+		new CardVictoryPoint{1, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{},
+		ResourceType::MATERIAL);
+		this->deck.push_back(robotsCompagnie);
+
+		// Satellites
+		sf::Texture designSatellites;
+		designSatellites.loadFromFile("./resources/img/Cards/Development_Cards/satellites.png");
+		DevelopmentCard* satellites = new DevelopmentCard ("Satellites",
+		{new ResourceToProduce{ResourceType::EXPLORATION, 2, CardType::NONETYPE}},
+		designSatellites,
+		new CardVictoryPoint{3, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{ResourceType::COLONEL},
+		ResourceType::EXPLORATION);
+		this->deck.push_back(satellites);
+
+		// Super calculateur
+		sf::Texture designSuperCalculateur;
+		designSuperCalculateur.loadFromFile("./resources/img/Cards/Development_Cards/super_calculateur.png");
+		DevelopmentCard* superCalculateur = new DevelopmentCard ("Super calculateur",
+		{new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE}},
+		designSuperCalculateur,
+		new CardVictoryPoint{1, (int) CardType::VEHICLE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{},
+		ResourceType::SCIENCE);
+		this->deck.push_back(superCalculateur);
+
+		// Super soldats
+		sf::Texture designSuperSoldats;
+		designSuperSoldats.loadFromFile("./resources/img/Cards/Development_Cards/super_soldats.png");
+		DevelopmentCard* superSoldats = new DevelopmentCard ("Super soldats",
+		{},
+		designSuperSoldats,
+		new CardVictoryPoint{1, (int) ResourceType::COLONEL},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{ResourceType::COLONEL},
+		ResourceType::EXPLORATION);
+		this->deck.push_back(superSoldats);
+
+		// Super sonar
+		sf::Texture designSuperSonar;
+		designSuperSonar.loadFromFile("./resources/img/Cards/Development_Cards/super_sonar.png");
+		DevelopmentCard* superSonar = new DevelopmentCard ("Super sonar",
+		{new ResourceToProduce{ResourceType::EXPLORATION, 1, CardType::VEHICLE}},
+		designSuperSonar,
+		new CardVictoryPoint{1, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{},
+		ResourceType::EXPLORATION);
+		this->deck.push_back(superSonar);
+
+		// Technologie inconnue
+		sf::Texture designTechnologieInconnue;
+		designTechnologieInconnue.loadFromFile("./resources/img/Cards/Development_Cards/technologie_inconnue.png");
+		DevelopmentCard* technologieInconnue = new DevelopmentCard ("Technologie inconnue",
+		{},
+		designTechnologieInconnue,
+		new CardVictoryPoint{3, (int) CardType::RESEARCH},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::KRYSTALLIUM, false}},
+		{},
+		ResourceType::SCIENCE);
+		this->deck.push_back(technologieInconnue);
+
+		// Teleportation
+		sf::Texture designTeleportation;
+		designTeleportation.loadFromFile("./resources/img/Cards/Development_Cards/teleportation.png");
+		DevelopmentCard* teleportation = new DevelopmentCard ("Teleportation",
+		{},
+		designTeleportation,
+		new CardVictoryPoint{8, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{ResourceType::KRYSTALLIUM, ResourceType::KRYSTALLIUM},
+		ResourceType::EXPLORATION);
+		this->deck.push_back(teleportation);
+
+		// Transmutation
+		sf::Texture designTransmutation;
+		designTransmutation.loadFromFile("./resources/img/Cards/Development_Cards/transmutation.png");
+		DevelopmentCard* transmutation = new DevelopmentCard ("Transmutation",
+		{new ResourceToProduce{ResourceType::GOLD, 3, CardType::NONETYPE}},
+		designTransmutation,
+		new CardVictoryPoint{1, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},
+		{ResourceType::KRYSTALLIUM},
+		ResourceType::GOLD);
+		this->deck.push_back(transmutation);
+
+		// Vaccin Universel
+		sf::Texture designVaccinUniversel;
+		designVaccinUniversel.loadFromFile("./resources/img/Cards/Development_Cards/vaccin_universel.png");
+		DevelopmentCard* vaccinUniversel = new DevelopmentCard ("Vaccin universel",
+		{},
+		designVaccinUniversel,
+		new CardVictoryPoint{1, (int) CardType::PROJECT},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},
+		{},
+		ResourceType::GOLD);
+		this->deck.push_back(vaccinUniversel);
+
+		// Voyage temporel
+		sf::Texture designVoyageTemporel;
+		designVoyageTemporel.loadFromFile("./resources/img/Cards/Development_Cards/voyage_temporel.png");
+		DevelopmentCard* voyageTemporel = new DevelopmentCard ("Voyage temporel",
+		{},
+		designVoyageTemporel,
+		new CardVictoryPoint{15, (int) CardType::NONETYPE},
+		CardType::RESEARCH,
+		1,
+		{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::KRYSTALLIUM, false}, new ResourceToPay{ResourceType::KRYSTALLIUM, false}},
+		{},
+		ResourceType::EXPLORATION);
+		this->deck.push_back(voyageTemporel);
 
 		/* Arguments de DevelopmentCard
 		std::string name,
