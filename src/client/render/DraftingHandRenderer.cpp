@@ -9,7 +9,7 @@ namespace render {
 		this->font = f;
 
 		this->player = player;
-        cards = player->getDraftingCards();
+        std::vector<state::DevelopmentCard*> cards = player->getDraftingCards();
 
 		this->sprites = {};
 		this->sprite_transforms = {};
@@ -84,10 +84,10 @@ namespace render {
     void DraftingHandRenderer::update (){
         DevelopmentCardRenderer* cRenderer;
 
-		cards = player->getDraftingCards();
+		std::vector<state::DevelopmentCard*> cards = player->getDraftingCards();
 		int i;
 		
-        for (i=0;i<7 and i<drafted.size();i++){
+        for (i=0;i<7 and i<cards.size();i++){
             cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }
