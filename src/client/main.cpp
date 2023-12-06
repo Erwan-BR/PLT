@@ -21,7 +21,6 @@ using namespace render;
 
 int main(int argc,char* argv[])
 {
-
 	//Print Temporary Manual Commands
 	cout<<"**Temporary Manual Commands**"<<endl;
 	cout<<"*Change Window Commands*"<<endl;
@@ -63,6 +62,14 @@ int main(int argc,char* argv[])
 
 	//Creation of the instance of the Scene class
 	Scene scene = Scene(&game,tr_scale);
+
+	//Observable
+	game.addObserver(*(scene.getGameRenderer()));
+	for(i=0, i<game.getPlayers().size;i++){
+		game.addObserver(*(scene.getPlayerRenderer(i)));
+	}
+	game.addObserver(*(scene.getHandRenderer()))
+
 
 	//Creation of the Font for the Texts
 	sf::Font font;

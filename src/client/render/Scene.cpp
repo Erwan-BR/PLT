@@ -35,7 +35,7 @@ namespace render {
 		pRenderer = new PlayerRenderer(game->getPlayers()[0],transform,PLAYER_INFO);
 		this->player_renderer.push_back(pRenderer);
 
-		this->drafting_hand_renderer = new DraftingHandRenderer(((game->getPlayers())[0])->getDraftingCards(),sf::Transform(transform).translate(0.f,900.f));
+		this->drafting_hand_renderer = new DraftingHandRenderer((game->getPlayers())[0],sf::Transform(transform).translate(0.f,900.f));
 
 		this->game_renderer = new GameRenderer(game,transform);
 	}

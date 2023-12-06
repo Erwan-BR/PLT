@@ -2,13 +2,14 @@
 #include <string>
 
 namespace render {
-    DraftingHandRenderer::DraftingHandRenderer (std::vector<state::DevelopmentCard*> cards, sf::Transform transform){
+    DraftingHandRenderer::DraftingHandRenderer (state::Player* player, sf::Transform transform){
 		//Creation of the Font for the Texts
 		sf::Font f;
 		f.loadFromFile("./resources/font/arial.ttf");
 		this->font = f;
 
-		this->cards = cards;
+		this->player = player;
+        cards = player->getDraftingCards();
 
 		this->sprites = {};
 		this->sprite_transforms = {};
@@ -81,6 +82,20 @@ namespace render {
         return this->devCardRenderers.size();
     }
     void DraftingHandRenderer::update (){
+        DevelopmentCardRenderer* cRenderer;
+
+		cards = player->getDraftingCards();
+		int i;
+		
+        for (i=0;i<7 and i<drafted.size();i++){
+            cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
+            this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+        }
+		
+
+		for(i=0; i<this->getNumberCardRenderer();i++){
+			(this->getCardRenderer(i))->update();
+		}
 
     }
 
