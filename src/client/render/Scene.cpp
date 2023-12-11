@@ -62,6 +62,10 @@ namespace render {
 		return this->game_renderer;
 	}
 
+	DraftingHandRenderer* Scene::getHandRenderer(){
+		return this->drafting_hand_renderer;
+	}
+
 	/// @brief Setter for current_window
 	/// @param window new window
 	void Scene::changeWindow(Window window){

@@ -64,11 +64,11 @@ int main(int argc,char* argv[])
 	Scene scene = Scene(&game,tr_scale);
 
 	//Observable
-	game.addObserver(*(scene.getGameRenderer()));
-	for(i=0, i<game.getPlayers().size;i++){
-		game.addObserver(*(scene.getPlayerRenderer(i)));
+	game.addObserver(scene.getGameRenderer());
+	for(i=0;i<(int) game.getPlayers().size();i++){
+		game.addObserver(scene.getPlayerRenderer(i));
 	}
-	game.addObserver(*(scene.getHandRenderer()))
+	game.addObserver(scene.getHandRenderer());
 
 
 	//Creation of the Font for the Texts
@@ -97,13 +97,13 @@ int main(int argc,char* argv[])
 				}
 				if (event.type == sf::Event::KeyPressed) {
 					//cout<<to_string(event.key.code)<<endl; //Debug Print the code of pressed key
-					if (event.key.code == 0){		//Key A
+					if (event.key.code == sf::Keyboard::A){
 						scene.changeWindow(MAIN_WINDOW); //Change the window to MAIN_WINDOW
 					}
-					if (event.key.code == 25){		//Key Z
+					if (event.key.code == sf::Keyboard::Z){
 						scene.changeWindow(DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
 					}
-					if (event.key.code == 4){		//Key E
+					if (event.key.code == sf::Keyboard::E){
 						scene.changeWindow(PLAYER_INFO); //Change the window to PLAYER_INFO
 					}
 						
@@ -136,7 +136,7 @@ int main(int argc,char* argv[])
 					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 						cRenderer = pRenderer->getCardRenderer(j);
 						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
-						for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+						for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
 							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 						}
 					}
@@ -154,7 +154,7 @@ int main(int argc,char* argv[])
 					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 						cRenderer = pRenderer->getCardRenderer(j);
 						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
-						for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+						for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
 							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 						}
 					}
@@ -172,7 +172,7 @@ int main(int argc,char* argv[])
 				for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 					cRenderer = pRenderer->getCardRenderer(j);
 					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
-					for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
 						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 					}
 				}
