@@ -78,12 +78,11 @@ int main(int argc,char* argv[])
 	//Creation of the instance of sf::Event class that will received user's inputs.
 	sf::Event event;
 
-	scene.changeWindow(DRAFTING_WINDOW);
+	//scene.changeWindow(DRAFTING_WINDOW);
 	PlayerRenderer* pRenderer;
 	DevelopmentCardRenderer* cRenderer;
 	GameRenderer* gRenderer;
 	DraftingHandRenderer* hRenderer;
-	sf::Sprite s;sf::Transform tr;
 
 	//Main Loop active while the window is still open
 	while (window.isOpen())
@@ -126,7 +125,6 @@ int main(int argc,char* argv[])
 				window.draw(*(gRenderer->getBoardExplorationSprite()),gRenderer->getBoardExplorationTransform());
 				window.draw(*(gRenderer->getBoardTurnSprite()),gRenderer->getBoardTurnTransform());
 				window.draw(*(gRenderer->getPhaseIndicator()),gRenderer->getPhaseIndicatorTransform());
-
 				
 				for (i=0; i < 2; i++){
 					pRenderer =	scene.getPlayerRenderer(i);
@@ -164,8 +162,7 @@ int main(int argc,char* argv[])
 				}
 				hRenderer = scene.getHandRenderer();
 				for (j = 0; j < hRenderer->getNumberSprite() ;j++){
-					s = *(hRenderer->getSprite(j));tr =hRenderer->getSpriteTransform(j);
-					window.draw(s,tr);
+					window.draw(*(hRenderer->getSprite(j)),hRenderer->getSpriteTransform(j));
 				}
 				for (j = 0; j < hRenderer->getNumberText() ;j++){
 					window.draw(*(hRenderer->getText(j)),hRenderer->getTextTransform(j));

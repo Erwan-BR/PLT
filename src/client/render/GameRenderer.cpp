@@ -65,8 +65,10 @@ namespace render
     void GameRenderer::update ()
     {
         int turn = this->game->getTurn();
-        this->boardTurnTexture->loadFromFile("./resources/img/turn_"+std::to_string(turn)+".png");
-        this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
+        if (turn < 5){
+            this->boardTurnTexture->loadFromFile("./resources/img/turn_"+std::to_string(turn)+".png");
+            this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
+        }
 
         this->boardMaterialSprite->setColor(sf::Color::White);
         this->boardEnergySprite->setColor(sf::Color::White);
