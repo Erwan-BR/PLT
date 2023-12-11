@@ -99,6 +99,8 @@ namespace render
                     case state::EXPLORATION:
                         this->boardExplorationSprite->setColor(sf::Color(127,127,127));
                         break;
+                    default:
+                        break;
                 }
                 break;
         }

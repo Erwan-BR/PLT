@@ -42,7 +42,7 @@ namespace render {
         this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
 
         //Enter Cards (position 2 to 9 in sprites)
-        for (i=0;i<7 and i<cards.size();i++){
+        for (i=0;i<7 and i<(int) cards.size();i++){
             cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }
@@ -87,7 +87,7 @@ namespace render {
 		std::vector<state::DevelopmentCard*> cards = player->getDraftingCards();
 		int i;
 		
-        for (i=0;i<7 and i<cards.size();i++){
+        for (i=0;i<7 and i<(int) cards.size();i++){
             cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }
