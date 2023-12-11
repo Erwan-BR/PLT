@@ -78,9 +78,12 @@ int main(int argc,char* argv[])
 	//Creation of the instance of sf::Event class that will received user's inputs.
 	sf::Event event;
 
+	scene.changeWindow(DRAFTING_WINDOW);
 	PlayerRenderer* pRenderer;
 	DevelopmentCardRenderer* cRenderer;
 	GameRenderer* gRenderer;
+	DraftingHandRenderer* hRenderer;
+	sf::Sprite s;sf::Transform tr;
 
 	//Main Loop active while the window is still open
 	while (window.isOpen())
@@ -159,7 +162,21 @@ int main(int argc,char* argv[])
 						}
 					}
 				}
-				//TODO Drafting HAND
+				hRenderer = scene.getHandRenderer();
+				for (j = 0; j < hRenderer->getNumberSprite() ;j++){
+					s = *(hRenderer->getSprite(j));tr =hRenderer->getSpriteTransform(j);
+					window.draw(s,tr);
+				}
+				for (j = 0; j < hRenderer->getNumberText() ;j++){
+					window.draw(*(hRenderer->getText(j)),hRenderer->getTextTransform(j));
+				}
+				/*for (j = 0; j < hRenderer->getNumberCardRenderer() ;j++){
+					cRenderer = hRenderer->getCardRenderer(j);
+					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
+					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
+						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
+					}
+				}*/
 				break;
 			case PLAYER_INFO:
 				pRenderer =	scene.getPlayerRenderer(4);
@@ -176,7 +193,6 @@ int main(int argc,char* argv[])
 						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 					}
 				}
-				cout<<player1->toString()<<endl;
 			default:
 				break;
 			}

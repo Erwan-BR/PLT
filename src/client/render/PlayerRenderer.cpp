@@ -294,6 +294,21 @@ namespace render {
 					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
+				(this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
+				(this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
+				(this->texts)[3]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::SCIENCE]));
+				(this->texts)[4]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::GOLD]));
+				(this->texts)[5]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::EXPLORATION]));
+
+				(this->texts)[6]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::STRUCTURE]));
+				(this->texts)[7]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::VEHICLE]));
+				(this->texts)[8]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::RESEARCH]));
+				(this->texts)[9]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::PROJECT]));
+				(this->texts)[10]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::DISCOVERY]));
+
+				(this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
+				(this->texts)[12]->setString("x"+std::to_string(this->player->getColonelTokensUnit()));
+				(this->texts)[13]->setString("x"+std::to_string(this->player->getFinancierTokensUnit()));
 				break;
 			case DRAFTING_WINDOW:
 				for (i=0;i<7 and i<(int) drafted.size();i++){
@@ -310,6 +325,21 @@ namespace render {
 					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
+				(this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
+				(this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
+				(this->texts)[3]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::SCIENCE]));
+				(this->texts)[4]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::GOLD]));
+				(this->texts)[5]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::EXPLORATION]));
+
+				(this->texts)[6]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::STRUCTURE]));
+				(this->texts)[7]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::VEHICLE]));
+				(this->texts)[8]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::RESEARCH]));
+				(this->texts)[9]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::PROJECT]));
+				(this->texts)[10]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::DISCOVERY]));
+
+				(this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
+				(this->texts)[12]->setString("x"+std::to_string(this->player->getColonelTokensUnit()));
+				(this->texts)[13]->setString("x"+std::to_string(this->player->getFinancierTokensUnit()));
 				break;
 			default:
 				break;

@@ -55,7 +55,7 @@ namespace render {
         text->setFillColor(sf::Color::White);
         this->texts.push_back(text);			//Text
         this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,10.0f));		//Transform
-}
+    }
     sf::Sprite* DraftingHandRenderer::getSprite (int index){
         return this->sprites[index];
     }
@@ -81,6 +81,7 @@ namespace render {
     int DraftingHandRenderer::getNumberCardRenderer (){
         return this->devCardRenderers.size();
     }
+    
     void DraftingHandRenderer::update (){
         DevelopmentCardRenderer* cRenderer;
 
