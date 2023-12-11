@@ -126,6 +126,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     //Testing method setDraftinCards :
     myFirstPlayer->setDraftingCards(draftingDeck);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftingCards().size(), draftingDeck.size());
 
 
     //Testing method setEmpire :
@@ -136,6 +137,8 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
    	CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{3,state::CardType::DISCOVERY};
 		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {/*prob face B*/}, {/*victorypoints face B*/}, AFRICA); 
     myFirstPlayer->setEmpire(africa);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getEmpire(), africa);
+
 
 
     //Testing method chooseDraftCard :
@@ -195,16 +198,19 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     victoryPointsAFRICA  = new CardVictoryPoint{1,state::ResourceType::COLONEL};
 		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
 		myFirstPlayer->setEmpire(africa);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getEmpire(), africa);
     (void)myFirstPlayer->computeVictoryPoint();
 
     victoryPointsAFRICA  = new CardVictoryPoint{1,state::ResourceType::FINANCIER};
 		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
 		myFirstPlayer->setEmpire(africa);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getEmpire(), africa);
     (void)myFirstPlayer->computeVictoryPoint();
 
     victoryPointsAFRICA  = new CardVictoryPoint{1,state::CardType::NONETYPE};
 		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
 		myFirstPlayer->setEmpire(africa);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getEmpire(), africa);
     (void)myFirstPlayer->computeVictoryPoint();
 
 
@@ -224,6 +230,9 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     //Testing method toString :
     (void)myFirstPlayer->toString();
+
+    myFirstPlayer->setState(PENDING);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getState(), PENDING);
 
     //Testing getters:
     (void)myFirstPlayer->getProductionGain(MATERIAL);
