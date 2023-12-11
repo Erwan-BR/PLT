@@ -179,7 +179,16 @@ namespace render {
 				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(1300.0f+200.f*(i),125.0f));		//Transform
 			}
 
-			//Enter Information Texts (position 14 to 15)
+			//Enter Krystallium (position 14)
+			text = new sf::Text();
+			text->setFont(font);
+			text->setString("x0+0/5");
+			text->setCharacterSize(50);
+			text->setFillColor(sf::Color::White);
+			this->texts.push_back(text);				//Text
+			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(1300.0f,200.0f));		//Transform
+
+			//Enter Information Texts (position 15 to 16)
 			text = new sf::Text();
 			text->setFont(font);
 			text->setString("Cards Built");
@@ -340,6 +349,9 @@ namespace render {
 				(this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
 				(this->texts)[12]->setString("x"+std::to_string(this->player->getColonelTokensUnit()));
 				(this->texts)[13]->setString("x"+std::to_string(this->player->getFinancierTokensUnit()));
+
+				(this->texts)[14]->setString("x"+std::to_string(this->player->getKrystalliumTokensUnit())+"+"+std::to_string(this->player->getResourcesInEmpireUnit())+"/5");
+
 				break;
 			default:
 				break;

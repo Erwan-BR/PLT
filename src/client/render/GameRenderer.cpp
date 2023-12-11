@@ -16,37 +16,37 @@ namespace render
 		this->boardMaterialTexture->loadFromFile("./resources/img/board_material.png");
 		this->boardMaterialSprite = new sf::Sprite();
 		this->boardMaterialSprite->setTexture(*(this->boardMaterialTexture));
-        this->boardMaterialTransform = sf::Transform(transform).translate(400.0f,500.0f).scale(0.1f,0.1f);
+        this->boardMaterialTransform = sf::Transform(transform).translate(400.0f,500.0f).scale(0.2f,0.2f);
 
         this->boardEnergyTexture = new sf::Texture();
 		this->boardEnergyTexture->loadFromFile("./resources/img/board_energy.png");
 		this->boardEnergySprite = new sf::Sprite();
 		this->boardEnergySprite->setTexture(*(this->boardEnergyTexture));
-        this->boardEnergyTransform = sf::Transform(transform).translate(600.0f,500.0f).scale(0.1f,0.1f);
+        this->boardEnergyTransform = sf::Transform(transform).translate(620.0f,500.0f).scale(0.2f,0.2f);
         
         this->boardGoldTexture = new sf::Texture();
 		this->boardGoldTexture->loadFromFile("./resources/img/board_gold.png");
 		this->boardGoldSprite = new sf::Sprite();
 		this->boardGoldSprite->setTexture(*(this->boardGoldTexture));
-        this->boardGoldTransform = sf::Transform(transform).translate(800.0f,500.0f).scale(0.1f,0.1f);
+        this->boardGoldTransform = sf::Transform(transform).translate(1060.0f,500.0f).scale(0.2f,0.2f);
 
         this->boardScienceTexture = new sf::Texture();
 		this->boardScienceTexture->loadFromFile("./resources/img/board_science.png");
 		this->boardScienceSprite = new sf::Sprite();
 		this->boardScienceSprite->setTexture(*(this->boardScienceTexture));
-        this->boardScienceTransform = sf::Transform(transform).translate(1000.0f,500.0f).scale(0.1f,0.1f);
+        this->boardScienceTransform = sf::Transform(transform).translate(840.0f,500.0f).scale(0.2f,0.2f);
 
         this->boardExplorationTexture = new sf::Texture();
 		this->boardExplorationTexture->loadFromFile("./resources/img/board_exploration.png");
 		this->boardExplorationSprite = new sf::Sprite();
 		this->boardExplorationSprite->setTexture(*(this->boardExplorationTexture));
-        this->boardExplorationTransform = sf::Transform(transform).translate(1200.0f,500.0f).scale(0.1f,0.1f);
+        this->boardExplorationTransform = sf::Transform(transform).translate(1280.0f,500.0f).scale(0.2f,0.2f);
 
         this->boardTurnTexture = new sf::Texture();
 		this->boardTurnTexture->loadFromFile("./resources/img/turn_1.png");
 		this->boardTurnSprite = new sf::Sprite();
 		this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
-        this->boardTurnTransform = sf::Transform(transform).translate(800.0f,400.0f).scale(0.2f,0.2f);
+        this->boardTurnTransform = sf::Transform(transform).translate(900.0f,400.0f).scale(0.2f,0.2f);
 
         this->phaseIndicator = new sf::Text();
         this->phaseIndicator->setFont(font);
