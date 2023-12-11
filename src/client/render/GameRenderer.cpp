@@ -3,8 +3,8 @@
 namespace render
 {
     /// @brief  Full constructor of GameRenderer
-    /// @param game 
-    /// @param transform 
+    /// @param game Game to render
+    /// @param transform Transformation to do to display it
     GameRenderer::GameRenderer (state::Game* game, sf::Transform transform)
     {
         this->game = game;
@@ -103,6 +103,9 @@ namespace render
                 break;
         }
     }
+
+    /************************************* Setters & Getters *************************************/
+
     sf::Sprite* GameRenderer::getBoardMaterialSprite ()
     {
         return this->boardMaterialSprite;
