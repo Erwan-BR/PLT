@@ -106,6 +106,9 @@ int main(int argc,char* argv[])
 						scene.changeWindow(DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
 					}
 					if (event.key.code == sf::Keyboard::E){
+						scene.changeWindow(PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
+					}
+					if (event.key.code == sf::Keyboard::R){
 						scene.changeWindow(PLAYER_INFO); //Change the window to PLAYER_INFO
 					}
 						
@@ -176,9 +179,9 @@ int main(int argc,char* argv[])
 				}*/
 				break;
 			case PLAYER_INFO:
-				pRenderer =	scene.getPlayerRenderer(4);
+				pRenderer =	scene.getPlayerRenderer(0);
 				for (j = 0; j < pRenderer->getNumberSprite() ;j++){
-					window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j));
+					window.draw(*(pRenderer->getSprite(j)),(pRenderer->getSpriteTransform(j)));
 				}
 				for (j = 0; j < pRenderer->getNumberText() ;j++){
 					window.draw(*(pRenderer->getText(j)),pRenderer->getTextTransform(j));
@@ -190,6 +193,23 @@ int main(int argc,char* argv[])
 						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 					}
 				}
+				break;
+			case PLANIFICATION_WINDOW:
+				pRenderer =	scene.getPlayerRenderer(3);
+				for (j = 0; j < pRenderer->getNumberSprite() ;j++){
+					window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j).translate(0.f,-780.f));
+				}
+				for (j = 0; j < pRenderer->getNumberText() ;j++){
+					window.draw(*(pRenderer->getText(j)),pRenderer->getTextTransform(j).translate(0.f,-780.f));
+				}
+				for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
+					cRenderer = pRenderer->getCardRenderer(j);
+					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().translate(0.f,-780.f));
+					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
+						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].translate(0.f,-780.f));
+					}
+				}
+				break;
 			default:
 				break;
 			}

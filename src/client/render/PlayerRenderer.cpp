@@ -205,6 +205,41 @@ namespace render {
 			this->texts.push_back(text);				//Text
 			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,670.f));		//Transform
 			break;
+		case PLANIFICATION_WINDOW:
+			//Enter Player board (position 0 in sprites)
+			texture = new sf::Texture();
+			texture->loadFromFile("./resources/img/player_draft.png");
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[0]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(transform);				//Transform
+
+			//Enter Player Profile Picture (position 1 in sprites)
+			texture = new sf::Texture();
+			texture->loadFromFile("./resources/img/pfp_draft.png");
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[1]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
+
+			//Enter Cards (position 2 to 9 in sprites)
+			for (i=0;i<7 and i<(int) drafted.size();i++){
+				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+			}
+
+			//Enter Player Name (position 0 in texts)
+			text = new sf::Text();
+			text->setFont(font);
+			text->setString("Drafted Cards");
+			text->setCharacterSize(30);
+			text->setFillColor(sf::Color::White);
+			this->texts.push_back(text);			//Text
+			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,10.0f));		//Transform
+
+			break;
 		default:
 			break;
 		}

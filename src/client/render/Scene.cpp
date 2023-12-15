@@ -33,6 +33,8 @@ namespace render {
 		}
 		pRenderer = new PlayerRenderer(game->getPlayers()[0],transform,PLAYER_INFO);
 		this->player_renderer.push_back(pRenderer);
+		pRenderer = new PlayerRenderer(game->getPlayers()[0],generatePlayerTransform(transform,PLANIFICATION_WINDOW,0),PLAYER_INFO);
+		this->player_renderer.push_back(pRenderer);
 
 		this->drafting_hand_renderer = new DraftingHandRenderer((game->getPlayers())[0],sf::Transform(transform).translate(0.f,900.f));
 
@@ -94,6 +96,9 @@ namespace render {
 			else {
 				return sf::Transform(transform).translate(0.f,(indice-1)*180.f);
 			}
+		if (window == PLANIFICATION_WINDOW){
+			return sf::Transform(transform).translate(0.f,720.f);
+		}
 		}
 	return sf::Transform(transform);
 	}
