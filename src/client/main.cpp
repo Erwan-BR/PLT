@@ -129,7 +129,7 @@ int main(int argc,char* argv[])
 					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 						cRenderer = pRenderer->getCardRenderer(j);
 						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
-						for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+						for(k = 0; k< (int) cRenderer->getVectorOfCrossesSprite().size();k++){
 							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 						}
 					}
@@ -147,7 +147,7 @@ int main(int argc,char* argv[])
 					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 						cRenderer = pRenderer->getCardRenderer(j);
 						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
-						for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+						for(k = 0; k< (int) cRenderer->getVectorOfCrossesSprite().size();k++){
 							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 						}
 					}
@@ -165,7 +165,7 @@ int main(int argc,char* argv[])
 				for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 					cRenderer = pRenderer->getCardRenderer(j);
 					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
-					for(k = 0; k< cRenderer->getVectorOfCrossesSprite().size();k++){
+					for(k = 0; k< (int) cRenderer->getVectorOfCrossesSprite().size();k++){
 						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
 					}
 				}
