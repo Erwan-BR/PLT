@@ -95,11 +95,11 @@ namespace state {
 			this->deck.push_back(agenceEspionnage);
 		}
 
-		// Ascenceur Spatial
-		sf::Texture designAscenceurSpatial;
-		designAscenceurSpatial.loadFromFile("./resources/img/Cards/Development_Cards/ascenceur_spatial.png");
-		DevelopmentCard* ascenceurSpatial = new DevelopmentCard ("Ascenceur spatial",{},designAscenceurSpatial,new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::ENERGY);
-		this->deck.push_back(ascenceurSpatial);
+		// Ascenseur Spatial
+		sf::Texture designAscenseurSpatial;
+		designAscenseurSpatial.loadFromFile("./resources/img/Cards/Development_Cards/ascenseur_spatial.png");
+		DevelopmentCard* ascenseurSpatial = new DevelopmentCard ("Ascenseur spatial",{},designAscenseurSpatial,new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::ENERGY);
+		this->deck.push_back(ascenseurSpatial);
 
 		// Barrage Geant
 		sf::Texture designBarrageGeant;
