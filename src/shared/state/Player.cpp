@@ -358,7 +358,7 @@ namespace state {
         this->notifyObservers();
     }
 
-        /// @brief Setter for the drafting deck
+    /// @brief Setter for the drafting deck
     /// @param draft drafting deck to give to the player
     void Player::setState(PlayerState state)
     {
