@@ -20,7 +20,7 @@ namespace state {
     /// @param victoryPointsAdvanced Advanced victory points provided by the empire
     /// @param empire Region the empire belongs to
     /// @param designFaceB Design of the backside of the card.
-    EmpireCard::EmpireCard(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, CardVictoryPoint* victoryPointsAdvanced, EmpireLand empire, sf::Texture designFaceB) :
+    EmpireCard::EmpireCard(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, CardVictoryPoint* victoryPointsAdvanced, EmpireLand empire, sf::Texture* designFaceB) :
     Card(name, productionGain, design, victoryPoints),
     victoryPointsAdvanced(victoryPointsAdvanced),
     empire(empire),
@@ -53,7 +53,7 @@ namespace state {
 
     /// @brief Getter for the deisgn of the face B.
     /// @return Design of the face B.
-    sf::Texture EmpireCard::getDesignFaceB () const
+    sf::Texture* EmpireCard::getDesignFaceB () const
     {
         return this->designFaceB;
     }

@@ -7,13 +7,13 @@ namespace state {
     Observable(),
     name(""),
     productionGain(),
-    design(sf::Texture()),
+    design(new sf::Texture()),
     victoryPoints()
     {
     }
 
     /// @brief Create a card with all informations.
-    Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints) :
+    Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints) :
     Observable(),
     name(name),
     design(design),
@@ -46,7 +46,7 @@ namespace state {
 
     /// @brief Get the design of the card.
     /// @return Design of the card.
-    sf::Texture Card::getDesign () const
+    sf::Texture* Card::getDesign () const
     {
         return this->design;
     }
