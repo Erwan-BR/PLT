@@ -136,6 +136,24 @@ namespace state {
 
         this->notifyObservers();
     }
+    
+    void Player::discardCard(int cardIndex, bool isADraftedCard)
+    {
+        
+        if(isADraftedCard)
+        {
+            DevelopmentCard* toDiscardCard = this->draftCards.at(cardIndex);
+            this->currentResources.push_back(toDiscardCard->getDiscardGain());
+            this->draftCards.erase(this->draftCards.begin() + cardIndex);            
+        }
+        else
+        {
+            DevelopmentCard* toDiscardCard = this->toBuildCards.at(cardIndex);
+            sendResourceToEmpire(toDiscardCard->getDiscardGain());
+            convertToKrystallium();
+            this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);             
+        }
+    }
 
     /// @brief Function called when the player wants to keep a card from the drafting phase.
     /// @param toKeepCard Card to keep
@@ -149,6 +167,16 @@ namespace state {
         }
 
         this->notifyObservers();
+    }
+
+    void Player::keepCard(int toKeepCardIndex)
+    {
+        if(toKeepCardIndex >= (int) this->draftCards.size())
+        {
+            DevelopmentCard* card = this->draftCards.at(toKeepCardIndex);
+            this->toBuildCards.push_back(card);
+            this->draftCards.erase(this->draftCards.begin() + toKeepCardIndex);
+        }
     }
 
     /// @briefUpdate the production of every tokens
@@ -286,6 +314,15 @@ namespace state {
             this->draftingCards.erase(cardPos);
             this->state = PENDING;
         }
+
+        this->notifyObservers();
+    }
+
+    void Player::chooseDraftCard(int cardIndex)
+    {
+        this->draftCards.push_back(draftingCards.at(cardIndex));
+        this->draftingCards.erase(draftingCards.begin()+ cardIndex);
+        this->state = PENDING;
 
         this->notifyObservers();
     }
