@@ -113,7 +113,7 @@ find_library(
 # Add source subdirectories
 add_subdirectory(src/shared)
 add_subdirectory(src/client)
-#add_subdirectory(src/server)
+add_subdirectory(src/server)
 
 # Unit tests
 # Set BUILD_TESTING to OFF in CMakeCache to disable tests
