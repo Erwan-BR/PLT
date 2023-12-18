@@ -75,10 +75,10 @@ namespace state {
 		// Checking if the number of players is inferior of the number of empires. We should always enter inside.
 		if (this->players.size() <= empires.size())
 		{
+			int empireIndex = 0;
 			for(Player* player : this->players)
 			{
 				// Initialise the empires that will be given to the players
-				int empireIndex = 0;
 				player->setEmpire(empires[empireIndex]);
 				empireIndex++;
 			}
@@ -96,7 +96,7 @@ namespace state {
 	std::vector<EmpireCard*> Game::initEmpire ()
 	{
 		CreateAllCards empireCardCreation;
-		std::vector<EmpireCard*> empires = empireCardCreation.createAllEmpireCards();
+		std::vector<EmpireCard*> empires = empireCardCreation.createAllEmpireCards(isFaceA);
 
 		// Shuffle if not a testing game.
 		if (! this->isTestingGame)
