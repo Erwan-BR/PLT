@@ -83,9 +83,10 @@ namespace render {
 		return (this->current_window);
 	}
 
-	void Scene::changePlayerInfoPlayer(int index,sf::Transform transform){
+	void Scene::changePlayerInfoPlayer(int index){
 		state::Player* player = game->getPlayers()[index];
-		PlayerRenderer* pRenderer = new PlayerRenderer(player,transform,PLAYER_INFO);
+		sf::Transform t = this->getPlayerRenderer(4)->getSpriteTransform(0);
+		PlayerRenderer* pRenderer = new PlayerRenderer(player,t,PLAYER_INFO);
 		player->addObserver(pRenderer);
 		//TODO Destroy previous Renderer?
 		this->player_renderer[4] = pRenderer;

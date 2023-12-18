@@ -3,6 +3,7 @@
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
 
+#define CROSS_SIZE 0.012f
 
 void testSFML() {
     sf::Texture texture;
@@ -160,7 +161,7 @@ int main(int argc,char* argv[])
 						cRenderer = pRenderer->getCardRenderer(j);
 						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));
 						for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(0.05f,0.05f));
+							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(CROSS_SIZE,CROSS_SIZE));
 						}
 					}
 				}
@@ -178,7 +179,7 @@ int main(int argc,char* argv[])
 						cRenderer = pRenderer->getCardRenderer(j);
 						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
 						for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(0.05f,0.05f));
+							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(CROSS_SIZE,CROSS_SIZE));
 						}
 					}
 				}
@@ -193,7 +194,7 @@ int main(int argc,char* argv[])
 					cRenderer = hRenderer->getCardRenderer(j);
 					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
 					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(0.05f,0.05f));
+						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(CROSS_SIZE,CROSS_SIZE));
 					}
 				}
 				break;
@@ -226,7 +227,7 @@ int main(int argc,char* argv[])
 					cRenderer = pRenderer->getCardRenderer(j);
 					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().translate(0.f,-780.f).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));
 					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].translate(0.f,-780.f).scale(0.05f,0.05f));
+						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].translate(0.f,-780.f).scale(CROSS_SIZE,CROSS_SIZE));
 					}
 				}
 				pRenderer =	scene.getPlayerRenderer(5);
@@ -346,7 +347,7 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 			
 			break;
 		case 14:         //PLANIFICATION p2 1ere carte
-			scene->changePlayerInfoPlayer(1,scene->getPlayerRenderer(4)->getSpriteTransform(0));
+			scene->changePlayerInfoPlayer(1);
 			scene->changeWindow(PLAYER_INFO);
 			p2->keepCard(0);	//Avalon
 			
@@ -358,8 +359,7 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 			break;
         case 16:         //PLANIFICATION 2-3
 			scene->changeWindow(PLAYER_INFO);
-			p2->discardCard(0,true);
-			p2->addResource(state::EXPLORATION,0);
+			p2->keepCard(1);	//Centre
 			
 			break;
         case 17:         //PLANIFICATION 2-4
@@ -383,20 +383,41 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 		case 20:		//PLANIFICATION 2-7
 			scene->changeWindow(PLAYER_INFO);
 			p2->discardCard(0,true);
-			p2->addResource(state::EXPLORATION,0);
+			p2->addResource(state::EXPLORATION,2);
 			game->endPlanification();
 			break;
-		case 21: 		//PROD MATERIAL
+		case 21: 		//PROD INIT
 			scene->changeWindow(MAIN_WINDOW);
 			game->initProduction();
-			p1->addResource(state::MATERIAL,0);
-			p1->addResource(state::MATERIAL,0);
 		break;
-		case 22: 		//PROD ENERGY
+		case 22: 		//PROD MATERIAL
 			scene->changeWindow(MAIN_WINDOW);
 			game->nextProduction();
-			p2->addResource(state::ENERGY,0);
-			p2->addResource(state::ENERGY,0);
+			p1->addResource(state::MATERIAL,0);
+			p1->addResource(state::MATERIAL,0);
+			break;
+		case 23:		//PROD ENERGY
+			scene->changeWindow(MAIN_WINDOW);
+			game->nextProduction();
+			p1->addResource(state::ENERGY,0);
+			break;
+		case 24:		//PROD SCIENCE
+			scene->changeWindow(MAIN_WINDOW);
+			game->nextProduction();
+			//p1->addResource(state::SCIENCE,0);
+			break;
+		case 25:		//PROD GOLD
+			scene->changeWindow(MAIN_WINDOW);
+			game->nextProduction();
+			//p1->addResource(state::GOLD,0);
+			break;
+		case 26:		//PROD EXPLORATION
+			scene->changeWindow(MAIN_WINDOW);
+			game->nextProduction();
+			//p1->addResource(state::EXPLORATION,0);
+			break;
+		case 27:		//FINISHED
+			game->endGame();
         default:
 			break;
     }

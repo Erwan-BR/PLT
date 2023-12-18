@@ -110,6 +110,9 @@ namespace render
                         break;
                 }
                 break;
+            case state::FINISHED:
+                this->phaseIndicator->setString("FINISHED!");
+                break;
         }
     }
 
