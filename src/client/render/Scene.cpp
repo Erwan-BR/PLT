@@ -79,6 +79,12 @@ namespace render {
 		return (this->current_window);
 	}
 
+	void Scene::changePlayerInfoPlayer(int index,sf::Transform transform){
+		PlayerRenderer* pRenderer = new PlayerRenderer(game->getPlayers()[index],transform,PLAYER_INFO);
+		//TODO Destroy previous Renderer?
+		this->player_renderer[4] = pRenderer;
+	}
+
 	sf::Transform Scene::generatePlayerTransform(sf::Transform transform, Window window, int indice){
 		if (window == MAIN_WINDOW){
 			if (indice == 0){

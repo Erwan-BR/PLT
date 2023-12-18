@@ -147,9 +147,9 @@ int main(int argc,char* argv[])
 					}
 					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 						cRenderer = pRenderer->getCardRenderer(j);
-						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
+						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));
 						for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
+							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(0.05f,0.05f));
 						}
 					}
 				}
@@ -165,9 +165,9 @@ int main(int argc,char* argv[])
 					}
 					for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 						cRenderer = pRenderer->getCardRenderer(j);
-						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
+						window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
 						for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
+							window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(0.05f,0.05f));
 						}
 					}
 				}
@@ -180,9 +180,9 @@ int main(int argc,char* argv[])
 				}
 				for (j = 0; j < hRenderer->getNumberCardRenderer() ;j++){
 					cRenderer = hRenderer->getCardRenderer(j);
-					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
+					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
 					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
+						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(0.05f,0.05f));
 					}
 				}
 				break;
@@ -196,9 +196,9 @@ int main(int argc,char* argv[])
 				}
 				for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 					cRenderer = pRenderer->getCardRenderer(j);
-					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().translate(0.f,-780.f));
+					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().scale(0.3f,0.3f));
 					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].translate(0.f,-780.f));
+						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].scale(0.01f,0.01f));
 					}
 				}
 				break;
@@ -213,9 +213,9 @@ int main(int argc,char* argv[])
 				}
 				for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 					cRenderer = pRenderer->getCardRenderer(j);
-					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().translate(0.f,-780.f));
+					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().translate(0.f,-780.f).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));
 					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].translate(0.f,-780.f));
+						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].translate(0.f,-780.f).scale(0.05f,0.05f));
 					}
 				}
 				pRenderer =	scene.getPlayerRenderer(5);
@@ -227,10 +227,7 @@ int main(int argc,char* argv[])
 				}
 				for (j = 0; j < pRenderer->getNumberCardRenderer() ;j++){
 					cRenderer = pRenderer->getCardRenderer(j);
-					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform());
-					for(k = 0; k<(int) cRenderer->getVectorOfCrossesSprite().size();k++){
-						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k]);
-					}
+					window.draw(*(cRenderer->getSprite()),cRenderer->getTransform().scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
 				}
 				break;
 			default:
@@ -331,12 +328,57 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 			p1->sendResourceToEmpire(state::EXPLORATION);
 			scene->update();
 			break;
-		case 13:
+		case 13:		//PLANIFICATION 1-7
 			scene->changeWindow(PLANIFICATION_WINDOW);
 			p1->discardCard(0,true);
 			p1->sendResourceToEmpire(state::EXPLORATION);
 			scene->update();
 			break;
+		case 14:         //PLANIFICATION p2 1ere carte
+			scene->changePlayerInfoPlayer(1,scene->getPlayerRenderer(4)->getSpriteTransform(0));
+			scene->changeWindow(PLAYER_INFO);
+			p2->keepCard(0);	//Avalon
+			scene->update();
+			break;
+        case 15:         //PLANIFICATION 2-2
+			scene->changeWindow(PLAYER_INFO);
+			p2->keepCard(2);	//Zeppelin
+			scene->update();
+			break;
+        case 16:         //PLANIFICATION 2-3
+			scene->changeWindow(PLAYER_INFO);
+			p2->discardCard(0,true);
+			p2->addResource(state::EXPLORATION,0);
+			scene->update();
+			break;
+        case 17:         //PLANIFICATION 2-4
+			scene->changeWindow(PLAYER_INFO);
+			p2->discardCard(0,true);
+			p2->addResource(state::EXPLORATION,0);
+			scene->update();
+			break;
+        case 18:         //PLANIFICATION 2-5
+			scene->changeWindow(PLAYER_INFO);
+			p2->discardCard(0,true);
+			p2->addResource(state::EXPLORATION,0);
+			scene->update();
+			break;
+        case 19:         //PLANIFICATION 2-6
+			scene->changeWindow(PLAYER_INFO);
+			p2->discardCard(0,true);
+			p2->addResource(state::EXPLORATION,0);
+			scene->update();
+			break;
+		case 20:		//PLANIFICATION 2-7
+			scene->changeWindow(PLAYER_INFO);
+			p2->discardCard(0,true);
+			p2->addResource(state::EXPLORATION,0);
+			game->endPlanification();
+			scene->update();
+			break;
+		case 21: 		//PROD MATERIAL
+			scene->changeWindow(MAIN_WINDOW);
+			game->initProduction();
         default:
 			break;
     }
