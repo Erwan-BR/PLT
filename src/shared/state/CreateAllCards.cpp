@@ -579,8 +579,9 @@ namespace state
     }
 
     /// @brief Create all empire cards for a game.
+    /// @param isFaceA States if the game is played with face A or not.
     /// @return Vector of all empire cards.
-    std::vector<EmpireCard*> CreateAllCards::createAllEmpireCards ()
+    std::vector<EmpireCard*> CreateAllCards::createAllEmpireCards (bool isFaceA)
     {
         // face B
 		ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
@@ -597,7 +598,7 @@ namespace state
 		sf::Texture* designAFRICA_FaceB = new sf::Texture;
 		designAFRICA_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Panafricaine.png");
 		CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,CardType::RESEARCH};
-		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, productionGainB, {0}, AFRICA, designAFRICA_FaceB);
+		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, productionGainB, {0}, AFRICA, designAFRICA_FaceB, isFaceA);
 	
 		// empire NORAM
 		ResourceToProduce* firstResourceToProduceNORAM = new ResourceToProduce{ResourceType::MATERIAL, 3, CardType::NONETYPE};
@@ -608,7 +609,7 @@ namespace state
 		sf::Texture* designNORAM_FaceB = new sf::Texture;
 		designNORAM_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Noram.png");
 		CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1, ResourceType::FINANCIER};
-		EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, designNORAM, victoryPointsNORAM, productionGainB, {0}, NORAM, designNORAM_FaceB);
+		EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, designNORAM, victoryPointsNORAM, productionGainB, {0}, NORAM, designNORAM_FaceB, isFaceA);
 		
         // empire EUROPE
 		ResourceToProduce* firstResourceToProduceEUROPE = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
@@ -620,7 +621,7 @@ namespace state
 		sf::Texture* designEUROPE_FaceB = new sf::Texture;
 		designEUROPE_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Europa.png");
 		CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
-		EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, designEUROPE, victoryPointsEUROPE, productionGainB, {0}, EUROPE, designEUROPE_FaceB);
+		EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, designEUROPE, victoryPointsEUROPE, productionGainB, {0}, EUROPE, designEUROPE_FaceB, isFaceA);
 
 		// empire ASIA
 		ResourceToProduce* firstResourceToProduceASIA = new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE};
@@ -631,7 +632,7 @@ namespace state
 		sf::Texture* designASIA_FaceB = new sf::Texture;
 		designASIA_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Asia.png");
 		CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2, CardType::PROJECT};
-		EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, designASIA, victoryPointsASIA, productionGainB, {0}, ASIA, designASIA_FaceB);
+		EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, designASIA, victoryPointsASIA, productionGainB, {0}, ASIA, designASIA_FaceB, isFaceA);
 		
 		// empire AZTEC
 		ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE};
@@ -642,9 +643,9 @@ namespace state
 		sf::Texture* designAZTEC_FaceB = new sf::Texture;
 		designAZTEC->loadFromFile("./resources/img/Cards/Empire_Face_B/Azteca.png");
 		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
-		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB);
+		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, isFaceA);
 
-		std::vector<EmpireCard*> empires = {africa, noram, asia, europe, aztec};
+		std::vector<EmpireCard*> empires = {asia, aztec, africa, noram, europe};
 		
     	return empires;
     }

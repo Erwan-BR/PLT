@@ -10,17 +10,17 @@ namespace state {
     id(-1),
     profilePicture(new sf::Texture())
     {
-        resourcesProduction[MATERIAL] = 0;
-        resourcesProduction[ENERGY] = 0;
-        resourcesProduction[SCIENCE] = 0;
-        resourcesProduction[GOLD] = 0;
-        resourcesProduction[EXPLORATION] = 0;
+        resourcesProduction[ResourceType::MATERIAL] = 0;
+        resourcesProduction[ResourceType::ENERGY] = 0;
+        resourcesProduction[ResourceType::SCIENCE] = 0;
+        resourcesProduction[ResourceType::GOLD] = 0;
+        resourcesProduction[ResourceType::EXPLORATION] = 0;
 
-        cardsTypeList[STRUCTURE] = 0;
-        cardsTypeList[VEHICLE] = 0;
-        cardsTypeList[RESEARCH] = 0;
-        cardsTypeList[PROJECT] = 0;
-        cardsTypeList[DISCOVERY] = 0;
+        cardsTypeList[CardType::STRUCTURE] = 0;
+        cardsTypeList[CardType::VEHICLE] = 0;
+        cardsTypeList[CardType::RESEARCH] = 0;
+        cardsTypeList[CardType::PROJECT] = 0;
+        cardsTypeList[CardType::DISCOVERY] = 0;
     }
     
     /// @brief Constructor of the player, with some parameters.
@@ -33,17 +33,17 @@ namespace state {
     id(id),
     profilePicture(profilePicture)
     {
-        resourcesProduction[MATERIAL] = 0;
-        resourcesProduction[ENERGY] = 0;
-        resourcesProduction[SCIENCE] = 0;
-        resourcesProduction[GOLD] = 0;
-        resourcesProduction[EXPLORATION] = 0;
+        resourcesProduction[ResourceType::MATERIAL] = 0;
+        resourcesProduction[ResourceType::ENERGY] = 0;
+        resourcesProduction[ResourceType::SCIENCE] = 0;
+        resourcesProduction[ResourceType::GOLD] = 0;
+        resourcesProduction[ResourceType::EXPLORATION] = 0;
 
-        cardsTypeList[STRUCTURE] = 0;
-        cardsTypeList[VEHICLE] = 0;
-        cardsTypeList[RESEARCH] = 0;
-        cardsTypeList[PROJECT] = 0;
-        cardsTypeList[DISCOVERY] = 0;
+        cardsTypeList[CardType::STRUCTURE] = 0;
+        cardsTypeList[CardType::VEHICLE] = 0;
+        cardsTypeList[CardType::RESEARCH] = 0;
+        cardsTypeList[CardType::PROJECT] = 0;
+        cardsTypeList[CardType::DISCOVERY] = 0;
     }
 
     /// @brief Destructor of the class Player
@@ -85,9 +85,14 @@ namespace state {
         {
             return ;
         }
+        CardType cardConstructedType = this->toBuildCards[cardIndex]->getType();
+        
         // Transfering the element from a vector to the other one.
         this->builtCards.push_back(this->toBuildCards[cardIndex]);
         this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);
+        
+        // Add the card to the dictionnary containing constructed cards.
+        this->cardsTypeList[cardConstructedType] ++;
         this->updateProduction();
         this->notifyObservers();
     }
@@ -175,39 +180,46 @@ namespace state {
     int Player::computeProduction(ResourceType resourceToProduce) const
     {
         int productionValue = 0;
+
+        // Iterating among all constructed cards.
         for(DevelopmentCard* card : this->builtCards)
         {
+            // Iterating among all resources produced by this card.
             for(ResourceToProduce* resource : card->getProductionGain())
             {
-                if(resource->type == resourceToProduce)
+                // Checking if the resource is the same as the one we are constructing.
+                if(resourceToProduce == resource->type)
                 {
-                    if(resource->cardType != NONETYPE)
+                    // Checking if it's nonetype, or if it has to be multiplied by the number of a certain type of card (already built)
+                    if(CardType::NONETYPE == resource->cardType)
                     {
-                        productionValue += (resource->quantity)*cardsTypeList.at(resource->cardType);
+                        productionValue += resource->quantity;
                     }
+                    else
+                    {
+                        productionValue += (resource->quantity) * (this->cardsTypeList.at(resource->cardType));
+                    }
+                }
+            }
+        }
+
+        // Iterating among all resources produced by the empire.
+        for(ResourceToProduce* resource : this->empire->getProductionGain())
+        {
+            // Checking if the resource is the same as the one we are constructing.
+            if(resourceToProduce == resource->type)
+            {
+                // Checking if it's nonetype, or if it has to be multiplied by the number of a certain type of card (already built)
+                if(CardType::NONETYPE == resource->cardType)
+                {
+                    productionValue += resource->quantity;           
                 }
                 else
                 {
-                        productionValue += resource->quantity;
-                   
+                    productionValue += (resource->quantity) * (this->cardsTypeList.at(resource->cardType));
                 }
-            } 
+            }
         }
-
-        for(ResourceToProduce* resource : this->empire->getProductionGain())
-        {
-            if(resource->type == resourceToProduce)
-            {
-                if(resource->cardType != NONETYPE)
-                {
-                    productionValue += (resource->quantity)*cardsTypeList.at(resource->cardType);
-                }
-            }
-            else
-            {
-                    productionValue += resource->quantity;           
-            }
-        } 
 
         return productionValue;
     }
@@ -221,38 +233,38 @@ namespace state {
         {
             CardVictoryPoint* cardVictoryPoints = card->getVictoryPoints();
 
-            if(cardVictoryPoints->cardOrResourceType == 0)
+            if(0 == cardVictoryPoints->cardOrResourceType)
             {
                 victoryPoints += cardVictoryPoints->numberOfPoints;
             }
-            else if(cardVictoryPoints->cardOrResourceType == COLONEL)
+            else if(ResourceType::COLONEL == cardVictoryPoints->cardOrResourceType)
             {
                 victoryPoints += cardVictoryPoints->numberOfPoints * this->colonelTokensUnit;
             }
-            else if(cardVictoryPoints->cardOrResourceType == FINANCIER)
+            else if(ResourceType::FINANCIER == cardVictoryPoints->cardOrResourceType)
             {
                 victoryPoints += cardVictoryPoints->numberOfPoints * this->financierTokensUnit;
             }
-            else if(20 < cardVictoryPoints->cardOrResourceType and cardVictoryPoints->cardOrResourceType < 30)
+            else if((20 < cardVictoryPoints->cardOrResourceType) && (26 > cardVictoryPoints->cardOrResourceType))
             {
                 victoryPoints += (cardVictoryPoints->numberOfPoints) * this->cardsTypeList.at((state::CardType)(cardVictoryPoints->cardOrResourceType));
             }
         }
 
         CardVictoryPoint* empireVictoryPoints = this->empire->getVictoryPoints();
-        if(empireVictoryPoints->cardOrResourceType == 0)
+        if(0 == empireVictoryPoints->cardOrResourceType)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints;
         }
-        else if(empireVictoryPoints->cardOrResourceType == COLONEL)
+        else if(ResourceType::COLONEL == empireVictoryPoints->cardOrResourceType)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints * this->colonelTokensUnit;
         }
-        else if(empireVictoryPoints->cardOrResourceType == FINANCIER)
+        else if(ResourceType::FINANCIER == empireVictoryPoints->cardOrResourceType)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints * this->financierTokensUnit;
         }
-        else if(20 < empireVictoryPoints->cardOrResourceType and empireVictoryPoints->cardOrResourceType < 30)
+        else if((20 < empireVictoryPoints->cardOrResourceType) && (26 > empireVictoryPoints->cardOrResourceType))
         {
             victoryPoints += (empireVictoryPoints->numberOfPoints) * this->cardsTypeList.at((state::CardType)empireVictoryPoints->cardOrResourceType);
         }
