@@ -5,33 +5,48 @@
 
 namespace ai
 {
+    /// @brief Empty construtor of AIRandom. Should never be used.
     AIRandom::AIRandom () :
         Player()
     {
 
     }
 
+    /// @brief Full constructor of AIRandom, with important information inside.
+    /// @param name Name of the AI.
+    /// @param id ID of the AI. Should be negative for engine methods.
+    /// @param profilePicture Image of the profile picture of the AI.
     AIRandom::AIRandom (std::string name, int id, sf::Texture* profilePicture) :
         Player(name, id, profilePicture)
     {
 
     }
+    
+    /// @brief Destructor of the AIRandom class. Does not destruct anything for the moment.
     AIRandom::~AIRandom ()
     {
 
     }
 
+    /// @brief Method used to implement how the Ai choose it's card from the draft phase. It's completely random.
     void AIRandom::AIChooseDraftingCard ()
     {
-        this->chooseDraftCard(0);
-        this->state = state::PlayerState::PENDING;
+        // Time-base seed to choose if the card is choosed or not.
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine randomness(seed);
+        std::uniform_int_distribution<int> distribution(0, this->draftCards.size() - 1);
+        
+        // Generate a random integer.
+        int randomInt = distribution(randomness);
+        this->chooseDraftCard(randomInt);
     }
 
+    /// @brief Method used to implement how the AI choose it's card during the planification phase.
     void AIRandom::AIPlanification ()
     {
-        for (int cardIndex = 7; 0 <= cardIndex; cardIndex++)
+        for (int cardIndex = 7; 0 <= cardIndex; cardIndex--)
         {
-            // Time-base seed to choose if the card is choose or not.
+            // Time-base seed to choose if the card is choosed or not.
 			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 			std::default_random_engine randomness(seed);
             std::uniform_int_distribution<int> distribution(0, 1);
@@ -49,11 +64,60 @@ namespace ai
             }
         }
         this->AIUseProducedResources();
-        this->state = state::PlayerState::PENDING;
     }
 
+    /// @brief Method used to implement how the AI uses it's resources (after the planification with instantGains, and after each production).
     void AIRandom::AIUseProducedResources ()
     {
-        
+        const int numberOfCardsToBuild = (const int) this->toBuildCards.size();
+        // If no card to build, put all resources on the empire.
+        if (0 == numberOfCardsToBuild)
+        {
+            for (state::ResourceType resource : this->currentResources)
+            {
+                this->sendResourceToEmpire(resource);
+            }
+            this->currentResources.clear();
+        }
+
+        // Time-base seed to shuffle resources.
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine randomness(seed);
+        std::shuffle(this->currentResources.begin(), this->currentResources.end(), randomness);
+
+        // Iterating among all resources that needs to be used.
+        for (state::ResourceType currentResource : this->currentResources)
+        {
+            // Check if the resource is not playable, to send it directly into the empire.
+            if (!(this->isResourcePlayable(currentResource)))
+            {
+                this->sendResourceToEmpire(currentResource);
+                continue ;
+            }
+
+            // Here, the resource is playable. Choose a random card to try playing on it.
+            std::uniform_int_distribution<int> distribution(0, numberOfCardsToBuild);
+            
+            // Generate a random integer.
+            int randomCardPosition = distribution(randomness);
+
+            // As long as we are here, the resource is addable. We just have to iterate a certain time to add it on a card.
+            while(true)
+            {
+                // If the resource can be added on this card, do it and quit the loop to add the next resource.
+                if (this->toBuildCards[randomCardPosition]->isResourceAddable(currentResource))
+                {
+                    this->addResource(currentResource, randomCardPosition);
+                    break;
+                }
+                // Getting the next card position, to add it on another card. Re-intilization of the position if it exceed the size of the vector.
+                randomCardPosition ++;
+                if (numberOfCardsToBuild == randomCardPosition)
+                {
+                    randomCardPosition = 0;
+                }
+            }
+        }
+        this->endProduction();
     }
 };
