@@ -247,7 +247,6 @@ namespace state {
 	{
 		this->resourceProducing = ResourceType::MATERIAL;
 		this->notifyObservers();
-		this->nextProduction();
 	}
 
 	/// @brief Launch the next production phase if a production phase arrives, launch the next draft phase if not.

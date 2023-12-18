@@ -59,6 +59,10 @@ namespace render {
 		return (this->player_renderer)[i];
 	}
 
+	int Scene::getNumberPlayerRenderer(){
+		return (this->player_renderer).size();
+	}
+
 	GameRenderer* Scene::getGameRenderer(){
 		return this->game_renderer;
 	}
@@ -80,7 +84,9 @@ namespace render {
 	}
 
 	void Scene::changePlayerInfoPlayer(int index,sf::Transform transform){
-		PlayerRenderer* pRenderer = new PlayerRenderer(game->getPlayers()[index],transform,PLAYER_INFO);
+		state::Player* player = game->getPlayers()[index];
+		PlayerRenderer* pRenderer = new PlayerRenderer(player,transform,PLAYER_INFO);
+		player->addObserver(pRenderer);
 		//TODO Destroy previous Renderer?
 		this->player_renderer[4] = pRenderer;
 	}

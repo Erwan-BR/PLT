@@ -67,11 +67,22 @@ int main(int argc,char* argv[])
 
 	//Observable
 	game.addObserver(scene.getGameRenderer());
-	for(i=0;i<(int) game.getPlayers().size();i++){
+	for(i=0;i<scene.getNumberPlayerRenderer();i++){
 		game.addObserver(scene.getPlayerRenderer(i));
 	}
 	game.addObserver(scene.getHandRenderer());
 
+	player1->addObserver(scene.getGameRenderer());
+	for(i=0;i<scene.getNumberPlayerRenderer();i++){
+		player1->addObserver(scene.getPlayerRenderer(i));
+	}
+	player1->addObserver(scene.getHandRenderer());
+
+	player2->addObserver(scene.getGameRenderer());
+	for(i=0;i<scene.getNumberPlayerRenderer();i++){
+		player2->addObserver(scene.getPlayerRenderer(i));
+	}
+	player2->addObserver(scene.getHandRenderer());
 
 	//Creation of the Font for the Texts
 	sf::Font font;
@@ -250,135 +261,142 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
             p1->chooseDraftCard(5);		//Tresor
             p2->chooseDraftCard(5);		//Avalon
 			game->nextDraft();
-			scene->update();
+			
             break;
         case 1:         //DRAFT 2eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
             p1->chooseDraftCard(5);		//Zeppelin
             p2->chooseDraftCard(0);		//Zeppelin
 			game->nextDraft();
-			scene->update();
+			
             break;
         case 2:         //DRAFT 3eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
             p1->chooseDraftCard(4);		//Tour géante
             p2->chooseDraftCard(4);		//Centre Terre
 			game->nextDraft();
-			scene->update();
+			
             break;
         case 3:         //DRAFT 4eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
             p1->chooseDraftCard(0);
             p2->chooseDraftCard(0);
 			game->nextDraft();
-			scene->update();
+			
             break;
         case 4:         //DRAFT 5eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
             p1->chooseDraftCard(0);
             p2->chooseDraftCard(0);
 			game->nextDraft();
-			scene->update();
+			
             break;
         case 5:         //DRAFT 6eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
             p1->chooseDraftCard(0);
             p2->chooseDraftCard(0);
 			game->nextDraft();
-			scene->update();
+			
             break;
         case 6:         //DRAFT 7eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
             p1->chooseDraftCard(0);
             p2->chooseDraftCard(0);
 			game->nextDraft();
-			scene->update();
+			
             break;
         case 7:         //PLANIFICATION p1 1ere carte
 			scene->changeWindow(PLANIFICATION_WINDOW);
 			p1->keepCard(0);	//Tresor
-			scene->update();
+			
 			break;
         case 8:         //PLANIFICATION 1-2
 			scene->changeWindow(PLANIFICATION_WINDOW);
 			p1->keepCard(1);	//Tour
-			scene->update();
+			
 			break;
         case 9:         //PLANIFICATION 1-3
 			scene->changeWindow(PLANIFICATION_WINDOW);
 			p1->discardCard(0,true);
 			p1->addResource(state::EXPLORATION,0);
-			scene->update();
+			
 			break;
         case 10:         //PLANIFICATION 1-4
 			scene->changeWindow(PLANIFICATION_WINDOW);
 			p1->discardCard(0,true);
 			p1->addResource(state::EXPLORATION,0);
-			scene->update();
+			
 			break;
         case 11:         //PLANIFICATION 1-5
 			scene->changeWindow(PLANIFICATION_WINDOW);
 			p1->discardCard(0,true);
 			p1->addResource(state::EXPLORATION,0);
-			scene->update();
+			
 			break;
         case 12:         //PLANIFICATION 1-6
 			scene->changeWindow(PLANIFICATION_WINDOW);
 			p1->discardCard(0,true);
 			p1->sendResourceToEmpire(state::EXPLORATION);
-			scene->update();
+			
 			break;
 		case 13:		//PLANIFICATION 1-7
 			scene->changeWindow(PLANIFICATION_WINDOW);
 			p1->discardCard(0,true);
 			p1->sendResourceToEmpire(state::EXPLORATION);
-			scene->update();
+			
 			break;
 		case 14:         //PLANIFICATION p2 1ere carte
 			scene->changePlayerInfoPlayer(1,scene->getPlayerRenderer(4)->getSpriteTransform(0));
 			scene->changeWindow(PLAYER_INFO);
 			p2->keepCard(0);	//Avalon
-			scene->update();
+			
 			break;
         case 15:         //PLANIFICATION 2-2
 			scene->changeWindow(PLAYER_INFO);
 			p2->keepCard(2);	//Zeppelin
-			scene->update();
+			
 			break;
         case 16:         //PLANIFICATION 2-3
 			scene->changeWindow(PLAYER_INFO);
 			p2->discardCard(0,true);
 			p2->addResource(state::EXPLORATION,0);
-			scene->update();
+			
 			break;
         case 17:         //PLANIFICATION 2-4
 			scene->changeWindow(PLAYER_INFO);
 			p2->discardCard(0,true);
 			p2->addResource(state::EXPLORATION,0);
-			scene->update();
+			
 			break;
         case 18:         //PLANIFICATION 2-5
 			scene->changeWindow(PLAYER_INFO);
 			p2->discardCard(0,true);
 			p2->addResource(state::EXPLORATION,0);
-			scene->update();
+			
 			break;
         case 19:         //PLANIFICATION 2-6
 			scene->changeWindow(PLAYER_INFO);
 			p2->discardCard(0,true);
 			p2->addResource(state::EXPLORATION,0);
-			scene->update();
+			
 			break;
 		case 20:		//PLANIFICATION 2-7
 			scene->changeWindow(PLAYER_INFO);
 			p2->discardCard(0,true);
 			p2->addResource(state::EXPLORATION,0);
 			game->endPlanification();
-			scene->update();
 			break;
 		case 21: 		//PROD MATERIAL
 			scene->changeWindow(MAIN_WINDOW);
 			game->initProduction();
+			p1->addResource(state::MATERIAL,0);
+			p1->addResource(state::MATERIAL,0);
+		break;
+		case 22: 		//PROD ENERGY
+			scene->changeWindow(MAIN_WINDOW);
+			game->nextProduction();
+			p2->addResource(state::ENERGY,0);
+			p2->addResource(state::ENERGY,0);
         default:
 			break;
     }
