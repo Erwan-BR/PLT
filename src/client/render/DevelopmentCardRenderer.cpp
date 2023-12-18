@@ -11,7 +11,8 @@ namespace render
         sf::Texture* cardDesign = this->card->getDesign();
         this->texture = cardDesign;
 
-        //this->sprite->setTexture(*(this->texture));
+        this->sprite = new sf::Sprite();
+        this->sprite->setTexture(*(this->texture));
 
         this->transform = transform;
 

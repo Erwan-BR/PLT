@@ -227,8 +227,6 @@ namespace state {
 	///@brief Initialize the Planification phase during which players choose the cards they will try to build
 	void Game::initPlanification ()
 	{
-		// To-do
-		this->endPlanification();
 	}
 
 	/// @brief End the planification phase to start the next phase.
@@ -253,34 +251,32 @@ namespace state {
 			this->produceResource();
 			this->resourceProducing = ResourceType::ENERGY;
 			this->notifyObservers();
-			this->nextProduction ();
 		}
 		else if (ResourceType::ENERGY == this->resourceProducing)
 		{
 			this->produceResource();
 			this->resourceProducing = ResourceType::SCIENCE;
 			this->notifyObservers();
-			this->nextProduction ();
 		}
 		else if (ResourceType::SCIENCE == this->resourceProducing)
 		{
 			this->produceResource();
 			this->resourceProducing = ResourceType::GOLD;
 			this->notifyObservers();
-			this->nextProduction ();
 		}
 		else if (ResourceType::GOLD == this->resourceProducing)
 		{
 			this->produceResource();
 			this->resourceProducing = ResourceType::EXPLORATION;
 			this->notifyObservers();
-			this->nextProduction ();
 		}
-		else
+		else if (ResourceType::EXPLORATION == this->resourceProducing)
 		{
 			this->produceResource();
 			this->resourceProducing = ResourceType::KRYSTALLIUM;
 			this->notifyObservers();
+		}
+		else{
 			this->endProduction();
 		}
 	}

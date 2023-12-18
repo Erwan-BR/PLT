@@ -19,8 +19,6 @@ using namespace std;
 using namespace state;
 using namespace render;
 
-void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene);
-
 int main(int argc,char* argv[])
 {
 	//Print Temporary Manual Commands
@@ -86,8 +84,6 @@ int main(int argc,char* argv[])
 	GameRenderer* gRenderer;
 	DraftingHandRenderer* hRenderer;
 
-    int etape =0;
-
 	//Main Loop active while the window is still open
 	while (window.isOpen())
 		{
@@ -114,10 +110,6 @@ int main(int argc,char* argv[])
 					}
 					if (event.key.code == sf::Keyboard::R){
 						scene.changeWindow(PLAYER_INFO); //Change the window to PLAYER_INFO
-					}
-                    if (event.key.code == sf::Keyboard::Space){
-						next_step(etape,&game,player1,player2,&scene);
-                        etape++;
 					}
 						
 				}
@@ -244,73 +236,4 @@ int main(int argc,char* argv[])
     cout << "Exit Successfully !" << endl;
 
     return 0;
-}
-
-void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
-    switch(etape){
-        case 0:         //DRAFT 1ere carte
-			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
-			game->nextDraft();
-			scene->update();
-            break;
-        case 1:         //DRAFT 2eme carte
-			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
-			game->nextDraft();
-			scene->update();
-            break;
-        case 2:         //DRAFT 3eme carte
-			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
-			game->nextDraft();
-			scene->update();
-            break;
-        case 3:         //DRAFT 4eme carte
-			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
-			game->nextDraft();
-			scene->update();
-            break;
-        case 4:         //DRAFT 5eme carte
-			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
-			game->nextDraft();
-			scene->update();
-            break;
-        case 5:         //DRAFT 6eme carte
-			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
-			game->nextDraft();
-			scene->update();
-            break;
-        case 6:         //DRAFT 7eme carte
-			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
-			game->nextDraft();
-			scene->update();
-            break;
-        case 7:         //PLANIFICATION
-
-
-        case 8:         //PROD MATERIAL
-
-        case 9:         //PROD ENERGY
-
-        case 10:         //PROD RESEARCH
-
-        case 11:         //PROD GOLD
-
-        case 12:         //PROD EXPLO
-            
-            break;
-    }
-
 }

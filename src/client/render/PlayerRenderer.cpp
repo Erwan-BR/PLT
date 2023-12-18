@@ -331,6 +331,7 @@ namespace render {
 		std::vector<state::DevelopmentCard*> built = this->player->getBuiltCards();
 		std::vector<state::DevelopmentCard*> drafted = this->player->getDraftCards();
 		int i;
+		this->devCardRenderers = {};
 		
 		switch(this->affected_window){
 			case MAIN_WINDOW:
