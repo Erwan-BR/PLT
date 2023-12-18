@@ -27,11 +27,11 @@ namespace state {
     /// @param discardGain Pointers to the resources you get when the Card is discarded.
     DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
         Card(name, productionGain, design, victoryPoints),
-        type(CardType::NONETYPE),
+        type(type),
         numberOfCopies(numberOfCopies),
         instantGain(instantGain),
         discardGain(discardGain),
-        quantityResourceMissing(costToBuild.size()) // Because no resource is paid and the size is never 0.
+        quantityResourceMissing((int)costToBuild.size()) // Because no resource is paid and the size is never 0.
     {
         for(ResourceToPay* resource : costToBuild){this->costToBuild.push_back(resource);}
     }
