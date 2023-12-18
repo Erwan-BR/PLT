@@ -117,6 +117,7 @@ namespace state {
             }
             this->currentResources.erase(resourcePosition);
         }
+        this->notifyObservers();
     }
     
     /// @brief Discard a card to gain a discard gain.
