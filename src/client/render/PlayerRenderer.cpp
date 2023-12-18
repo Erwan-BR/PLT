@@ -389,6 +389,11 @@ namespace render {
 				(this->texts)[14]->setString("x"+std::to_string(this->player->getKrystalliumTokensUnit())+"+"+std::to_string(this->player->getResourcesInEmpireUnit())+"/5");
 
 				break;
+			case PLANIFICATION_WINDOW:
+				for (i=0;i<7 and i<(int) drafted.size();i++){
+				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+			}
 			default:
 				break;
 		}

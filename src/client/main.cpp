@@ -86,7 +86,7 @@ int main(int argc,char* argv[])
 	GameRenderer* gRenderer;
 	DraftingHandRenderer* hRenderer;
 
-    int etape =0;
+    int etape = 0;
 
 	//Main Loop active while the window is still open
 	while (window.isOpen())

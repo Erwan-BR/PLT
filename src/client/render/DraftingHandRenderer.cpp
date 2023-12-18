@@ -87,6 +87,7 @@ namespace render {
 
 		std::vector<state::DevelopmentCard*> cards = player->getDraftingCards();
 		int i;
+        this->devCardRenderers = {};
 		
         for (i=0;i<7 and i<(int) cards.size();i++){
             cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
