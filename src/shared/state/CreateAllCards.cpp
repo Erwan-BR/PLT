@@ -645,7 +645,7 @@ namespace state
 		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
 		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, isFaceA);
 
-		std::vector<EmpireCard*> empires = {africa, noram, asia, europe, aztec};
+		std::vector<EmpireCard*> empires = {asia, aztec, africa, noram, europe};
 		
     	return empires;
     }
