@@ -10,17 +10,17 @@ namespace state {
     id(-1),
     profilePicture(new sf::Texture())
     {
-        resourcesProduction[MATERIAL] = 0;
-        resourcesProduction[ENERGY] = 0;
-        resourcesProduction[SCIENCE] = 0;
-        resourcesProduction[GOLD] = 0;
-        resourcesProduction[EXPLORATION] = 0;
+        resourcesProduction[ResourceType::MATERIAL] = 0;
+        resourcesProduction[ResourceType::ENERGY] = 0;
+        resourcesProduction[ResourceType::SCIENCE] = 0;
+        resourcesProduction[ResourceType::GOLD] = 0;
+        resourcesProduction[ResourceType::EXPLORATION] = 0;
 
-        cardsTypeList[STRUCTURE] = 0;
-        cardsTypeList[VEHICLE] = 0;
-        cardsTypeList[RESEARCH] = 0;
-        cardsTypeList[PROJECT] = 0;
-        cardsTypeList[DISCOVERY] = 0;
+        cardsTypeList[CardType::STRUCTURE] = 0;
+        cardsTypeList[CardType::VEHICLE] = 0;
+        cardsTypeList[CardType::RESEARCH] = 0;
+        cardsTypeList[CardType::PROJECT] = 0;
+        cardsTypeList[CardType::DISCOVERY] = 0;
     }
     
     /// @brief Constructor of the player, with some parameters.
@@ -33,17 +33,17 @@ namespace state {
     id(id),
     profilePicture(profilePicture)
     {
-        resourcesProduction[MATERIAL] = 0;
-        resourcesProduction[ENERGY] = 0;
-        resourcesProduction[SCIENCE] = 0;
-        resourcesProduction[GOLD] = 0;
-        resourcesProduction[EXPLORATION] = 0;
+        resourcesProduction[ResourceType::MATERIAL] = 0;
+        resourcesProduction[ResourceType::ENERGY] = 0;
+        resourcesProduction[ResourceType::SCIENCE] = 0;
+        resourcesProduction[ResourceType::GOLD] = 0;
+        resourcesProduction[ResourceType::EXPLORATION] = 0;
 
-        cardsTypeList[STRUCTURE] = 0;
-        cardsTypeList[VEHICLE] = 0;
-        cardsTypeList[RESEARCH] = 0;
-        cardsTypeList[PROJECT] = 0;
-        cardsTypeList[DISCOVERY] = 0;
+        cardsTypeList[CardType::STRUCTURE] = 0;
+        cardsTypeList[CardType::VEHICLE] = 0;
+        cardsTypeList[CardType::RESEARCH] = 0;
+        cardsTypeList[CardType::PROJECT] = 0;
+        cardsTypeList[CardType::DISCOVERY] = 0;
     }
 
     /// @brief Destructor of the class Player
@@ -85,9 +85,14 @@ namespace state {
         {
             return ;
         }
+        CardType cardConstructedType = this->toBuildCards[cardIndex]->getType();
+        
         // Transfering the element from a vector to the other one.
         this->builtCards.push_back(this->toBuildCards[cardIndex]);
         this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);
+        
+        // Add the card to the dictionnary containing constructed cards.
+        this->cardsTypeList[cardConstructedType] ++;
         this->updateProduction();
         this->notifyObservers();
     }
