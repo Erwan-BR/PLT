@@ -367,7 +367,7 @@ namespace render {
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				for (i=28;i<56 and i<28+(int) tobuild.size();i++){
-					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));
+					cRenderer = new DevelopmentCardRenderer(tobuild[i-28],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				(this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));

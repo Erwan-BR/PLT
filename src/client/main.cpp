@@ -56,7 +56,7 @@ int main(int argc,char* argv[])
 	players.push_back(player2);
 
 	//Creation of the instance of the Game class
-	state::Game game = state::Game(players);
+	state::Game game = state::Game(players,true);
 
 	game.initGame();
 	//endDraft - endPlanification - 
@@ -250,22 +250,22 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
     switch(etape){
         case 0:         //DRAFT 1ere carte
 			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
+            p1->chooseDraftCard(5);		//Tresor
+            p2->chooseDraftCard(5);		//Avalon
 			game->nextDraft();
 			scene->update();
             break;
         case 1:         //DRAFT 2eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
+            p1->chooseDraftCard(5);		//Zeppelin
+            p2->chooseDraftCard(0);		//Zeppelin
 			game->nextDraft();
 			scene->update();
             break;
         case 2:         //DRAFT 3eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
+            p1->chooseDraftCard(4);		//Tour géante
+            p2->chooseDraftCard(4);		//Centre Terre
 			game->nextDraft();
 			scene->update();
             break;
@@ -297,20 +297,48 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 			game->nextDraft();
 			scene->update();
             break;
-        case 7:         //PLANIFICATION
-
-
-        case 8:         //PROD MATERIAL
-
-        case 9:         //PROD ENERGY
-
-        case 10:         //PROD RESEARCH
-
-        case 11:         //PROD GOLD
-
-        case 12:         //PROD EXPLO
-            
-            break;
+        case 7:         //PLANIFICATION p1 1ere carte
+			scene->changeWindow(PLANIFICATION_WINDOW);
+			p1->keepCard(0);	//Tresor
+			scene->update();
+			break;
+        case 8:         //PLANIFICATION 1-2
+			scene->changeWindow(PLANIFICATION_WINDOW);
+			p1->keepCard(1);	//Tour
+			scene->update();
+			break;
+        case 9:         //PLANIFICATION 1-3
+			scene->changeWindow(PLANIFICATION_WINDOW);
+			p1->discardCard(0,true);
+			p1->addResource(state::EXPLORATION,0);
+			scene->update();
+			break;
+        case 10:         //PLANIFICATION 1-4
+			scene->changeWindow(PLANIFICATION_WINDOW);
+			p1->discardCard(0,true);
+			p1->addResource(state::EXPLORATION,0);
+			scene->update();
+			break;
+        case 11:         //PLANIFICATION 1-5
+			scene->changeWindow(PLANIFICATION_WINDOW);
+			p1->discardCard(0,true);
+			p1->addResource(state::EXPLORATION,0);
+			scene->update();
+			break;
+        case 12:         //PLANIFICATION 1-6
+			scene->changeWindow(PLANIFICATION_WINDOW);
+			p1->discardCard(0,true);
+			p1->sendResourceToEmpire(state::EXPLORATION);
+			scene->update();
+			break;
+		case 13:
+			scene->changeWindow(PLANIFICATION_WINDOW);
+			p1->discardCard(0,true);
+			p1->sendResourceToEmpire(state::EXPLORATION);
+			scene->update();
+			break;
+        default:
+			break;
     }
 
 }

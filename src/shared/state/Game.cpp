@@ -174,6 +174,7 @@ namespace state {
 			// Send cards to players.
 			player->setDraftingCards(draftingDeck);
 		}
+		this->nextDraft();
 		this->notifyObservers();
 	}
 

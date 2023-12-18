@@ -31,7 +31,7 @@ namespace render
         {
             vectorOfCrossesSprite.push_back(new sf::Sprite());
             vectorOfCrossesSprite[index]->setTexture(*(this->notPaidTexture));
-            vectorOfCrossesTransform.push_back(sf::Transform(transform).translate(0.0f,0.0f+10.0f*index));
+            vectorOfCrossesTransform.push_back(sf::Transform(transform).translate(0.0f,0.0f+10.0f*index).scale(0.05f,0.05f));
         }
     }
 

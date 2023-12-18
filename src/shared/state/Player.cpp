@@ -357,7 +357,7 @@ namespace state {
     /// @param cardIndex Card choosed by the player
     void Player::chooseDraftCard(int cardIndex)
     {
-        if (0 > cardIndex || (int)this->draftCards.size() < cardIndex)
+        if (0 > cardIndex || (int)this->draftingCards.size() < cardIndex)
         {
             return ;
         }
