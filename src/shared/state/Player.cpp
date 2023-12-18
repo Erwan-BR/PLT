@@ -113,6 +113,26 @@ namespace state {
         }
     }
 
+    /// @brief Add a resource to a card that is in toBuildCards.
+    /// @param resource Resource to add to the card.
+    /// @param cardIndex Index of the card.
+    void Player::addResource (ResourceType resource, int cardIndex)
+    {
+        if (0 > cardIndex || (int)this->toBuildCards.size() < cardIndex)
+        {
+            return ;
+        }
+        //Check if the resource is addable to the designated card
+        if(this->toBuildCards[cardIndex]->isResourceAddable(resource))
+        {
+            //Adding the resource to the card, and building it if there are all the resources required on it.
+            if(this->toBuildCards[cardIndex]->addResource(resource))
+            {
+                this->construct(this->toBuildCards[cardIndex]);
+            }
+        }
+    }
+
     /// @brief Discard the card "toDiscardCard"
     /// @param toDiscardCard Card that is going to be discarded
     void Player::discardCard(DevelopmentCard* toDiscardCard)
@@ -137,22 +157,33 @@ namespace state {
         this->notifyObservers();
     }
     
+    /// @brief Discard a card to gain a discard gain.
+    /// @param cardIndex Index of the card to discard.
+    /// @param isADraftedCard Indicated if the card comes from the vector drafted card, or from toBuildCards.
     void Player::discardCard(int cardIndex, bool isADraftedCard)
     {
-        
         if(isADraftedCard)
         {
+            if ((0 > cardIndex) || ((int)this->draftCards.size() < cardIndex))
+            {
+                return ;
+            }
             DevelopmentCard* toDiscardCard = this->draftCards.at(cardIndex);
             this->currentResources.push_back(toDiscardCard->getDiscardGain());
             this->draftCards.erase(this->draftCards.begin() + cardIndex);            
         }
         else
         {
+            if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex))
+            {
+                return ;
+            }
             DevelopmentCard* toDiscardCard = this->toBuildCards.at(cardIndex);
             sendResourceToEmpire(toDiscardCard->getDiscardGain());
             convertToKrystallium();
             this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);             
         }
+        this->notifyObservers();
     }
 
     /// @brief Function called when the player wants to keep a card from the drafting phase.
@@ -169,14 +200,18 @@ namespace state {
         this->notifyObservers();
     }
 
+    /// @brief Function called when the player wants to keep a card from the drafting phase.
+    /// @param toKeepCardIndex Index of the card to keep.
     void Player::keepCard(int toKeepCardIndex)
     {
-        if(toKeepCardIndex >= (int) this->draftCards.size())
+        if (0 > toKeepCardIndex || (int)this->draftCards.size() < toKeepCardIndex)
         {
-            DevelopmentCard* card = this->draftCards.at(toKeepCardIndex);
-            this->toBuildCards.push_back(card);
-            this->draftCards.erase(this->draftCards.begin() + toKeepCardIndex);
+            return ;
         }
+        DevelopmentCard* card = this->draftCards.at(toKeepCardIndex);
+        this->toBuildCards.push_back(card);
+        this->draftCards.erase(this->draftCards.begin() + toKeepCardIndex);
+        this->notifyObservers();
     }
 
     /// @briefUpdate the production of every tokens
@@ -318,11 +353,17 @@ namespace state {
         this->notifyObservers();
     }
 
+    /// @brief Add the selected card from the drafting deck to the selected one
+    /// @param cardIndex Card choosed by the player
     void Player::chooseDraftCard(int cardIndex)
     {
+        if (0 > cardIndex || (int)this->draftCards.size() < cardIndex)
+        {
+            return ;
+        }
         this->draftCards.push_back(draftingCards.at(cardIndex));
-        this->draftingCards.erase(draftingCards.begin()+ cardIndex);
-        this->state = PENDING;
+        this->draftingCards.erase(draftingCards.begin() + cardIndex);
+        this->state = PlayerState::PENDING;
 
         this->notifyObservers();
     }
@@ -345,6 +386,32 @@ namespace state {
             this->currentResources.push_back(resourceToReceive);
         }
 
+        this->notifyObservers();
+    }
+
+    /// @brief End the planificiation for the current player. Send all drafted cards to the to buildCard.
+    void Player::endPlanification ()
+    {
+        for (DevelopmentCard* card : this->draftCards)
+        {
+            this->toBuildCards.push_back(card);
+        }
+
+        this->draftCards.clear();
+        this->state = PlayerState::PENDING;
+        this->notifyObservers();
+    }
+
+    /// @brief End the production for the current player. Send all resources in empires.
+    void Player::endProduction ()
+    {
+        for (ResourceType resource : this->currentResources)
+        {
+            this->sendResourceToEmpire(resource);
+        }
+
+        this->currentResources.clear();
+        this->state = PlayerState::PENDING;
         this->notifyObservers();
     }
 

@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <random>
 #include <fstream>
+#include <random>
+#include <chrono>
 
 namespace state {
 	///@brief Create an instance of the class Game
@@ -60,8 +62,10 @@ namespace state {
 		// Shuffle the cards only if the game is not for testing purpose.
 		if (! this->isTestingGame)
 		{
-			auto rng = std::default_random_engine {};
-			std::shuffle(std::begin(deck), std::end(deck), rng);
+			// Time-base seed to shuffle cards.
+			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+			std::default_random_engine randomness(seed);
+			std::shuffle(this->deck.begin(), this->deck.end(), randomness);
 		}
 	}
 
@@ -97,8 +101,10 @@ namespace state {
 		// Shuffle if not a testing game.
 		if (! this->isTestingGame)
 		{
-			auto rng = std::default_random_engine {};
-			std::shuffle(std::begin(empires), std::end(empires), rng);
+			// Time-base seed to shuffle cards.
+			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+			std::default_random_engine randomness(seed);
+			std::shuffle(empires.begin(), empires.end(), randomness);
 		}
 
 		return empires;
@@ -169,7 +175,6 @@ namespace state {
 			player->setDraftingCards(draftingDeck);
 		}
 		this->notifyObservers();
-		this->nextDraft ();
 	}
 
 	///@brief Launch the next draft.
@@ -227,8 +232,7 @@ namespace state {
 	///@brief Initialize the Planification phase during which players choose the cards they will try to build
 	void Game::initPlanification ()
 	{
-		// To-do
-		this->endPlanification();
+		return ;
 	}
 
 	/// @brief End the planification phase to start the next phase.
@@ -253,35 +257,30 @@ namespace state {
 			this->produceResource();
 			this->resourceProducing = ResourceType::ENERGY;
 			this->notifyObservers();
-			this->nextProduction ();
 		}
 		else if (ResourceType::ENERGY == this->resourceProducing)
 		{
 			this->produceResource();
 			this->resourceProducing = ResourceType::SCIENCE;
 			this->notifyObservers();
-			this->nextProduction ();
 		}
 		else if (ResourceType::SCIENCE == this->resourceProducing)
 		{
 			this->produceResource();
 			this->resourceProducing = ResourceType::GOLD;
 			this->notifyObservers();
-			this->nextProduction ();
 		}
 		else if (ResourceType::GOLD == this->resourceProducing)
 		{
 			this->produceResource();
 			this->resourceProducing = ResourceType::EXPLORATION;
 			this->notifyObservers();
-			this->nextProduction ();
 		}
 		else
 		{
 			this->produceResource();
 			this->resourceProducing = ResourceType::KRYSTALLIUM;
 			this->notifyObservers();
-			this->endProduction();
 		}
 	}
 
@@ -359,14 +358,11 @@ namespace state {
 		this->nextPhase();
 	}
 
-	/// @brief Ends the game, counts every player's victory points and compares them to give a podium
+	/// @brief Ends the game.
 	void Game::endGame ()
 	{
-		std::vector<int> points;
-		for(Player* player : this->players)
-		{
-			points.push_back(player->computeVictoryPoint());
-		}
+		this->phase = GamePhase::FINISHED;
+		this->notifyObservers();
 	}
 
 	///@brief Debug method to check the state of the instance of Game
