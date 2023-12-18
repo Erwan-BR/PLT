@@ -97,9 +97,9 @@ namespace state {
     /// @param card Card that will receive the resource "resource"
     void Player::addResource(ResourceType resource, DevelopmentCard* card)
     {
-
+        auto resourcePosition = std::find(this->currentResources.begin(), this->currentResources.end(), resource);
 		auto cardPos = std::find(this->toBuildCards.begin(), this->toBuildCards.end(), card);
-		if(cardPos != toBuildCards.end())
+		if((this->toBuildCards.end() != cardPos) && this->currentResources.end() != resourcePosition)
         {
             //Check if the resource is addable to the designated card
             if((*cardPos)->isResourceAddable(resource))
@@ -110,6 +110,7 @@ namespace state {
                     this->construct(*cardPos);
                 }
             }
+            this->currentResources.erase(resourcePosition);
         }
     }
 
@@ -118,7 +119,8 @@ namespace state {
     /// @param cardIndex Index of the card.
     void Player::addResource (ResourceType resource, int cardIndex)
     {
-        if (0 > cardIndex || (int)this->toBuildCards.size() < cardIndex)
+        auto resourcePosition = std::find(this->currentResources.begin(), this->currentResources.end(), resource);
+        if ((0 > cardIndex || ((int)this->toBuildCards.size() < cardIndex)) || (this->currentResources.end() == resourcePosition))
         {
             return ;
         }
@@ -130,6 +132,7 @@ namespace state {
             {
                 this->construct(this->toBuildCards[cardIndex]);
             }
+            this->currentResources.erase(resourcePosition);
         }
     }
 
