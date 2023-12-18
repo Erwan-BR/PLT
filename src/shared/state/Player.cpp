@@ -96,6 +96,21 @@ namespace state {
         this->updateProduction();
         this->notifyObservers();
     }
+    
+    /// @brief Check if a resource can be played by the player. Does not check if the player has the resource.
+    /// @param resource Resource which the information is retrieved.
+    /// @return True if the player can play this resource, false either.
+    bool Player::isResourcePlayable (ResourceType resource) const
+    {
+        for (DevelopmentCard* cardToBuild : this->toBuildCards)
+        {
+            if (cardToBuild->isResourceAddable(resource))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /// @brief Add a resource to a card that is in toBuildCards.
     /// @param resource Resource to add to the card.
