@@ -20,6 +20,6 @@ namespace engine
     /// @brief Launch the command to keep a card.
     void KeepCard::launchCommand () const
     {
-
+        this->player->keepCard(this->cardIndex);
     }
 }

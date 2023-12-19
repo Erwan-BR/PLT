@@ -21,6 +21,6 @@ namespace engine
     /// @brief Launching the command to add a resource.
     void AddResource::launchCommand () const
     {
-
+        this->player->addResource(this->resource, this->cardIndex);
     }
 }

@@ -2,86 +2,84 @@
 
 namespace engine
 {
+    /// @brief Empty constructor of an engine. Should not be used.
     Engine::Engine() :
-    currentGame(new state::Game());
-    {};
+        currentGame(new state::Game()),
+        currentCommands({})
+    {
 
-    Engine::Engine(std::vector<state::Player*> players, std::vector<ai::AI> ais*) :
-    currentGame(new state::Game(players));
-    ais(ais);
-    {};
+    }
 
-    Engine::~Engine(){};
+    /// @brief Full constructor of the engine.
+    /// @param currentGame Game that is played.
+    /// @param currentCommands Command that can be done in the game.
+    Engine::Engine(state::Game* currentGame, std::vector<Command*> currentCommands) :
+        currentGame(currentGame),
+        currentCommands(currentCommands)
+    {
 
+    }
+
+    /// @brief Destructor of the engine class. Empty for the moment.
+    Engine::~Engine()
+    {
+
+    }
+
+    /// @brief Run the complete game. Logic of the game is done in Game, and waiting for AI / Players to play is done here.
     void Engine::gameRunning()
     {
-        currentGame.initGame();
-        bool playersPending = false;
-        bool aiPending
-        while(currentGame.getTurn() != 5)
+        this->currentGame->initGame();
+        while(state::GamePhase::FINISHED != this->currentGame->getPhase())
         {
-
-            //Selecting the 7 drafted cards.
-            for(int i=0; i<7; i++)draftRunning();
-
-            planificationRunning();
-
-            productionRunning();
+            this->phaseRunning();
         }
     }
 
-    void Engine::draftRunning()
+    /// @brief Run a phase, according to the current phase.
+    void Engine::phaseRunning()
     {
-        bool playersPlaying = true;
+        // Vector of method of AI
+        using AIMethodPtr = void (state::Player::*)();
+        const std::vector<AIMethodPtr> aiMethodVector = {&state::Player::AIChooseDraftingCard, &state::Player::AIPlanification, &state::Player::AIUseProducedResources};
+        
+        // Vector of method of Game to call at the end.
+        using GameMethodPtr = void (state::Game::*)();
+        const std::vector<GameMethodPtr> gameMethodVector = {&state::Game::nextDraft, &state::Game::endPlanification, &state::Game::nextProduction};
 
-        for(AI* ai : this->ais)
+        int currentPhase = (int) (this->currentGame->getPhase());
+
+        // Make AIs play first.
+        for (state::Player* player : this->currentGame->getPlayers())
         {
-            ai.AIChooseDraftCard();
+            if (player->isAI())
+            {
+                // Calling the method linked to the current phase.
+                (player->*(aiMethodVector[currentPhase]))();
+            }
         }
 
-        while(playersPlaying)playersPlaying = getPlayersState();
-
-        this->currentGame.nextDraft();
+        // Now, we are waiting for players to play.
+        while(! this->areAllRealPlayersPending())
+        {
+            ;
+        }
+        // Once finished, we can call the next method of game.
+        (this->currentGame->*(gameMethodVector[currentPhase]))();
     }
 
-    void Engine::planificationRunning()
+    /// @brief Check if all real players are pending or not.
+    /// @return Boolean that state if all players have played. TRUE : all player are waiting. FALSE : At least one player is playing.
+    bool Engine::areAllRealPlayersPending()
     {
-        bool playersPlaying  = true;
-
-        for(AI* ai : this->ais)
+        for(state::Player* player : this->currentGame->getPlayers())
         {
-            ai.AIKeepOrDiscardCard();
+            // Checdking for real player if only one is playing.
+            if ((! player->isAI()) && (state::PlayerState::PLAYING == player->getState()))
+            {
+                return false;
+            }
         }
-
-        while(playersPlaying)playersPlaying = getPlayersState();
-
-        this->currentGame.endPlanification();
-
-    }
-
-    void Engine::productionRunning()
-    {
-        bool playersPlaying  = true;
-
-        for(AI* ai : this->ais)
-        {
-            ai.AIAddResource();
-        }
-
-        while(playersPlaying)playersPlaying = getPlayersState();
-
-        this->currentGame.endProduction();
-
-    }
-
-    bool Engine::getPlayersState()
-    {
-        bool playersPlaying = false;
-        for(state::Player* player : this->currentGame.getPlayers())
-        {
-            if(player.getState() == state::PlayerState::PLAYING)playersPlaying == true;
-        }
-
-        return playersState;
+        return true;
     }
 }

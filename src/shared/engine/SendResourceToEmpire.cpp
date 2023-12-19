@@ -20,6 +20,6 @@ namespace engine
     /// @brief Launch the command to send a resource to the empire of a player.
     void SendResourceToEmpire::launchCommand () const
     {
-
+        this->player->sendResourceToEmpire(this->resource);
     }
 }

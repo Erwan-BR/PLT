@@ -20,6 +20,6 @@ namespace engine
     /// @brief Launching the command to choose the card from the draft cards.
     void ChooseDraftCard::launchCommand () const
     {
-
+        this->player->chooseDraftCard(this->cardIndex);
     }
 }

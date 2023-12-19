@@ -20,6 +20,6 @@ namespace engine
     /// @brief Launch the command to end the planification phase for this player.
     void EndPlanification::launchCommand () const
     {
-
+        this->player->endPlanification();
     }
 }
