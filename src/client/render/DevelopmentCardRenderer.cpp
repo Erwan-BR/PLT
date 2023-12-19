@@ -38,7 +38,11 @@ namespace render
     /// @brief Destructor of the card renderer.
     DevelopmentCardRenderer::~DevelopmentCardRenderer ()
     {
-
+        free(this->paidTexture);
+        free(this->notPaidTexture);
+        for(sf::Sprite* s : this->vectorOfCrossesSprite){
+            free(s);
+        }
     }
 
     /// @brief Update the render of the Renderer of Card.

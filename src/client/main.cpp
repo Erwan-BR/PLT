@@ -3,7 +3,7 @@
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
 
-#define CROSS_SIZE 0.012f
+#define CROSS_SIZE 0.01f
 
 void testSFML() {
     sf::Texture texture;
@@ -394,30 +394,49 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 			scene->changeWindow(MAIN_WINDOW);
 			game->nextProduction();
 			p1->addResource(state::MATERIAL,0);
-			p1->addResource(state::MATERIAL,0);
 			break;
 		case 23:		//PROD ENERGY
 			scene->changeWindow(MAIN_WINDOW);
+			p1->endPlanification();
+			p2->endPlanification();
 			game->nextProduction();
-			p1->addResource(state::ENERGY,0);
+			p2->addResource(state::ENERGY,1);
+			p2->addResource(state::ENERGY,1);
 			break;
 		case 24:		//PROD SCIENCE
 			scene->changeWindow(MAIN_WINDOW);
+			p1->endPlanification();
+			p2->endPlanification();
 			game->nextProduction();
+			p2->sendResourceToEmpire(state::SCIENCE);
 			//p1->addResource(state::SCIENCE,0);
 			break;
 		case 25:		//PROD GOLD
 			scene->changeWindow(MAIN_WINDOW);
+			p1->endPlanification();
+			p2->endPlanification();
 			game->nextProduction();
+			p1->addResource(state::GOLD,0);
+			p1->addResource(state::GOLD,0);
+			p1->addResource(state::GOLD,0);
+			p1->addResource(state::FINANCIER,0);
 			//p1->addResource(state::GOLD,0);
 			break;
 		case 26:		//PROD EXPLORATION
 			scene->changeWindow(MAIN_WINDOW);
+			p1->endPlanification();
+			p2->endPlanification();
 			game->nextProduction();
+			p1->sendResourceToEmpire(state::EXPLORATION);
+			p2->addResource(state::EXPLORATION,0);
+			p2->addResource(state::EXPLORATION,0);
 			//p1->addResource(state::EXPLORATION,0);
 			break;
 		case 27:		//FINISHED
+			p1->endPlanification();
+			p2->endPlanification();
 			game->endGame();
+			break;
         default:
 			break;
     }
