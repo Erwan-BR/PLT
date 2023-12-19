@@ -372,7 +372,13 @@ namespace state {
             this->toBuildCards.push_back(card);
         }
 
+        for (ResourceType resource : this->currentResources)
+        {
+            this->sendResourceToEmpire(resource);
+        }
+
         this->draftCards.clear();
+        this->currentResources.clear();
         this->state = PlayerState::PENDING;
         this->notifyObservers();
     }
