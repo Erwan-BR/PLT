@@ -73,20 +73,27 @@ namespace ai
         // If no card to build, put all resources on the empire.
         if (0 == numberOfCardsToBuild)
         {
-            for (state::ResourceType resource : this->currentResources)
-            {
-                this->sendResourceToEmpire(resource);
-            }
-            this->currentResources.clear();
+            this->sendAllResourcesToEmpire();
         }
 
         // Time-base seed to shuffle resources.
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::default_random_engine randomness(seed);
-        std::shuffle(this->currentResources.begin(), this->currentResources.end(), randomness);
+        
+        const std::vector<state::ResourceType> existingResources = {state::ResourceType::MATERIAL, state::ResourceType::ENERGY, state::ResourceType::SCIENCE, state::ResourceType::GOLD, state::ResourceType::EXPLORATION, state::ResourceType::KRYSTALLIUM, state::ResourceType::COLONEL, state::ResourceType::FINANCIER};
+        std::vector<state::ResourceType> resourceToPlay;
+        for (state::ResourceType resource : existingResources)
+        {
+            for (int i = 0; i < this->currentResources.at(resource); i++)
+            {
+                resourceToPlay.push_back(resource);
+            }
+        }
+
+        std::shuffle(resourceToPlay.begin(), resourceToPlay.end(), randomness);
 
         // Iterating among all resources that needs to be used.
-        for (state::ResourceType currentResource : this->currentResources)
+        for (state::ResourceType currentResource : resourceToPlay)
         {
             // Check if the resource is not playable, to send it directly into the empire.
             if (!(this->isResourcePlayable(currentResource)))
