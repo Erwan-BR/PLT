@@ -28,7 +28,7 @@ namespace ai
 
     }
 
-    /// @brief Method used to implement how the Ai choose it's card from the draft phase. It's completely random.
+    /// @brief Method used to implement how the AI choose it's card from the draft phase. It's completely random.
     void AIRandom::AIChooseDraftingCard ()
     {
         // Time-base seed to choose if the card is choosed or not.
