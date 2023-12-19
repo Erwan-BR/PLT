@@ -74,17 +74,40 @@ namespace ai
 
     void AIAdvanced::AIUseProducedResources ()
     {
-        for(state::ResourceType resource : this->currentResources)
+        const std::vector<state::ResourceType> existingResources = {state::ResourceType::MATERIAL, state::ResourceType::ENERGY, state::ResourceType::SCIENCE, state::ResourceType::GOLD, state::ResourceType::EXPLORATION, state::ResourceType::KRYSTALLIUM, state::ResourceType::COLONEL, state::ResourceType::FINANCIER};
+        std::vector<state::ResourceType> resourceToPlay;
+        for (state::ResourceType resource : existingResources)
         {
-            auto resourcePosition = std::find(resourcesToPay.begin(), resourcesToPay.end(), resource);
-            if( resourcePosition == resourcesToPay.end())
+            for (int i = 0; i < this->currentResources.at(resource); i++)
+            {
+                resourceToPlay.push_back(resource);
+            }
+        }
+        
+        
+        
+        for(state::ResourceType resource : resourceToPlay)
+        {
+            auto cardPosition = std::find(resourcesToPay.begin(), resourcesToPay.end(), resource);
+            if( cardPosition == resourcesToPay.end())
             {
                 this->sendResourceToEmpire(resource);
             }
             else
             {
-                int index = resourcePosition - resourcesToPay.begin();
-                this->addResource(resource,index);
+                int cardIndex = cardPosition - resourcesToPay.begin();
+                int resourceIndex = 0;
+                for(std::vector<state::ResourceToPay*> cardCost : resourcesToPay)
+                {
+                    resourceIndex++;
+                    auto resourcePosition = std::find(cardCost.begin(), cardCost.end(), resource);
+                    if(resourcePosition != cardCost.end()) 
+                    {
+                        resourcesToPay[cardIndex].erase(resourcePosition);
+                        break;
+                    }
+                }
+                this->addResource(resource,cardIndex);
             }
         }
     }
