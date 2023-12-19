@@ -94,7 +94,11 @@ namespace state
 
         /****************************************** Beginning of VEHICLE cards ******************************************/
 
-        // Brise glace -- created at the end
+        // Brise glace -- Only one because three are created at the end.
+        sf::Texture* designBriseGlace = new sf::Texture;
+        designBriseGlace->loadFromFile("./resources/img/Cards/Development_Cards/brise_glace.png");
+        DevelopmentCard* briseGlaceFirst = new DevelopmentCard ("Brise glace",{new ResourceToProduce{ResourceType::EXPLORATION,2, CardType::NONETYPE}},designBriseGlace,{},CardType::VEHICLE,4,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::EXPLORATION);
+        returnValue.push_back(briseGlaceFirst);
 
         // Division de chars
         sf::Texture* designDivisionDeChars = new sf::Texture;
@@ -114,12 +118,7 @@ namespace state
             returnValue.push_back(escadrilleDeSoucoupes);
         }
 
-        // Juggernaut
-        sf::Texture* designJuggernaut = new sf::Texture;
-        designJuggernaut->loadFromFile("./resources/img/Cards/Development_Cards/juggernaut.png");
-        DevelopmentCard* juggernaut = new DevelopmentCard ("Juggernaut",{new ResourceToProduce{ResourceType::EXPLORATION,2, CardType::NONETYPE}},designJuggernaut,new CardVictoryPoint{1, CardType::VEHICLE},CardType::VEHICLE,1,{new ResourceToPay{ResourceType::MATERIAL, false},new ResourceToPay{ResourceType::MATERIAL, false},new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::KRYSTALLIUM, false}},{ResourceType::COLONEL,ResourceType::COLONEL},ResourceType::MATERIAL);
-        returnValue.push_back(juggernaut);
-
+        // Juggernaut -- Created at the end.
 
         // Laboratoire aeroporte
         sf::Texture* designLaboratoireAeroporte = new sf::Texture;
@@ -567,13 +566,17 @@ namespace state
         returnValue.push_back(centreDeLaTerre);
 
         // Brise glace
-        sf::Texture* designBriseGlace = new sf::Texture;
-        designBriseGlace->loadFromFile("./resources/img/Cards/Development_Cards/brise_glace.png");
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 3; i++)
         {
             DevelopmentCard* briseGlace = new DevelopmentCard ("Brise glace",{new ResourceToProduce{ResourceType::EXPLORATION,2, CardType::NONETYPE}},designBriseGlace,{},CardType::VEHICLE,4,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::EXPLORATION);
             returnValue.push_back(briseGlace);
         }
+
+        // Juggernaut
+        sf::Texture* designJuggernaut = new sf::Texture;
+        designJuggernaut->loadFromFile("./resources/img/Cards/Development_Cards/juggernaut.png");
+        DevelopmentCard* juggernaut = new DevelopmentCard ("Juggernaut",{new ResourceToProduce{ResourceType::EXPLORATION,2, CardType::NONETYPE}},designJuggernaut,new CardVictoryPoint{1, CardType::VEHICLE},CardType::VEHICLE,1,{new ResourceToPay{ResourceType::MATERIAL, false},new ResourceToPay{ResourceType::MATERIAL, false},new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::KRYSTALLIUM, false}},{ResourceType::COLONEL,ResourceType::COLONEL},ResourceType::MATERIAL);
+        returnValue.push_back(juggernaut);
 
         return returnValue;
     }
