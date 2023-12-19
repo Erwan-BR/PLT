@@ -7,15 +7,19 @@ namespace render
     DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card,sf::Transform transform) :
         card(card)
     {
+        //Get the Texture form Card
         this->texture = new sf::Texture();
         sf::Texture* cardDesign = this->card->getDesign();
         this->texture = cardDesign;
 
+        //Generate Sprite
         this->sprite = new sf::Sprite();
         this->sprite->setTexture(*(this->texture));
 
+        //Store transform
         this->transform = transform;
 
+        //Initialize Vecotor
         this->vectorOfCrossesSprite = {};
         this->vectorOfCrossesTransform = {};
 
@@ -25,8 +29,10 @@ namespace render
         this->notPaidTexture = new sf::Texture();
 		this->notPaidTexture->loadFromFile("./resources/img/resourcesNotPaid.png");
 
+        //Get number of crosses (ie number of resources to build)
         long unsigned int numberOfSprites = this->card->getCostToBuild().size();
 
+        //Create the Sprite using the notPaid Texture
         for (long unsigned int index = 0; index < numberOfSprites; index++)
         {
             vectorOfCrossesSprite.push_back(new sf::Sprite());
@@ -70,15 +76,21 @@ namespace render
         return this->vectorOfCrossesSprite;
     }
 
+    /// @brief Get the Sprite of the Card
+    /// @return Sprite of the Card
     sf::Sprite* DevelopmentCardRenderer::getSprite(){
         return this->sprite;
     }
 
+    /// @brief Getter VectorCrossesTransform
+    /// @return Vector of Transform linked to the Crosses
     std::vector<sf::Transform> DevelopmentCardRenderer::getVectorOfCrossesTransform ()
     {
         return this->vectorOfCrossesTransform;
     }
 
+    /// @brief Getter Transform
+    /// @return Transform for the Card
     sf::Transform DevelopmentCardRenderer::getTransform(){
         return this->transform;
     }

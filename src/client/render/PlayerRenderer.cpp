@@ -11,13 +11,16 @@ namespace render {
 		f.loadFromFile("./resources/font/arial.ttf");
 		this->font = f;
 
+		//Store attributes
 		this->affected_window = window;
 		this->player = player;
 
+		//Get Cards
 		std::vector<state::DevelopmentCard*> tobuild = player->getToBuildCards();
 		std::vector<state::DevelopmentCard*> built = player->getBuiltCards();
 		std::vector<state::DevelopmentCard*> drafted = player->getDraftCards();
 
+		//Initialize vectors
 		this->sprites = {};
 		this->sprite_transforms = {};
 		this->devCardRenderers = {};
@@ -285,15 +288,19 @@ namespace render {
 	}
 
 	/// @brief Getter Number of Drawable element in PlayerRenderer class.
-	///	@return Number of Drawable element in the vector sprites (same as the numbers of elements in transforms).
+	///	@return Number of Drawable element in the vector texts (same as the numbers of elements in transforms).
 	int PlayerRenderer::getNumberText(){
 		return (this->texts).size();
 	}
-
+	/// @brief Getter CardRenderer of PlayerRenderer class.
+	///	@param i the position of the wanted Renderer in the vector
+	/// @return The renderer corresponding.
 	DevelopmentCardRenderer* PlayerRenderer::getCardRenderer(int i){
 		return (this->devCardRenderers)[i];
 	}
 
+	/// @brief Getter Number of CardRenderer element in PlayerRenderer class.
+	/// @return Number of Drawable element in the vector texts
 	int PlayerRenderer::getNumberCardRenderer(){
 		return (this->devCardRenderers).size();
 	}
@@ -319,29 +326,33 @@ namespace render {
 	void PlayerRenderer::changeNumbers(int index,int value){
 		//TODO Check value to avoid too long string and/or problems.
 		if (index<14 and index>=0){
-		(this->texts[index+1])->setString("x"+std::to_string(value));
+			(this->texts[index+1])->setString("x"+std::to_string(value));
 		}
 	}
 
+	/// @brief update the Player Renderer with the current state of the game
 	void PlayerRenderer::update()
 	{
 		DevelopmentCardRenderer* cRenderer;
 
+		//Get Cards
 		std::vector<state::DevelopmentCard*> tobuild = this->player->getToBuildCards();
 		std::vector<state::DevelopmentCard*> built = this->player->getBuiltCards();
 		std::vector<state::DevelopmentCard*> drafted = this->player->getDraftCards();
 		int i;
-		this->devCardRenderers = {};
 		
+		//Initialize vector
+		this->devCardRenderers = {};
+
 		switch(this->affected_window){
 			case MAIN_WINDOW:
-				for (i=(int) devCardRenderers.size();i>0;i--){
-					delete this->devCardRenderers[i];
-				}
+				//Create new Cards
 				for (i=0;i<14 and i<(int) tobuild.size();i++){
 					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(340.f+70.f*(i%7),48.f+127.f*(i/7)));
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
+
+				//Update String content
 				(this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
 				(this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
 				(this->texts)[3]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::SCIENCE]));
@@ -355,30 +366,28 @@ namespace render {
 				(this->texts)[10]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::DISCOVERY]));
 
 				(this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
-				(this->texts)[12]->setString("x"+std::to_string(this->player->getColonelTokensUnit()));
-				(this->texts)[13]->setString("x"+std::to_string(this->player->getFinancierTokensUnit()));
+				(this->texts)[12]->setString("x"+std::to_string(this->player->getCurrentResources()[state::COLONEL]));
+				(this->texts)[13]->setString("x"+std::to_string(this->player->getCurrentResources()[state::FINANCIER]));
 				break;
 			case DRAFTING_WINDOW:
-				for (i=(int) devCardRenderers.size();i>0;i--){
-					delete this->devCardRenderers[i];
-				}
+				//Create new cards
 				for (i=0;i<7 and i<(int) drafted.size();i++){
 					cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f));
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				break;
 			case PLAYER_INFO:
-				for (i=(int) devCardRenderers.size();i>0;i--){
-					delete this->devCardRenderers[i];
-				}
+				//Create new cards built
 				for (i=0;i<28 and i<(int) built.size();i++){
 					cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)));
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
+				//Create new cards to build
 				for (i=28;i<56 and i<28+(int) tobuild.size();i++){
 					cRenderer = new DevelopmentCardRenderer(tobuild[i-28],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)));
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
+				//Update String content
 				(this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
 				(this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
 				(this->texts)[3]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::SCIENCE]));
@@ -392,16 +401,14 @@ namespace render {
 				(this->texts)[10]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::DISCOVERY]));
 
 				(this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
-				(this->texts)[12]->setString("x"+std::to_string(this->player->getColonelTokensUnit()));
-				(this->texts)[13]->setString("x"+std::to_string(this->player->getFinancierTokensUnit()));
+				(this->texts)[12]->setString("x"+std::to_string(this->player->getCurrentResources()[state::COLONEL]));
+				(this->texts)[13]->setString("x"+std::to_string(this->player->getCurrentResources()[state::FINANCIER]));
 
-				(this->texts)[14]->setString("x"+std::to_string(this->player->getKrystalliumTokensUnit())+"+"+std::to_string(this->player->getResourcesInEmpireUnit())+"/5");
+				(this->texts)[14]->setString("x"+std::to_string(this->player->getCurrentResources()[state::KRYSTALLIUM])+"+"+std::to_string(this->player->getResourcesInEmpireUnit())+"/5");
 
 				break;
 			case PLANIFICATION_WINDOW:
-				for (i=(int) devCardRenderers.size();i>0;i--){
-					delete this->devCardRenderers[i];
-				}
+				//Create new Cards
 				for (i=0;i<7 and i<(int) drafted.size();i++){
 				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f));
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
@@ -410,6 +417,7 @@ namespace render {
 				break;
 		}
 
+		//Update Cards
 		for(i=0; i<this->getNumberCardRenderer();i++){
 			(this->getCardRenderer(i))->update();
 		}

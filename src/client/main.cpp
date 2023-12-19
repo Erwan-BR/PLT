@@ -60,7 +60,7 @@ int main(int argc,char* argv[])
 	state::Game game = state::Game(players,true);
 
 	game.initGame();
-	//endDraft - endPlanification - 
+
 	int i,j,k;
 
 	//Creation of the instance of the Scene class
@@ -92,12 +92,13 @@ int main(int argc,char* argv[])
 	//Creation of the instance of sf::Event class that will received user's inputs.
 	sf::Event event;
 
-	//scene.changeWindow(DRAFTING_WINDOW);
+	//Creation of pointer
 	PlayerRenderer* pRenderer;
 	DevelopmentCardRenderer* cRenderer;
 	GameRenderer* gRenderer;
 	DraftingHandRenderer* hRenderer;
 
+	//Creation of an int that indicates the step of the test game
     int etape = 0;
 
 	//Main Loop active while the window is still open
@@ -128,7 +129,7 @@ int main(int argc,char* argv[])
 						scene.changeWindow(PLAYER_INFO); //Change the window to PLAYER_INFO
 					}
                     if (event.key.code == sf::Keyboard::Space){
-						next_step(etape,&game,player1,player2,&scene);
+						next_step(etape,&game,player1,player2,&scene);	//Go to the next step
                         etape++;
 					}
 						
@@ -149,6 +150,7 @@ int main(int argc,char* argv[])
 				window.draw(*(gRenderer->getBoardTurnSprite()),gRenderer->getBoardTurnTransform());
 				window.draw(*(gRenderer->getPhaseIndicator()),gRenderer->getPhaseIndicatorTransform());
 				
+				//Display players
 				for (i=0; i < 2; i++){
 					pRenderer =	scene.getPlayerRenderer(i);
 					for (j = 0; j < pRenderer->getNumberSprite() ;j++){
@@ -167,6 +169,7 @@ int main(int argc,char* argv[])
 				}
 				break;
 			case DRAFTING_WINDOW:
+				//Display players
 				for (i=2; i < 4; i++){
 					pRenderer =	scene.getPlayerRenderer(i);
 					for (j = 0; j < pRenderer->getNumberSprite() ;j++){
@@ -183,6 +186,7 @@ int main(int argc,char* argv[])
 						}
 					}
 				}
+				//Display Drafting Hand
 				hRenderer = scene.getHandRenderer();
 				for (j = 0; j < hRenderer->getNumberSprite() ;j++){
 					window.draw(*(hRenderer->getSprite(j)),hRenderer->getSpriteTransform(j));
@@ -199,6 +203,7 @@ int main(int argc,char* argv[])
 				}
 				break;
 			case PLAYER_INFO:
+				//Display Player
 				pRenderer =	scene.getPlayerRenderer(4);
 				for (j = 0; j < pRenderer->getNumberSprite() ;j++){
 					window.draw(*(pRenderer->getSprite(j)),(pRenderer->getSpriteTransform(j)));
@@ -216,6 +221,8 @@ int main(int argc,char* argv[])
 				break;
 			case PLANIFICATION_WINDOW:
 				window.draw(scene.getBackground(),tr_scale);
+
+				//Display Player
 				pRenderer =	scene.getPlayerRenderer(0);
 				for (j = 0; j < pRenderer->getNumberSprite() ;j++){
 					window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j).translate(0.f,-780.f));
@@ -230,6 +237,7 @@ int main(int argc,char* argv[])
 						window.draw(*(cRenderer->getVectorOfCrossesSprite()[k]),cRenderer->getVectorOfCrossesTransform()[k].translate(0.f,-780.f).scale(CROSS_SIZE,CROSS_SIZE));
 					}
 				}
+				//Display Drafted Hand
 				pRenderer =	scene.getPlayerRenderer(5);
 				for (j = 0; j < pRenderer->getNumberSprite() ;j++){
 					window.draw(*(pRenderer->getSprite(j)),pRenderer->getSpriteTransform(j));
