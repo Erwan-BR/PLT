@@ -61,7 +61,7 @@ namespace state {
         return false;
     }
 
-    /// @brief Add a krystallium ressource into a Card. A resource should be replaced. 
+    /// @brief /!\ DEPRECATED FUNCTION /!\ Add a krystallium ressource into a Card. A resource should be replaced. 
     /// @param resourceToReplace Resource that will be replaced by a krystallium.
     /// @return True if the card is just payed. False either.
     bool DevelopmentCard::addKrystallium (ResourceType resourceToReplace)

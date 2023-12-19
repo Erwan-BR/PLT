@@ -136,6 +136,22 @@ namespace state {
         this->currentResources.at(resource) --;
         this->notifyObservers();
     }
+
+    /// @brief Convert a krystallium into another resource. Used when the player wants to place a krystallium on material/energy/...
+    /// @param targetResource Resource that will replace the krystallium.
+    void Player::convertKrystallium (ResourceType targetResource)
+    {
+        // Impossible to convert to colonel / financier. Moreover, the player has to have at least one krystallium to make the conversion.
+        if ((ResourceType::COLONEL == targetResource) || (ResourceType::FINANCIER == targetResource) || (0 > this->currentResources.at(ResourceType::KRYSTALLIUM)))
+        {
+            return ;
+        }
+
+        // Convert the resource and propagate the information to observers.
+        this->currentResources.at(ResourceType::KRYSTALLIUM) --;
+        this->currentResources.at(targetResource) --;
+        this->notifyObservers();
+    }
     
     /// @brief Discard a card to gain a discard gain.
     /// @param cardIndex Index of the card to discard.
@@ -537,6 +553,20 @@ namespace state {
     std::map<CardType,int> Player::getCardsTypeList () const
     {
         return this->cardsTypeList;
+    }
+
+    /// @brief Retrieve the ID of the player. To know if a player is an AI, use isAI.
+    /// @return ID of the player.
+    int Player::getID () const
+    {
+        return this->id;
+    }
+
+    /// @brief Check if a player is an AI (because players with negative ID are AIs)
+    /// @return Boolean that state if a player is an AI.
+    bool Player::isAI () const
+    {
+        return (this->id < 0);
     }
 
     /************************************* Methods implemented for AI. *************************************/
