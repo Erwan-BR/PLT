@@ -572,19 +572,19 @@ namespace state {
     /************************************* Methods implemented for AI. *************************************/
     
     /// @brief Method for AI, to make them choose their card. Method implemented in Player because both Player and AI are in the same vector in Game.
-    void AIChooseDraftingCard ()
+    void Player::AIChooseDraftingCard ()
     {
         return ;
     }
 
     /// @brief Method for AI, to make them choose their card in planification. Method implemented in Player because both Player and AI are in the same vector in Game.
-    void AIPlanification ()
+    void Player::AIPlanification ()
     {
         return ;
     }
 
     /// @brief Method for AI, to make them used their resources. Method implemented in Player because both Player and AI are in the same vector in Game.
-    void AIUseProducedResources ()
+    void Player::AIUseProducedResources ()
     {
         return ;
     }
