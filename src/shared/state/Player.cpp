@@ -96,6 +96,21 @@ namespace state {
         this->updateProduction();
         this->notifyObservers();
     }
+    
+    /// @brief Check if a resource can be played by the player. Does not check if the player has the resource.
+    /// @param resource Resource which the information is retrieved.
+    /// @return True if the player can play this resource, false either.
+    bool Player::isResourcePlayable (ResourceType resource) const
+    {
+        for (DevelopmentCard* cardToBuild : this->toBuildCards)
+        {
+            if (cardToBuild->isResourceAddable(resource))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /// @brief Add a resource to a card that is in toBuildCards.
     /// @param resource Resource to add to the card.
@@ -358,7 +373,13 @@ namespace state {
             this->toBuildCards.push_back(card);
         }
 
+        for (ResourceType resource : this->currentResources)
+        {
+            this->sendResourceToEmpire(resource);
+        }
+
         this->draftCards.clear();
+        this->currentResources.clear();
         this->state = PlayerState::PENDING;
         this->notifyObservers();
     }
@@ -401,13 +422,13 @@ namespace state {
 
     /************************************* Setters & Getters *************************************/
 
-    /// @brief Setter for the empire card
-    /// @param empire Empire to give to the player
+    /// @brief Setter for the empire card. The resources produced has to be updated.
+    /// @param empire Empire to give to the player.
     void Player::setEmpire(EmpireCard* empire)
     {
         this->empire = empire;
 
-        this->notifyObservers();
+        this->updateProduction();
     }
 
     /// @brief Setter for the drafting deck
