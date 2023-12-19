@@ -415,13 +415,13 @@ namespace state {
 
     /************************************* Setters & Getters *************************************/
 
-    /// @brief Setter for the empire card
-    /// @param empire Empire to give to the player
+    /// @brief Setter for the empire card. The resources produced has to be updated.
+    /// @param empire Empire to give to the player.
     void Player::setEmpire(EmpireCard* empire)
     {
         this->empire = empire;
 
-        this->notifyObservers();
+        this->updateProduction();
     }
 
     /// @brief Setter for the drafting deck
