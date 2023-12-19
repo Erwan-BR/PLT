@@ -28,16 +28,12 @@ namespace ai
                 state::DevelopmentCard* card = this->draftingCards[index];
                 if(card->getVictoryPoints()->cardOrResourceType == state::NONETYPE and 0 < card->getVictoryPoints()->numberOfPoints)
                 {
-                    for(state::ResourceToPay* resource : card->getCostToBuild())
-                    {
-                        resourcesToPay.push_back(resource);
-                    }
+                    resourcesToPay.push_back(card->getCostToBuild());
+                    
                     this->chooseDraftCard(index);
                 }
             }
-            /*for(state::ResourceToPay* resource : this->draftingCards[0]->getCostToBuild())
-                {
-                    resourcesToPay.push_back(resource);
+            /*resourcesToPay.push_back(draftingCards[0]->getCostToBuild());
                 }*/
             this->chooseDraftCard(0);
         }
@@ -71,21 +67,29 @@ namespace ai
             else
             {
                 this->discardCard(index,true);
+                AIAdvanced::AIUseProducedResources ();
             }
         }
     }
 
     void AIAdvanced::AIUseProducedResources ()
     {
-        /*for(state::ResourceType resource : this->currentResources)
+        for(state::ResourceType resource : this->currentResources)
         {
             auto resourcePosition = std::find(resourcesToPay.begin(), resourcesToPay.end(), resource);
-
-            this->addResource(resource,resourcePosition);
-        }*/
+            if( resourcePosition == resourcesToPay.end())
+            {
+                this->sendResourceToEmpire(resource);
+            }
+            else
+            {
+                int index = resourcePosition - resourcesToPay.begin();
+                this->addResource(resource,index);
+            }
+        }
     }
     
-    std::vector<int> AIAdvanced::findMaxVp()
+    std::vector<int> AIAdvanced::findMaxVp() const
     {
         int max = this->draftingCards[0]->getVictoryPoints()->numberOfPoints;
         int index = 0;
@@ -99,7 +103,7 @@ namespace ai
         return (std::vector(max, index));
     }
 
-    std::vector<int> AIAdvanced::findMinVp()
+    std::vector<int> AIAdvanced::findMinVp() const
     {
         int min = this->draftingCards[0]->getVictoryPoints()->numberOfPoints;
         int index = 0;
@@ -113,7 +117,7 @@ namespace ai
         return (std::vector(min, index));
     }
 
-    int AIAdvanced::lowestCost()
+    int AIAdvanced::lowestCost() const
     {
         int cost = this->draftingCards[0]->getCostToBuild().size();
         int index,counter = 0;
@@ -128,7 +132,7 @@ namespace ai
         return index;
     }
 
-    int AIAdvanced::highestCost()
+    int AIAdvanced::highestCost() const
     {
         int cost = this->draftingCards[0]->getCostToBuild().size();
         int index,counter = 0;

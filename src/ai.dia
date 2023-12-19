@@ -819,7 +819,7 @@
             <dia:string>#resourcesToPay#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#std::vector&lt;state::ResourceToPay*&gt;#</dia:string>
+            <dia:string>#std::vector&lt;std::vector&lt;state::ResourceToPay*&gt;&gt;#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
             <dia:string>##</dia:string>
