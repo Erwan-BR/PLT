@@ -21,16 +21,13 @@ namespace render {
     	this->current_window = MAIN_WINDOW;
 
 		PlayerRenderer* pRenderer;
-		int i;
 
 		std::vector<state::Player*> players = game->getPlayers();
-		//for (int i = 0; i<players.size();i++){
-			pRenderer = new PlayerRenderer(players[0],generatePlayerTransform(transform,MAIN_WINDOW,0),MAIN_WINDOW);
+		for (int i = 0; i<(int) players.size();i++){
+			pRenderer = new PlayerRenderer(players[i],generatePlayerTransform(transform,MAIN_WINDOW,i),MAIN_WINDOW);
     		this->player_renderer.push_back(pRenderer);
-			pRenderer = new PlayerRenderer(players[1],generatePlayerTransform(transform,MAIN_WINDOW,1),MAIN_WINDOW);
-    		this->player_renderer.push_back(pRenderer);
-		//}
-		for (int i = 0; i<players.size();i++){
+		}
+		for (int i = 0; i<(int) players.size();i++){
     		pRenderer = new PlayerRenderer(players[i],generatePlayerTransform(transform,DRAFTING_WINDOW,i),DRAFTING_WINDOW);
 			this->player_renderer.push_back(pRenderer);
 		}

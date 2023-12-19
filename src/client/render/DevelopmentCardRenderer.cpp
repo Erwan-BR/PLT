@@ -8,8 +8,8 @@ namespace render
         card(card)
     {
         this->texture = new sf::Texture();
-        sf::Texture cardDesign = this->card->getDesign();
-        this->texture = &cardDesign;
+        sf::Texture* cardDesign = this->card->getDesign();
+        this->texture = cardDesign;
 
         this->sprite->setTexture(*(this->texture));
 

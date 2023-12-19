@@ -1,5 +1,4 @@
 #include "Player.h"
-#include <map>
 
 namespace state {
 
@@ -10,17 +9,7 @@ namespace state {
     id(-1),
     profilePicture(new sf::Texture())
     {
-        resourcesProduction[MATERIAL] = 0;
-        resourcesProduction[ENERGY] = 0;
-        resourcesProduction[SCIENCE] = 0;
-        resourcesProduction[GOLD] = 0;
-        resourcesProduction[EXPLORATION] = 0;
-
-        cardsTypeList[STRUCTURE] = 0;
-        cardsTypeList[VEHICLE] = 0;
-        cardsTypeList[RESEARCH] = 0;
-        cardsTypeList[PROJECT] = 0;
-        cardsTypeList[DISCOVERY] = 0;
+        this->initializeMaps();
     }
     
     /// @brief Constructor of the player, with some parameters.
@@ -33,17 +22,7 @@ namespace state {
     id(id),
     profilePicture(profilePicture)
     {
-        resourcesProduction[MATERIAL] = 0;
-        resourcesProduction[ENERGY] = 0;
-        resourcesProduction[SCIENCE] = 0;
-        resourcesProduction[GOLD] = 0;
-        resourcesProduction[EXPLORATION] = 0;
-
-        cardsTypeList[STRUCTURE] = 0;
-        cardsTypeList[VEHICLE] = 0;
-        cardsTypeList[RESEARCH] = 0;
-        cardsTypeList[PROJECT] = 0;
-        cardsTypeList[DISCOVERY] = 0;
+        this->initializeMaps();
     }
 
     /// @brief Destructor of the class Player
@@ -77,81 +56,130 @@ namespace state {
 
     }
 
-    /// @brief Construct the card "cardToBuild"
-    /// @param cardToBuild The card to build
-    void Player::construct(DevelopmentCard* cardToBuild)
+    /// @brief Method called in the constructor. Used to initialize all dictionnary to null values.
+    void Player::initializeMaps ()
     {
-        auto cardPos = std::find(this->toBuildCards.begin(), this->toBuildCards.end(), cardToBuild);
-        if(cardPos != this->toBuildCards.end())
-        {
-            this->builtCards.push_back(cardToBuild);
-            this->toBuildCards.erase(cardPos);
-        }
+        this->resourcesProduction[ResourceType::MATERIAL] = 0;
+        this->resourcesProduction[ResourceType::ENERGY] = 0;
+        this->resourcesProduction[ResourceType::SCIENCE] = 0;
+        this->resourcesProduction[ResourceType::GOLD] = 0;
+        this->resourcesProduction[ResourceType::EXPLORATION] = 0;
 
+        this->currentResources[ResourceType::MATERIAL] = 0;
+        this->currentResources[ResourceType::ENERGY] = 0;
+        this->currentResources[ResourceType::SCIENCE] = 0;
+        this->currentResources[ResourceType::GOLD] = 0;
+        this->currentResources[ResourceType::EXPLORATION] = 0;
+        this->currentResources[ResourceType::KRYSTALLIUM] = 0;
+        this->currentResources[ResourceType::FINANCIER] = 0;
+        this->currentResources[ResourceType::COLONEL] = 0;
+
+        this->cardsTypeList[CardType::STRUCTURE] = 0;
+        this->cardsTypeList[CardType::VEHICLE] = 0;
+        this->cardsTypeList[CardType::RESEARCH] = 0;
+        this->cardsTypeList[CardType::PROJECT] = 0;
+        this->cardsTypeList[CardType::DISCOVERY] = 0;
+    }
+
+    /// @brief Construct the card at the given index. The card is in toBuild and goes to builtCard.
+    /// @param cardIndex Index of the card to construct, in the attributes toBuildCard.
+    void Player::construct(int cardIndex)
+    {
+        if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex))
+        {
+            return ;
+        }
+        CardType cardConstructedType = this->toBuildCards[cardIndex]->getType();
+        
+        // Transfering the element from a vector to the other one.
+        this->builtCards.push_back(this->toBuildCards[cardIndex]);
+        this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);
+        
+        // Add the card to the dictionnary containing constructed cards.
+        this->cardsTypeList[cardConstructedType] ++;
         this->updateProduction();
         this->notifyObservers();
     }
-
-    /// @brief Add a resource "resource" to the card "card"
-    /// @param resource Resource placed on the card "card"
-    /// @param card Card that will receive the resource "resource"
-    void Player::addResource(ResourceType resource, DevelopmentCard* card)
+    
+    /// @brief Check if a resource can be played by the player. Does not check if the player has the resource.
+    /// @param resource Resource which the information is retrieved.
+    /// @return True if the player can play this resource, false either.
+    bool Player::isResourcePlayable (ResourceType resource) const
     {
-
-		auto cardPos = std::find(this->toBuildCards.begin(), this->toBuildCards.end(), card);
-		if(cardPos != toBuildCards.end())
+        for (DevelopmentCard* cardToBuild : this->toBuildCards)
         {
-            //Check if the resource is addable to the designated card
-            if((*cardPos)->isResourceAddable(resource))
+            if (cardToBuild->isResourceAddable(resource))
             {
-                //Adding the resource to the card, and building it if there are all the resources required on it.
-                if((*cardPos)->addResource(resource))
-                {
-                    this->construct(*cardPos);
-                }
+                return true;
             }
         }
+        return false;
     }
 
-    /// @brief Discard the card "toDiscardCard"
-    /// @param toDiscardCard Card that is going to be discarded
-    void Player::discardCard(DevelopmentCard* toDiscardCard)
+    /// @brief Add a resource to a card that is in toBuildCards.
+    /// @param resource Resource to add to the card.
+    /// @param cardIndex Index of the card.
+    void Player::addResource (ResourceType resource, int cardIndex)
     {
-		auto cardPos = std::find(this->draftCards.begin(), this->draftCards.end(), toDiscardCard);
-        if(cardPos != this->draftCards.end())
+        // Checking if the index of the card is valid and if the player has this resource.
+        if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex) || (0 == this->currentResources.at(resource)))
         {
-            this->currentResources.push_back(toDiscardCard->getDiscardGain());
-            this->draftCards.erase(cardPos);
+            return ;
+        }
+
+        //Adding the resource to the card, and building it if there are all the resources required on it.
+        if(this->toBuildCards[cardIndex]->addResource(resource))
+        {
+            this->construct(cardIndex);
+        }
+        
+        this->currentResources.at(resource) --;
+        this->notifyObservers();
+    }
+    
+    /// @brief Discard a card to gain a discard gain.
+    /// @param cardIndex Index of the card to discard.
+    /// @param isADraftedCard Indicated if the card comes from the vector drafted card, or from toBuildCards.
+    void Player::discardCard(int cardIndex, bool isADraftedCard)
+    {
+        if(isADraftedCard)
+        {
+            if ((0 > cardIndex) || ((int)this->draftCards.size() < cardIndex))
+            {
+                return ;
+            }
+            ResourceType discardGain = this->draftCards.at(cardIndex)->getDiscardGain();
+            this->currentResources.at(discardGain) ++ ;
+            this->draftCards.erase(this->draftCards.begin() + cardIndex);            
         }
         else
         {
-            cardPos = std::find(this->toBuildCards.begin(), this->toBuildCards.end(), toDiscardCard);
-            if(cardPos != this->toBuildCards.end())
+            if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex))
             {
-                sendResourceToEmpire(toDiscardCard->getDiscardGain());
-                convertToKrystallium();
-                this->toBuildCards.erase(cardPos);
+                return ;
             }
+            this->resourcesInEmpireUnit ++;
+            this->convertToKrystallium();
+            this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);             
         }
-
         this->notifyObservers();
     }
 
     /// @brief Function called when the player wants to keep a card from the drafting phase.
-    /// @param toKeepCard Card to keep
-    void Player::keepCard(DevelopmentCard* toKeepCard)
+    /// @param toKeepCardIndex Index of the card to keep.
+    void Player::keepCard(int toKeepCardIndex)
     {
-        auto cardPos = std::find(this->draftCards.begin(), this->draftCards.end(), toKeepCard);
-        if(cardPos != this->draftCards.end())
+        if (0 > toKeepCardIndex || (int)this->draftCards.size() < toKeepCardIndex)
         {
-            this->toBuildCards.push_back(toKeepCard);
-            this->draftCards.erase(cardPos);
+            return ;
         }
-
+        DevelopmentCard* card = this->draftCards.at(toKeepCardIndex);
+        this->toBuildCards.push_back(card);
+        this->draftCards.erase(this->draftCards.begin() + toKeepCardIndex);
         this->notifyObservers();
     }
 
-    /// @briefUpdate the production of every tokens
+    /// @brief Update the production of every tokens
     void Player::updateProduction()
     {
         this->resourcesProduction[MATERIAL] = computeProduction(MATERIAL);
@@ -169,39 +197,46 @@ namespace state {
     int Player::computeProduction(ResourceType resourceToProduce) const
     {
         int productionValue = 0;
+
+        // Iterating among all constructed cards.
         for(DevelopmentCard* card : this->builtCards)
         {
+            // Iterating among all resources produced by this card.
             for(ResourceToProduce* resource : card->getProductionGain())
             {
-                if(resource->type == resourceToProduce)
+                // Checking if the resource is the same as the one we are constructing.
+                if(resourceToProduce == resource->type)
                 {
-                    if(resource->cardType != NONETYPE)
+                    // Checking if it's nonetype, or if it has to be multiplied by the number of a certain type of card (already built)
+                    if(CardType::NONETYPE == resource->cardType)
                     {
-                        productionValue += (resource->quantity)*cardsTypeList.at(resource->cardType);
+                        productionValue += resource->quantity;
                     }
+                    else
+                    {
+                        productionValue += (resource->quantity) * (this->cardsTypeList.at(resource->cardType));
+                    }
+                }
+            }
+        }
+
+        // Iterating among all resources produced by the empire.
+        for(ResourceToProduce* resource : this->empire->getProductionGain())
+        {
+            // Checking if the resource is the same as the one we are constructing.
+            if(resourceToProduce == resource->type)
+            {
+                // Checking if it's nonetype, or if it has to be multiplied by the number of a certain type of card (already built)
+                if(CardType::NONETYPE == resource->cardType)
+                {
+                    productionValue += resource->quantity;           
                 }
                 else
                 {
-                        productionValue += resource->quantity;
-                   
+                    productionValue += (resource->quantity) * (this->cardsTypeList.at(resource->cardType));
                 }
-            } 
+            }
         }
-
-        for(ResourceToProduce* resource : this->empire->getProductionGain())
-        {
-            if(resource->type == resourceToProduce)
-            {
-                if(resource->cardType != NONETYPE)
-                {
-                    productionValue += (resource->quantity)*cardsTypeList.at(resource->cardType);
-                }
-            }
-            else
-            {
-                    productionValue += resource->quantity;           
-            }
-        } 
 
         return productionValue;
     }
@@ -215,38 +250,38 @@ namespace state {
         {
             CardVictoryPoint* cardVictoryPoints = card->getVictoryPoints();
 
-            if(cardVictoryPoints->cardOrResourceType == 0)
+            if(0 == cardVictoryPoints->cardOrResourceType)
             {
                 victoryPoints += cardVictoryPoints->numberOfPoints;
             }
-            else if(cardVictoryPoints->cardOrResourceType == COLONEL)
+            else if(ResourceType::COLONEL == cardVictoryPoints->cardOrResourceType)
             {
-                victoryPoints += cardVictoryPoints->numberOfPoints * this->colonelTokensUnit;
+                victoryPoints += cardVictoryPoints->numberOfPoints * this->currentResources.at(ResourceType::COLONEL);
             }
-            else if(cardVictoryPoints->cardOrResourceType == FINANCIER)
+            else if(ResourceType::FINANCIER == cardVictoryPoints->cardOrResourceType)
             {
-                victoryPoints += cardVictoryPoints->numberOfPoints * this->financierTokensUnit;
+                victoryPoints += cardVictoryPoints->numberOfPoints * this->currentResources.at(ResourceType::FINANCIER);
             }
-            else if(20 < cardVictoryPoints->cardOrResourceType and cardVictoryPoints->cardOrResourceType < 30)
+            else if((20 < cardVictoryPoints->cardOrResourceType) && (26 > cardVictoryPoints->cardOrResourceType))
             {
                 victoryPoints += (cardVictoryPoints->numberOfPoints) * this->cardsTypeList.at((state::CardType)(cardVictoryPoints->cardOrResourceType));
             }
         }
 
         CardVictoryPoint* empireVictoryPoints = this->empire->getVictoryPoints();
-        if(empireVictoryPoints->cardOrResourceType == 0)
+        if(0 == empireVictoryPoints->cardOrResourceType)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints;
         }
-        else if(empireVictoryPoints->cardOrResourceType == COLONEL)
+        else if(ResourceType::COLONEL == empireVictoryPoints->cardOrResourceType)
         {
-            victoryPoints += empireVictoryPoints->numberOfPoints * this->colonelTokensUnit;
+            victoryPoints += empireVictoryPoints->numberOfPoints * this->currentResources.at(ResourceType::COLONEL);
         }
-        else if(empireVictoryPoints->cardOrResourceType == FINANCIER)
+        else if(ResourceType::FINANCIER == empireVictoryPoints->cardOrResourceType)
         {
-            victoryPoints += empireVictoryPoints->numberOfPoints * this->financierTokensUnit;
+            victoryPoints += empireVictoryPoints->numberOfPoints * this->currentResources.at(ResourceType::FINANCIER);
         }
-        else if(20 < empireVictoryPoints->cardOrResourceType and empireVictoryPoints->cardOrResourceType < 30)
+        else if((20 < empireVictoryPoints->cardOrResourceType) && (26 > empireVictoryPoints->cardOrResourceType))
         {
             victoryPoints += (empireVictoryPoints->numberOfPoints) * this->cardsTypeList.at((state::CardType)empireVictoryPoints->cardOrResourceType);
         }
@@ -258,10 +293,13 @@ namespace state {
     /// @param resource Type of resource that one will be send to the empire card of the player
     void Player::sendResourceToEmpire(ResourceType resource)
     {
+        if (0 == this->currentResources.at(resource))
+        {
+            return;
+        }
+        this->currentResources.at(resource) --;
         this->resourcesInEmpireUnit++;
-
         this->convertToKrystallium();
-
         this->notifyObservers();
     }
 
@@ -271,21 +309,21 @@ namespace state {
         if(5 == this->resourcesInEmpireUnit)
         {
             this->resourcesInEmpireUnit = 0;
-            this->krystalliumTokensUnit++;
+            this->currentResources.at(ResourceType::KRYSTALLIUM) ++;
         }
     }
 
-    /// @brief Add the selected card "card" from the drafting deck to the selected one
-    /// @param card Card choosed by the player
-    void Player::chooseDraftCard(DevelopmentCard* card)
+    /// @brief Add the selected card from the drafting deck to the selected one
+    /// @param cardIndex Card choosed by the player
+    void Player::chooseDraftCard(int cardIndex)
     {
-        auto cardPos = std::find(this->draftingCards.begin(), this->draftingCards.end(), card);
-        if(cardPos != draftingCards.end())
+        if (0 > cardIndex || (int)this->draftingCards.size() < cardIndex)
         {
-            this->draftCards.push_back(card);
-            this->draftingCards.erase(cardPos);
-            this->state = PENDING;
+            return ;
         }
+        this->draftCards.push_back(draftingCards.at(cardIndex));
+        this->draftingCards.erase(this->draftingCards.begin() + cardIndex);
+        this->state = PlayerState::PENDING;
 
         this->notifyObservers();
     }
@@ -305,11 +343,48 @@ namespace state {
     {
         for (int i = 0; i < numberOfResources ; i++)
         {
-            this->currentResources.push_back(resourceToReceive);
+            this->currentResources.at(resourceToReceive) ++;
         }
 
         this->notifyObservers();
     }
+
+    /// @brief End the planificiation for the current player. Send all drafted cards to the to buildCard.
+    void Player::endPlanification ()
+    {
+        for (DevelopmentCard* card : this->draftCards)
+        {
+            this->toBuildCards.push_back(card);
+        }
+
+        this->sendAllResourcesToEmpire();
+
+        this->draftCards.clear();
+        this->state = PlayerState::PENDING;
+        this->notifyObservers();
+    }
+
+    /// @brief End the production for the current player. Send all resources in empires.
+    void Player::endProduction ()
+    {
+        this->sendAllResourcesToEmpire();
+        this->state = PlayerState::PENDING;
+        this->notifyObservers();
+    }
+
+    /// @brief Send all resources (material, energy, gold, exploration, science)
+    void Player::sendAllResourcesToEmpire ()
+    {
+        const std::vector<ResourceType> resourcesToSend = {ResourceType::MATERIAL, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION};
+        for (ResourceType resourceType : resourcesToSend)
+        {
+            for (int i = 0; i < this->currentResources.at(resourceType) ; i++)
+            {
+                this->sendResourceToEmpire(resourceType);
+            }
+        }
+    }
+
 
     /// @brief Transform the Player to a readable string.
     /// @return Readable string that represents the information of the Player.
@@ -324,25 +399,23 @@ namespace state {
         returnValue += "draftingCards length: " + std::to_string(this->draftingCards.size()) + "\n";
         returnValue += "dratfCards length: " + std::to_string(this->draftCards.size()) + "\n";
         returnValue += "State: " + std::to_string(this->state) + "\n";
-        returnValue += "financierTokensUnit: " + std::to_string(this->financierTokensUnit) + "\n";
-        returnValue += "colonelTokensUnit: " + std::to_string(this->colonelTokensUnit) + "\n";
-        returnValue += "krystalliumTokensUnit: " + std::to_string(this->krystalliumTokensUnit) + "\n";
-        returnValue += "currentResources length: " + std::to_string(this->currentResources.size()) + "\n";
+        returnValue += "financierTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::FINANCIER)) + "\n";
+        returnValue += "colonelTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::COLONEL)) + "\n";
+        returnValue += "krystalliumTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::KRYSTALLIUM)) + "\n";
         returnValue += "resourcesInEmpireUnit: " + std::to_string(this->resourcesInEmpireUnit) + "\n";
-
 
         return returnValue;
     }
 
     /************************************* Setters & Getters *************************************/
 
-    /// @brief Setter for the empire card
-    /// @param empire Empire to give to the player
+    /// @brief Setter for the empire card. The resources produced has to be updated.
+    /// @param empire Empire to give to the player.
     void Player::setEmpire(EmpireCard* empire)
     {
         this->empire = empire;
 
-        this->notifyObservers();
+        this->updateProduction();
     }
 
     /// @brief Setter for the drafting deck
@@ -358,7 +431,7 @@ namespace state {
         this->notifyObservers();
     }
 
-        /// @brief Setter for the drafting deck
+    /// @brief Setter for the drafting deck
     /// @param draft drafting deck to give to the player
     void Player::setState(PlayerState state)
     {
@@ -417,7 +490,7 @@ namespace state {
     }
 
     /// @brief Get the cards that the player choosed during the drafting phase.
-    /// @return Vector of cards that the player choosed during the drafing phase.
+    /// @return Vector of cards that the player choosed during the drafting phase.
     std::vector<DevelopmentCard*> Player::getDraftCards () const
     {
         return this->draftCards;
@@ -430,32 +503,19 @@ namespace state {
         return this->state;
     }
 
-    /// @brief Get the quantity of Financier tokens that the player has.
-    /// @return Quantity of Financier tokens that the player has.
-    int Player::getFinancierTokensUnit () const
-    {
-        return this->financierTokensUnit;
-    }
-
-    /// @brief Get the quantity of Colonel tokens that the player has.
-    /// @return Quantity of Colonel tokens that the player has.
-    int Player::getColonelTokensUnit () const
-    {
-        return this->colonelTokensUnit;
-    }
-
-    /// @brief Get the quantity of Krystallium tokens that the player has.
-    /// @return Quantity of Krystallium tokens that the player has.
-    int Player::getKrystalliumTokensUnit () const
-    {
-        return this->krystalliumTokensUnit;
-    }
-
     /// @brief Get the ressources that the player has and can play now.
     /// @return Vector of ressources that the player can play.
-    std::vector<ResourceType> Player::getCurrentResources () const
+    std::map<ResourceType,int> Player::getCurrentResources () const
     {
         return this->currentResources;
+    }
+
+    /// @brief Get the current resources 
+    /// @param resource Resource which we want to know number the player has.
+    /// @return Number of resources of the input that the player has.
+    int Player::getCurrentResources (ResourceType resource) const
+    {
+        return this->currentResources.at(resource);
     }
 
     /// @brief Get the quantity of ressources in the empire (to convert to Krystallium)
@@ -477,5 +537,25 @@ namespace state {
     std::map<CardType,int> Player::getCardsTypeList () const
     {
         return this->cardsTypeList;
+    }
+
+    /************************************* Methods implemented for AI. *************************************/
+    
+    /// @brief Method for AI, to make them choose their card. Method implemented in Player because both Player and AI are in the same vector in Game.
+    void AIChooseDraftingCard ()
+    {
+        return ;
+    }
+
+    /// @brief Method for AI, to make them choose their card in planification. Method implemented in Player because both Player and AI are in the same vector in Game.
+    void AIPlanification ()
+    {
+        return ;
+    }
+
+    /// @brief Method for AI, to make them used their resources. Method implemented in Player because both Player and AI are in the same vector in Game.
+    void AIUseProducedResources ()
+    {
+        return ;
     }
 }
