@@ -29,8 +29,11 @@ int main(int argc,char* argv[])
 	cout<<"*Change Window Commands*"<<endl;
 	cout<<"A - Main Window"<<endl;
 	cout<<"Z - Drafting Window"<<endl;
-	cout<<"E - Player Full Window"<<endl;
-
+	cout<<"E - Planification Window"<<endl;
+	cout<<"R - Full Info Player Window"<<endl;
+	cout<<"> On This Window:"<<endl;
+	cout<<">Q - Display Player 1"<<endl;
+	cout<<">S - Display Player 2"<<endl;
 
 	//Creation of the window
 	int win_length = 1820;
@@ -127,6 +130,12 @@ int main(int argc,char* argv[])
 					}
 					if (event.key.code == sf::Keyboard::R){
 						scene.changeWindow(PLAYER_INFO); //Change the window to PLAYER_INFO
+					}
+					if (event.key.code == sf::Keyboard::Q and scene.getWindow() == PLAYER_INFO){
+						scene.changePlayerInfoPlayer(0);
+					}
+					if (event.key.code == sf::Keyboard::S and scene.getWindow() == PLAYER_INFO){
+						scene.changePlayerInfoPlayer(1);
 					}
                     if (event.key.code == sf::Keyboard::Space){
 						next_step(etape,&game,player1,player2,&scene);	//Go to the next step
@@ -267,29 +276,29 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
     switch(etape){
         case 0:         //DRAFT 1ere carte
 			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(5);		//Tresor
-            p2->chooseDraftCard(5);		//Avalon
+            p1->chooseDraftCard(5);		//P1 Choose Tresor de Barbe Noire
+            p2->chooseDraftCard(5);		//P2 Choose Ile d'Avalon
 			game->nextDraft();
 			
             break;
         case 1:         //DRAFT 2eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(5);		//Zeppelin
-            p2->chooseDraftCard(0);		//Zeppelin
+            p1->chooseDraftCard(5);		//P1 Choose Zeppelin
+            p2->chooseDraftCard(0);		//P2 Choose Zeppelin
 			game->nextDraft();
 			
             break;
         case 2:         //DRAFT 3eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(4);		//Tour géante
-            p2->chooseDraftCard(4);		//Centre Terre
+            p1->chooseDraftCard(4);		//P1 Choose Tour géante
+            p2->chooseDraftCard(4);		//P2 Choose Centre de la Terre
 			game->nextDraft();
 			
             break;
         case 3:         //DRAFT 4eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
+            p1->chooseDraftCard(0);		//P1 Choose Juggernaut
+            p2->chooseDraftCard(0);		//P2 Choose Brise-blaces
 			game->nextDraft();
 			
             break;
@@ -316,81 +325,81 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
             break;
         case 7:         //PLANIFICATION p1 1ere carte
 			scene->changeWindow(PLANIFICATION_WINDOW);
-			p1->keepCard(0);	//Tresor
+			p1->keepCard(0);	//P1 Keep Tresor de Barbe Noire
 			
 			break;
         case 8:         //PLANIFICATION 1-2
 			scene->changeWindow(PLANIFICATION_WINDOW);
-			p1->keepCard(1);	//Tour
+			p1->keepCard(1);	//P1 Keep Tour Géante
 			
 			break;
         case 9:         //PLANIFICATION 1-3
 			scene->changeWindow(PLANIFICATION_WINDOW);
-			p1->discardCard(0,true);
+			p1->discardCard(0,true);				//Discard Exploration for Tresor
 			p1->addResource(state::EXPLORATION,0);
 			
 			break;
         case 10:         //PLANIFICATION 1-4
 			scene->changeWindow(PLANIFICATION_WINDOW);
-			p1->discardCard(0,true);
-			p1->addResource(state::EXPLORATION,0);
+			p1->discardCard(0,true);				//Discard Material for Tour
+			p1->addResource(state::MATERIAL,1);
 			
 			break;
         case 11:         //PLANIFICATION 1-5
 			scene->changeWindow(PLANIFICATION_WINDOW);
-			p1->discardCard(0,true);
+			p1->discardCard(0,true);				//Discard Exploration for Tresor
 			p1->addResource(state::EXPLORATION,0);
 			
 			break;
         case 12:         //PLANIFICATION 1-6
 			scene->changeWindow(PLANIFICATION_WINDOW);
-			p1->discardCard(0,true);
-			p1->sendResourceToEmpire(state::EXPLORATION);
+			p1->discardCard(0,true);				//Discard Exploration for Tresor
+			p1->addResource(state::EXPLORATION,0);	//Tresor built
 			
 			break;
 		case 13:		//PLANIFICATION 1-7
 			scene->changeWindow(PLANIFICATION_WINDOW);
-			p1->discardCard(0,true);
+			p1->discardCard(0,true);				//Discard Exploration in Empire
 			p1->sendResourceToEmpire(state::EXPLORATION);
 			
 			break;
 		case 14:         //PLANIFICATION p2 1ere carte
 			scene->changePlayerInfoPlayer(1);
 			scene->changeWindow(PLAYER_INFO);
-			p2->keepCard(0);	//Avalon
+			p2->keepCard(0);	//P2 Keep Ile d'Avalon
 			
 			break;
         case 15:         //PLANIFICATION 2-2
 			scene->changeWindow(PLAYER_INFO);
-			p2->keepCard(2);	//Zeppelin
+			p2->keepCard(2);	//P2 Keep Zeppelin
 			
 			break;
         case 16:         //PLANIFICATION 2-3
 			scene->changeWindow(PLAYER_INFO);
-			p2->keepCard(1);	//Centre
+			p2->keepCard(1);	//P2 Keep Centre de la Terre
 			
 			break;
         case 17:         //PLANIFICATION 2-4
 			scene->changeWindow(PLAYER_INFO);
-			p2->discardCard(0,true);
+			p2->discardCard(0,true);				//Discard Exploration for Avalon
 			p2->addResource(state::EXPLORATION,0);
 			
 			break;
         case 18:         //PLANIFICATION 2-5
 			scene->changeWindow(PLAYER_INFO);
-			p2->discardCard(0,true);
+			p2->discardCard(0,true);				//Discard Exploration for Avalon
 			p2->addResource(state::EXPLORATION,0);
 			
 			break;
         case 19:         //PLANIFICATION 2-6
 			scene->changeWindow(PLAYER_INFO);
-			p2->discardCard(0,true);
+			p2->discardCard(0,true);				//Discard Exploration for Avalon
 			p2->addResource(state::EXPLORATION,0);
 			
 			break;
 		case 20:		//PLANIFICATION 2-7
 			scene->changeWindow(PLAYER_INFO);
-			p2->discardCard(0,true);
+			p2->discardCard(0,true);				//Discard Exploration for Centre
 			p2->addResource(state::EXPLORATION,2);
 			game->endPlanification();
 			break;
@@ -401,14 +410,14 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 		case 22: 		//PROD MATERIAL
 			scene->changeWindow(MAIN_WINDOW);
 			game->nextProduction();
-			p1->addResource(state::MATERIAL,0);
+			p1->addResource(state::MATERIAL,0);		//P1 Give 1 Material to Tour
 			break;
 		case 23:		//PROD ENERGY
 			scene->changeWindow(MAIN_WINDOW);
 			p1->endPlanification();
 			p2->endPlanification();
 			game->nextProduction();
-			p2->addResource(state::ENERGY,1);
+			p2->addResource(state::ENERGY,1);		//P2 build Zepellin with 2 Energy
 			p2->addResource(state::ENERGY,1);
 			break;
 		case 24:		//PROD SCIENCE
@@ -416,7 +425,7 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 			p1->endPlanification();
 			p2->endPlanification();
 			game->nextProduction();
-			p2->sendResourceToEmpire(state::SCIENCE);
+			p2->sendResourceToEmpire(state::SCIENCE);	//P2 discard 1 Science
 			//p1->addResource(state::SCIENCE,0);
 			break;
 		case 25:		//PROD GOLD
@@ -424,7 +433,7 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 			p1->endPlanification();
 			p2->endPlanification();
 			game->nextProduction();
-			p1->addResource(state::GOLD,0);
+			p1->addResource(state::GOLD,0);			//P1 Finish Tour with 3 Gold and 1 Financier
 			p1->addResource(state::GOLD,0);
 			p1->addResource(state::GOLD,0);
 			p1->addResource(state::FINANCIER,0);
@@ -435,8 +444,8 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
 			p1->endPlanification();
 			p2->endPlanification();
 			game->nextProduction();
-			p1->sendResourceToEmpire(state::EXPLORATION);
-			p2->addResource(state::EXPLORATION,0);
+			p1->sendResourceToEmpire(state::EXPLORATION);	//P1 Discard 1 Exploration
+			p2->addResource(state::EXPLORATION,0);	//P2 Finish Avalon
 			p2->addResource(state::EXPLORATION,0);
 			//p1->addResource(state::EXPLORATION,0);
 			break;

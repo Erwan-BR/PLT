@@ -118,6 +118,9 @@ namespace render {
 		game->addObserver(pRenderer);
 
 		//TODO Destroy previous Renderer?
+
+		//Update the just created Renderer with the current state of the game
+		pRenderer->update();
 		//Put the new Renderer in its place
 		this->player_renderer[4] = pRenderer;
 	}

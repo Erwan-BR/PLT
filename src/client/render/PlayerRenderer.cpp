@@ -250,7 +250,15 @@ namespace render {
 
 	/// @brief Full destructor of the PlayerRenderer class.
 	PlayerRenderer::~PlayerRenderer(){
-
+		for (sf::Sprite* s : this->sprites){
+			free(s);
+		}
+		for (sf::Text* t : this->texts){
+			free(t);
+		}
+		for (DevelopmentCardRenderer* c : devCardRenderers){
+			free(c);
+		}
 	}
     
 	/// @brief Getter Sprite of PlayerRenderer class.
