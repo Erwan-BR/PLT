@@ -28,6 +28,19 @@ namespace state {
         for(ResourceToProduce* resource : this->productionGain)delete(resource);
     }
 
+    ///@brief Convert the Card to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the card.
+    Json::Value Card::toJSON () const
+    {
+        // Instanciation of the card into a json format.
+        Json::Value cardJson;
+
+        // Writing basic information
+        //cardJson["name"] = this->name;
+
+        return cardJson;
+    }
+
     /************************************* Setters & Getters *************************************/
 
     /// @brief Get the name of the Card.

@@ -45,11 +45,14 @@ namespace state {
         }
     }
 
-    /// @brief Convert the current EmpireCard to a readable string.
-    /// @return String returned after conversion
-    std::string EmpireCard::toString () const
+    ///@brief Convert the Empire to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the empire.
+    Json::Value EmpireCard::toJSON () const
     {
-        return "";
+        // Instanciation of the empire card into a JSON format.
+        Json::Value empireCardJSON;
+
+        return empireCardJSON;
     }
 
     /************************************* Setters & Getters *************************************/

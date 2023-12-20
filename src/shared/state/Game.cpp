@@ -349,11 +349,14 @@ namespace state {
 		this->notifyObservers();
 	}
 
-	///@brief Debug method to check the state of the instance of Game
-	///@return String explaining the state of Game
-	std::string Game::toString () const
+	///@brief Convert the Game to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the game.
+	Json::Value Game::toJSON () const
 	{
-		return "";
+		// Instanciation of the game into a JSON format.
+        Json::Value gameJSON;
+
+        return gameJSON;
 	}
 
     /************************************* Setters & Getters *************************************/

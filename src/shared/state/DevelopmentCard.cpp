@@ -134,32 +134,14 @@ namespace state {
         return this->isPaid; 
     }
 
-    /// @brief Convert the DevelopmentCard to a readable string.
-    /// @return Readable string that contains the information concerning DevelopmentCard.
-    std::string DevelopmentCard::toString () const
+    ///@brief Convert the Development card to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the development card.
+    Json::Value DevelopmentCard::toJSON () const
     {
-        // Instantiation of a string to return.
-        std::string returnValue = "Name: " + this->name + "\n";
-        
-        // Adding some info to returnValue.
-        returnValue += "Type: " + std::to_string(this->type) + "\n";
-        returnValue += "Number Of Copies: " + std::to_string(this->numberOfCopies) + "\n";
-        
-        // Adding a different sentence depending on if the card is paid or not.
-        if (this->isPaid)
-        {
-            returnValue += "This card is paid.\n";
-        }
-        else
-        {
-            returnValue += "Resouces missing: " + std::to_string(this->quantityResourceMissing);
-        }
+        // Instanciation of the card into a JSON format.
+        Json::Value devCardJSON;
 
-        // Adding some other info to returnValue.
-        returnValue += "Discard gain: " + std::to_string(this->discardGain) + "\n";
-        
-        // Return the constructed string.
-        return returnValue;
+        return devCardJSON;
     }
 
     /************************************* Setters & Getters *************************************/

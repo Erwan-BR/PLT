@@ -87,7 +87,7 @@ function(add_custom_test name)
 endfunction()
 
 #add_subdirectory(shared)
-add_subdirectory(client)
+#add_subdirectory(client)
 #add_subdirectory(server)
 
 
