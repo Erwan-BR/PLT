@@ -1,18 +1,11 @@
 #include "DevelopmentCard.h"
 
 namespace state {
-
-    ResourceType resource;
-    /// @brief Empty constructor of the DevelopmentCard class.
-    DevelopmentCard::DevelopmentCard () :
-    Card(),
-    type(CardType::NONETYPE),
-    numberOfCopies(0),
-    costToBuild({}),
-    instantGain({}),
-    discardGain(ResourceType::MATERIAL),
-    quantityResourceMissing(-1) // "Error" value : Empty constructor should never be used.
+    /// @brief Create a development card from a json file.
+    DevelopmentCard::DevelopmentCard (Json::Value jsonValue) :
+        Card(jsonValue)
     {
+        // To-do
     }
 
     /// @brief Full constructor of the DevelopmentCard class.

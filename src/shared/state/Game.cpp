@@ -6,11 +6,11 @@
 #include <chrono>
 
 namespace state {
-	///@brief Create an instance of the class Game
-	Game::Game() :
-		Observable(),
-		players()
+	///@brief Create a game from a json file.
+	Game::Game(Json::Value jsonValue) :
+		Observable()
 	{
+		// To-do
 	}
 
 	///@brief Create an instance of the class Game with players specified

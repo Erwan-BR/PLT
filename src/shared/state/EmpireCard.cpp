@@ -2,15 +2,11 @@
 
 namespace state {
 
-    /// @brief Empty constructor for the EmpireCard class
-    EmpireCard::EmpireCard() :
-    Card(),
-    productionGainAdvanced(),
-    victoryPointsAdvanced(),
-    empire(EmpireLand::AFRICA),
-    designFaceB(new sf::Texture()),
-    isFaceA(false)
+    /// @brief Create an empire card from a json file.
+    EmpireCard::EmpireCard(Json::Value jsonValue) :
+        Card(jsonValue)
     {
+        // To-Do
     }
 
     /// @brief Full constructor for the EmpireCard class

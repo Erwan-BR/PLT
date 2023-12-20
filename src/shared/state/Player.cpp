@@ -2,14 +2,11 @@
 
 namespace state {
 
-    /// @brief Constructor of the class Player
-    Player::Player() :
-    Observable(),
-    name(""),
-    id(-1),
-    profilePicture(new sf::Texture())
+    /// @brief Create a player from a json file.
+    Player::Player(Json::Value jsonValue) :
+        Observable()
     {
-        this->initializeMaps();
+        // To-do
     }
     
     /// @brief Constructor of the player, with some parameters.
