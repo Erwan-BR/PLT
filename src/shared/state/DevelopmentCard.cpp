@@ -247,6 +247,8 @@ namespace state {
         return this->costToBuild;
     }
 
+    /// @brief Gettter for the instant gain of the card (gain when the card is constructed.)
+    /// @return Instant gain of the card.
     std::vector<ResourceType> DevelopmentCard::getInstantGain() const
     {
         return this->instantGain;
