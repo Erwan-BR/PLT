@@ -366,12 +366,13 @@ namespace render {
 				for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) drafted.size();i++){
 				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+120.f*(i),10.f),170.f/375.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+				}
 
 				//Create new Cards to build
 				for (i=0;i<CARDS_DISPLAY_MAIN_WINDOW and i<(int) tobuild.size();i++){
 				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[2]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)),300.f/375.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
-			}
+				}
 
 				(this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
 				(this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
@@ -388,7 +389,7 @@ namespace render {
 				(this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
 				(this->texts)[12]->setString("x"+std::to_string(this->player->getCurrentResources()[state::COLONEL]));
 				(this->texts)[13]->setString("x"+std::to_string(this->player->getCurrentResources()[state::FINANCIER]));
-			}
+			
 			default:
 				break;
 		}

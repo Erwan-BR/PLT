@@ -143,7 +143,6 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
             p1->chooseDraftCard(5);		//P1 Choose Tresor de Barbe Noire
             p2->chooseDraftCard(5);		//P2 Choose Ile d'Avalon
 			game->nextDraft();
-			
             break;
         case 1:         //DRAFT 2eme carte
 			scene->changeWindow(DRAFTING_WINDOW);
