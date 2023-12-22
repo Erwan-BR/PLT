@@ -113,26 +113,6 @@ namespace state {
         return false;
     }
 
-    /// @brief /!\ DEPRECATED FUNCTION /!\ Add a krystallium ressource into a Card. A resource should be replaced. 
-    /// @param resourceToReplace Resource that will be replaced by a krystallium.
-    /// @return True if the card is just payed. False either.
-    bool DevelopmentCard::addKrystallium (ResourceType resourceToReplace)
-    {
-        // Iterating among all resources that should be paid
-        for (ResourceToPay* resourceToPay : this->costToBuild)
-        {
-            // Checking if the current resource is not paid, and if the type is the one we want to replace.
-            if ((!resourceToPay->isPaid) && (resourceToPay->type == resourceToReplace))
-            {
-                resourceToPay->isPaid = true;
-                this->notifyObservers();
-                return (this->decreaseResourceUnitNeeded());
-            } 
-        }
-        // The following line should never be reached.
-        return false;
-    }
-
     /// @brief Check if a resource can be added to the DevelopmentCard.
     /// @param resource The resource we want to know if it is addable.
     /// @return True if the resource can be added to the Card, else False.
@@ -153,16 +133,6 @@ namespace state {
             {
                 // If both types are the same, resource can be added.
                 if (resourceToPay->type == resource)
-                {
-                    return true;
-                }
-                // If the input resource is a krysallium, and the resourceToPay is not Colonel / Financier, it can be paid.
-                if ((resource == ResourceType::KRYSTALLIUM) &&
-                (resourceToPay->type == ResourceType::MATERIAL ||
-                resourceToPay->type == ResourceType::ENERGY ||
-                resourceToPay->type == ResourceType::SCIENCE ||
-                resourceToPay->type == ResourceType::GOLD ||
-                resourceToPay->type == ResourceType::EXPLORATION))
                 {
                     return true;
                 }
