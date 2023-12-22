@@ -1,11 +1,43 @@
 #include "DevelopmentCard.h"
+#include "CreateJSONFormatStructures.h"
 
 namespace state {
     /// @brief Create a development card from a json file.
     DevelopmentCard::DevelopmentCard (Json::Value jsonValue) :
         Card(jsonValue)
     {
-        // To-do
+        this->type = static_cast<CardType> (jsonValue["type"].asInt());
+
+        this->numberOfCopies = jsonValue["numberOfCopies"].asInt();
+
+        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
+
+        // Retrieve production gain from the JSON.
+        this->costToBuild = {};
+        if (jsonValue["costToBuild"].isArray())
+        {
+            const Json::Value costToBuildArray = jsonValue["costToBuild"];
+            for (const Json::Value& jsonStruct : costToBuildArray)
+            {
+                this->costToBuild.push_back(createInformations->resourceToPayFromJSON(jsonStruct));
+            }
+        }
+
+        // Retrieve instant gain
+        this->instantGain = {};
+        if (jsonValue["instantGain"].isArray())
+        {
+            const Json::Value& instantGainArray = jsonValue["instantGain"];
+
+            for (unsigned int i = 0; i < instantGainArray.size(); ++i)
+            {
+                this->instantGain.push_back(static_cast<ResourceType>(instantGainArray[i].asInt()));
+            }
+        }
+
+        this->discardGain = static_cast<ResourceType> (jsonValue["discardGain"].asInt());
+        this->isPaid = jsonValue["isPaid"].asBool();
+        this->quantityResourceMissing = jsonValue["quantityResourceMissing"].asInt();
     }
 
     /// @brief Full constructor of the DevelopmentCard class.
@@ -159,7 +191,35 @@ namespace state {
     Json::Value DevelopmentCard::toJSON () const
     {
         // Instanciation of the card into a JSON format.
-        Json::Value devCardJSON;
+        Json::Value devCardJSON = Card::toJSON();
+
+        devCardJSON["type"] = static_cast<int>(this->type);
+
+        devCardJSON["numberOfCopies"] = this->numberOfCopies;
+
+        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
+
+        // Serialize the vector of the cost to build
+        Json::Value costArray;
+        for (const ResourceToPay* prodGain : this->costToBuild)
+        {
+            costArray.append(createInformations->jsonOfResourceToPay(*prodGain));
+        }
+        devCardJSON["costToBuild"] = costArray;
+
+        // Serialize the vector of the cost to build
+        Json::Value instantGainArray;
+        for (const ResourceType instantGainValue : this->instantGain)
+        {
+            instantGainArray.append(static_cast<int>(instantGainValue));
+        }
+        devCardJSON["instantGain"] = instantGainArray;
+
+        devCardJSON["discardGain"] = this->discardGain;
+
+        devCardJSON["isPaid"] = this->isPaid;
+
+        devCardJSON["quantityResourceMissing"] = this->quantityResourceMissing;
 
         return devCardJSON;
     }
