@@ -2,14 +2,16 @@
 #include <algorithm>
 #include <random>
 #include <fstream>
+#include <random>
+#include <chrono>
 
 namespace state {
-	///@brief Create an instance of the class Game
-	Game::Game() :
-		Observable(),
-		players()
+	///@brief Create a game from a json file.
+	/*Game::Game(Json::Value jsonValue) :
+		Observable()
 	{
-	}
+		// To-do
+	}*/
 
 	///@brief Create an instance of the class Game with players specified
 	///@param players Vector of pointers which designate the players of the game
@@ -20,6 +22,16 @@ namespace state {
 		phase(PRODUCTION),
 		deck(),
 		isClockwise(true)
+	{
+	}
+
+	///@brief Create an instance of the class Game with players specified. isTestingGame passed for the creation of a testing game.
+	///@param players Vector of pointers which designate the players of the game.
+	/// @param isTestingGame Define if the game is created to be played or just for testing.
+	Game::Game(std::vector<Player*> players, bool isTestingGame) :
+		Observable(),
+		players(players),
+		isTestingGame(isTestingGame)
 	{
 	}
 
@@ -46,8 +58,15 @@ namespace state {
 	void Game::initCards ()
 	{
 		this->createCards();
-		auto rng = std::default_random_engine {};
-		std::shuffle(std::begin(deck), std::end(deck), rng);
+
+		// Shuffle the cards only if the game is not for testing purpose.
+		if (! this->isTestingGame)
+		{
+			// Time-base seed to shuffle cards.
+			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+			std::default_random_engine randomness(seed);
+			std::shuffle(this->deck.begin(), this->deck.end(), randomness);
+		}
 	}
 
 	/// @brief Distributes the empires to the players
@@ -56,10 +75,10 @@ namespace state {
 		// Checking if the number of players is inferior of the number of empires. We should always enter inside.
 		if (this->players.size() <= empires.size())
 		{
+			int empireIndex = 0;
 			for(Player* player : this->players)
 			{
 				// Initialise the empires that will be given to the players
-				int empireIndex = 0;
 				player->setEmpire(empires[empireIndex]);
 				empireIndex++;
 			}
@@ -69,69 +88,26 @@ namespace state {
 	/// @brief Create all cards of the game and add them to the deck.
 	void Game::createCards()
 	{
-		// To-Do : modify once cards are correctly scanned.
-		for(int i = 0; i < 150; i++)
-		{
-			DevelopmentCard* createdCard = new DevelopmentCard();
-			this->deck.push_back(createdCard);
-		}
+		CreateAllCards* developmentCardCreation = new CreateAllCards;
+		this->deck = developmentCardCreation->createAllDevelopmentCards();
 	}
-
+		
 	///@brief Create and Initialize the Empire for the game
 	std::vector<EmpireCard*> Game::initEmpire ()
-	{	
-		// face B
-		ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 1, state::CardType::NONETYPE};
-    	ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 1, state::CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainB = {firstResourceToProduce,secondResourceToProduce,thirdResourceToProduce};		
+	{
+		CreateAllCards empireCardCreation;
+		std::vector<EmpireCard*> empires = empireCardCreation.createAllEmpireCards(isFaceA);
 
-		// empire AFRICA
-		ResourceToProduce* firstResourceToProduceAFRICA = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceAFRICA = new ResourceToProduce{ResourceType::SCIENCE, 2, state::CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainAFRICA = {firstResourceToProduceAFRICA,secondResourceToProduceAFRICA};
-		sf::Texture designAFRICA;
-   		CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,state::CardType::RESEARCH};
-		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, productionGainB, {0}, AFRICA);
-	
-		// empire NORAM
-		ResourceToProduce* firstResourceToProduceNORAM = new ResourceToProduce{ResourceType::MATERIAL, 3, state::CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceNORAM = new ResourceToProduce{ResourceType::GOLD, 1, state::CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainNORAM = {firstResourceToProduceNORAM,secondResourceToProduceNORAM};
-		sf::Texture designNORAM;
-   		CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1,state::ResourceType::FINANCIER};
-		EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, designNORAM, victoryPointsNORAM, productionGainB, {0}, NORAM);
-		
-		// empire ASIA
-		ResourceToProduce* firstResourceToProduceASIA = new ResourceToProduce{ResourceType::MATERIAL, 1, state::CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceASIA = new ResourceToProduce{ResourceType::GOLD, 2, state::CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainASIA = {firstResourceToProduceASIA,secondResourceToProduceASIA};
-		sf::Texture designASIA;
-   		CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2,state::CardType::PROJECT};
-		EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, designASIA, victoryPointsASIA, productionGainB, {0}, ASIA);
-		
-		// empire EUROPE
-		ResourceToProduce* firstResourceToProduceEUROPE = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceEUROPE = new ResourceToProduce{ResourceType::ENERGY, 1, state::CardType::NONETYPE};
-    	ResourceToProduce* thirdResourceToProduceEUROPE = new ResourceToProduce{ResourceType::SCIENCE, 1, state::CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainEUROPE = {firstResourceToProduceEUROPE,secondResourceToProduceEUROPE,thirdResourceToProduceEUROPE};
-		sf::Texture designEUROPE;
-   		CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1,state::ResourceType::COLONEL};
-		EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, designEUROPE, victoryPointsEUROPE, productionGainB, {0}, EUROPE);
-		
-		// empire AZTEC
-		ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 2, state::CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::EXPLORATION, 1, state::CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC,secondResourceToProduceAZTEC};
-		sf::Texture designAZTEC;
-   		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3,state::CardType::DISCOVERY};
-		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC);
+		// Shuffle if not a testing game.
+		if (! this->isTestingGame)
+		{
+			// Time-base seed to shuffle cards.
+			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+			std::default_random_engine randomness(seed);
+			std::shuffle(empires.begin(), empires.end(), randomness);
+		}
 
-		std::vector<EmpireCard*> empires = {africa,noram,asia,europe,aztec};
-		auto rng = std::default_random_engine {};
-		std::shuffle(std::begin(empires), std::end(empires), rng);
-		
-    return(empires);
+		return empires;
 	}
 
 	///@brief Start the game
@@ -165,8 +141,8 @@ namespace state {
 	///@brief Start one of the four turn of the game
 	void Game::newTurn ()
 	{
-		this->turn= (this->turn + 1);
-		if(1 == this->turn)
+		this->turn = this->turn + 1;
+		if ((1 == this->turn && this->isTestingGame) || (4 == this->turn && ! this->isTestingGame))
 		{
 			this->endGame();
 		}
@@ -199,7 +175,6 @@ namespace state {
 			player->setDraftingCards(draftingDeck);
 		}
 		this->notifyObservers();
-		this->nextDraft ();
 	}
 
 	///@brief Launch the next draft.
@@ -257,8 +232,7 @@ namespace state {
 	///@brief Initialize the Planification phase during which players choose the cards they will try to build
 	void Game::initPlanification ()
 	{
-		//to do
-		this->endPlanification();
+		return ;
 	}
 
 	/// @brief End the planification phase to start the next phase.
@@ -278,41 +252,20 @@ namespace state {
 	/// @brief Launch the next production phase if a production phase arrives, launch the next draft phase if not.
 	void Game::nextProduction ()
 	{
-		if (ResourceType::MATERIAL == this->resourceProducing)
+		const static std::vector<ResourceType> tableOfResources = {ResourceType::MATERIAL, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION, ResourceType::KRYSTALLIUM};
+
+		auto indexOfResource = std::find(tableOfResources.begin(), tableOfResources.end(), this->resourceProducing);
+		
+		// Resource producing is 'Kystallium'. It means that there is no more resource to produce.
+		if (ResourceType::KRYSTALLIUM == this->resourceProducing)
 		{
-			this->produceResource();
-			this->resourceProducing = ResourceType::ENERGY;
-			this->notifyObservers();
-			this->nextProduction ();
-		}
-		else if (ResourceType::ENERGY == this->resourceProducing)
-		{
-			this->produceResource();
-			this->resourceProducing = ResourceType::SCIENCE;
-			this->notifyObservers();
-			this->nextProduction ();
-		}
-		else if (ResourceType::SCIENCE == this->resourceProducing)
-		{
-			this->produceResource();
-			this->resourceProducing = ResourceType::GOLD;
-			this->notifyObservers();
-			this->nextProduction ();
-		}
-		else if (ResourceType::GOLD == this->resourceProducing)
-		{
-			this->produceResource();
-			this->resourceProducing = ResourceType::EXPLORATION;
-			this->notifyObservers();
-			this->nextProduction ();
-		}
-		else
-		{
-			this->produceResource();
-			this->resourceProducing = ResourceType::KRYSTALLIUM;
-			this->notifyObservers();
 			this->endProduction();
+			return;
 		}
+
+		this->produceResource();
+		this->resourceProducing = *(indexOfResource + 1);
+		this->notifyObservers();
 	}
 
 	///@brief Manage the phase of production for all player and one resource
@@ -358,12 +311,12 @@ namespace state {
 			// Send the financier token
 			if (ResourceType::MATERIAL == this->resourceProducing || ResourceType::GOLD == this->resourceProducing)
 			{
-				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER,1);
+				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER, 1);
 			}
 			// Send the colonel token
 			else if (ResourceType::ENERGY == this->resourceProducing || ResourceType::EXPLORATION == this->resourceProducing)
 			{
-				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL,1);
+				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL, 1);
 			}
 			// Send the token choosen by the player
 			else
@@ -373,11 +326,11 @@ namespace state {
 
 				if (chooseColonel)
 				{
-					//this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL,1);
+					this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL, 1);
 				}
 				else
 				{
-					this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER,1);
+					this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER, 1);
 				}
 			}
 		}
@@ -389,22 +342,22 @@ namespace state {
 		this->nextPhase();
 	}
 
-	/// @brief Ends the game, counts every player's victory points and compares them to give a podium
+	/// @brief Ends the game.
 	void Game::endGame ()
 	{
-		std::vector<int> points;
-		for(Player* player : this->players)
-		{
-			points.push_back(player->computeVictoryPoint());
-		}
+		this->phase = GamePhase::FINISHED;
+		this->notifyObservers();
 	}
 
-	///@brief Debug method to check the state of the instance of Game
-	///@return String explaining the state of Game
-	std::string Game::toString () const
+	///@brief Convert the Game to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the game.
+	/*Json::Value Game::toJSON () const
 	{
-		return "";
-	}
+		// Instanciation of the game into a JSON format.
+        Json::Value gameJSON;
+
+        return gameJSON;
+	}*/
 
     /************************************* Setters & Getters *************************************/
 

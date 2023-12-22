@@ -5,8 +5,10 @@
 
 namespace render {
 
-	/// @brief Empty constructor of the Scene class.
-    Scene::Scene (){
+	/// @brief Full constructor of the Scene class.
+    Scene::Scene(state::Game* game,sf::Transform transform){
+		this->game = game;
+
        	//Creation and initialisation of the background texture
     	this->background_texture =sf::Texture();
     	(this->background_texture).loadFromFile("./resources/img/background.png");
@@ -18,8 +20,22 @@ namespace render {
     	//Set Starting Window
     	this->current_window = MAIN_WINDOW;
 
-    	this->player_renderer.push_back(new PlayerRenderer(sf::Transform(),MAIN_WINDOW));
-    }
+		PlayerRenderer* pRenderer;
+
+		std::vector<state::Player*> players = game->getPlayers();
+		for (int i = 0; i<(int) players.size();i++){
+			pRenderer = new PlayerRenderer(players[i],generatePlayerTransform(transform,MAIN_WINDOW,i),MAIN_WINDOW);
+    		this->player_renderer.push_back(pRenderer);
+		}
+		for (int i = 0; i<(int) players.size();i++){
+    		pRenderer = new PlayerRenderer(players[i],generatePlayerTransform(transform,DRAFTING_WINDOW,i),DRAFTING_WINDOW);
+			this->player_renderer.push_back(pRenderer);
+		}
+		pRenderer = new PlayerRenderer(game->getPlayers()[0],transform,PLAYER_INFO);
+		this->player_renderer.push_back(pRenderer);
+
+		this->game_renderer = new GameRenderer(game,transform);
+	}
 
     /// @brief Full destructor of the Scene class.
     Scene::~Scene (){
@@ -35,8 +51,12 @@ namespace render {
     /// @brief Getter of the player renderer.
     /// @param index corresponding of the wanted player renderer in the vector player_renderer
 	/// @return The player renderer corresponding of the index.
-	PlayerRenderer* Scene::getPlayerRenderer (int index){
-		return ((this->player_renderer)[index]);
+	PlayerRenderer* Scene::getPlayerRenderer (int i){
+		return (this->player_renderer)[i];
+	}
+
+	GameRenderer* Scene::getGameRenderer(){
+		return this->game_renderer;
 	}
 
 	/// @brief Setter for current_window
@@ -49,5 +69,26 @@ namespace render {
 	/// @return value of current_window
 	Window Scene::getWindow(){
 		return (this->current_window);
+	}
+
+	sf::Transform Scene::generatePlayerTransform(sf::Transform transform, Window window, int indice){
+		if (window == MAIN_WINDOW){
+			if (indice == 0){
+				return sf::Transform(transform).translate(525.f,780.f);
+			}
+			else {
+				return sf::Transform(transform).translate(525.f,0.f);
+				//TODO See for indice>2
+			}
+		}
+		if (window == DRAFTING_WINDOW){
+			if (indice == 0){
+				return sf::Transform(transform).translate(0.f,720.f);
+			}
+			else {
+				return sf::Transform(transform).translate(0.f,(indice-1)*180.f);
+			}
+		}
+	return sf::Transform(transform);
 	}
 };

@@ -2,14 +2,12 @@
 
 namespace state {
 
-    /// @brief Empty constructor for the EmpireCard class
-    EmpireCard::EmpireCard() :
-    Card(),
-    productionGainAdvanced(),
-    victoryPointsAdvanced(),
-    empire(EmpireLand::AFRICA)
+    /// @brief Create an empire card from a json file.
+    /*EmpireCard::EmpireCard(Json::Value jsonValue) :
+        Card(jsonValue)
     {
-    }
+        // To-Do
+    }*/
 
     /// @brief Full constructor for the EmpireCard class
     /// @param name Name of the empire
@@ -19,25 +17,68 @@ namespace state {
     /// @param productionGainAdvanced Advanced production provided by the empire
     /// @param victoryPointsAdvanced Advanced victory points provided by the empire
     /// @param empire Region the empire belongs to
-    EmpireCard::EmpireCard(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture design, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, CardVictoryPoint* victoryPointsAdvanced, EmpireLand empire) :
+    /// @param designFaceB Design of the backside of the card.
+    EmpireCard::EmpireCard(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, CardVictoryPoint* victoryPointsAdvanced, EmpireLand empire, sf::Texture* designFaceB, bool isFaceA) :
     Card(name, productionGain, design, victoryPoints),
     victoryPointsAdvanced(victoryPointsAdvanced),
-    empire(empire)
+    empire(empire),
+    designFaceB(designFaceB),
+    isFaceA(isFaceA)
     {
-        for(ResourceToProduce* resource : productionGainAdvanced){this->productionGainAdvanced.push_back(resource);}
+        for(ResourceToProduce* resource : productionGainAdvanced)
+        {
+            this->productionGainAdvanced.push_back(resource);
+        }
     }
     
     /// @brief Destructor for the EmpireCard class
     EmpireCard::~EmpireCard ()
     {
         delete(this->victoryPointsAdvanced);
-        for(ResourceToProduce* resource : productionGainAdvanced)delete(resource);
+        for(ResourceToProduce* resource : productionGainAdvanced)
+        {
+            delete(resource);
+        }
     }
 
-    /// @brief Convert the current EmpireCard to a readable string.
-    /// @return String returned after conversion
-    std::string EmpireCard::toString () const
+    ///@brief Convert the Empire to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the empire.
+    /*Json::Value EmpireCard::toJSON () const
     {
-        return "";
+        // Instanciation of the empire card into a JSON format.
+        Json::Value empireCardJSON;
+
+        return empireCardJSON;
+    }*/
+
+    /************************************* Setters & Getters *************************************/
+
+    /// @brief Getter for the deisgn of the face B.
+    /// @return Design of the face B.
+    sf::Texture* EmpireCard::getDesignFaceB () const
+    {
+        return this->designFaceB;
+    }
+
+    /// @brief Returns the production gain, according to the face that is played.
+    /// @return Production gain of the Empire.
+    std::vector<ResourceToProduce*> EmpireCard::getProductionGain () const
+    {
+        if (isFaceA)
+        {
+            return this->productionGain;
+        }
+        return this->productionGainAdvanced;
+    }
+
+    /// @brief Number of victory points, according to the face that is played.
+    /// @return Victory points of the Empire.
+    CardVictoryPoint* EmpireCard::getVictoryPoints () const
+    {
+        if (isFaceA)
+        {
+            return this->victoryPoints;
+        }
+        return this->victoryPointsAdvanced;
     }
 }

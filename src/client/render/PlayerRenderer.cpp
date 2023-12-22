@@ -2,46 +2,33 @@
 #include <string>
 
 namespace render {
-
-	/// @brief Empty constructor of the PlayerRenderer class.
-	PlayerRenderer::PlayerRenderer(){
-		//Creation of the Font for the Texts
-		sf::Font f;
-		f.loadFromFile("./resources/font/arial.ttf");
-		this->font = f;
-
-		//Enter Player board (position 0)
-		sf::Texture* texture = new sf::Texture();
-		texture->loadFromFile("./resources/img/player.png");
-		this->textures.push_back(texture);					//Texture
-		sf::Sprite* sprite= new sf::Sprite();
-		sprite->setTexture(*(this->textures[0]));
-		this->sprites.push_back(sprite);					//Sprite
-		this->sprite_transforms.push_back(sf::Transform());		//Transform
-
-		//Enter Player Profile Picture (position 1)
-		texture = new sf::Texture();
-		texture->loadFromFile("./resources/img/default_pfp.png");
-		this->textures.push_back(texture);					//Texture
-		sprite= new sf::Sprite();
-		sprite->setTexture(*(this->textures[1]));
-		this->sprites.push_back(sprite);					//Sprite
-		this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(20.f,20.f));				//Transform
-	}
-
 	/// @brief Full constructor of the PlayerRenderer class.
 	/// @param transform indicating the position of the Renderer and passing the scale of the windows.
 	/// @param window that will received this PlayerRenderer
-	PlayerRenderer::PlayerRenderer(sf::Transform transform,Window window){
+	PlayerRenderer::PlayerRenderer(state::Player* player,sf::Transform transform,Window window){
 		//Creation of the Font for the Texts
 		sf::Font f;
 		f.loadFromFile("./resources/font/arial.ttf");
 		this->font = f;
+
+		this->player = player;
+
+		std::vector<state::DevelopmentCard*> tobuild = player->getToBuildCards();
+		std::vector<state::DevelopmentCard*> built = player->getBuiltCards();
+		std::vector<state::DevelopmentCard*> drafted = player->getDraftCards();
+
+		this->sprites = {};
+		this->sprite_transforms = {};
+		this->devCardRenderers = {};
+		this->texts = {};
+		this->text_transforms = {};
 
 		int i;
 		sf::Texture* texture;
 		sf::Sprite* sprite;
 		sf::Text* text;
+		DevelopmentCardRenderer* cRenderer;
+		this->sprites = {};
 
 		switch (window){
 		case MAIN_WINDOW:
@@ -55,8 +42,7 @@ namespace render {
 			this->sprite_transforms.push_back(transform);				//Transform
 
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = new sf::Texture();
-			texture->loadFromFile("./resources/img/default_pfp.png");
+			texture = player->getProfilePicture();
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));
@@ -64,20 +50,15 @@ namespace render {
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(20.f,20.f));				//Transform
 
 			//Enter Cards (position 2 to 16 in sprites)
-			for (i=0;i<14;i++){
-				texture = new sf::Texture();
-				texture->loadFromFile("./resources/img/DevelopmentCards/image_"+std::to_string(i%78+1)+".png");
-				this->textures.push_back(texture);	//Texture
-				sprite= new sf::Sprite();
-				sprite->setTexture(*(this->textures[i+2]));
-				this->sprites.push_back(sprite);	//Sprite
-				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));		//Transform
+			for (i=0;i<14 and i<tobuild.size();i++){
+				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
 			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();
 			text->setFont(font);
-			text->setString("Nom");
+			text->setString(player->getName());
 			text->setCharacterSize(30);
 			text->setFillColor(sf::Color::White);
 			this->texts.push_back(text);			//Text
@@ -102,7 +83,7 @@ namespace render {
 				text->setCharacterSize(10);
 				text->setFillColor(sf::Color::White);
 				this->texts.push_back(text);				//Text
-				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(200.0f,140.0f+30.0f*(i)));		//Transform
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(200.0f,140.0f+50.0f*(i)));		//Transform
 			}
 			break;
 		case DRAFTING_WINDOW:
@@ -116,8 +97,7 @@ namespace render {
 			this->sprite_transforms.push_back(transform);				//Transform
 
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = new sf::Texture();
-			texture->loadFromFile("./resources/img/default_pfp.png");
+			texture = player->getProfilePicture();
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));
@@ -125,20 +105,15 @@ namespace render {
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
 
 			//Enter Cards (position 2 to 9 in sprites)
-			for (i=0;i<7;i++){
-				texture = new sf::Texture();
-				texture->loadFromFile("./resources/img/DevelopmentCards/image_"+std::to_string(i%78+1)+".png");
-				this->textures.push_back(texture);	//Texture
-				sprite= new sf::Sprite();
-				sprite->setTexture(*(this->textures[i+2]));
-				this->sprites.push_back(sprite);	//Sprite
-				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));		//Transform
+			for (i=0;i<7 and i<drafted.size();i++){
+				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
 			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();
 			text->setFont(font);
-			text->setString("Nom");
+			text->setString(player->getName());
 			text->setCharacterSize(30);
 			text->setFillColor(sf::Color::White);
 			this->texts.push_back(text);			//Text
@@ -156,8 +131,7 @@ namespace render {
 			this->sprite_transforms.push_back(transform);				//Transform
 
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = new sf::Texture();
-			texture->loadFromFile("./resources/img/default_pfp.png");
+			texture = player->getProfilePicture();
 			this->textures.push_back(texture);					//Texture
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[1]));
@@ -165,20 +139,19 @@ namespace render {
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,50.f).scale(2.f,2.f).scale(1.f,(431.f/375.f)));				//Transform
 
 			//Enter Cards (position 2 to 58 in sprites)
-			for (i=0;i<56;i++){
-				texture = new sf::Texture();
-				texture->loadFromFile("./resources/img/DevelopmentCards/image_"+std::to_string(i%78+1)+".png");
-				this->textures.push_back(texture);	//Texture
-				sprite= new sf::Sprite();
-				sprite->setTexture(*(this->textures[i+2]));
-				this->sprites.push_back(sprite);	//Sprite
-				this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));		//Transform
+			for (i=0;i<28 and i<built.size();i++){
+				cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+			}
+			for (i=28;i<56 and i<28+tobuild.size();i++){
+				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)).scale(0.3f,0.3f));
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
 			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();
 			text->setFont(font);
-			text->setString("Nom");
+			text->setString(player->getName());
 			text->setCharacterSize(50);
 			text->setFillColor(sf::Color::White);
 			this->texts.push_back(text);			//Text
@@ -273,6 +246,13 @@ namespace render {
 		return (this->texts).size();
 	}
 
+	DevelopmentCardRenderer* PlayerRenderer::getCardRenderer(int i){
+		return (this->devCardRenderers)[i];
+	}
+
+	int PlayerRenderer::getNumberCardRenderer(){
+		return (this->devCardRenderers).size();
+	}
 	/// @brief Setter Sprite & Texture (position 1 in vector sprites)
 	///	@param Name of png file from resource/img without extension
 	void PlayerRenderer::changeProfilePicture(std::string path){
@@ -297,6 +277,11 @@ namespace render {
 		if (index<14 and index>=0){
 		(this->texts[index+1])->setString("x"+std::to_string(value));
 		}
+	}
+
+	void PlayerRenderer::update()
+	{
+		
 	}
 };
 
