@@ -1,6 +1,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include "../../src/shared/state/Player.h"
+#include "../../src/shared/state/Game.h"
 
 using namespace ::state;
 
@@ -8,233 +9,309 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 {
   {
     // Testing the empty contructor of Player
-    Player* myFirstPlayer = new Player();
-    myFirstPlayer = new Player("Maxime", 1, sf::Texture());
+    sf::Texture* profilePicture = new sf::Texture();
+    Player* myFirstPlayer = new Player("Maxime", 1, profilePicture);
 
-    //Elements to test the methods :
-    std::vector<ResourceToProduce*> resourceProd1;
-    ResourceToProduce* production1 = new ResourceToProduce{MATERIAL, 2, NONETYPE};
-    resourceProd1.push_back(production1);
-    std::vector<ResourceToPay*> resourcePay1;
-    ResourceToPay* paiement1 = new ResourceToPay{MATERIAL, false};
-    resourcePay1.push_back(paiement1);
-    std::vector<ResourceType> instantGain1;
-    instantGain1.push_back(SCIENCE);
-    CardVictoryPoint* victoryPoints1 = new CardVictoryPoint{2,NONETYPE};
-    DevelopmentCard* cardTest1 = new DevelopmentCard("CardTest1", resourceProd1, sf::Texture(), victoryPoints1, STRUCTURE, 1, resourcePay1, instantGain1, GOLD);
+    //Defining Empire
+      //Producing 2 ENERGY, 1 SCIENCE, gain 3 victory points per DISCOVERY cards
+    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
+		ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
+		ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
+		std::vector<ResourceToProduce*> productionGainB = {firstResourceToProduce,secondResourceToProduce, thirdResourceToProduce};		
 
-    std::vector<ResourceToProduce*> resourceProd2;
-    ResourceToProduce* production2 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
-    resourceProd2.push_back(production2);
-    std::vector<ResourceToPay*> resourcePay2;
-    ResourceToPay* paiement2 = new ResourceToPay{EXPLORATION, false};
-    resourcePay2.push_back(paiement2);
-    std::vector<ResourceType> instantGain2;
-    instantGain2.push_back(GOLD);
-    CardVictoryPoint* victoryPoints2 = new CardVictoryPoint{1,FINANCIER};
-    DevelopmentCard* cardTest2 = new DevelopmentCard("CardTest2", resourceProd2, sf::Texture(), victoryPoints2, PROJECT, 2, resourcePay2, instantGain2, SCIENCE);
-    
-    
-    std::vector<ResourceToProduce*> resourceProd3;
-    ResourceToProduce* production3 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
-    resourceProd3.push_back(production3);
-    std::vector<ResourceToPay*> resourcePay3;
-    ResourceToPay* paiement3 = new ResourceToPay{EXPLORATION, true};
-    resourcePay3.push_back(paiement3);
-    std::vector<ResourceType> instantGain3;
-    instantGain3.push_back(GOLD);
-    CardVictoryPoint* victoryPoints3 = new CardVictoryPoint{1,FINANCIER};
-    DevelopmentCard* cardTest3 = new DevelopmentCard("CardTest3", resourceProd3, sf::Texture(), victoryPoints3, PROJECT, 2, resourcePay3, instantGain3, SCIENCE);
-  
-    std::vector<ResourceToProduce*> resourceProd4;
-    ResourceToProduce* production4 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
-    resourceProd4.push_back(production4);
-    std::vector<ResourceToPay*> resourcePay4;
-    ResourceToPay* paiement4 = new ResourceToPay{EXPLORATION, true};
-    resourcePay4.push_back(paiement4);
-    std::vector<ResourceType> instantGain4;
-    instantGain4.push_back(GOLD);
-    CardVictoryPoint* victoryPoints4 = new CardVictoryPoint{1,COLONEL};
-    DevelopmentCard* cardTest4 = new DevelopmentCard("CardTest4", resourceProd4, sf::Texture(), victoryPoints4, STRUCTURE, 2, resourcePay4, instantGain4, SCIENCE);
-      
-    std::vector<ResourceToProduce*> resourceProd5;
-    ResourceToProduce* production5 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
-    resourceProd5.push_back(production5);
-    std::vector<ResourceToPay*> resourcePay5;
-    ResourceToPay* paiement5 = new ResourceToPay{EXPLORATION, true};
-    resourcePay5.push_back(paiement5);
-    std::vector<ResourceType> instantGain5;
-    instantGain5.push_back(GOLD);
-    CardVictoryPoint* victoryPoints5 = new CardVictoryPoint{1,FINANCIER};
-    DevelopmentCard* cardTest5 = new DevelopmentCard("CardTest5", resourceProd5, sf::Texture(), victoryPoints5, PROJECT, 2, resourcePay5, instantGain5, SCIENCE);
-    
-    std::vector<ResourceToProduce*> resourceProd6;
-    ResourceToProduce* production6 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
-    resourceProd6.push_back(production6);
-    std::vector<ResourceToPay*> resourcePay6;
-    ResourceToPay* paiement6 = new ResourceToPay{EXPLORATION, true};
-    resourcePay6.push_back(paiement6);
-    std::vector<ResourceType> instantGain6;
-    instantGain6.push_back(GOLD);
-    CardVictoryPoint* victoryPoints6 = new CardVictoryPoint{1,FINANCIER};
-    DevelopmentCard* cardTest6 = new DevelopmentCard("CardTest6", resourceProd6, sf::Texture(), victoryPoints6, PROJECT, 2, resourcePay6, instantGain6, SCIENCE);
-    
-    std::vector<ResourceToProduce*> resourceProd7;
-    ResourceToProduce* production7 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
-    resourceProd7.push_back(production7);
-    std::vector<ResourceToPay*> resourcePay7;
-    ResourceToPay* paiement7 = new ResourceToPay{EXPLORATION, true};
-    resourcePay7.push_back(paiement7);
-    std::vector<ResourceType> instantGain7;
-    instantGain7.push_back(GOLD);
-    CardVictoryPoint* victoryPoints7 = new CardVictoryPoint{1,FINANCIER};
-    DevelopmentCard* cardTest7 = new DevelopmentCard("CardTest7", resourceProd7, sf::Texture(), victoryPoints7, PROJECT, 2, resourcePay7, instantGain7, SCIENCE);
- 
-    std::vector<ResourceToProduce*> resourceProd9;
-    ResourceToProduce* production9 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
-    resourceProd9.push_back(production9);
-    std::vector<ResourceToPay*> resourcePay9;
-    ResourceToPay* paiement9 = new ResourceToPay{EXPLORATION, true};
-    resourcePay9.push_back(paiement9);
-    std::vector<ResourceType> instantGain9;
-    instantGain9.push_back(GOLD);
-    CardVictoryPoint* victoryPoints9 = new CardVictoryPoint{1,STRUCTURE};
-    DevelopmentCard* cardTest9 = new DevelopmentCard("CardTest9", resourceProd9, sf::Texture(), victoryPoints9, PROJECT, 2, resourcePay9, instantGain9, SCIENCE);
+		ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE};
+    ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
+		std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC, secondResourceToProduceAZTEC};
+		sf::Texture* designAZTEC = new sf::Texture;
+		designAZTEC->loadFromFile("./resources/img/Cards/Empire_Face_A/Azteca.png");
+		sf::Texture* designAZTEC_FaceB = new sf::Texture;
+		designAZTEC_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Azteca.png");
+		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
+		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, true);
 
-    std::vector<ResourceToProduce*> resourceProd8;
-    ResourceToProduce* production8 = new ResourceToProduce{ENERGY, 1, STRUCTURE};
-    resourceProd8.push_back(production8);
-    std::vector<ResourceToPay*> resourcePay8;
-    ResourceToPay* paiement8 = new ResourceToPay{EXPLORATION, true};
-    resourcePay8.push_back(paiement8);
-    std::vector<ResourceType> instantGain8;
-    instantGain8.push_back(GOLD);
-    CardVictoryPoint* victoryPoints8 = new CardVictoryPoint{1,STRUCTURE};
-    DevelopmentCard* cardTest8 = new DevelopmentCard("CardTest8", resourceProd8, sf::Texture(), victoryPoints8, PROJECT, 2, resourcePay8, instantGain8, SCIENCE);
+    //Giving the empire to the player
+    myFirstPlayer->setEmpire(aztec);
 
+    //Definiing multiple cards to fully test all functions
+      //Card that produces 1 SCIENCE * DISCOVERY cards, 10 victory points, 2 instant KRYSTALLIUM
+      //Need to pay 1 EXPLORATION
+    sf::Texture* designAnciensAstronautes = new sf::Texture;
+    designAnciensAstronautes->loadFromFile("./resources/img/Cards/Development_Cards/anciens_astronautes.png");
+    DevelopmentCard* anciensAstronautes = new DevelopmentCard ("Anciens Astronautes",{new ResourceToProduce{ResourceType::SCIENCE,1, CardType::DISCOVERY}},designAnciensAstronautes,new CardVictoryPoint{10, CardType::NONETYPE},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::SCIENCE);
+
+
+      //Card that produces 3 EXPLORATION, 2 victory points per DISCOVERY card, 1 instant COLONEL
+      //Need to pay 1 ENERGY
+    sf::Texture* designBasePolaire = new sf::Texture;
+    designBasePolaire->loadFromFile("./resources/img/Cards/Development_Cards/base_polaire.png");
+    DevelopmentCard* basePolaire = new DevelopmentCard ("Base polaire",{new ResourceToProduce{ResourceType::EXPLORATION, 3, CardType::NONETYPE}},designBasePolaire,new CardVictoryPoint{2, (int) CardType::DISCOVERY},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::EXPLORATION);
+        
+      //Card that produces nothing, 1 victory points per COLONEL
+      //Need to pay 1 SCIENCE
+    sf::Texture* designAutomateControle = new sf::Texture;
+    designAutomateControle->loadFromFile("./resources/img/Cards/Development_Cards/automates_de_controle.png");
+    DevelopmentCard* automateControle = new DevelopmentCard ("Automates de controle",{},designAutomateControle,new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::GOLD);
+
+      //Card that produces nothing, 1 victory points per FINANCIER, 1 instant FINANCIER
+      //Need to pay 1 ENERGY
+    sf::Texture* designAscenseurSpatial = new sf::Texture;
+    designAscenseurSpatial->loadFromFile("./resources/img/Cards/Development_Cards/ascenseur_spatial.png");
+    DevelopmentCard* ascenseurSpatial = new DevelopmentCard ("Ascenseur spatial",{},designAscenseurSpatial,new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::ENERGY);
+
+      //Card that will be discard in toBuildCards
+      //Giving 1 EXPLORATION
+    sf::Texture* designZeppelin = new sf::Texture;
+    designZeppelin->loadFromFile("./resources/img/Cards/Development_Cards/zeppelin.png");
+    DevelopmentCard* zeppelinToBuild = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designZeppelin,new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+
+      //Card that will be discard in draftCards
+      //Giving 1 EXPLORATION
+    DevelopmentCard* zeppelinDraft = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designZeppelin,new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+
+      //Card that will remain in draftingCards
+    DevelopmentCard* zeppelinDrafting = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designZeppelin,new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+
+    //Adding cards in the drafting deck
     std::vector<DevelopmentCard*> draftingDeck;
-    draftingDeck.push_back(cardTest1);
-    draftingDeck.push_back(cardTest2);
-    draftingDeck.push_back(cardTest3);
-    draftingDeck.push_back(cardTest4);
-    draftingDeck.push_back(cardTest5);
-    draftingDeck.push_back(cardTest6);
-    draftingDeck.push_back(cardTest7);
-    draftingDeck.push_back(cardTest8);
-    draftingDeck.push_back(cardTest9);
-    
+    draftingDeck.push_back(zeppelinDrafting);
+    draftingDeck.push_back(zeppelinDraft);
+    draftingDeck.push_back(zeppelinToBuild);
+    draftingDeck.push_back(ascenseurSpatial);
+    draftingDeck.push_back(automateControle);
+    draftingDeck.push_back(basePolaire);
+    draftingDeck.push_back(anciensAstronautes);
 
-    //Testing method setDraftinCards :
     myFirstPlayer->setDraftingCards(draftingDeck);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftingCards().size(), draftingDeck.size());
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftingCards().size(), 7);
 
+    //Choosing the DraftCards
+    for(int i=1; i<(int)draftingDeck.size(); i++)
+    {
+      myFirstPlayer->chooseDraftCard(1);
+      int stringCompare = strcmp(draftingDeck.at(i)->getName().data(), myFirstPlayer->getDraftCards().at(i-1)->getName().data());
+      BOOST_CHECK_EQUAL(stringCompare, 0);
+    }
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftingCards().size(), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 6);
 
-    //Testing method setEmpire :
-		ResourceToProduce* firstResourceToProduceAFRICA = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::NONETYPE};
-    ResourceToProduce* secondResourceToProduceAFRICA = new ResourceToProduce{ResourceType::EXPLORATION, 1, state::CardType::STRUCTURE};
-		std::vector<ResourceToProduce*> productionGainAFRICA = {firstResourceToProduceAFRICA,secondResourceToProduceAFRICA};
-		sf::Texture designAFRICA;
-   	CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{3,state::CardType::DISCOVERY};
-		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {/*prob face B*/}, {/*victorypoints face B*/}, AFRICA); 
-    myFirstPlayer->setEmpire(africa);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getEmpire(), africa);
+    //Choosing out of bound draft card
+    myFirstPlayer->chooseDraftCard(42);
 
-
-
-    //Testing method chooseDraftCard :
-    myFirstPlayer->chooseDraftCard(cardTest1);
-    myFirstPlayer->chooseDraftCard(cardTest2);
-    myFirstPlayer->chooseDraftCard(cardTest3);
-    myFirstPlayer->chooseDraftCard(cardTest4);
-    myFirstPlayer->chooseDraftCard(cardTest5);
-    myFirstPlayer->chooseDraftCard(cardTest6);
-    myFirstPlayer->chooseDraftCard(cardTest8);
-    myFirstPlayer->chooseDraftCard(cardTest9);
-
-
-    //Testing method keepCard :
-    myFirstPlayer->keepCard(cardTest1);
-    myFirstPlayer->keepCard(cardTest2);
-    myFirstPlayer->keepCard(cardTest3);
-    myFirstPlayer->keepCard(cardTest4);
-    myFirstPlayer->keepCard(cardTest8);
-    myFirstPlayer->keepCard(cardTest9);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 2);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 6);
-
-
-    //Testing method discardCard :
-    myFirstPlayer->discardCard(cardTest6);
-    myFirstPlayer->discardCard(cardTest9);
+    //Choosing the toBuildCards
+    std::vector<DevelopmentCard*> draftDeck = myFirstPlayer->getDraftCards();
+    for(int i=1; i<6; i++)
+    {
+      myFirstPlayer->keepCard(1);
+      int stringCompare = strcmp(myFirstPlayer->getToBuildCards().at(i-1)->getName().data(), draftDeck.at(i)->getName().data());
+      BOOST_CHECK_EQUAL(stringCompare, 0);   
+    }
     BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 1);
     BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 5);
 
+    //Choosing out of bound keep card
+    myFirstPlayer->keepCard(42);
 
+    //Discarding the last drafted Card
+    myFirstPlayer->discardCard(0,true);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(EXPLORATION), 1);
 
-    //Testing method addResource :
-    myFirstPlayer->addResource(MATERIAL, cardTest1);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 4);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getBuiltCards().size(), 1);
+    //Discarding out of bound card
+    myFirstPlayer->discardCard(42, true);
 
-
-    //Testing method construct :
-    myFirstPlayer->construct(cardTest3);
-    myFirstPlayer->construct(cardTest4);
-    myFirstPlayer->construct(cardTest8);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getBuiltCards().size(), 4);
-
-
-    //Testing method receiveResource and receiveResources:
-    myFirstPlayer->receiveResources(GOLD,3);
-
-
-    //Testing method chooseColonelToken :
-    (void)myFirstPlayer->chooseColonelToken();
-
-
-    //Testing method computeVictoryPoint :
-    (void)myFirstPlayer->computeVictoryPoint();
-
-    victoryPointsAFRICA  = new CardVictoryPoint{1,state::ResourceType::COLONEL};
-		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
-		myFirstPlayer->setEmpire(africa);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getEmpire(), africa);
-    (void)myFirstPlayer->computeVictoryPoint();
-
-    victoryPointsAFRICA  = new CardVictoryPoint{1,state::ResourceType::FINANCIER};
-		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
-		myFirstPlayer->setEmpire(africa);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getEmpire(), africa);
-    (void)myFirstPlayer->computeVictoryPoint();
-
-    victoryPointsAFRICA  = new CardVictoryPoint{1,state::CardType::NONETYPE};
-		africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, {}, {}, AFRICA); 
-		myFirstPlayer->setEmpire(africa);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getEmpire(), africa);
-    (void)myFirstPlayer->computeVictoryPoint();
-
-
-    //Testing method sendResourceToEmpire :
-    myFirstPlayer->sendResourceToEmpire(MATERIAL);
-    myFirstPlayer->sendResourceToEmpire(MATERIAL);
-    myFirstPlayer->sendResourceToEmpire(MATERIAL);
-    myFirstPlayer->sendResourceToEmpire(MATERIAL);
-    myFirstPlayer->sendResourceToEmpire(MATERIAL);
-
-
-    //Testing method convertToKrystallium :
-    myFirstPlayer->convertToKrystallium();
-
-    //Testing method updateProduction :
+    //Production phase with empire only
     myFirstPlayer->updateProduction();
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(ENERGY), 2);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(SCIENCE), 1);
 
-    //Testing method toString :
-    (void)myFirstPlayer->toString();
+    //Transferring the to produce resources to the possessed resources
+    myFirstPlayer->receiveResources(MATERIAL, myFirstPlayer->getResourcesProduction().at(MATERIAL));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(MATERIAL), 0);
+    myFirstPlayer->receiveResources(ENERGY, myFirstPlayer->getResourcesProduction().at(ENERGY));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(ENERGY), 2);
+    myFirstPlayer->receiveResources(SCIENCE, myFirstPlayer->getResourcesProduction().at(SCIENCE));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(SCIENCE), 1);
+    myFirstPlayer->receiveResources(GOLD, myFirstPlayer->getResourcesProduction().at(GOLD));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(GOLD), 0);
+    myFirstPlayer->receiveResources(EXPLORATION, myFirstPlayer->getResourcesProduction().at(EXPLORATION));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(EXPLORATION), 1);
 
-    myFirstPlayer->setState(PENDING);
-    BOOST_CHECK_EQUAL(myFirstPlayer->getState(), PENDING);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(COLONEL), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(FINANCIER), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(KRYSTALLIUM), 0);
 
-    //Testing getters:
+    //Checking if resources of a type can be added to a card
+    BOOST_CHECK_EQUAL(myFirstPlayer->isResourcePlayable(ENERGY), true);
+    BOOST_CHECK_EQUAL(myFirstPlayer->isResourcePlayable(GOLD), false);
+
+    //Constructing cards
+    myFirstPlayer->addResource(ENERGY, 1);
+    int stringCompare = strcmp(myFirstPlayer->getBuiltCards().at(0)->getName().data(), "Ascenseur spatial");
+    BOOST_CHECK_EQUAL(stringCompare, 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getBuiltCards().size(), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 4);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(ENERGY), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(FINANCIER), 1);
+
+    myFirstPlayer->addResource(SCIENCE, 1);
+    stringCompare = strcmp(myFirstPlayer->getBuiltCards().at(1)->getName().data(), "Automates de controle");
+    BOOST_CHECK_EQUAL(stringCompare, 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getBuiltCards().size(), 2);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 3);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(SCIENCE), 0);
+
+    myFirstPlayer->addResource(ENERGY, 1);
+    stringCompare = strcmp(myFirstPlayer->getBuiltCards().at(2)->getName().data(), "Base polaire");
+    BOOST_CHECK_EQUAL(stringCompare, 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getBuiltCards().size(), 3);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 2);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(ENERGY), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(COLONEL), 1);
+
+    myFirstPlayer->addResource(EXPLORATION, 1);
+    stringCompare = strcmp(myFirstPlayer->getBuiltCards().at(3)->getName().data(), "Anciens Astronautes");
+    BOOST_CHECK_EQUAL(stringCompare, 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getBuiltCards().size(), 4);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(EXPLORATION), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(KRYSTALLIUM), 2);
+
+    //Out of bound addResource test
+    myFirstPlayer->addResource(ENERGY, 1);
+
+    //Discarding last card of toBuild deck
+    myFirstPlayer->discardCard(0, false);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesInEmpireUnit(), 1);
+
+    //Discarding out of bound card
+    myFirstPlayer->discardCard(42, false);
+
+    //Recompute production
+    myFirstPlayer->updateProduction();
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(MATERIAL), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(ENERGY), 2);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(SCIENCE), 2);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(GOLD), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(EXPLORATION), 3);
+
+    //Transferring again the to produce resources to the possessed resources
+    myFirstPlayer->receiveResources(MATERIAL, myFirstPlayer->getResourcesProduction().at(MATERIAL));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(MATERIAL), 0);
+    myFirstPlayer->receiveResources(ENERGY, myFirstPlayer->getResourcesProduction().at(ENERGY));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(ENERGY), 2);
+    myFirstPlayer->receiveResources(SCIENCE, myFirstPlayer->getResourcesProduction().at(SCIENCE));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(SCIENCE), 2);
+    myFirstPlayer->receiveResources(GOLD, myFirstPlayer->getResourcesProduction().at(GOLD));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(GOLD), 0);
+    myFirstPlayer->receiveResources(EXPLORATION, myFirstPlayer->getResourcesProduction().at(EXPLORATION));
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(EXPLORATION), 3);
+
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(COLONEL), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(FINANCIER), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(KRYSTALLIUM), 2);
+
+    //Compute victory points
+    int victoryPoints = myFirstPlayer->computeVictoryPoint();
+    BOOST_CHECK_EQUAL(victoryPoints, 17);
+
+    //Ending the production
+    myFirstPlayer->endProduction();
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(MATERIAL), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(ENERGY), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(SCIENCE), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(GOLD), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(EXPLORATION), 0);
+
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(COLONEL), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(FINANCIER), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(KRYSTALLIUM), 3);
+
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesInEmpireUnit(), 3);
+
+    //Testing the error return of sendResourceToEmpire
+    myFirstPlayer->sendResourceToEmpire(GOLD);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(GOLD), 0);
+
+    //Testing end the planification
+    draftingDeck = {zeppelinDraft};
+    myFirstPlayer->setDraftingCards(draftingDeck);
+    myFirstPlayer->chooseDraftCard(0);
+    stringCompare = strcmp(draftingDeck.at(0)->getName().data(), myFirstPlayer->getDraftCards().at(0)->getName().data());
+    BOOST_CHECK_EQUAL(stringCompare, 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 1);
+
+    myFirstPlayer->endPlanification();
+    BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 1);
+
+    //Test convertKrystallium
+    myFirstPlayer->convertKrystallium(MATERIAL);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(MATERIAL), 1);
+
+    myFirstPlayer->convertKrystallium(COLONEL);
+
+
+    //Test chooseColonel (not implemented yet)
+    bool isColonel = myFirstPlayer->chooseColonelToken();
+    BOOST_CHECK_EQUAL(isColonel, false);
+
+    //Test the setter of the player's state
+    myFirstPlayer->setState(PLAYING);
+    BOOST_CHECK_EQUAL(PLAYING, myFirstPlayer->getState());
+
+    //Testing different empire configuration
+      //Config two
+    firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 4, CardType::DISCOVERY};
+		productionGainAZTEC = {firstResourceToProduceAZTEC};
+		victoryPointsAZTEC  = new CardVictoryPoint{2, ResourceType::FINANCIER};
+		aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, true);
+
+    myFirstPlayer->setEmpire(aztec);
+
+    myFirstPlayer->updateProduction();
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(MATERIAL), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(ENERGY), 4);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(SCIENCE), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(GOLD), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(EXPLORATION), 3);
+
+    victoryPoints = myFirstPlayer->computeVictoryPoint();
+    BOOST_CHECK_EQUAL(victoryPoints, 16);
+
+      //Config three
+		victoryPointsAZTEC  = new CardVictoryPoint{8, ResourceType::COLONEL};
+		aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, true);
+
+    myFirstPlayer->setEmpire(aztec);
+
+    myFirstPlayer->updateProduction();
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(MATERIAL), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(ENERGY), 4);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(SCIENCE), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(GOLD), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(EXPLORATION), 3);
+
+    victoryPoints = myFirstPlayer->computeVictoryPoint();
+    BOOST_CHECK_EQUAL(victoryPoints, 22);
+
+          //Config four (last one)
+		victoryPointsAZTEC  = new CardVictoryPoint{26, CardType::NONETYPE};
+		aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, true);
+
+    myFirstPlayer->setEmpire(aztec);
+
+    myFirstPlayer->updateProduction();
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(MATERIAL), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(ENERGY), 4);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(SCIENCE), 1);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(GOLD), 0);
+    BOOST_CHECK_EQUAL(myFirstPlayer->getResourcesProduction().at(EXPLORATION), 3);
+
+    victoryPoints = myFirstPlayer->computeVictoryPoint();
+    BOOST_CHECK_EQUAL(victoryPoints, 40);
+
+    //Testing getters
     (void)myFirstPlayer->getProductionGain(MATERIAL);
     (void)myFirstPlayer->getName();
     (void)myFirstPlayer->getProfilePicture();
@@ -244,14 +321,19 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     (void)myFirstPlayer->getDraftingCards();
     (void)myFirstPlayer->getDraftCards();
     (void)myFirstPlayer->getState();
-    (void)myFirstPlayer->getFinancierTokensUnit();
-    (void)myFirstPlayer->getColonelTokensUnit();
-    (void)myFirstPlayer->getKrystalliumTokensUnit();
     (void)myFirstPlayer->getCurrentResources();
+    (void)myFirstPlayer->getCurrentResources(MATERIAL);
     (void)myFirstPlayer->getResourcesInEmpireUnit();
     (void)myFirstPlayer->getResourcesProduction();
     (void)myFirstPlayer->getCardsTypeList();
+    (void)myFirstPlayer->getID();
 
+    (void)myFirstPlayer->isAI();
+
+    //Testing void AI functions
+    myFirstPlayer->AIChooseDraftingCard();
+    myFirstPlayer->AIPlanification();
+    myFirstPlayer->AIUseProducedResources();
 
     // Delete pointers that won't be used anymore.
     delete myFirstPlayer;
