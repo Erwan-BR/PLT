@@ -7,4 +7,6 @@ namespace state{
     {
         return;
     }
+
+    Observer::~Observer(){}
 }
