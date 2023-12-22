@@ -2,11 +2,11 @@
 
 namespace state {
     /// @brief Create a development card from a json file.
-    /*DevelopmentCard::DevelopmentCard (Json::Value jsonValue) :
+    DevelopmentCard::DevelopmentCard (Json::Value jsonValue) :
         Card(jsonValue)
     {
         // To-do
-    }*/
+    }
 
     /// @brief Full constructor of the DevelopmentCard class.
     /// @param name Name of the Card.
@@ -129,13 +129,13 @@ namespace state {
 
     ///@brief Convert the Development card to a JSON format. Usefull when the game is saved.
 	///@return Readable JSON of the development card.
-    /*Json::Value DevelopmentCard::toJSON () const
+    Json::Value DevelopmentCard::toJSON () const
     {
         // Instanciation of the card into a JSON format.
         Json::Value devCardJSON;
 
         return devCardJSON;
-    }*/
+    }
 
     /************************************* Setters & Getters *************************************/
 

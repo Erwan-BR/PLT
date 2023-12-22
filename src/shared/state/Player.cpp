@@ -3,11 +3,11 @@
 namespace state {
 
     /// @brief Create a player from a json file.
-    /*Player::Player(Json::Value jsonValue) :
+    Player::Player(Json::Value jsonValue) :
         Observable()
     {
         // To-do
-    }*/
+    }
     
     /// @brief Constructor of the player, with some parameters.
     /// @param name Name of the player
@@ -401,13 +401,13 @@ namespace state {
 
     ///@brief Convert the Player to a JSON format. Usefull when the game is saved.
 	///@return Readable JSON of the player.
-    /*Json::Value Player::toJSON () const
+    Json::Value Player::toJSON () const
     {
         // Instanciation of the player into a JSON format.
         Json::Value playerJSON;
 
         return playerJSON;
-    }*/
+    }
 
     /************************************* Setters & Getters *************************************/
 

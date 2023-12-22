@@ -7,11 +7,11 @@
 
 namespace state {
 	///@brief Create a game from a json file.
-	/*Game::Game(Json::Value jsonValue) :
+	Game::Game(Json::Value jsonValue) :
 		Observable()
 	{
 		// To-do
-	}*/
+	}
 
 	///@brief Create an instance of the class Game with players specified
 	///@param players Vector of pointers which designate the players of the game
@@ -351,13 +351,13 @@ namespace state {
 
 	///@brief Convert the Game to a JSON format. Usefull when the game is saved.
 	///@return Readable JSON of the game.
-	/*Json::Value Game::toJSON () const
+	Json::Value Game::toJSON () const
 	{
 		// Instanciation of the game into a JSON format.
         Json::Value gameJSON;
 
         return gameJSON;
-	}*/
+	}
 
     /************************************* Setters & Getters *************************************/
 
