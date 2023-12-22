@@ -246,4 +246,9 @@ namespace state {
     {
         return this->costToBuild;
     }
+
+    std::vector<ResourceType> DevelopmentCard::getInstantGain() const
+    {
+        return this->instantGain;
+    }
 }
