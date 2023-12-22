@@ -3,22 +3,36 @@
 namespace state {
 
     /// @brief Create a player from a json file.
-    /*Player::Player(Json::Value jsonValue) :
+    Player::Player(Json::Value jsonValue) :
         Observable()
     {
         // To-do
-    }*/
+    }
     
     /// @brief Constructor of the player, with some parameters.
     /// @param name Name of the player
     /// @param id Id of the player
     /// @param profilePicture Profile Picture of the player
     Player::Player(std::string name, int id, sf::Texture* profilePicture) :
-    Observable(),
-    name(name),
-    id(id),
-    profilePicture(profilePicture)
+        Observable(),
+        name(name),
+        id(id),
+        profilePicture(profilePicture)
     {
+        this->initializeMaps();
+    }
+
+    /// @brief Constructor of player that takes into argument the relative path to the texture.
+    /// @param name Name of the player.
+    /// @param id ID of the player.
+    /// @param relativePathToTexture Relative path of the profile picture, that is loaded in the function.
+    Player::Player (std::string name, int id, std::string relativePathToTexture) :
+        Observable(),
+        name(name),
+        id(id)
+    {
+        this->profilePicture = new sf::Texture;
+        this->profilePicture->loadFromFile(relativePathToTexture);
         this->initializeMaps();
     }
 
@@ -401,13 +415,13 @@ namespace state {
 
     ///@brief Convert the Player to a JSON format. Usefull when the game is saved.
 	///@return Readable JSON of the player.
-    /*Json::Value Player::toJSON () const
+    Json::Value Player::toJSON () const
     {
         // Instanciation of the player into a JSON format.
         Json::Value playerJSON;
 
         return playerJSON;
-    }*/
+    }
 
     /************************************* Setters & Getters *************************************/
 
@@ -553,6 +567,13 @@ namespace state {
     bool Player::isAI () const
     {
         return (this->id < 0);
+    }
+
+    /// @brief Get the relative path of a texture.
+    /// @return Relative path of a texture.
+    std::string Player::getRelativePathToTexture () const
+    {
+        return this->relativePathToTexture;
     }
 
     /************************************* Methods implemented for AI. *************************************/

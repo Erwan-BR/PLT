@@ -812,7 +812,7 @@ void print_include_stdlib(struct stdlib_includes* si,char* name) {
        }       
        if (!si->jsoncpp
        && (strstr(name,"Json::") == name)) {
-           print ("//#include <json/json.h>\n");
+           print ("#include <json/json.h>\n");
            si->jsoncpp = 1;
        }       
     }

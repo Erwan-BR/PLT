@@ -4,7 +4,7 @@
 namespace state {
 
     /// @brief Create a card from a json file.
-    /*Card::Card(Json::Value jsonValue) :
+    Card::Card(Json::Value jsonValue) :
         Observable()
     {
         // Retrive name.
@@ -24,16 +24,43 @@ namespace state {
 		this->victoryPoints = createInformations->cardVictoryPointFromJSON(jsonValue["victoryPoints"]);
 
         // To-do : Use path of images to store it as an attribute, to retrive it and replace folowing lines.
+        this->relativePathToTexture = jsonValue["relativePathToTexture"].asString();
         this->design = new sf::Texture;
-    }*/
+        this->design->loadFromFile(this->relativePathToTexture);
+    }
 
-    /// @brief Create a card with all informations.
-    Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints) :
+    /// @brief Create a card with all information that concerned this card.
+    /// @param name Name of the card that will be displayed.
+    /// @param productionGain Represent what kind of resource the card can bring.
+    /// @param design Pointer to the design of the card, loaded in a texture.
+    /// @param victoryPoints Represent what kind of points the card can bring.
+    Card::Card (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints) :
         Observable(),
         name(name),
         design(design),
-    victoryPoints(victoryPoints)
+        victoryPoints(victoryPoints)
     {
+        
+        for(ResourceToProduce* resource : productionGain)
+        {
+            this->productionGain.push_back(resource);
+        }
+    }
+
+    /// @brief Create a card with all information that concerned this card.
+    /// @param name Name of the card that will be displayed.
+    /// @param productionGain Represent what kind of resource the card can bring.
+    /// @param relativePathToTexture Path of the design of the card.
+    /// @param victoryPoints Represent what kind of points the card can bring.
+    Card::Card (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathToTexture, CardVictoryPoint* victoryPoints) :
+        Observable(),
+        name(name),
+        victoryPoints(victoryPoints),
+        relativePathToTexture(relativePathToTexture)
+    {
+        this->design = new sf::Texture;
+        this->design->loadFromFile(relativePathToTexture);
+        
         for(ResourceToProduce* resource : productionGain)
         {
             this->productionGain.push_back(resource);
@@ -51,7 +78,7 @@ namespace state {
 
     ///@brief Convert the Card to a JSON format. Usefull when the game is saved.
 	///@return Readable JSON of the card.
-    /*Json::Value Card::toJSON () const
+    Json::Value Card::toJSON () const
     {
         // Instanciation of the card into a json format.
         Json::Value cardJson;
@@ -72,10 +99,10 @@ namespace state {
 
         cardJson["victoryPoints"] = createInformations->jsonOfCardVictoryPoint(*(this->victoryPoints));
 
-        // To-do : Implement the path of the design.
+        cardJson["relativePathToTexture"] = this->relativePathToTexture;
 
         return cardJson;
-    }*/
+    }
 
     /************************************* Setters & Getters *************************************/
 
@@ -105,5 +132,12 @@ namespace state {
     CardVictoryPoint* Card::getVictoryPoints () const
     {
         return this->victoryPoints;
+    }
+
+    /// @brief Get the relative path of the design of the card.
+    /// @return Relative path to the design of the card.
+    std::string Card::getRelativePathToTexture () const
+    {
+        return this->relativePathToTexture;
     }
 }
