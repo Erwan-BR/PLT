@@ -34,6 +34,8 @@ int main(int argc,char* argv[])
 	cout<<"> On This Window (Player Info):"<<endl;
 	cout<<"> Q - Display Player 1"<<endl;
 	cout<<"> S - Display Player 2"<<endl;
+	cout<<"*Game Commands*"<<endl;
+	cout<<"Space - Go to the next step of the testing game"<<endl;
 
 	//Creation of the window
 	int win_length = 1820;

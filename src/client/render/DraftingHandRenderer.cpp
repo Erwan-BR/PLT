@@ -1,6 +1,8 @@
 #include "DraftingHandRenderer.h"
 #include <string>
 
+#define CARDS_DISPLAY_DRAFTING 7
+
 namespace render {
     DraftingHandRenderer::DraftingHandRenderer (state::Player* player, sf::Transform transform){
 		//Creation of the Font for the Texts
@@ -46,7 +48,7 @@ namespace render {
         this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
 
         //Enter Cards (position 2 to 9 in sprites)
-        for (i=0;i<7 and i<(int) cards.size();i++){
+        for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++){
             cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f),150.f/375.f);
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }
@@ -74,7 +76,7 @@ namespace render {
         this->devCardRenderers = {};
 
         //Create new Cards
-        for (i=0;i<7 and i<(int) cards.size();i++){
+        for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++){
             cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(300.f+120.f*(i),0.f),170.f/375.f);
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }

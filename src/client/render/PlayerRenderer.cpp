@@ -1,6 +1,10 @@
 #include "PlayerRenderer.h"
 #include <string>
 
+#define CARDS_DISPLAY_MAIN_WINDOW 14
+#define CARDS_DISPLAY_DRAFTING 7
+#define CARDS_DISPLAY_FULL 28
+
 namespace render {
 	/// @brief Full constructor of the PlayerRenderer class.
 	/// @param transform indicating the position of the Renderer and passing the scale of the windows.
@@ -53,7 +57,7 @@ namespace render {
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(20.f,20.f));				//Transform
 
 			//Enter Cards (position 2 to 16 in sprites)
-			for (i=0;i<14 and i<(int) tobuild.size();i++){
+			for (i=0;i<CARDS_DISPLAY_MAIN_WINDOW and i<(int) tobuild.size();i++){
 				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
@@ -108,7 +112,7 @@ namespace render {
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
 
 			//Enter Cards (position 2 to 9 in sprites)
-			for (i=0;i<7 and i<(int) drafted.size();i++){
+			for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) drafted.size();i++){
 				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
@@ -142,12 +146,12 @@ namespace render {
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,50.f).scale(2.f,2.f).scale(1.f,(431.f/375.f)));				//Transform
 
 			//Enter Cards (position 2 to 58 in sprites)
-			for (i=0;i<28 and i<(int) built.size();i++){
+			for (i=0;i<CARDS_DISPLAY_FULL and i<(int) built.size();i++){
 				cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
-			for (i=28;i<56 and i<28+(int) tobuild.size();i++){
-				cRenderer = new DevelopmentCardRenderer(tobuild[i-28],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),0.f);
+			for (i=0;i<CARDS_DISPLAY_FULL and i<(int) tobuild.size();i++){
+				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
@@ -245,13 +249,13 @@ namespace render {
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[2]).translate(20.f,20.f));				//Transform
 
 			//Enter Cards to build
-			for (i=0;i<14 and i<(int) tobuild.size();i++){
+			for (i=0;i<CARDS_DISPLAY_MAIN_WINDOW and i<(int) tobuild.size();i++){
 				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[2]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
 			//Enter Cards (position 2 to 9 in sprites)
-			for (i=0;i<7 and i<(int) drafted.size();i++){
+			for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) drafted.size();i++){
 				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f),150.f/375.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
@@ -357,7 +361,7 @@ namespace render {
 		switch(this->affected_window){
 			case MAIN_WINDOW:
 				//Create new Cards
-				for (i=0;i<14 and i<(int) tobuild.size();i++){
+				for (i=0;i<CARDS_DISPLAY_MAIN_WINDOW and i<(int) tobuild.size();i++){
 					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(300.f+100.f*(i%7),0.f+150.f*(i/7)),150.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
@@ -381,20 +385,20 @@ namespace render {
 				break;
 			case DRAFTING_WINDOW:
 				//Create new cards
-				for (i=0;i<7 and i<(int) drafted.size();i++){
+				for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) drafted.size();i++){
 					cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(300.f+120.f*(i),0.f),170.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				break;
 			case PLAYER_INFO:
 				//Create new cards built
-				for (i=0;i<28 and i<(int) built.size();i++){
+				for (i=0;i<CARDS_DISPLAY_FULL and i<(int) built.size();i++){
 					cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				//Create new cards to build
-				for (i=28;i<56 and i<28+(int) tobuild.size();i++){
-					cRenderer = new DevelopmentCardRenderer(tobuild[i-28],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
+				for (i=0;i<CARDS_DISPLAY_FULL and i<(int) tobuild.size();i++){
+					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				//Update String content
@@ -419,12 +423,12 @@ namespace render {
 				break;
 			case PLANIFICATION_WINDOW:
 				//Create new Cards drafted
-				for (i=0;i<7 and i<(int) drafted.size();i++){
+				for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) drafted.size();i++){
 				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+120.f*(i),10.f),170.f/375.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 
 				//Create new Cards to build
-				for (i=0;i<14 and i<(int) tobuild.size();i++){
+				for (i=0;i<CARDS_DISPLAY_MAIN_WINDOW and i<(int) tobuild.size();i++){
 				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[2]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)),300.f/375.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
