@@ -14,7 +14,18 @@ namespace state {
 
         // Retrieve production gain from the JSON.
         this->productionGain = {};
+        if (jsonValue["productionGain"].isArray())
+        {
+            const Json::Value productionArray = jsonValue["productionGain"];
+        
+            for (const Json::Value& jsonStruct : productionArray)
+            {
+                this->productionGain.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
+            }
+        }
+        
         const Json::Value productionArray = jsonValue["productionGain"];
+        
         for (const Json::Value& jsonStruct : productionArray)
         {
             this->productionGain.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
@@ -93,7 +104,6 @@ namespace state {
         for (const ResourceToProduce* prodGain : this->productionGain)
         {
             productionArray.append(createInformations->jsonOfResourceToProduce(*prodGain));
-            //dataArray.append(toJson(myStruct));
         }
         cardJson["productionGain"] = productionArray;
 
