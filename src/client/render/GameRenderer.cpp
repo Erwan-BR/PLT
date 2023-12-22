@@ -136,90 +136,13 @@ namespace render
         }
     }
 
-    /************************************* Setters & Getters *************************************/
-
-    /// @brief Getter Sprite Board Material
-    /// @return Sprite of Board of MAterial
-    sf::Sprite* GameRenderer::getBoardMaterialSprite ()
-    {
-        return this->boardMaterialSprite;
-    }
-    /// @brief Getter Transform Board Material
-    /// @return Transform for the Board of Material
-    sf::Transform GameRenderer::getBoardMaterialTransform ()
-    {
-        return this->boardMaterialTransform;
-    }
-    /// @brief Getter Sprite Board Energy
-    /// @return Sprite of Board of Energy
-    sf::Sprite* GameRenderer::getBoardEnergySprite ()
-    {
-        return this->boardEnergySprite;
-    }
-    /// @brief Getter Transform Board Energy
-    /// @return Transform for the Board of Energy
-    sf::Transform GameRenderer::getBoardEnergyTransform ()
-    {
-        return this->boardEnergyTransform;
-    }
-    /// @brief Getter Sprite Board Gold
-    /// @return Sprite of Board of Gold
-    sf::Sprite* GameRenderer::getBoardGoldSprite ()
-    {
-        return this->boardGoldSprite;
-    }
-    /// @brief Getter Transform Board Gold
-    /// @return Transform for the Board of Gold
-    sf::Transform GameRenderer::getBoardGoldTransform ()
-    {
-        return this->boardGoldTransform;
-    }
-    /// @brief Getter Sprite Board Science
-    /// @return Sprite of Board of Science
-    sf::Sprite* GameRenderer::getBoardScienceSprite ()
-    {
-        return this->boardScienceSprite;
-    }
-    /// @brief Getter Transform Board Science
-    /// @return Transform for the Board of Science
-    sf::Transform GameRenderer::getBoardScienceTransform ()
-    {
-        return this->boardScienceTransform;
-    }
-    /// @brief Getter Sprite Board Exploration
-    /// @return Sprite of Board of Exploration
-    sf::Sprite* GameRenderer::getBoardExplorationSprite ()
-    {
-        return this->boardExplorationSprite;
-    }
-    /// @brief Getter Transform Board Exploration
-    /// @return Transform for the Board of Exploration
-    sf::Transform GameRenderer::getBoardExplorationTransform ()
-    {
-        return this->boardExplorationTransform;
-    }
-    /// @brief Getter Sprite Turn Indicator
-    /// @return Sprite of Turn Indicator
-    sf::Sprite* GameRenderer::getBoardTurnSprite ()
-    {
-        return this->boardTurnSprite;
-    }
-    /// @brief Getter Transform Turn Indicator
-    /// @return Transform for the Turn Indicator
-    sf::Transform GameRenderer::getBoardTurnTransform ()
-    {
-        return this->boardTurnTransform;
-    }
-    /// @brief Getter Text Phase Indicator
-    /// @return Text of Phase Indicator
-    sf::Text* GameRenderer::getPhaseIndicator ()
-    {
-        return this->phaseIndicator;
-    }
-    /// @brief Getter Transform Phase Indicator
-    /// @return Transform for the Phase Indicator
-    sf::Transform GameRenderer::getPhaseIndicatorTransform ()
-    {
-        return this->phaseIndicatorTransform;
+    void GameRenderer::draw(sf::RenderWindow& window){
+        window.draw(*this->boardMaterialSprite,this->boardMaterialTransform);
+        window.draw(*this->boardEnergySprite,this->boardEnergyTransform);
+        window.draw(*this->boardScienceSprite,this->boardScienceTransform);
+        window.draw(*this->boardGoldSprite,this->boardGoldTransform);
+        window.draw(*this->boardExplorationSprite,this->boardExplorationTransform);
+        window.draw(*this->boardTurnSprite,this->boardTurnTransform);
+        window.draw(*this->phaseIndicator,this->phaseIndicatorTransform);
     }
 }

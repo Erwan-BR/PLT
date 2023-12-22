@@ -54,7 +54,7 @@ namespace render {
 
 			//Enter Cards (position 2 to 16 in sprites)
 			for (i=0;i<14 and i<(int) tobuild.size();i++){
-				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)));
+				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
@@ -109,7 +109,7 @@ namespace render {
 
 			//Enter Cards (position 2 to 9 in sprites)
 			for (i=0;i<7 and i<(int) drafted.size();i++){
-				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
+				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
@@ -143,11 +143,11 @@ namespace render {
 
 			//Enter Cards (position 2 to 58 in sprites)
 			for (i=0;i<28 and i<(int) built.size();i++){
-				cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)));
+				cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 			for (i=28;i<56 and i<28+(int) tobuild.size();i++){
-				cRenderer = new DevelopmentCardRenderer(tobuild[i-28],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)));
+				cRenderer = new DevelopmentCardRenderer(tobuild[i-28],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),0.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
@@ -216,7 +216,7 @@ namespace render {
 			sprite= new sf::Sprite();
 			sprite->setTexture(*(this->textures[0]));
 			this->sprites.push_back(sprite);					//Sprite
-			this->sprite_transforms.push_back(transform);				//Transform
+			this->sprite_transforms.push_back(sf::Transform(transform).translate(0.f,900.f));				//Transform
 
 			//Enter Player Profile Picture (position 1 in sprites)
 			texture = new sf::Texture();
@@ -227,13 +227,67 @@ namespace render {
 			this->sprites.push_back(sprite);					//Sprite
 			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
 
+			//Enter Player board (position 2 in sprites)
+			texture = new sf::Texture();
+			texture->loadFromFile("./resources/img/player.png");
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[2]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(sf::Transform(transform).scale(2.f,2.f));				//Transform
+
+			//Enter Player Profile Picture (position 3 in sprites)
+			texture = player->getProfilePicture();
+			this->textures.push_back(texture);					//Texture
+			sprite= new sf::Sprite();
+			sprite->setTexture(*(this->textures[3]));
+			this->sprites.push_back(sprite);					//Sprite
+			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[2]).translate(20.f,20.f));				//Transform
+
+			//Enter Cards to build
+			for (i=0;i<14 and i<(int) tobuild.size();i++){
+				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[2]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)),0.f);
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+			}
+
 			//Enter Cards (position 2 to 9 in sprites)
 			for (i=0;i<7 and i<(int) drafted.size();i++){
-				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f).scale(0.35f,0.35f).scale(1.f,(431.f/375.f)));
+				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f),150.f/375.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 			}
 
 			//Enter Player Name (position 0 in texts)
+			text = new sf::Text();
+			text->setFont(font);
+			text->setString(player->getName());
+			text->setCharacterSize(30);
+			text->setFillColor(sf::Color::White);
+			this->texts.push_back(text);			//Text
+			this->text_transforms.push_back(sf::Transform(sprite_transforms[2]).translate(140.f,30.0f));		//Transform
+
+			//Enter Resources/Constructions Count (position 1 to 10)
+			for (i=0;i<10;i++){
+				text = new sf::Text();
+				text->setFont(font);
+				text->setString("x0");
+				text->setCharacterSize(10);
+				text->setFillColor(sf::Color::White);
+				this->texts.push_back(text);			//Text
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[2]).translate(40.f+80.f*(i/5),140.0f+30.0f*(i%5)));	//Transform
+			}
+
+			//Enter Victory Point / Token Count (position 11 to 13)
+			for (i=0;i<3;i++){
+				text = new sf::Text();
+				text->setFont(font);
+				text->setString("x0");
+				text->setCharacterSize(10);
+				text->setFillColor(sf::Color::White);
+				this->texts.push_back(text);				//Text
+				this->text_transforms.push_back(sf::Transform(sprite_transforms[2]).translate(200.0f,140.0f+50.0f*(i)));		//Transform
+			}
+
+			//Enter Drafted Hand (position 14 in texts)
 			text = new sf::Text();
 			text->setFont(font);
 			text->setString("Drafted Cards");
@@ -241,7 +295,6 @@ namespace render {
 			text->setFillColor(sf::Color::White);
 			this->texts.push_back(text);			//Text
 			this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,10.0f));		//Transform
-
 			break;
 		default:
 			break;
@@ -260,58 +313,7 @@ namespace render {
 			free(c);
 		}
 	}
-    
-	/// @brief Getter Sprite of PlayerRenderer class.
-	///	@param i the position of the wanted Sprite in the vector
-	/// @return The Sprite corresponding
-	sf::Sprite* PlayerRenderer::getSprite(int i){
-		return (this->sprites)[i];
-	}
 
-	/// @brief Getter Transform of PlayerRenderer class.
-	///	@param i the position of the wanted transform in the vector
-	/// @return The transform corresponding.
-	sf::Transform PlayerRenderer::getSpriteTransform(int i){
-		return (this->sprite_transforms)[i];
-	}
-
-	/// @brief Getter Number of Sprite element in PlayerRenderer class.
-	///	@return Number of Sprite element in the vector sprites (same as the numbers of elements in sprite_transforms).
-	int PlayerRenderer::getNumberSprite(){
-		return (this->sprites).size();
-	}
-
-	/// @brief Getter Text of PlayerRenderer class.
-	///	@param i the position of the wanted text in the vector
-	/// @return The text corresponding
-	sf::Text* PlayerRenderer::getText(int i){
-		return (this->texts)[i];
-	}
-
-	/// @brief Getter Transform of PlayerRenderer class.
-	///	@param i the position of the wanted transform in the vector
-	/// @return The transform corresponding.
-	sf::Transform PlayerRenderer::getTextTransform(int i){
-		return (this->text_transforms)[i];
-	}
-
-	/// @brief Getter Number of Drawable element in PlayerRenderer class.
-	///	@return Number of Drawable element in the vector texts (same as the numbers of elements in transforms).
-	int PlayerRenderer::getNumberText(){
-		return (this->texts).size();
-	}
-	/// @brief Getter CardRenderer of PlayerRenderer class.
-	///	@param i the position of the wanted Renderer in the vector
-	/// @return The renderer corresponding.
-	DevelopmentCardRenderer* PlayerRenderer::getCardRenderer(int i){
-		return (this->devCardRenderers)[i];
-	}
-
-	/// @brief Getter Number of CardRenderer element in PlayerRenderer class.
-	/// @return Number of Drawable element in the vector texts
-	int PlayerRenderer::getNumberCardRenderer(){
-		return (this->devCardRenderers).size();
-	}
 	/// @brief Setter Sprite & Texture (position 1 in vector sprites)
 	///	@param Name of png file from resource/img without extension
 	void PlayerRenderer::changeProfilePicture(std::string path){
@@ -356,7 +358,7 @@ namespace render {
 			case MAIN_WINDOW:
 				//Create new Cards
 				for (i=0;i<14 and i<(int) tobuild.size();i++){
-					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(340.f+70.f*(i%7),48.f+127.f*(i/7)));
+					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(300.f+100.f*(i%7),0.f+150.f*(i/7)),150.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 
@@ -380,19 +382,19 @@ namespace render {
 			case DRAFTING_WINDOW:
 				//Create new cards
 				for (i=0;i<7 and i<(int) drafted.size();i++){
-					cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f));
+					cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(300.f+120.f*(i),0.f),170.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				break;
 			case PLAYER_INFO:
 				//Create new cards built
 				for (i=0;i<28 and i<(int) built.size();i++){
-					cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)));
+					cRenderer = new DevelopmentCardRenderer(built[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				//Create new cards to build
 				for (i=28;i<56 and i<28+(int) tobuild.size();i++){
-					cRenderer = new DevelopmentCardRenderer(tobuild[i-28],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)));
+					cRenderer = new DevelopmentCardRenderer(tobuild[i-28],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				//Update String content
@@ -416,20 +418,59 @@ namespace render {
 
 				break;
 			case PLANIFICATION_WINDOW:
-				//Create new Cards
+				//Create new Cards drafted
 				for (i=0;i<7 and i<(int) drafted.size();i++){
-				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f));
+				cRenderer = new DevelopmentCardRenderer(drafted[i],sf::Transform(sprite_transforms[0]).translate(350.f+120.f*(i),10.f),170.f/375.f);
 				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+
+				//Create new Cards to build
+				for (i=0;i<14 and i<(int) tobuild.size();i++){
+				cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[2]).translate(350.f+70.f*(i%7),48.f+127.f*(i/7)).scale(0.2f,0.2f).scale(1.f,(431.f/375.f)),300.f/375.f);
+				this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+			}
+
+				(this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
+				(this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
+				(this->texts)[3]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::SCIENCE]));
+				(this->texts)[4]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::GOLD]));
+				(this->texts)[5]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::EXPLORATION]));
+
+				(this->texts)[6]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::STRUCTURE]));
+				(this->texts)[7]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::VEHICLE]));
+				(this->texts)[8]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::RESEARCH]));
+				(this->texts)[9]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::PROJECT]));
+				(this->texts)[10]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::DISCOVERY]));
+
+				(this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
+				(this->texts)[12]->setString("x"+std::to_string(this->player->getCurrentResources()[state::COLONEL]));
+				(this->texts)[13]->setString("x"+std::to_string(this->player->getCurrentResources()[state::FINANCIER]));
 			}
 			default:
 				break;
 		}
 
 		//Update Cards
-		for(i=0; i<this->getNumberCardRenderer();i++){
-			(this->getCardRenderer(i))->update();
+		for(i=0; i<(int) this->devCardRenderers.size();i++){
+			(this->devCardRenderers[i])->update();
 		}
 
+	}
+
+	void PlayerRenderer::draw(sf::RenderWindow& window){
+		for(int i=0;i<(int) this->sprites.size();i++){
+			window.draw(*(this->sprites[i]),(this->sprite_transforms[i]));
+		}
+		for(int i=0;i<(int) this->texts.size();i++){
+			window.draw(*(this->texts[i]),(this->text_transforms[i]));
+		}
+		for(DevelopmentCardRenderer* cRenderer: this->devCardRenderers){
+			cRenderer->draw(window);
+		}
+
+	}
+
+	sf::Transform PlayerRenderer::getPos(){
+		return this->sprite_transforms[0];
 	}
 };
 

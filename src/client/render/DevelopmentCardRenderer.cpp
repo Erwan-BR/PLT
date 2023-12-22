@@ -4,7 +4,7 @@ namespace render
 {
     /// @brief Constructor of the card renderer.
     /// @param card Card to render.
-    DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card,sf::Transform transform) :
+    DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card,sf::Transform transform,float scale) :
         card(card)
     {
         //Get the Texture form Card
@@ -17,7 +17,7 @@ namespace render
         this->sprite->setTexture(*(this->texture));
 
         //Store transform
-        this->transform = transform;
+        this->transform = sf::Transform(transform).scale(scale,scale);
 
         //Initialize Vecotor
         this->vectorOfCrossesSprite = {};
@@ -37,7 +37,7 @@ namespace render
         {
             vectorOfCrossesSprite.push_back(new sf::Sprite());
             vectorOfCrossesSprite[index]->setTexture(*(this->notPaidTexture));
-            vectorOfCrossesTransform.push_back(sf::Transform(transform).translate(0.0f,0.0f+10.0f*index));
+            vectorOfCrossesTransform.push_back(sf::Transform(transform).scale(scale,scale).translate(30.0f,10.0f+35.0f*index).scale(0.035f,0.035f));
         }
     }
 
@@ -67,31 +67,10 @@ namespace render
         }
     }
 
-    /************************************* Setters & Getters *************************************/
-
-    /// @brief Get the vector of sprites that shows if a resource is paid or not.
-    /// @return Vector of sprites.
-    std::vector<sf::Sprite*> DevelopmentCardRenderer::getVectorOfCrossesSprite () const
-    {
-        return this->vectorOfCrossesSprite;
-    }
-
-    /// @brief Get the Sprite of the Card
-    /// @return Sprite of the Card
-    sf::Sprite* DevelopmentCardRenderer::getSprite(){
-        return this->sprite;
-    }
-
-    /// @brief Getter VectorCrossesTransform
-    /// @return Vector of Transform linked to the Crosses
-    std::vector<sf::Transform> DevelopmentCardRenderer::getVectorOfCrossesTransform ()
-    {
-        return this->vectorOfCrossesTransform;
-    }
-
-    /// @brief Getter Transform
-    /// @return Transform for the Card
-    sf::Transform DevelopmentCardRenderer::getTransform(){
-        return this->transform;
+    void DevelopmentCardRenderer::draw(sf::RenderWindow& window){
+        window.draw(*this->sprite,this->transform);
+        for(int i=0;i<(int) this->vectorOfCrossesSprite.size();i++){
+            window.draw(*(this->vectorOfCrossesSprite[i]),this->vectorOfCrossesTransform[i]);
+        }
     }
 }

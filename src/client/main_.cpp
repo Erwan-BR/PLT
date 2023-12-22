@@ -21,7 +21,7 @@ using namespace render;
 
 int main(int argc,char* argv[])
 {
-	//Print Temporary Manual Commands
+	/*//Print Temporary Manual Commands
 	cout<<"**Temporary Manual Commands**"<<endl;
 	cout<<"*Change Window Commands*"<<endl;
 	cout<<"A - Main Window"<<endl;
@@ -235,5 +235,5 @@ int main(int argc,char* argv[])
 		}
     cout << "Exit Successfully !" << endl;
 
-    return 0;
+    return 0;*/
 }

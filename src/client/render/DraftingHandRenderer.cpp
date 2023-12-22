@@ -47,7 +47,7 @@ namespace render {
 
         //Enter Cards (position 2 to 9 in sprites)
         for (i=0;i<7 and i<(int) cards.size();i++){
-            cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f));
+            cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f),150.f/375.f);
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }
 
@@ -59,59 +59,6 @@ namespace render {
         text->setFillColor(sf::Color::White);
         this->texts.push_back(text);			//Text
         this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,10.0f));		//Transform
-    }
-
-    /// @brief Getter Sprites
-    /// @param index position of the wanted sprite in sprites
-    /// @return Pointer to wanted Sprite
-    sf::Sprite* DraftingHandRenderer::getSprite (int index){
-        return this->sprites[index];
-    }
-
-    /// @brief Getter Transform for sprite
-    /// @param index position of the wanted transform in sprite_transform
-    /// @return Wanted Transform
-    sf::Transform DraftingHandRenderer::getSpriteTransform (int index){
-        return this->sprite_transforms[index];
-    }
-
-    /// @brief Getter number of Sprite
-    /// @return Number of Sprite in sprites
-    int DraftingHandRenderer::getNumberSprite (){
-        return this->sprites.size();
-    }
-
-    /// @brief Getter Text
-    /// @param index position of the wanted Text in texts
-    /// @return Pointer to wanted Text
-    sf::Text* DraftingHandRenderer::getText (int index){
-        return this->texts[index];
-    }
-
-    /// @brief Getter Transform for Text
-    /// @param index position of the wanted transform in text_transform
-    /// @return Wanted Transform
-    sf::Transform DraftingHandRenderer::getTextTransform (int index){
-        return this->text_transforms[index];
-    }
-
-    /// @brief Getter number of Text
-    /// @return Number of Text in texts
-    int DraftingHandRenderer::getNumberText (){
-        return this->texts.size();
-    }
-
-    /// @brief Getter CardRenderer
-    /// @param index position of the wanted renderer in devCardRenderers
-    /// @return Pointer to wanted CardRenderer
-    DevelopmentCardRenderer* DraftingHandRenderer::getCardRenderer (int index){
-        return this->devCardRenderers[index];
-    }
-
-    /// @brief Getter number of CardRenderer
-    /// @return Number of CardRenderer in devCardRenderers
-    int DraftingHandRenderer::getNumberCardRenderer (){
-        return this->devCardRenderers.size();
     }
     
     /// @brief update the DraftingHandRenderer with the current state of the game
@@ -128,17 +75,27 @@ namespace render {
 
         //Create new Cards
         for (i=0;i<7 and i<(int) cards.size();i++){
-            cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f));
+            cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(300.f+120.f*(i),0.f),170.f/375.f);
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }
 		
         //Update Cards
-		for(i=0; i<this->getNumberCardRenderer();i++){
-			(this->getCardRenderer(i))->update();
+		for(i=0; i<(int) this->devCardRenderers.size();i++){
+			(this->devCardRenderers[i])->update();
 		}
-
     }
 
+    void DraftingHandRenderer::draw(sf::RenderWindow& window){
+        for(int i=0;i<(int) this->sprites.size();i++){
+			window.draw(*(this->sprites[i]),(this->sprite_transforms[i]));
+		}
+		for(int i=0;i<(int) this->texts.size();i++){
+			window.draw(*(this->texts[i]),(this->text_transforms[i]));
+		}
+		for(DevelopmentCardRenderer* cRenderer: this->devCardRenderers){
+			cRenderer->draw(window);
+		}
+    }
 
 
 }

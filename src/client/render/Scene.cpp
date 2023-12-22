@@ -9,6 +9,7 @@ namespace render {
     Scene::Scene(state::Game* game,sf::Transform transform){
 		//Store game attribute
 		this->game = game;
+		this->transform = transform;
 
        	//Creation and initialisation of the background texture
     	this->background_texture =sf::Texture();
@@ -43,7 +44,7 @@ namespace render {
 		this->player_renderer.push_back(pRenderer);
 
 		//Generate PlayerRenderer for PLANIFICATION_WINDOW
-		pRenderer = new PlayerRenderer(game->getPlayers()[0],generatePlayerTransform(transform,PLANIFICATION_WINDOW,0).translate(0.f,900.f),PLANIFICATION_WINDOW);
+		pRenderer = new PlayerRenderer(game->getPlayers()[0],transform,PLANIFICATION_WINDOW);
 		this->player_renderer.push_back(pRenderer);
 
 		//Generate DraftingHandRenederer
@@ -57,37 +58,6 @@ namespace render {
     Scene::~Scene (){
 
     }
-
-    /// @brief Getter of the background sprite.
-    /// @return The sprite corresponding of the background of the scene
-    sf::Sprite Scene::getBackground (){
-    	return (this->background);
-    }
-
-    /// @brief Getter of the player renderer.
-    /// @param index corresponding of the wanted player renderer in the vector player_renderer
-	/// @return The player renderer corresponding of the index.
-	PlayerRenderer* Scene::getPlayerRenderer (int i){
-		return (this->player_renderer)[i];
-	}
-
-	/// @brief Getter Number of PlayerRenderer
-	/// @return the number of PlayerRenderer in player_renderer
-	int Scene::getNumberPlayerRenderer(){
-		return (this->player_renderer).size();
-	}
-
-	/// @brief Getter GameRenderer
-	/// @return the GameRenderer
-	GameRenderer* Scene::getGameRenderer(){
-		return this->game_renderer;
-	}
-	
-	/// @brief Getter DraftingHandRnederer
-	/// @return the DraftingHandRendereR
-	DraftingHandRenderer* Scene::getHandRenderer(){
-		return this->drafting_hand_renderer;
-	}
 
 	/// @brief Setter for current_window
 	/// @param window new window
@@ -108,7 +78,7 @@ namespace render {
 		state::Player* player = game->getPlayers()[index];
 
 		//Get Transform
-		sf::Transform t = this->getPlayerRenderer(4)->getSpriteTransform(0);
+		sf::Transform t = this->player_renderer[4]->getPos();
 
 		//Create Renderer
 		PlayerRenderer* pRenderer = new PlayerRenderer(player,t,PLAYER_INFO);
@@ -148,7 +118,7 @@ namespace render {
 				return sf::Transform(transform).translate(0.f,(indice-1)*180.f);
 			}
 		if (window == PLANIFICATION_WINDOW){
-			return sf::Transform(transform).translate(0.f,720.f);
+			return sf::Transform(transform);
 		}
 		}
 	return sf::Transform(transform);
@@ -161,5 +131,52 @@ namespace render {
 		for(PlayerRenderer* pRend:this->player_renderer){
 			pRend->update();
 		}
+	}
+
+	void Scene::draw(sf::RenderWindow& window){
+		
+		switch (this->current_window){
+			case MAIN_WINDOW:
+				window.draw(this->background,this->transform);		//Background
+				//Display GameRenderer
+				this->game_renderer->draw(window);			
+				
+				//Display players
+				for (int i=0; i < 2; i++){
+					this->player_renderer[i]->draw(window);
+				}
+				break;
+			case DRAFTING_WINDOW:
+				//Display players
+				for (int i=2; i < 4; i++){
+					this->player_renderer[i]->draw(window);
+				}
+				//Display Drafting Hand
+				this->drafting_hand_renderer->draw(window);
+				break;
+			case PLAYER_INFO:
+				//Display Player
+				this->player_renderer[4]->draw(window);
+				break;
+			case PLANIFICATION_WINDOW:
+				window.draw(this->background,this->transform);
+
+				//Display Player
+				//this->player_renderer[6]->draw(window);
+				//Display Drafted Hand
+				this->player_renderer[5]->draw(window);
+				break;
+			default:
+				break;
+			}
+
+	}
+
+	void Scene::setupObserver(state::Observable* observable){
+		observable->addObserver(this->game_renderer);
+		for(PlayerRenderer* pRenderer: player_renderer){
+			observable->addObserver(pRenderer);
+		}
+		observable->addObserver(this->drafting_hand_renderer);
 	}
 };
