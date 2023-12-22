@@ -644,7 +644,7 @@ namespace state
 		sf::Texture* designAZTEC = new sf::Texture;
 		designAZTEC->loadFromFile("./resources/img/Cards/Empire_Face_A/Azteca.png");
 		sf::Texture* designAZTEC_FaceB = new sf::Texture;
-		designAZTEC->loadFromFile("./resources/img/Cards/Empire_Face_B/Azteca.png");
+		designAZTEC_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Azteca.png");
 		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
 		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, isFaceA);
 

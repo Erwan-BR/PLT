@@ -102,12 +102,19 @@ namespace state {
         }
         CardType cardConstructedType = this->toBuildCards[cardIndex]->getType();
         
+        for(ResourceType resource : this->toBuildCards[cardIndex]->getInstantGain())
+        {
+            this->currentResources[resource]++;
+        }
+
         // Transfering the element from a vector to the other one.
         this->builtCards.push_back(this->toBuildCards[cardIndex]);
         this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);
         
         // Add the card to the dictionnary containing constructed cards.
         this->cardsTypeList[cardConstructedType] ++;
+
+
         this->updateProduction();
         this->notifyObservers();
     }
@@ -160,7 +167,7 @@ namespace state {
 
         // Convert the resource and propagate the information to observers.
         this->currentResources.at(ResourceType::KRYSTALLIUM) --;
-        this->currentResources.at(targetResource) --;
+        this->currentResources.at(targetResource) ++;
         this->notifyObservers();
     }
     
@@ -324,7 +331,7 @@ namespace state {
         {
             return;
         }
-        this->currentResources.at(resource) --;
+        this->currentResources.at(resource)--;
         this->resourcesInEmpireUnit++;
         this->convertToKrystallium();
         this->notifyObservers();
@@ -405,7 +412,7 @@ namespace state {
         const std::vector<ResourceType> resourcesToSend = {ResourceType::MATERIAL, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION};
         for (ResourceType resourceType : resourcesToSend)
         {
-            for (int i = 0; i < this->currentResources.at(resourceType) ; i++)
+            while(0 != this->currentResources.at(resourceType))
             {
                 this->sendResourceToEmpire(resourceType);
             }
