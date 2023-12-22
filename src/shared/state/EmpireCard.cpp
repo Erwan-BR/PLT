@@ -42,10 +42,10 @@ namespace state {
     /// @param relativePathOfTextureFaceB Path to find the image of the player face B of the card.
     EmpireCard::EmpireCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathOfTexture, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, CardVictoryPoint* victoryPointdAdvanced, EmpireLand empire, std::string relativePathOfTextureFaceB, bool isFaceA) :
         Card(name, productionGain, relativePathOfTexture, victoryPoints),
-        victoryPointsAdvanced(victoryPointsAdvanced),
+        victoryPointsAdvanced(victoryPointdAdvanced),
         empire(empire),
-        designFaceB(designFaceB),
-        isFaceA(isFaceA)
+        isFaceA(isFaceA),
+        relativePathOfTextureFaceB(relativePathOfTextureFaceB)
     {
         this->designFaceB = new sf::Texture;
         this->designFaceB->loadFromFile(relativePathOfTextureFaceB);
@@ -105,5 +105,12 @@ namespace state {
             return this->victoryPoints;
         }
         return this->victoryPointsAdvanced;
+    }
+
+    /// @brief Retrieve the path of the texture of the second face of the card.
+    /// @return Path to the design of the face B.
+    std::string EmpireCard::getRelativePathOfTextureFaceB () const
+    {
+        return this->relativePathOfTextureFaceB;
     }
 }

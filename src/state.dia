@@ -134,7 +134,7 @@
         <dia:point val="27.8565,61.2458"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="27.8065,61.1958;56.1265,75.8958"/>
+        <dia:rectangle val="27.8065,61.1958;56.1265,76.6958"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="27.8565,61.2458"/>
@@ -143,7 +143,7 @@
         <dia:real val="28.219999999999999"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="14.6"/>
+        <dia:real val="15.4"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#Card#</dia:string>
@@ -336,7 +336,7 @@
             <dia:string>#std::string#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#""#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Relative path that indicate where the texture is saved. Really usefull for saving games to JSON and reload it.#</dia:string>
@@ -758,6 +758,36 @@
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#CardVictoryPoint*#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="0"/>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="inheritance_type">
+            <dia:enum val="2"/>
+          </dia:attribute>
+          <dia:attribute name="query">
+            <dia:boolean val="true"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="parameters"/>
+        </dia:composite>
+        <dia:composite type="umloperation">
+          <dia:attribute name="name">
+            <dia:string>#getRelativePathToTexture#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="stereotype">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#std::string#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="0"/>
@@ -1404,7 +1434,7 @@
             </dia:composite>
             <dia:composite type="umlparameter">
               <dia:attribute name="name">
-                <dia:string>#numberofCopies#</dia:string>
+                <dia:string>#numberOfCopies#</dia:string>
               </dia:attribute>
               <dia:attribute name="type">
                 <dia:string>#int#</dia:string>
@@ -2015,7 +2045,7 @@
         <dia:point val="44.8124,80.0933"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="44.7624,80.0433;74.6224,101.143"/>
+        <dia:rectangle val="44.7624,80.0433;74.6224,102.743"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="44.8124,80.0933"/>
@@ -2024,7 +2054,7 @@
         <dia:real val="29.760000000000002"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="21.000000000000007"/>
+        <dia:real val="22.600000000000009"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#EmpireCard#</dia:string>
@@ -2221,6 +2251,29 @@
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Boolean that states if the game is played with the first or second face.#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="1"/>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+        </dia:composite>
+        <dia:composite type="umlattribute">
+          <dia:attribute name="name">
+            <dia:string>#relativePathOfTextureFaceB#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#std::string#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="value">
+            <dia:string>#""#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>#Relative path that indicate where the texture of face B is saved. Really usefull for saving games to JSON and reload it.#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="1"/>
@@ -2800,6 +2853,36 @@
           </dia:attribute>
           <dia:attribute name="parameters"/>
         </dia:composite>
+        <dia:composite type="umloperation">
+          <dia:attribute name="name">
+            <dia:string>#getRelativePathOfTextureFaceB#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="stereotype">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#std::string#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="0"/>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="inheritance_type">
+            <dia:enum val="2"/>
+          </dia:attribute>
+          <dia:attribute name="query">
+            <dia:boolean val="true"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="parameters"/>
+        </dia:composite>
       </dia:attribute>
       <dia:attribute name="template">
         <dia:boolean val="false"/>
@@ -2812,7 +2895,7 @@
         <dia:point val="4.82195,8.73338"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="4.77195,8.68338;30.782,60.1834"/>
+        <dia:rectangle val="4.77195,8.68338;30.782,60.9834"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="4.82195,8.73338"/>
@@ -2821,7 +2904,7 @@
         <dia:real val="25.91"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="51.399999999999999"/>
+        <dia:real val="52.199999999999996"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#Player#</dia:string>
@@ -3221,7 +3304,7 @@
             <dia:string>#std::string#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#""#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Relative path that indicate where the texture is saved. Really usefull for saving games to JSON and reload it.#</dia:string>
@@ -4890,6 +4973,36 @@
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#int#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="0"/>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="inheritance_type">
+            <dia:enum val="2"/>
+          </dia:attribute>
+          <dia:attribute name="query">
+            <dia:boolean val="true"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="parameters"/>
+        </dia:composite>
+        <dia:composite type="umloperation">
+          <dia:attribute name="name">
+            <dia:string>#getRelativePathToTexture#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="stereotype">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#std::string#</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="0"/>
@@ -8326,18 +8439,18 @@
     </dia:object>
     <dia:object type="UML - Generalization" version="1" id="O17">
       <dia:attribute name="obj_pos">
-        <dia:point val="41.9665,75.8458"/>
+        <dia:point val="41.9665,76.6458"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="22.6774,75.7958;42.8165,80.1228"/>
+        <dia:rectangle val="22.6774,76.5958;42.8165,80.1228"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="41.9665,75.8458"/>
-        <dia:point val="41.9665,78.3593"/>
-        <dia:point val="22.7274,78.3593"/>
+        <dia:point val="41.9665,76.6458"/>
+        <dia:point val="41.9665,78.7593"/>
+        <dia:point val="22.7274,78.7593"/>
         <dia:point val="22.7274,80.0728"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -8377,18 +8490,18 @@
     </dia:object>
     <dia:object type="UML - Generalization" version="1" id="O18">
       <dia:attribute name="obj_pos">
-        <dia:point val="41.9665,75.8458"/>
+        <dia:point val="41.9665,76.6458"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="41.1165,75.7958;59.7424,80.1433"/>
+        <dia:rectangle val="41.1165,76.5958;59.7424,80.1433"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="41.9665,75.8458"/>
-        <dia:point val="41.9665,78.3696"/>
-        <dia:point val="59.6924,78.3696"/>
+        <dia:point val="41.9665,76.6458"/>
+        <dia:point val="41.9665,78.7696"/>
+        <dia:point val="59.6924,78.7696"/>
         <dia:point val="59.6924,80.0933"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -8737,18 +8850,18 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O25">
       <dia:attribute name="obj_pos">
-        <dia:point val="17.7769,60.1334"/>
+        <dia:point val="17.7769,60.9334"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="17.7269,60.0834;23.1774,80.5228"/>
+        <dia:rectangle val="17.7269,60.8834;23.1774,80.5228"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="17.7769,60.1334"/>
-        <dia:point val="17.7769,69.9031"/>
-        <dia:point val="22.7274,69.9031"/>
+        <dia:point val="17.7769,60.9334"/>
+        <dia:point val="17.7769,70.3031"/>
+        <dia:point val="22.7274,70.3031"/>
         <dia:point val="22.7274,80.0728"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -8791,16 +8904,16 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O26">
       <dia:attribute name="obj_pos">
-        <dia:point val="17.7769,60.1808"/>
+        <dia:point val="17.7769,34.8334"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="17.7269,59.6226;60.1424,80.5433"/>
+        <dia:rectangle val="17.7269,34.7834;60.1424,80.5433"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="17.7769,60.1808"/>
+        <dia:point val="17.7769,34.8334"/>
         <dia:point val="17.7769,60.3676"/>
         <dia:point val="59.6924,60.3676"/>
         <dia:point val="59.6924,80.0933"/>
@@ -8838,7 +8951,7 @@
         <dia:color val="#000000ff"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O5" connection="126"/>
+        <dia:connection handle="0" to="O5" connection="128"/>
         <dia:connection handle="1" to="O4" connection="1"/>
       </dia:connections>
       <dia:childnode parent="O0"/>
@@ -9111,16 +9224,16 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O32">
       <dia:attribute name="obj_pos">
-        <dia:point val="59.6924,101.093"/>
+        <dia:point val="59.6924,102.693"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="59.6424,101.043;92.1036,118.612"/>
+        <dia:rectangle val="59.6424,102.643;92.1036,118.612"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="59.6924,101.093"/>
+        <dia:point val="59.6924,102.693"/>
         <dia:point val="59.6924,108.993"/>
         <dia:point val="91.6536,108.993"/>
         <dia:point val="91.6536,118.162"/>
@@ -9271,18 +9384,18 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O35">
       <dia:attribute name="obj_pos">
-        <dia:point val="41.9665,75.8458"/>
+        <dia:point val="41.9665,76.6458"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="40.9961,75.7958;42.0165,113.068"/>
+        <dia:rectangle val="40.9961,76.5958;42.0165,113.068"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="41.9665,75.8458"/>
-        <dia:point val="41.9665,94.0319"/>
-        <dia:point val="41.4461,94.0319"/>
+        <dia:point val="41.9665,76.6458"/>
+        <dia:point val="41.9665,94.4319"/>
+        <dia:point val="41.4461,94.4319"/>
         <dia:point val="41.4461,112.618"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">

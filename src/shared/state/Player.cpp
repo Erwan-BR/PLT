@@ -569,6 +569,13 @@ namespace state {
         return (this->id < 0);
     }
 
+    /// @brief Get the relative path of a texture.
+    /// @return Relative path of a texture.
+    std::string Player::getRelativePathToTexture () const
+    {
+        return this->relativePathToTexture;
+    }
+
     /************************************* Methods implemented for AI. *************************************/
     
     /// @brief Method for AI, to make them choose their card. Method implemented in Player because both Player and AI are in the same vector in Game.

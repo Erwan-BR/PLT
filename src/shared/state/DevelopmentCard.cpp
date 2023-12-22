@@ -42,7 +42,7 @@ namespace state {
     /// @param costToBuild Vector that contains all the resources to pay to build the Card.
     /// @param instantGain Vector that contains all the resources won at the construction of the Card.
     /// @param discardGain Pointers to the resources you get when the Card is discarded.
-    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathOfTexture, CardVictoryPoint* victoryPoints, CardType type, int numberofCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
+    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathOfTexture, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
         Card(name, productionGain, relativePathOfTexture, victoryPoints),
         type(type),
         numberOfCopies(numberOfCopies),

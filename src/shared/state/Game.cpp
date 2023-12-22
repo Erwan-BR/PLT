@@ -145,6 +145,7 @@ namespace state {
 		if ((1 == this->turn && this->isTestingGame) || (4 == this->turn && ! this->isTestingGame))
 		{
 			this->endGame();
+			return ;
 		}
 
 		// Invert the sens for the draft phase
