@@ -3,29 +3,51 @@
 #include "../../src/client/render/Scene.h"
 
 using namespace ::render;
+using namespace std;
 
 BOOST_AUTO_TEST_CASE(SceneTest)
 {
   {
-	// Creation of the instance of Game
-    Scene* myScene = new Scene();
+	sf::Texture* t = new sf::Texture();
+	sf::Texture* t2 = new sf::Texture();
+	//Creation of testing instances of Player class
+	t->loadFromFile("./resources/img/pfp_1.png");
+	state::Player* player1 = new state::Player("MOI",0,t);
+	t2->loadFromFile("./resources/img/pfp_2.png");
+	state::Player* player2 = new state::Player("TOI",1,t2);
 
-	// Test getBackground()
-	(void)myScene->getBackground();
+	//Creation of the vector players
+	std::vector<state::Player*> players;
+	players.push_back(player1);
+	players.push_back(player2);
 
-	// Test getPlayerRenderer
-	(void)myScene->getPlayerRenderer(0);
+	//Creation of the instance of the Game class
+	state::Game game = state::Game(players,true);
+	game.initGame();
+
+	//Creation of the instance of the Scene class
+	Scene* myscene = new Scene(&game,sf::Transform());
 
 	// Test setWindow
 	Window w = PLAYER_INFO;
-	myScene->changeWindow(w);
+	myscene->changeWindow(w);
 
 	// Test getWindow
-	Window w2 = myScene->getWindow();
+	Window w2 = myscene->getWindow();
 	BOOST_CHECK_EQUAL(w, w2);
 
+	//Test changePlayerInfoPlayer
+	myscene->changePlayerInfoPlayer(1);
+
+	//Test update
+	myscene->update();
+
+	//Test draw
+	sf::RenderWindow window(sf::VideoMode(10,10),"Test",0);
+	myscene->draw(window);
+
 	// Delete pointers
-	delete myScene;
+	delete myscene;
   }
 }
 
