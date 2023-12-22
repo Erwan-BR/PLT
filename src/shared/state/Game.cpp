@@ -21,7 +21,7 @@ namespace state {
 		turn(0),
 		phase(PRODUCTION),
 		deck(),
-		isClockwise(true)
+		isClockwise(false)
 	{
 	}
 

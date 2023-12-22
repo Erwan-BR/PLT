@@ -7,30 +7,36 @@ using namespace ::state;
 BOOST_AUTO_TEST_CASE(firstGameTest)
 {
   {
+	// Creation Arguments
+	sf::Texture* profilePicture;
+	std::vector<Player*> players;
+	Player* firstPlayer = new Player("Maxime", 1, profilePicture);
+	players.push_back(firstPlayer);
+	Player* secondPlayer = new Player("Adrien", 2, profilePicture);
+	players.push_back(secondPlayer);
 	
 	// Creation of the instance of Game
-    Game* myFirstGame = new Game();
+    Game* myFirstGame = new Game(players);
+	myFirstGame->initGame();
 
-	// Test toString()
-	std::string gameToString = myFirstGame->toString();
-	//BOOST_CHECK(gameToString == "");
+    Game* myFirstGameTest = new Game(players, true);
 
-	myFirstGame->getTurn();
-	myFirstGame->getPhase();
-	myFirstGame->getResourceProducing();
+	myFirstGameTest->getTurn();
+	myFirstGameTest->getPhase();
+	myFirstGameTest->getResourceProducing();
 
 	// Delete pointers
 	delete myFirstGame;
+	delete myFirstGameTest;
 
   }
 }
+
 BOOST_AUTO_TEST_CASE(secondGameTest)
 {
   {
-	// Test Full constructor
-
 	// Creation Arguments
-	sf::Texture profilePicture;
+	sf::Texture* profilePicture;
 	std::vector<Player*> players;
 	Player* firstPlayer = new Player("Maxime", 1, profilePicture);
 	players.push_back(firstPlayer);
@@ -38,32 +44,42 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
 	players.push_back(secondPlayer);
 
 
-
-
 	// Call Constructor
 	Game* mySecondGame = new Game(players);
 	
 	mySecondGame->initGame();
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::DRAFT);
 	
-	for(int index1 = 1; index1 < 4; index1++)
+	//turn 1
+	BOOST_CHECK_EQUAL(mySecondGame->getTurn(), 1);
+
+	for (int draftTurn = 0 ; draftTurn < 7; draftTurn++)
 	{
-		std::cout << mySecondGame->getTurn();
-		for (int index2 = 0 ; index2 < 7; index2++)
+		mySecondGame->getPlayers()[0]->chooseDraftCard(0);
+		mySecondGame->getPlayers()[1]->chooseDraftCard(0);
+		mySecondGame->nextDraft();
+		if (6 != draftTurn)
 		{
-			mySecondGame->getPlayers()[0]->chooseDraftCard(mySecondGame->getPlayers()[0]->getDraftingCards()[0]);
-			mySecondGame->getPlayers()[1]->chooseDraftCard(mySecondGame->getPlayers()[1]->getDraftingCards()[0]);
-			mySecondGame->nextDraft();
+			BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::DRAFT);
 		}
 	}
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PLANIFICATION);
+
+	for (int discardTurn = 0 ; discardTurn < 7; discardTurn++)
+	{
+		mySecondGame->getPlayers()[0]->discardCard(0,true);
+		mySecondGame->getPlayers()[1]->discardCard(0,true);
+	}
+	mySecondGame->endPlanification();
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PRODUCTION);
 	
     // Elements to create for testing the full constructor.
-    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::FINANCIER, true};
-    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::MATERIAL, true};
-    ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::GOLD, true};
-    ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::KRYSTALLIUM, true};
+    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::MATERIAL, false};
 
-    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, state::CardType::VEHICLE};
-    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 3, state::CardType::PROJECT};
+
+    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 20, state::CardType::VEHICLE};
+    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 30, state::CardType::PROJECT};
+    ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 20, state::CardType::NONETYPE};
 
     // Elements to pass to the constructor.
     std::string name = "myName";
@@ -71,10 +87,11 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
     std::vector<ResourceToProduce*> productionGain;
     productionGain.push_back(firstResourceToProduce);
     productionGain.push_back(secondResourceToProduce);
+    productionGain.push_back(thirdResourceToProduce);
 
-    sf::Texture design = sf::Texture();
+    sf::Texture* design = new sf::Texture();
 
-    CardVictoryPoint* victoryPoints = new CardVictoryPoint{1, 5};
+    CardVictoryPoint* victoryPoints = new CardVictoryPoint{1, state::CardType::NONETYPE};
 
     CardType type = CardType::PROJECT;
 
@@ -82,9 +99,6 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
 
     std::vector<ResourceToPay*> costToBuild;
     costToBuild.push_back(firstResourceToPay);
-    costToBuild.push_back(secondResourceToPay);
-    costToBuild.push_back(thirdResourceToPay);
-    costToBuild.push_back(fourthResourceToPay);
 
     std::vector<ResourceType> instantGain;
     instantGain.push_back(ResourceType::GOLD);
@@ -92,21 +106,111 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
 
     ResourceType discardGain = ResourceType::FINANCIER;
 
+	// Vector created to check the current resource produced.
+	const std::vector<ResourceType> resourceProduced = {ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION, ResourceType::KRYSTALLIUM};
+
+	for (int i=0;i<5;i++)
+	{
+		BOOST_CHECK_EQUAL(mySecondGame->getResourceProducing(), resourceProduced[i]);
+		mySecondGame->nextProduction();
+	}
+
     // Testing the full constructor of DevelopmentCard.
     DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard(name, productionGain, design, victoryPoints, type, numberOfCopies, costToBuild, instantGain, discardGain);
-	mySecondGame->getPlayers()[1]->construct(mySecondDevelopmentCard);
-	for (int index2 = 0 ; index2 < 8; index2++)
+	
+
+	//turn 2
+	BOOST_CHECK_EQUAL(mySecondGame->getTurn(), 2);
+	for (int draftTurn = 0 ; draftTurn < 7; draftTurn++)
 	{
-		mySecondGame->getPlayers()[0]->chooseDraftCard(mySecondGame->getPlayers()[0]->getDraftingCards()[0]);
-		mySecondGame->getPlayers()[1]->chooseDraftCard(mySecondGame->getPlayers()[1]->getDraftingCards()[0]);
+		mySecondGame->getPlayers()[0]->chooseDraftCard(0);
+		mySecondGame->getPlayers()[1]->chooseDraftCard(0);
 		mySecondGame->nextDraft();
+		if (6 != draftTurn)
+		{
+			BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::DRAFT);
+		}
 	}
-	mySecondGame->getPlayers()[0]->construct(mySecondDevelopmentCard);
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PLANIFICATION);
+
+	for (int discardTurn = 0 ; discardTurn < 6; discardTurn++)
+	{
+		mySecondGame->getPlayers()[0]->discardCard(0,true);
+		mySecondGame->getPlayers()[1]->discardCard(0,true);
+	}
+	
+	mySecondGame->getPlayers()[0]->keepCard(0);
+	mySecondGame->getPlayers()[1]->keepCard(0);
+	mySecondGame->getPlayers()[0]->addResource(state::ResourceType::MATERIAL, 0);
+
+	mySecondGame->endPlanification();
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PRODUCTION);
+
+	for (int i=0;i<5;i++)
+	{
+		BOOST_CHECK_EQUAL(mySecondGame->getResourceProducing(), resourceProduced[i]);
+		mySecondGame->nextProduction();
+	}
+
+	//turn 3
+	BOOST_CHECK_EQUAL(mySecondGame->getTurn(), 3);
+	for (int draftTurn = 0 ; draftTurn < 7; draftTurn++)
+	{
+		mySecondGame->getPlayers()[0]->chooseDraftCard(0);
+		mySecondGame->getPlayers()[1]->chooseDraftCard(0);
+		mySecondGame->nextDraft();
+		if (6 != draftTurn)
+		{
+			BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::DRAFT);
+		}
+	}
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PLANIFICATION);
+
+	for (int discardTurn = 0 ; discardTurn < 7; discardTurn++)
+	{
+		mySecondGame->getPlayers()[0]->discardCard(0,true);
+		mySecondGame->getPlayers()[1]->discardCard(0,true);
+	}
+	mySecondGame->endPlanification();
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PRODUCTION);
+	for (int i=0;i<5;i++)
+	{
+		BOOST_CHECK_EQUAL(mySecondGame->getResourceProducing(), resourceProduced[i]);
+		mySecondGame->nextProduction();
+	}
+
+	
+	//turn 4
+	BOOST_CHECK_EQUAL(mySecondGame->getTurn(), 4);
+	for (int draftTurn = 0 ; draftTurn < 7; draftTurn++)
+	{
+		mySecondGame->getPlayers()[0]->chooseDraftCard(0);
+		mySecondGame->getPlayers()[1]->chooseDraftCard(0);
+		mySecondGame->nextDraft();
+		if (6 != draftTurn)
+		{
+			BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::DRAFT);
+		}
+	}
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PLANIFICATION);
+
+	for (int discardTurn = 0 ; discardTurn < 7; discardTurn++)
+	{
+		mySecondGame->getPlayers()[0]->discardCard(0,true);
+		mySecondGame->getPlayers()[1]->discardCard(0,true);
+	}
+	mySecondGame->endPlanification();
+	BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PRODUCTION);
+
+	for (int i=0;i<5;i++)
+	{
+		BOOST_CHECK_EQUAL(mySecondGame->getResourceProducing(), resourceProduced[i]);
+		mySecondGame->nextProduction();
+	}
+
 
 	// Delete pointers
 	delete mySecondGame;
-	//delete firstPlayer;
-	//delete secondPlayer;
 	
   }
 }
