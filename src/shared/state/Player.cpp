@@ -14,11 +14,25 @@ namespace state {
     /// @param id Id of the player
     /// @param profilePicture Profile Picture of the player
     Player::Player(std::string name, int id, sf::Texture* profilePicture) :
-    Observable(),
-    name(name),
-    id(id),
-    profilePicture(profilePicture)
+        Observable(),
+        name(name),
+        id(id),
+        profilePicture(profilePicture)
     {
+        this->initializeMaps();
+    }
+
+    /// @brief Constructor of player that takes into argument the relative path to the texture.
+    /// @param name Name of the player.
+    /// @param id ID of the player.
+    /// @param relativePathToTexture Relative path of the profile picture, that is loaded in the function.
+    Player::Player (std::string name, int id, std::string relativePathToTexture) :
+        Observable(),
+        name(name),
+        id(id)
+    {
+        this->profilePicture = new sf::Texture;
+        this->profilePicture->loadFromFile(relativePathToTexture);
         this->initializeMaps();
     }
 

@@ -27,13 +27,20 @@ namespace state {
         this->design = new sf::Texture;
     }
 
-    /// @brief Create a card with all informations.
-    Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints) :
+    /// @brief Create a card with all information that concerned this card.
+    /// @param name Name of the card that will be displayed.
+    /// @param productionGain Represent what kind of resource the card can bring.
+    /// @param relativePathToTexture Path of the design of the card.
+    /// @param victoryPoints Represent what kind of points the card can bring.
+    Card::Card (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathToTexture, CardVictoryPoint* victoryPoints) :
         Observable(),
         name(name),
-        design(design),
-    victoryPoints(victoryPoints)
+        relativePathToTexture(relativePathToTexture),
+        victoryPoints(victoryPoints)
     {
+        this->design = new sf::Texture;
+        this->design->loadFromFile(relativePathToTexture);
+        
         for(ResourceToProduce* resource : productionGain)
         {
             this->productionGain.push_back(resource);
