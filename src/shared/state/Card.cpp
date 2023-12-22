@@ -4,7 +4,7 @@
 namespace state {
 
     /// @brief Create a card from a json file.
-    Card::Card(Json::Value jsonValue) :
+    /*Card::Card(Json::Value jsonValue) :
         Observable()
     {
         // Retrive name.
@@ -25,7 +25,7 @@ namespace state {
 
         // To-do : Use path of images to store it as an attribute, to retrive it and replace folowing lines.
         this->design = new sf::Texture;
-    }
+    }*/
 
     /// @brief Create a card with all informations.
     Card::Card(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints) :
@@ -51,7 +51,7 @@ namespace state {
 
     ///@brief Convert the Card to a JSON format. Usefull when the game is saved.
 	///@return Readable JSON of the card.
-    Json::Value Card::toJSON () const
+    /*Json::Value Card::toJSON () const
     {
         // Instanciation of the card into a json format.
         Json::Value cardJson;
@@ -75,7 +75,7 @@ namespace state {
         // To-do : Implement the path of the design.
 
         return cardJson;
-    }
+    }*/
 
     /************************************* Setters & Getters *************************************/
 

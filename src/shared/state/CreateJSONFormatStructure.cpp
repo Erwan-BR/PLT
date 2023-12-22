@@ -2,7 +2,7 @@
 
 namespace state
 {
-    Json::Value CreateJSONFormatStructures::jsonOfResourceToPay (const ResourceToPay resourceToPay) const
+    /*Json::Value CreateJSONFormatStructures::jsonOfResourceToPay (const ResourceToPay resourceToPay) const
     {
         Json::Value jsonRepresentationOfResourceToPay;
         
@@ -62,5 +62,5 @@ namespace state
         cardVictoryPoint->cardOrResourceType = jsonInput["cardOrResourceType"].asInt();
 
         return cardVictoryPoint;
-    }
+    }*/
 }

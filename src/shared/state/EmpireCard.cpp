@@ -3,11 +3,11 @@
 namespace state {
 
     /// @brief Create an empire card from a json file.
-    EmpireCard::EmpireCard(Json::Value jsonValue) :
+    /*EmpireCard::EmpireCard(Json::Value jsonValue) :
         Card(jsonValue)
     {
         // To-Do
-    }
+    }*/
 
     /// @brief Full constructor for the EmpireCard class
     /// @param name Name of the empire
@@ -43,13 +43,13 @@ namespace state {
 
     ///@brief Convert the Empire to a JSON format. Usefull when the game is saved.
 	///@return Readable JSON of the empire.
-    Json::Value EmpireCard::toJSON () const
+    /*Json::Value EmpireCard::toJSON () const
     {
         // Instanciation of the empire card into a JSON format.
         Json::Value empireCardJSON;
 
         return empireCardJSON;
-    }
+    }*/
 
     /************************************* Setters & Getters *************************************/
 
