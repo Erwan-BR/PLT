@@ -2,14 +2,11 @@
 
 namespace state {
 
-    /// @brief Constructor of the class Player
-    Player::Player() :
-    Observable(),
-    name(""),
-    id(-1),
-    profilePicture(new sf::Texture())
+    /// @brief Create a player from a json file.
+    Player::Player(Json::Value jsonValue) :
+        Observable()
     {
-        this->initializeMaps();
+        // To-do
     }
     
     /// @brief Constructor of the player, with some parameters.
@@ -17,11 +14,25 @@ namespace state {
     /// @param id Id of the player
     /// @param profilePicture Profile Picture of the player
     Player::Player(std::string name, int id, sf::Texture* profilePicture) :
-    Observable(),
-    name(name),
-    id(id),
-    profilePicture(profilePicture)
+        Observable(),
+        name(name),
+        id(id),
+        profilePicture(profilePicture)
     {
+        this->initializeMaps();
+    }
+
+    /// @brief Constructor of player that takes into argument the relative path to the texture.
+    /// @param name Name of the player.
+    /// @param id ID of the player.
+    /// @param relativePathToTexture Relative path of the profile picture, that is loaded in the function.
+    Player::Player (std::string name, int id, std::string relativePathToTexture) :
+        Observable(),
+        name(name),
+        id(id)
+    {
+        this->profilePicture = new sf::Texture;
+        this->profilePicture->loadFromFile(relativePathToTexture);
         this->initializeMaps();
     }
 
@@ -91,14 +102,20 @@ namespace state {
         }
         CardType cardConstructedType = this->toBuildCards[cardIndex]->getType();
         
+        for(ResourceType resource : this->toBuildCards[cardIndex]->getInstantGain())
+        {
+            this->currentResources[resource]++;
+        }
+
         // Transfering the element from a vector to the other one.
         this->builtCards.push_back(this->toBuildCards[cardIndex]);
         this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);
         
         // Add the card to the dictionnary containing constructed cards.
         this->cardsTypeList[cardConstructedType] ++;
+
+
         this->updateProduction();
-        this->notifyObservers();
     }
     
     /// @brief Check if a resource can be played by the player. Does not check if the player has the resource.
@@ -149,7 +166,7 @@ namespace state {
 
         // Convert the resource and propagate the information to observers.
         this->currentResources.at(ResourceType::KRYSTALLIUM) --;
-        this->currentResources.at(targetResource) --;
+        this->currentResources.at(targetResource) ++;
         this->notifyObservers();
     }
     
@@ -313,7 +330,7 @@ namespace state {
         {
             return;
         }
-        this->currentResources.at(resource) --;
+        this->currentResources.at(resource)--;
         this->resourcesInEmpireUnit++;
         this->convertToKrystallium();
         this->notifyObservers();
@@ -394,7 +411,7 @@ namespace state {
         const std::vector<ResourceType> resourcesToSend = {ResourceType::MATERIAL, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION};
         for (ResourceType resourceType : resourcesToSend)
         {
-            for (int i = 0; i < this->currentResources.at(resourceType) ; i++)
+            while(0 != this->currentResources.at(resourceType))
             {
                 this->sendResourceToEmpire(resourceType);
             }
@@ -402,25 +419,14 @@ namespace state {
     }
 
 
-    /// @brief Transform the Player to a readable string.
-    /// @return Readable string that represents the information of the Player.
-    std::string Player::toString () const
+    ///@brief Convert the Player to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the player.
+    Json::Value Player::toJSON () const
     {
-        std::string returnValue = "Name: " + this->name + "\n";
-        
-        returnValue += "Id: " + std::to_string(this->id) + "\n";
-        returnValue += "-----Empire informations:-----\n " + empire->toString() + "\n";
-        returnValue += "builtCards length: " + std::to_string(this->builtCards.size()) + "\n";
-        returnValue += "toBuildCards length: " + std::to_string(this->toBuildCards.size()) + "\n";
-        returnValue += "draftingCards length: " + std::to_string(this->draftingCards.size()) + "\n";
-        returnValue += "dratfCards length: " + std::to_string(this->draftCards.size()) + "\n";
-        returnValue += "State: " + std::to_string(this->state) + "\n";
-        returnValue += "financierTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::FINANCIER)) + "\n";
-        returnValue += "colonelTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::COLONEL)) + "\n";
-        returnValue += "krystalliumTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::KRYSTALLIUM)) + "\n";
-        returnValue += "resourcesInEmpireUnit: " + std::to_string(this->resourcesInEmpireUnit) + "\n";
+        // Instanciation of the player into a JSON format.
+        Json::Value playerJSON;
 
-        return returnValue;
+        return playerJSON;
     }
 
     /************************************* Setters & Getters *************************************/
@@ -569,6 +575,13 @@ namespace state {
         return (this->id < 0);
     }
 
+    /// @brief Get the relative path of a texture.
+    /// @return Relative path of a texture.
+    std::string Player::getRelativePathToTexture () const
+    {
+        return this->relativePathToTexture;
+    }
+
     /************************************* Methods implemented for AI. *************************************/
     
     /// @brief Method for AI, to make them choose their card. Method implemented in Player because both Player and AI are in the same vector in Game.
@@ -587,5 +600,12 @@ namespace state {
     void Player::AIUseProducedResources ()
     {
         return ;
+    }
+
+    /// @brief Method for AI, to make them choose colonel of financier token. Method implemented in Player because both Player and AI are in the same vector in Game.
+    /// @return True if the AI choose colonel, false either.
+    bool Player::AIChooseColonelToken ()
+    {
+        return false;
     }
 }
