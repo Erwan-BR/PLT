@@ -99,7 +99,7 @@ namespace state {
 
         CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
 
-        // Serialize the vector of structures
+        // Serialize the vector of resources to produce
         Json::Value productionArray;
         for (const ResourceToProduce* prodGain : this->productionGain)
         {
