@@ -2,22 +2,24 @@
 
 namespace ai
 {
-    /// @brief Empty construtor of AIAdvanced. Should never be used.
-    AIAdvanced::AIAdvanced () :
-        Player("AIAdvanced", -1, new sf::Texture())
-    {
-
-    }
-
     /// @brief Full constructor of AIAdvanced, with important information inside.
     /// @param name Name of the AI.
     /// @param id ID of the AI. Should be negative for engine methods.
     /// @param profilePicture Image of the profile picture of the AI.
     AIAdvanced::AIAdvanced (std::string name, int id, sf::Texture* profilePicture, state::Game* game) :
         Player(name, id, profilePicture),
-        game(game)
+        game(game),
+        cardsToBuildIndexesOrdered({}),
+        resourcesMissingOrdered({}),
+        indexesOfCardsToKeep({})
     {
-
+        missingResourcesToConstructAllCards[state::ResourceType::MATERIAL] = 0;
+        missingResourcesToConstructAllCards[state::ResourceType::ENERGY] = 0;
+        missingResourcesToConstructAllCards[state::ResourceType::SCIENCE] = 0;
+        missingResourcesToConstructAllCards[state::ResourceType::GOLD] = 0;
+        missingResourcesToConstructAllCards[state::ResourceType::EXPLORATION] = 0;
+        missingResourcesToConstructAllCards[state::ResourceType::COLONEL] = 0;
+        missingResourcesToConstructAllCards[state::ResourceType::FINANCIER] = 0;
     }
     
     /// @brief Destructor of the AIRandom class. Does not destruct anything for the moment.
@@ -29,178 +31,105 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card from the draft phase.
     void AIAdvanced::AIChooseDraftingCard()
     {
-        std::vector<state::ResourceType> resourcesUnitToPay;
-        if(1 == this->game->getTurn())
+        // At turn one, the AI takes every possible cards that makes him win flatpoint.
+        // For other turns, the AI takes a card only if he doesn't have any card to build left.
+        if (1 == this->game->getTurn() || 0 == this->toBuildCards.size())
         {
-            bool isACardFound = false;
-            for(long unsigned int index = 0; index < this->draftingCards.size(); index++)
-            {
-                state::DevelopmentCard* card = this->draftingCards[index];
-                
-                // Checking if card allows to win flatpoint only
-                if(((int) state::CardType::NONETYPE == card->getVictoryPoints()->cardOrResourceType) && (0 < card->getVictoryPoints()->numberOfPoints))
-                {
-                    for (state::ResourceToPay* resourceToPay : card->getCostToBuild())
-                    {
-                        state::ResourceType resource = resourceToPay->type;
-                        resourcesUnitToPay.push_back(resource);
-                    }
-                    
-                    this->chooseDraftCard(index);
 
-                    isACardFound = true;
-                }
-            }
-
-            if (! isACardFound)
-            {
-                for (state::ResourceToPay* resourceToPay : this->draftingCards[0]->getCostToBuild())
-                {
-                    state::ResourceType resource = resourceToPay->type;
-                    resourcesUnitToPay.push_back(resource);
-                }
-                this->chooseDraftCard(0);
-            }
         }
+        // Taking a card only for the discard gain.
         else
-        {   
-            for(long unsigned int index = 0; index < this->draftingCards.size(); index++)
+        {
+            // Iterating among all resources desired, by decreasing amount.
+            for (const state::ResourceType resourceDesired : this->resourcesMissingOrdered)
             {
-                state::DevelopmentCard* card = this->draftingCards[index];
-                state::ResourceType resource = card->getDiscardGain();
-                if(std::find(resourcesUnitToPay.begin(), resourcesUnitToPay.end(), resource) < resourcesUnitToPay.end())
+                // Iterating among all cards to try to have this resource.
+                for (long unsigned int index = 0; this->draftingCards.size(); index++)
                 {
-                    this->chooseDraftCard(index);
-                }
-                else
-                {
-                    this->chooseDraftCard(0);
+                    state::ResourceType currentDiscardGain = this->draftingCards[index]->getDiscardGain();
+                    if (resourceDesired == currentDiscardGain)
+                    {
+                        // Choose the card and specify that it won't be construct.
+                        this->AIChooseCardFromIndex(index, false);
+                        
+                        // Update informations concerning the missing resources.
+                        this->missingResourcesToConstructAllCards[currentDiscardGain] --;
+                        this->updateResourcesMissingOrdered();
+                        return ;
+                    }
                 }
             }
+
+            // Should never be reached because cards all have discard gain, and all resources are in the vector.
+            // Here only for security.
+            this->AIChooseCardFromIndex(0, false);
         }
     }
 
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
     void AIAdvanced::AIPlanification()
     {
-        for(long unsigned int index = 0; index<this->draftingCards.size();index++)
-        {
-            if(1 == game->getTurn())
-            {
-                this->keepCard(index);
-            }
-            else
-            {
-                this->discardCard(index,true);
-                AIAdvanced::AIUseProducedResources ();
-            }
-        }
+        this->indexesOfCardsToKeep.clear();
     }
 
     /// @brief Method used to implement how the AI uses it's resources (during the planification with instantGains, and after each production).
     void AIAdvanced::AIUseProducedResources ()
     {
-        const std::vector<state::ResourceType> existingResources = {state::ResourceType::MATERIAL, state::ResourceType::ENERGY, state::ResourceType::SCIENCE, state::ResourceType::GOLD, state::ResourceType::EXPLORATION, state::ResourceType::KRYSTALLIUM, state::ResourceType::COLONEL, state::ResourceType::FINANCIER};
-        std::vector<state::ResourceType> resourceToPlay;
-        
-        for (state::ResourceType resource : existingResources)
-        {
-            for (int i = 0; i < this->currentResources.at(resource); i++)
-            {
-                resourceToPlay.push_back(resource);
-            }
-        }
-
-        for(state::ResourceType resource : resourceToPlay)
-        {
-            auto resourcePosition = std::find(resourceToPlay.begin(), resourceToPlay.end(), resource);
-            if(resourceToPlay.end() == resourcePosition)
-            {
-                this->sendResourceToEmpire(resource);
-            }
-            else
-            {
-                // Non-sense in the following code, the index of the card is searched from the position of the resource in the vector ?
-                // To correct.
-                
-                /*int cardIndex = resourcePosition - resourcesToPay.begin();
-                int resourceIndex = 0;
-                for(std::vector<state::ResourceToPay*> cardCost : resourcesToPay)
-                {
-                    resourceIndex++;
-                    auto resourcePosition = std::find(cardCost.begin(), cardCost.end(), resource);
-                    if(resourcePosition != cardCost.end()) 
-                    {
-                        resourcesToPay[cardIndex].erase(resourcePosition);
-                        break;
-                    }
-                }
-                this->addResource(resource,cardIndex);*/
-            }
-        }
-    }
-    
-    std::vector<int> AIAdvanced::findMaxVp() const
-    {
-        int max = this->draftingCards[0]->getVictoryPoints()->numberOfPoints;
-        int index = 0;
-
-        for (long unsigned int i = 1; i < draftingCards.size(); ++i)
-        {
-            if (this->draftingCards[i]->getVictoryPoints()->numberOfPoints > max)
-            {
-                max = this->draftingCards[i]->getVictoryPoints()->numberOfPoints;
-                index = i;
-            }
-        }
-        std::vector<int> returnedValue = {max, index};
-        return returnedValue;
     }
 
-    std::vector<int> AIAdvanced::findMinVp() const
+    /// @brief Choose colonel if the quantity of colonel is superior or equal to the quantity of financier that the player needs.
+    /// @return A boolean that indicate if the colonel is the most required.
+    bool AIAdvanced::AIChooseColonelToken ()
     {
-        int min = this->draftingCards[0]->getVictoryPoints()->numberOfPoints;
-        int index = 0;
-
-        for (long unsigned int i = 1; i < draftingCards.size(); ++i)
+        bool isChoosingColonel = this->missingResourcesToConstructAllCards[state::ResourceType::COLONEL] > this->missingResourcesToConstructAllCards[state::ResourceType::FINANCIER];
+        if (isChoosingColonel)
         {
-            if (this->draftingCards[i]->getVictoryPoints()->numberOfPoints < min)
-            {
-                min = this->draftingCards[i]->getVictoryPoints()->numberOfPoints;
-                index = i;
-            }
+            this->missingResourcesToConstructAllCards[state::ResourceType::COLONEL] --;
         }
-        std::vector<int> returnedValue = {min, index};
-        return returnedValue;
+        else
+        {
+            this->missingResourcesToConstructAllCards[state::ResourceType::FINANCIER] --;
+        }
+        return isChoosingColonel;
     }
 
-    int AIAdvanced::lowestCost() const
+    /// @brief Keep a card at a given index, and update resources needed.
+    /// @param index Index of the card to keep from the draftingCards to the draftCards.
+    /// @param isDesiredToBuild Boolean that state if the card is going to be construct or not.
+    void AIAdvanced::AIChooseCardFromIndex (int index, bool isDesiredToBuild)
     {
-        long unsigned int cost = this->draftingCards[0]->getCostToBuild().size();
-        int index,counter = 0;
-        for(state::DevelopmentCard* card : this->draftingCards)
+        // Checking if the index is possible
+        if (0 > index || this->draftingCards.size() < index)
         {
-            counter++;
-            if(card->getCostToBuild().size() < cost)
-            {
-                index = counter;
-            }
+            return ;
         }
-        return index;
+
+        // If the card is going to be constructed, we have to had the neede resources to the mapping and the index in the vector.
+        if (isDesiredToBuild)
+        {
+            for (state::ResourceToPay* resourceToPay: this->draftingCards[index]->getCostToBuild())
+            {
+                this->missingResourcesToConstructAllCards[resourceToPay->type] ++;
+            }
+
+            // Writing the index in the vector of indexes of cards to build.
+            this->indexesOfCardsToKeep.push_back(this->draftCards.size());
+            
+            this->updateCardsToBuildIndexesOrdered();
+            this->updateResourcesMissingOrdered();
+        }
+        this->keepCard(index);
     }
 
-    int AIAdvanced::highestCost() const
+    /// @brief 
+    void AIAdvanced::updateCardsToBuildIndexesOrdered ()
     {
-        long unsigned int cost = this->draftingCards[0]->getCostToBuild().size();
-        int index,counter = 0;
-        for(state::DevelopmentCard* card : this->draftingCards)
-        {
-            counter++;
-            if(card->getCostToBuild().size() > cost)
-            {
-                index = counter;
-            }
-        }
-        return index;
+
+    }
+
+    /// @brief 
+    void AIAdvanced::updateResourcesMissingOrdered ()
+    {
+
     }
 };
