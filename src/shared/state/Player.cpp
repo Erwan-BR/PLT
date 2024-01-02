@@ -116,7 +116,6 @@ namespace state {
 
 
         this->updateProduction();
-        this->notifyObservers();
     }
     
     /// @brief Check if a resource can be played by the player. Does not check if the player has the resource.
@@ -601,5 +600,12 @@ namespace state {
     void Player::AIUseProducedResources ()
     {
         return ;
+    }
+
+    /// @brief Method for AI, to make them choose colonel of financier token. Method implemented in Player because both Player and AI are in the same vector in Game.
+    /// @return True if the AI choose colonel, false either.
+    bool Player::AIChooseColonelToken ()
+    {
+        return false;
     }
 }
