@@ -223,4 +223,23 @@ namespace state {
     {
         return this->instantGain;
     }
+
+    /// @brief Get the number of resources that needs to be paid on this card.
+    /// @return Number of resources to pay on this card.
+    int DevelopmentCard::getQuantityResourcesMissing () const
+    {
+        int quantityResourcesMissing = 0;
+        if (this->isPaid)
+        {
+            return 0;
+        }
+        for (ResourceToPay* resourceToPay : this->costToBuild)
+        {
+            if (! resourceToPay->isPaid)
+            {
+                quantityResourcesMissing ++;
+            }
+        }
+        return quantityResourcesMissing;
+    }
 }
