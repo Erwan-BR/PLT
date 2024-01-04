@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_CASE(firstObservableTest)
     myFirstObservable->addObserver(testObserver);
     myFirstObservable->notifyObservers();
 
-    myFirstObservable->~Observable();
+    delete myFirstObservable;
   }
 }
 
