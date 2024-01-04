@@ -69,8 +69,8 @@ namespace state {
         this->initializeMaps();
 
         // Retrieve currentResources from the JSON
-        const Json::Value& resourceArray = jsonValue["currentResources"];
-        for (const Json::Value& resourceObject : resourceArray)
+        const Json::Value& currentResourcesArray = jsonValue["currentResources"];
+        for (const Json::Value& resourceObject : currentResourcesArray)
         {
             ResourceType resourceType = static_cast<ResourceType> (resourceObject["resourceType"].asInt());
             int quantity = resourceObject["quantity"].asInt();
@@ -78,8 +78,8 @@ namespace state {
         }
 
         // Retrieve resourcesProduction from the JSON
-        const Json::Value& resourceArray = jsonValue["resourcesProduction"];
-        for (const Json::Value& resourceObject : resourceArray)
+        const Json::Value& resourcesProductionArray = jsonValue["resourcesProduction"];
+        for (const Json::Value& resourceObject : resourcesProductionArray)
         {
             ResourceType resourceType = static_cast<ResourceType> (resourceObject["resourceType"].asInt());
             int quantity = resourceObject["quantity"].asInt();
@@ -87,15 +87,15 @@ namespace state {
         }
 
         // Retrieve cardsTypeList from the JSON
-        const Json::Value& resourceArray = jsonValue["cardsTypeList"];
-        for (const Json::Value& resourceObject : resourceArray)
+        const Json::Value& cardsTypeListArray = jsonValue["cardsTypeList"];
+        for (const Json::Value& resourceObject : cardsTypeListArray)
         {
             CardType cardType = static_cast<CardType> (resourceObject["cardType"].asInt());
             int quantity = resourceObject["quantity"].asInt();
             this->cardsTypeList[cardType] = quantity;
         }  
     }
-    
+
     /// @brief Constructor of the player, with some parameters.
     /// @param name Name of the player
     /// @param id Id of the player
