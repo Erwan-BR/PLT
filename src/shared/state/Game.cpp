@@ -281,7 +281,7 @@ namespace state {
 		
 		bool multipleBiggestProduction = false;
 
-		// Current index of the loop - to update the plkayer with the biggest production
+		// Current index of the loop - to update the player with the biggest production
 		int index = 0;
 
 		// Iterating among all players.
@@ -309,30 +309,46 @@ namespace state {
 		// Checking who won's the most of this resources for the bonus.
 		if (!multipleBiggestProduction)
 		{
-			// Send the financier token
-			if (ResourceType::MATERIAL == this->resourceProducing || ResourceType::GOLD == this->resourceProducing)
+			this->sendTokenToMostProducer(playerIndexBiggestProduction);
+		}
+	}
+
+	/// @brief Function called by produceResource if only one player produce the most of the current resources. Send the corresponding token.
+	/// @param playerIndexBiggestProduction Index of the player (unique) that produces the most of the current resources.
+	void Game::sendTokenToMostProducer (int playerIndexBiggestProduction)
+	{
+		// Send the financier token
+		if (ResourceType::MATERIAL == this->resourceProducing || ResourceType::GOLD == this->resourceProducing)
+		{
+			this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER, 1);
+		}
+		// Send the colonel token
+		else if (ResourceType::ENERGY == this->resourceProducing || ResourceType::EXPLORATION == this->resourceProducing)
+		{
+			this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL, 1);
+		}
+		// Send the token choosen by the player
+		else
+		{
+			// Retrieve which token the player wants to get, the player can also be an AI.
+			bool chooseColonel ;
+			
+			if (this->players[playerIndexBiggestProduction]->isAI())
 			{
-				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER, 1);
+				chooseColonel = this->players[playerIndexBiggestProduction]->AIChooseColonelToken();
 			}
-			// Send the colonel token
-			else if (ResourceType::ENERGY == this->resourceProducing || ResourceType::EXPLORATION == this->resourceProducing)
+			else
+			{
+				chooseColonel = this->players[playerIndexBiggestProduction]->chooseColonelToken();
+			}
+
+			if (chooseColonel)
 			{
 				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL, 1);
 			}
-			// Send the token choosen by the player
 			else
 			{
-				// Retrieve which token the player wants to get.
-				bool chooseColonel = this->players[playerIndexBiggestProduction]->chooseColonelToken();
-
-				if (chooseColonel)
-				{
-					this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::COLONEL, 1);
-				}
-				else
-				{
-					this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER, 1);
-				}
+				this->players[playerIndexBiggestProduction]->receiveResources(ResourceType::FINANCIER, 1);
 			}
 		}
 	}
