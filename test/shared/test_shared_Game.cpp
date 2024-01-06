@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 BOOST_AUTO_TEST_CASE(firstGameTest)
 {
     // Creation Arguments
-    sf::Texture* profilePicture;
+    sf::Texture* profilePicture = new sf::Texture();
     std::vector<Player*> players;
     Player* firstPlayer = new Player("Maxime", 1, profilePicture);
     players.push_back(firstPlayer);
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 BOOST_AUTO_TEST_CASE(secondGameTest)
 {
     // Creation Arguments
-    sf::Texture* profilePicture;
+    sf::Texture* profilePicture = new sf::Texture();
     std::vector<Player*> players;
     Player* firstPlayer = new Player("Maxime", 1, profilePicture);
     players.push_back(firstPlayer);
@@ -123,22 +123,12 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
     productionGain.push_back(secondResourceToProduce);
     productionGain.push_back(thirdResourceToProduce);
 
-    sf::Texture* design = new sf::Texture();
-
-    CardVictoryPoint* victoryPoints = new CardVictoryPoint{1, state::CardType::NONETYPE};
-
-    CardType type = CardType::PROJECT;
-
-    int numberOfCopies = 2;
-
     std::vector<ResourceToPay*> costToBuild;
     costToBuild.push_back(firstResourceToPay);
 
     std::vector<ResourceType> instantGain;
     instantGain.push_back(ResourceType::GOLD);
     instantGain.push_back(ResourceType::SCIENCE);
-
-    ResourceType discardGain = ResourceType::FINANCIER;
 
     // Vector created to check the current resource produced.
     const std::vector<ResourceType> resourceProduced = {ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION, ResourceType::KRYSTALLIUM};
@@ -148,10 +138,6 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
         BOOST_CHECK_EQUAL(mySecondGame->getResourceProducing(), resourceProduced[i]);
         mySecondGame->nextProduction();
     }
-
-    // Testing the full constructor of DevelopmentCard.
-    DevelopmentCard* mySecondDevelopmentCard = new DevelopmentCard(name, productionGain, design, victoryPoints, type, numberOfCopies, costToBuild, instantGain, discardGain);
-    
 
     //turn 2
     BOOST_CHECK_EQUAL(mySecondGame->getTurn(), 2);
