@@ -25,18 +25,20 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
         Json::Value jsonContent = empireCardToExport->toJSON();
 
+        // Only for debug, the JSON appears in a log file (PLT/build/test/Testing/Temporary/LastTest.log)
+        /*
         for (int i = 0; i < 7; i++)
         {
             std::cout << std::endl;
         }
-
+        
         std::cout << jsonContent;
         
         for (int i = 0; i < 7; i++)
         {
             std::cout << std::endl;
         }
-
+        */
 
         EmpireCard* empireFromImport = new EmpireCard(jsonContent);
 
