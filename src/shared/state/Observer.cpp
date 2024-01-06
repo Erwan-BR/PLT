@@ -8,5 +8,9 @@ namespace state{
         return;
     }
 
-    Observer::~Observer(){}
+    /// @brief Destructor of the observor class. Has to be override.
+    Observer::~Observer()
+    {
+        return;
+    }
 }
