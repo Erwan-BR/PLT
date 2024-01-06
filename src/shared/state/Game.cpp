@@ -23,7 +23,7 @@ namespace state {
         }
 
         this->turn = jsonValue["turn"].asInt();
-        this->phase = static_cast<GamePhase> (jsonValue["turn"].asInt());
+        this->phase = static_cast<GamePhase> (jsonValue["phase"].asInt());
 
         // Retrieve drawable cards from the JSON.
         this->deck = {};
@@ -172,7 +172,7 @@ namespace state {
     void Game::newTurn ()
     {
         this->turn = this->turn + 1;
-        if ((1 == this->turn && this->isTestingGame) || (4 == this->turn && ! this->isTestingGame))
+        if ((2 == this->turn && this->isTestingGame) || (5 == this->turn && ! this->isTestingGame))
         {
             this->endGame();
             return ;
@@ -425,7 +425,7 @@ namespace state {
         gameJSON["isClockwise"] = this->isClockwise;
         gameJSON["isFaceA"] = this->isFaceA;
         gameJSON["resourceProducing"] = static_cast<int> (this->resourceProducing);
-        gameJSON["isTestingGame"] = this->isClockwise;
+        gameJSON["isTestingGame"] = this->isTestingGame;
 
 
         return gameJSON;
