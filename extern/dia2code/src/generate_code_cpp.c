@@ -376,9 +376,9 @@ gen_class (umlclassnode *node)
                     print("/// @brief %s\n", umla->key.comment);
                 }
                 print ("");
-                if (umla->key.isstatic) {
+                /*if (umla->key.isstatic) {
                     emit ("static ");
-                }
+                }*/
                 emit ("%s %s", umla->key.type, umla->key.name);
                 if (strlen (umla->key.value) > 0)
                     print (" = %s", umla->key.value);
@@ -432,8 +432,8 @@ gen_class (umlclassnode *node)
                 if (is_valuetype)
                     fprintf (stderr, "CORBAValue %s/%s: static not supported\n",
                                      name, umlo->key.attr.name);
-                else
-                    emit ("static ");
+                /*else
+                    emit ("static ");*/
             }
             if (strlen (umlo->key.attr.type) > 0) {
                 emit ("%s ", cppname (umlo->key.attr.type));
@@ -463,6 +463,10 @@ gen_class (umlclassnode *node)
                 if ((umlo->key.attr.isabstract || is_valuetype) &&
                     umlo->key.attr.name[0] != '~')
                     emit (" = %s", umlo->key.attr.value);
+            }
+            else if (umlo->key.attr.isstatic)
+            {
+                emit (" override ");
             }
             emit (";\n");
             umlo = umlo->next;

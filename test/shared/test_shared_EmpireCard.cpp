@@ -9,20 +9,6 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
   {
     // Testing the empty constructor of EmpireCard 
     EmpireCard* myFirstEmpireCard = new EmpireCard();
-
-    /*Adding some of those lines if somes getters are done.
-    // Checking default value given by the empty constructor.
-    // Checking values from the empty Card constructor.
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getName(), "");
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getProductionGain(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getDesign(), sf::Texture());
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getVictoryPoints(), {});
-
-    // Checking default value given by the EmpireCard constructor.
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getProductionGainAdvanced(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getVictoryPointsAdvanced(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getEmpire(), AFRICA);
-    */
     
     // Calling methods of EmpireCard.
     std::string EmpireCardToString = myFirstEmpireCard->toString();
@@ -31,18 +17,16 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
     BOOST_CHECK_EQUAL(EmpireCardToString, "");
 
     // Delete pointers that won't be used anymore.
-    delete myFirstEmpireCard;
+    myFirstEmpireCard->~EmpireCard();
   }
   
   {
     // Elements to create for testing the full constructor.
-    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::ENERGY, false};
-    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::COLONEL, false};
-    ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::SCIENCE, false};
-    ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::MATERIAL, false};
-
     ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::KRYSTALLIUM, 2, state::CardType::VEHICLE};
     ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::GOLD, 3, state::CardType::PROJECT};
+
+    ResourceToProduce* firstAdvancedResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 1, state::CardType::NONETYPE};
+    ResourceToProduce* secondAdvancedResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 3, state::CardType::PROJECT};
 
     // Elements to pass to the constructor.
     std::string name = "myName";
@@ -56,8 +40,8 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
     CardVictoryPoint* victoryPoints = new CardVictoryPoint();
 
     std::vector<ResourceToProduce*> productionGainAdvanced;
-    productionGainAdvanced.push_back(firstResourceToProduce);
-    productionGainAdvanced.push_back(secondResourceToProduce);
+    productionGainAdvanced.push_back(firstAdvancedResourceToProduce);
+    productionGainAdvanced.push_back(secondAdvancedResourceToProduce);
 
     CardVictoryPoint* victoryPointsAdvanced  = new CardVictoryPoint();
 
@@ -66,30 +50,8 @@ BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
     // Testing the full constructor of EmpireCard.
     EmpireCard* mySecondEmpireCard = new EmpireCard(name, productionGain, design, victoryPoints, productionGainAdvanced, victoryPointsAdvanced, empire);
 
-    /*Adding some of those lines if somes getters are done.
-    // Checking default value given by the empty constructor.
-    // Checking values from the empty Card constructor.
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getName(), "");
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getProductionGain(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getDesign(), sf::Texture());
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getVictoryPoints(), {});
-
-    // Checking default value given by the DevelopmentCard constructor.
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getProductionGainAdvanced(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getVictoryPointsAdvanced(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getEmpire(), AFRICA);
-    */
-
     // Delete pointers that won't be used anymore.
-    delete firstResourceToPay;
-    delete secondResourceToPay;
-    delete thirdResourceToPay;
-    delete fourthResourceToPay;
-
-    delete firstResourceToProduce;
-    delete secondResourceToProduce;
-
-    delete mySecondEmpireCard;
+    mySecondEmpireCard->~EmpireCard();
   }
 }
 
