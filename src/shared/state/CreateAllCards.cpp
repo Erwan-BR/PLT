@@ -15,7 +15,7 @@ namespace state
         designBaseMilitaire->loadFromFile("./resources/img/Cards/Development_Cards/base_militaire.png");
         for(int i = 0; i < 6; i++)
         {
-            DevelopmentCard* baseMilitaire = new DevelopmentCard ("Base militaire",{new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::SCIENCE,1, CardType::NONETYPE}},designBaseMilitaire,{},CardType::STRUCTURE,6,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::MATERIAL);
+            DevelopmentCard* baseMilitaire = new DevelopmentCard ("Base militaire",{new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::SCIENCE,1, CardType::NONETYPE}},designBaseMilitaire,new CardVictoryPoint{},CardType::STRUCTURE,6,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::MATERIAL);
             returnValue.push_back(baseMilitaire);
         }
 
@@ -24,7 +24,7 @@ namespace state
         designCentraleNucleaire->loadFromFile("./resources/img/Cards/Development_Cards/centrale_nucleaire.png");
         for(int i=0;i<5;i++)
         {
-            DevelopmentCard* centraleNucleaire = new DevelopmentCard ("Centrale nucleaire",{new ResourceToProduce{ResourceType::ENERGY,3, CardType::NONETYPE}},designCentraleNucleaire,{},CardType::STRUCTURE,5,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::ENERGY);
+            DevelopmentCard* centraleNucleaire = new DevelopmentCard ("Centrale nucleaire",{new ResourceToProduce{ResourceType::ENERGY,3, CardType::NONETYPE}},designCentraleNucleaire,new CardVictoryPoint{},CardType::STRUCTURE,5,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::ENERGY);
             returnValue.push_back(centraleNucleaire);
         }
 
@@ -33,7 +33,7 @@ namespace state
         {
             sf::Texture* designCentreDeRecherche = new sf::Texture;
             designCentreDeRecherche->loadFromFile("./resources/img/Cards/Development_Cards/centre_de_recherche.png");
-            DevelopmentCard* centreDeRecherche = new DevelopmentCard ("Centre de recherche",{new ResourceToProduce{ResourceType::SCIENCE,2, CardType::NONETYPE}},designCentreDeRecherche,{},CardType::STRUCTURE,7,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::SCIENCE);
+            DevelopmentCard* centreDeRecherche = new DevelopmentCard ("Centre de recherche",{new ResourceToProduce{ResourceType::SCIENCE,2, CardType::NONETYPE}},designCentreDeRecherche,new CardVictoryPoint{},CardType::STRUCTURE,7,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::SCIENCE);
             returnValue.push_back(centreDeRecherche);
         }
 
@@ -42,7 +42,7 @@ namespace state
         designComplexeIndustriel->loadFromFile("./resources/img/Cards/Development_Cards/complexe_industriel.png");
         for(int i = 0; i < 6; i++)
         {
-            DevelopmentCard* complexeIndustriel = new DevelopmentCard ("Complexe industriel",{new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::GOLD,1, CardType::NONETYPE}},designComplexeIndustriel,{},CardType::STRUCTURE,6,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::GOLD);
+            DevelopmentCard* complexeIndustriel = new DevelopmentCard ("Complexe industriel",{new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::GOLD,1, CardType::NONETYPE}},designComplexeIndustriel,new CardVictoryPoint{},CardType::STRUCTURE,6,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::GOLD);
             returnValue.push_back(complexeIndustriel);
         }
 
@@ -51,7 +51,7 @@ namespace state
         designEoliennes->loadFromFile("./resources/img/Cards/Development_Cards/eoliennes.png");
         for(int i = 0; i < 7; i++)
         {
-            DevelopmentCard* eoliennes = new DevelopmentCard ("Eoliennes",{new ResourceToProduce{ResourceType::ENERGY,1, CardType::NONETYPE}},designEoliennes,{},CardType::STRUCTURE,7,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}},{},ResourceType::ENERGY);
+            DevelopmentCard* eoliennes = new DevelopmentCard ("Eoliennes",{new ResourceToProduce{ResourceType::ENERGY,1, CardType::NONETYPE}},designEoliennes,new CardVictoryPoint{},CardType::STRUCTURE,7,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}},{},ResourceType::ENERGY);
             returnValue.push_back(eoliennes);
         }
 
@@ -60,7 +60,7 @@ namespace state
         designPlaceFinanciere->loadFromFile("./resources/img/Cards/Development_Cards/place_financiere.png");
         for(int i = 0; i < 5; i++)
         {
-            DevelopmentCard* placeFinanciere = new DevelopmentCard ("Place financiere",{new ResourceToProduce{ResourceType::GOLD,2, CardType::NONETYPE}},designPlaceFinanciere,{},CardType::STRUCTURE,5,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::GOLD);
+            DevelopmentCard* placeFinanciere = new DevelopmentCard ("Place financiere",{new ResourceToProduce{ResourceType::GOLD,2, CardType::NONETYPE}},designPlaceFinanciere,new CardVictoryPoint{},CardType::STRUCTURE,5,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::GOLD);
             returnValue.push_back(placeFinanciere);
         }
 
@@ -70,7 +70,7 @@ namespace state
         designPlateFormePetroliere->loadFromFile("./resources/img/Cards/Development_Cards/plate_forme_petroliere.png");
         for(int i = 0; i < 5; i++)
         {
-            DevelopmentCard* plateFormePetroliere = new DevelopmentCard ("Plate forme petroliere",{new ResourceToProduce{ResourceType::ENERGY,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::GOLD,1, CardType::NONETYPE}},designPlateFormePetroliere,{},CardType::STRUCTURE,5,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::FINANCIER},ResourceType::ENERGY);
+            DevelopmentCard* plateFormePetroliere = new DevelopmentCard ("Plate forme petroliere",{new ResourceToProduce{ResourceType::ENERGY,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::GOLD,1, CardType::NONETYPE}},designPlateFormePetroliere,new CardVictoryPoint{},CardType::STRUCTURE,5,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::FINANCIER},ResourceType::ENERGY);
             returnValue.push_back(plateFormePetroliere);
         }
 
@@ -88,7 +88,7 @@ namespace state
         designUsineDeRecyclage->loadFromFile("./resources/img/Cards/Development_Cards/usine_de_recyclage.png");
         for(int i = 0; i < 7; i++)
         {
-            DevelopmentCard* usineDeRecyclage = new DevelopmentCard ("Usine de recyclage",{new ResourceToProduce{ResourceType::MATERIAL,2, CardType::NONETYPE}},designUsineDeRecyclage,{},CardType::STRUCTURE,7,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL}},{},ResourceType::MATERIAL);
+            DevelopmentCard* usineDeRecyclage = new DevelopmentCard ("Usine de recyclage",{new ResourceToProduce{ResourceType::MATERIAL,2, CardType::NONETYPE}},designUsineDeRecyclage,new CardVictoryPoint{},CardType::STRUCTURE,7,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL}},{},ResourceType::MATERIAL);
             returnValue.push_back(usineDeRecyclage);
         }
 
@@ -97,7 +97,7 @@ namespace state
         // Brise glace -- Only one because three are created at the end.
         sf::Texture* designBriseGlace = new sf::Texture;
         designBriseGlace->loadFromFile("./resources/img/Cards/Development_Cards/brise_glace.png");
-        DevelopmentCard* briseGlaceFirst = new DevelopmentCard ("Brise glace",{new ResourceToProduce{ResourceType::EXPLORATION,2, CardType::NONETYPE}},designBriseGlace,{},CardType::VEHICLE,4,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::EXPLORATION);
+        DevelopmentCard* briseGlaceFirst = new DevelopmentCard ("Brise glace",{new ResourceToProduce{ResourceType::EXPLORATION,2, CardType::NONETYPE}},designBriseGlace,new CardVictoryPoint{},CardType::VEHICLE,4,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::EXPLORATION);
         returnValue.push_back(briseGlaceFirst);
 
         // Division de chars
@@ -105,7 +105,7 @@ namespace state
         designDivisionDeChars->loadFromFile("./resources/img/Cards/Development_Cards/division_de_chars.png");
         for(int i = 0; i < 7; i++)
         {
-            DevelopmentCard* divisionDeChars = new DevelopmentCard ("Division de chars",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designDivisionDeChars,{},CardType::VEHICLE,7,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::MATERIAL);
+            DevelopmentCard* divisionDeChars = new DevelopmentCard ("Division de chars",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designDivisionDeChars,new CardVictoryPoint{},CardType::VEHICLE,7,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::MATERIAL);
             returnValue.push_back(divisionDeChars);
         }
 
@@ -114,7 +114,7 @@ namespace state
         designEscadrilleDeSoucoupes->loadFromFile("./resources/img/Cards/Development_Cards/escadrille_de_soucoupes.png");
         for(int i = 0; i < 2; i++)
         {
-            DevelopmentCard* escadrilleDeSoucoupes = new DevelopmentCard ("Escadrille de soucoupes",{new ResourceToProduce{ResourceType::EXPLORATION,3, CardType::NONETYPE}},designEscadrilleDeSoucoupes,{},CardType::VEHICLE,2,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::SCIENCE);
+            DevelopmentCard* escadrilleDeSoucoupes = new DevelopmentCard ("Escadrille de soucoupes",{new ResourceToProduce{ResourceType::EXPLORATION,3, CardType::NONETYPE}},designEscadrilleDeSoucoupes,new CardVictoryPoint{},CardType::VEHICLE,2,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::SCIENCE);
             returnValue.push_back(escadrilleDeSoucoupes);
         }
 
@@ -125,7 +125,7 @@ namespace state
         designLaboratoireAeroporte->loadFromFile("./resources/img/Cards/Development_Cards/laboratoire_aeroporte.png");
         for(int i = 0; i < 3; i++)
         {
-            DevelopmentCard* laboratoireAeroporte = new DevelopmentCard ("Laboratoire aeroporte",{new ResourceToProduce{ResourceType::SCIENCE,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designLaboratoireAeroporte,{},CardType::VEHICLE,3,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::SCIENCE);
+            DevelopmentCard* laboratoireAeroporte = new DevelopmentCard ("Laboratoire aeroporte",{new ResourceToProduce{ResourceType::SCIENCE,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designLaboratoireAeroporte,new CardVictoryPoint{},CardType::VEHICLE,3,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::SCIENCE);
             returnValue.push_back(laboratoireAeroporte);
         }
 
@@ -134,7 +134,7 @@ namespace state
         designMegaForeuse->loadFromFile("./resources/img/Cards/Development_Cards/mega_foreuse.png");
         for(int i = 0; i < 4; i++)
         {
-            DevelopmentCard* megaForeuse = new DevelopmentCard ("Mega foreuse",{new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designMegaForeuse,{},CardType::VEHICLE,4,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::MATERIAL);
+            DevelopmentCard* megaForeuse = new DevelopmentCard ("Mega foreuse",{new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designMegaForeuse,new CardVictoryPoint{},CardType::VEHICLE,4,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::MATERIAL);
             returnValue.push_back(megaForeuse);
         }
 
@@ -568,7 +568,7 @@ namespace state
         // Brise glace
         for(int i = 0; i < 3; i++)
         {
-            DevelopmentCard* briseGlace = new DevelopmentCard ("Brise glace",{new ResourceToProduce{ResourceType::EXPLORATION,2, CardType::NONETYPE}},designBriseGlace,{},CardType::VEHICLE,4,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::EXPLORATION);
+            DevelopmentCard* briseGlace = new DevelopmentCard ("Brise glace",{new ResourceToProduce{ResourceType::EXPLORATION,2, CardType::NONETYPE}},designBriseGlace,new CardVictoryPoint{},CardType::VEHICLE,4,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::EXPLORATION);
             returnValue.push_back(briseGlace);
         }
 
