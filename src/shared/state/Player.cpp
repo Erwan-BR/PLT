@@ -6,9 +6,96 @@ namespace state {
     Player::Player(Json::Value jsonValue) :
         Observable()
     {
-        // To-do
+        this->name = jsonValue["name"].asString();
+        this->id = jsonValue["id"].asInt();
+        this->relativePathToTexture = jsonValue["relativePathToTexture"].asString();
+
+        this->profilePicture = new sf::Texture;
+        this->profilePicture->loadFromFile(this->relativePathToTexture);
+
+        this->empire = new EmpireCard(jsonValue["empire"]);
+
+        this->resourcesInEmpireUnit = jsonValue["resourcesInEmpireUnit"].asInt();
+        this->state = static_cast<PlayerState> (jsonValue["state"].asInt());
+
+        // Retrieve built cards from the JSON.
+        this->builtCards = {};
+        if (jsonValue["builtCards"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["builtCards"];
+        
+            for (const Json::Value& cardJSON : cardArray)
+            {
+                this->builtCards.push_back(new DevelopmentCard(cardJSON));
+            }
+        }
+
+        // Retrieve toBuildCards from the JSON.
+        this->toBuildCards = {};
+        if (jsonValue["toBuildCards"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["toBuildCards"];
+        
+            for (const Json::Value& cardJSON : cardArray)
+            {
+                this->toBuildCards.push_back(new DevelopmentCard(cardJSON));
+            }
+        }
+
+        // Retrieve toBuildCards from the JSON.
+        this->draftingCards = {};
+        if (jsonValue["draftingCards"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["draftingCards"];
+        
+            for (const Json::Value& cardJSON : cardArray)
+            {
+                this->draftingCards.push_back(new DevelopmentCard(cardJSON));
+            }
+        }
+
+        // Retrieve toBuildCards from the JSON.
+        this->draftCards = {};
+        if (jsonValue["draftCards"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["draftCards"];
+        
+            for (const Json::Value& cardJSON : cardArray)
+            {
+                this->draftCards.push_back(new DevelopmentCard(cardJSON));
+            }
+        }
+
+        this->initializeMaps();
+
+        // Retrieve currentResources from the JSON
+        const Json::Value& currentResourcesArray = jsonValue["currentResources"];
+        for (const Json::Value& resourceObject : currentResourcesArray)
+        {
+            ResourceType resourceType = static_cast<ResourceType> (resourceObject["resourceType"].asInt());
+            int quantity = resourceObject["quantity"].asInt();
+            this->currentResources[resourceType] = quantity;
+        }
+
+        // Retrieve resourcesProduction from the JSON
+        const Json::Value& resourcesProductionArray = jsonValue["resourcesProduction"];
+        for (const Json::Value& resourceObject : resourcesProductionArray)
+        {
+            ResourceType resourceType = static_cast<ResourceType> (resourceObject["resourceType"].asInt());
+            int quantity = resourceObject["quantity"].asInt();
+            this->resourcesProduction[resourceType] = quantity;
+        }
+
+        // Retrieve cardsTypeList from the JSON
+        const Json::Value& cardsTypeListArray = jsonValue["cardsTypeList"];
+        for (const Json::Value& resourceObject : cardsTypeListArray)
+        {
+            CardType cardType = static_cast<CardType> (resourceObject["cardType"].asInt());
+            int quantity = resourceObject["quantity"].asInt();
+            this->cardsTypeList[cardType] = quantity;
+        }  
     }
-    
+
     /// @brief Constructor of the player, with some parameters.
     /// @param name Name of the player
     /// @param id Id of the player
@@ -29,7 +116,8 @@ namespace state {
     Player::Player (std::string name, int id, std::string relativePathToTexture) :
         Observable(),
         name(name),
-        id(id)
+        id(id),
+        relativePathToTexture(relativePathToTexture)
     {
         this->profilePicture = new sf::Texture;
         this->profilePicture->loadFromFile(relativePathToTexture);
@@ -425,6 +513,76 @@ namespace state {
     {
         // Instanciation of the player into a JSON format.
         Json::Value playerJSON;
+
+        playerJSON["name"] = this->name;
+        playerJSON["id"] = this->id;
+        playerJSON["empire"] = this->empire->toJSON();
+
+        // Serialize the vector of builtCards
+        Json::Value builtCardsArray;
+        for (const DevelopmentCard* card : this->builtCards)
+        {
+            builtCardsArray.append(card->toJSON());
+        }
+        playerJSON["builtCards"] = builtCardsArray;
+
+        // Serialize the vector of toBuildCards
+        Json::Value toBuildCardsArray;
+        for (const DevelopmentCard* card : this->toBuildCards)
+        {
+            toBuildCardsArray.append(card->toJSON());
+        }
+        playerJSON["toBuildCards"] = toBuildCardsArray;
+
+        // Serialize the vector of draftingCards
+        Json::Value draftingCardsArray;
+        for (const DevelopmentCard* card : this->draftingCards)
+        {
+            draftingCardsArray.append(card->toJSON());
+        }
+        playerJSON["draftingCards"] = draftingCardsArray;
+
+        // Serialize the vector of draftCards
+        Json::Value draftCardsArray;
+        for (const DevelopmentCard* card : this->draftCards)
+        {
+            draftCardsArray.append(card->toJSON());
+        }
+        playerJSON["draftCards"] = draftCardsArray;
+
+        playerJSON["state"] = static_cast<int> (this->state);
+        playerJSON["resourcesInEmpireUnit"] = this->resourcesInEmpireUnit;
+        playerJSON["relativePathToTexture"] = this->relativePathToTexture;
+        
+        // Serialize the map of currentResources
+        Json::Value currentResourcesArray;
+        for (const auto& entry : this->currentResources) {
+            Json::Value resourceObject;
+            resourceObject["resourceType"] = static_cast<int>(entry.first);
+            resourceObject["quantity"] = entry.second;
+            currentResourcesArray.append(resourceObject);
+        }
+        playerJSON["currentResources"] = currentResourcesArray;
+
+        // Serialize the map of resourcesProduction
+        Json::Value resourcesProductionArray;
+        for (const auto& entry : this->resourcesProduction) {
+            Json::Value resourceObject;
+            resourceObject["resourceType"] = static_cast<int>(entry.first);
+            resourceObject["quantity"] = entry.second;
+            resourcesProductionArray.append(resourceObject);
+        }
+        playerJSON["resourcesProduction"] = resourcesProductionArray;
+
+        // Serialize the map of cardsTypeList
+        Json::Value cardsTypeListArray;
+        for (const auto& entry : this->cardsTypeList) {
+            Json::Value resourceObject;
+            resourceObject["cardType"] = static_cast<int>(entry.first);
+            resourceObject["quantity"] = entry.second;
+            cardsTypeListArray.append(resourceObject);
+        }
+        playerJSON["cardsTypeList"] = cardsTypeListArray;
 
         return playerJSON;
     }
