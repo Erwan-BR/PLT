@@ -27,7 +27,7 @@ namespace render {
 		sf::Texture* texture;
 		sf::Sprite* sprite;
 		sf::Text* text;
-		DevelopmentCardRenderer* cRenderer;
+		
 
         //Enter Player board (position 0 in sprites)
         texture = new sf::Texture();
@@ -48,7 +48,9 @@ namespace render {
         this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
 
         //Enter Cards (position 2 to 9 in sprites)
-        for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++){
+        for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++)
+        {
+            DevelopmentCardRenderer* cRenderer;
             cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f),150.f/375.f);
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }

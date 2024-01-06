@@ -19,11 +19,6 @@ namespace render {
 		this->affected_window = window;
 		this->player = player;
 
-		//Get Cards
-		std::vector<state::DevelopmentCard*> tobuild = player->getToBuildCards();
-		std::vector<state::DevelopmentCard*> built = player->getBuiltCards();
-		std::vector<state::DevelopmentCard*> drafted = player->getDraftCards();
-
 		//Initialize vectors
 		this->sprites = {};
 		this->sprite_transforms = {};

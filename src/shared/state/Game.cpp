@@ -187,13 +187,10 @@ namespace state {
     ///@brief Initialize the Draft part of the game during which players select their cards
     void Game::initDraft ()
     {
-        // Deck of cards to send to a player.
-        std::vector<DevelopmentCard*> draftingDeck;
-
         for(Player* player : this->players)
         {
             // Re-Initialise the cards that will be given to the players
-            draftingDeck = {};
+            std::vector<DevelopmentCard*> draftingDeck = {};
 
             for(int i = 0; i < 7; i++)
             {
@@ -302,9 +299,6 @@ namespace state {
     ///@brief Manage the phase of production for all player and one resource
     void Game::produceResource ()
     {
-        // Production of the player in the following loop.
-        int playerProduction;
-
         // Two integers to find the players that win the most of a resources to give him a bonus.
         int playerIndexBiggestProduction = -1;
         int biggestProduction = -1;
@@ -317,7 +311,7 @@ namespace state {
         // Iterating among all players.
         for(Player* player : this->players)
         {
-            playerProduction = player->getProductionGain(this->resourceProducing);
+            int playerProduction = player->getProductionGain(this->resourceProducing);
 
             player->receiveResources(this->resourceProducing, playerProduction);
 

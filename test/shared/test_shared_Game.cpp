@@ -115,9 +115,6 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
     ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 30, state::CardType::PROJECT};
     ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 20, state::CardType::NONETYPE};
 
-    // Elements to pass to the constructor.
-    std::string name = "myName";
-
     std::vector<ResourceToProduce*> productionGain;
     productionGain.push_back(firstResourceToProduce);
     productionGain.push_back(secondResourceToProduce);
