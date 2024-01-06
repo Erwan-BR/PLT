@@ -4,7 +4,7 @@ namespace state
 {
     /// @brief Create all development cards for a game.
     /// @return Vector of all development cards.
-    std::vector<DevelopmentCard*> CreateAllCards::createAllDevelopmentCards ()
+    std::vector<DevelopmentCard*> CreateAllCards::createAllDevelopmentCards () const
     {
         std::vector<DevelopmentCard*> returnValue = {};
 
@@ -480,13 +480,13 @@ namespace state
         // Dimension parallele
         sf::Texture* designDimensionParallele = new sf::Texture;
         designDimensionParallele->loadFromFile("./resources/img/Cards/Development_Cards/dimension_parallele.png");
-        DevelopmentCard* dimensionParallele = new DevelopmentCard ("Dimension parallele",{},designDimensionParallele,new CardVictoryPoint{3, CardType::RESEARCH},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::COLONEL, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::EXPLORATION);
+        DevelopmentCard* dimensionParallele = new DevelopmentCard ("Dimension parallele",{}, designDimensionParallele,new CardVictoryPoint{3, CardType::RESEARCH},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::COLONEL, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::EXPLORATION);
         returnValue.push_back(dimensionParallele);
 
         // Fontaine de jouvence
         sf::Texture* designFontaineDeJouvence = new sf::Texture;
         designFontaineDeJouvence->loadFromFile("./resources/img/Cards/Development_Cards/fontaine_de_jouvence.png");
-        DevelopmentCard* fontaineDeJouvence = new DevelopmentCard ("Fontaine de jouvence",{},	designFontaineDeJouvence,new CardVictoryPoint{1, ResourceType::COLONEL},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::ENERGY);
+        DevelopmentCard* fontaineDeJouvence = new DevelopmentCard ("Fontaine de jouvence",{}, designFontaineDeJouvence,new CardVictoryPoint{1, ResourceType::COLONEL},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::ENERGY);
         returnValue.push_back(fontaineDeJouvence);
 
         // Ile d avalon -- created at the end
@@ -506,7 +506,7 @@ namespace state
         // Roswell
         sf::Texture* designRoswell = new sf::Texture;
         designRoswell->loadFromFile("./resources/img/Cards/Development_Cards/roswell.png");
-        DevelopmentCard* roswell = new DevelopmentCard ("Roswell",{new ResourceToProduce{ResourceType::SCIENCE,1,CardType::NONETYPE}},designRoswell,new CardVictoryPoint{1, ResourceType::COLONEL},	CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::COLONEL},ResourceType::SCIENCE);
+        DevelopmentCard* roswell = new DevelopmentCard ("Roswell",{new ResourceToProduce{ResourceType::SCIENCE,1,CardType::NONETYPE}},designRoswell,new CardVictoryPoint{1, ResourceType::COLONEL},    CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}, new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::COLONEL},ResourceType::SCIENCE);
         returnValue.push_back(roswell);
 
         // Tombeau d alexandre
@@ -584,72 +584,134 @@ namespace state
     /// @brief Create all empire cards for a game.
     /// @param isFaceA States if the game is played with face A or not.
     /// @return Vector of all empire cards.
-    std::vector<EmpireCard*> CreateAllCards::createAllEmpireCards (bool isFaceA)
+    std::vector<EmpireCard*> CreateAllCards::createAllEmpireCards (bool isFaceA) const
     {
-        // face B
-		ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
-		ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
-		ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainB = {firstResourceToProduce,secondResourceToProduce, thirdResourceToProduce};		
+        EmpireCard* africa = this->createEmpireAFRICA(isFaceA);
+        EmpireCard* noram = this->createEmpireNORAM(isFaceA);
+        EmpireCard* europe = this->createEmpireEUROPE(isFaceA);
+        EmpireCard* asia = this->createEmpireASIA(isFaceA);
+        EmpireCard* aztec = this->createEmpireAZTEC(isFaceA);
 
-		// empire AFRICA
-		ResourceToProduce* firstResourceToProduceAFRICA = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceAFRICA = new ResourceToProduce{ResourceType::SCIENCE, 2, CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainAFRICA = {firstResourceToProduceAFRICA, secondResourceToProduceAFRICA};
-		sf::Texture* designAFRICA = new sf::Texture;
-		designAFRICA->loadFromFile("./resources/img/Cards/Empire_Face_A/Panafricaine.png");
-		sf::Texture* designAFRICA_FaceB = new sf::Texture;
-		designAFRICA_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Panafricaine.png");
-		CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,CardType::RESEARCH};
-		EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, designAFRICA, victoryPointsAFRICA, productionGainB, new CardVictoryPoint{}, AFRICA, designAFRICA_FaceB, isFaceA);
-	
-		// empire NORAM
-		ResourceToProduce* firstResourceToProduceNORAM = new ResourceToProduce{ResourceType::MATERIAL, 3, CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceNORAM = new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainNORAM = {firstResourceToProduceNORAM, secondResourceToProduceNORAM};
-		sf::Texture* designNORAM = new sf::Texture;
-		designNORAM->loadFromFile("./resources/img/Cards/Empire_Face_A/Noram.png");
-		sf::Texture* designNORAM_FaceB = new sf::Texture;
-		designNORAM_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Noram.png");
-		CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1, ResourceType::FINANCIER};
-		EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, designNORAM, victoryPointsNORAM, productionGainB, new CardVictoryPoint{}, NORAM, designNORAM_FaceB, isFaceA);
-		
-        // empire EUROPE
-		ResourceToProduce* firstResourceToProduceEUROPE = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceEUROPE = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
-    	ResourceToProduce* thirdResourceToProduceEUROPE = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainEUROPE = {firstResourceToProduceEUROPE, secondResourceToProduceEUROPE, thirdResourceToProduceEUROPE};
-		sf::Texture* designEUROPE = new sf::Texture;
-		designEUROPE->loadFromFile("./resources/img/Cards/Empire_Face_A/Europa.png");
-		sf::Texture* designEUROPE_FaceB = new sf::Texture;
-		designEUROPE_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Europa.png");
-		CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
-		EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, designEUROPE, victoryPointsEUROPE, productionGainB, new CardVictoryPoint{}, EUROPE, designEUROPE_FaceB, isFaceA);
+        std::vector<EmpireCard*> empires = {asia, aztec, africa, noram, europe};
+        
+        return empires;
+    }
 
-		// empire ASIA
-		ResourceToProduce* firstResourceToProduceASIA = new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceASIA = new ResourceToProduce{ResourceType::GOLD, 2, CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainASIA = {firstResourceToProduceASIA, secondResourceToProduceASIA};
-		sf::Texture* designASIA = new sf::Texture;
-		designASIA->loadFromFile("./resources/img/Cards/Empire_Face_A/Asia.png");
-		sf::Texture* designASIA_FaceB = new sf::Texture;
-		designASIA_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Asia.png");
-		CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2, CardType::PROJECT};
-		EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, designASIA, victoryPointsASIA, productionGainB, new CardVictoryPoint{}, ASIA, designASIA_FaceB, isFaceA);
-		
-		// empire AZTEC
-		ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE};
-    	ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::EXPLORATION, 1, CardType::NONETYPE};
-		std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC, secondResourceToProduceAZTEC};
-		sf::Texture* designAZTEC = new sf::Texture;
-		designAZTEC->loadFromFile("./resources/img/Cards/Empire_Face_A/Azteca.png");
-		sf::Texture* designAZTEC_FaceB = new sf::Texture;
-		designAZTEC_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Azteca.png");
-		CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
-		EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, new CardVictoryPoint{}, AZTEC, designAZTEC_FaceB, isFaceA);
+    /// @brief Create the empire card AFRICA.
+    /// @param isFaceA State if the empire is played with face A or B.
+    /// @return Pointer to the AFRICA empire.
+    EmpireCard* CreateAllCards::createEmpireAFRICA (bool isFaceA) const
+    {
+        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+        
+        ResourceToProduce* firstResourceToProduceAFRICA = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
+        ResourceToProduce* secondResourceToProduceAFRICA = new ResourceToProduce{ResourceType::SCIENCE, 2, CardType::NONETYPE};
+        std::vector<ResourceToProduce*> productionGainAFRICA = {firstResourceToProduceAFRICA, secondResourceToProduceAFRICA};
+        
+        std::string africa_FaceA = "./resources/img/Cards/Empire_Face_A/Panafricaine.png";
+        std::string africa_FaceB = "./resources/img/Cards/Empire_Face_B/Panafricaine.png";
+        
+        CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,CardType::RESEARCH};
+        
+        EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, africa_FaceA, victoryPointsAFRICA, productionGainB, new CardVictoryPoint{}, AFRICA, africa_FaceB, isFaceA);
+        
+        return africa;
+    }
 
-		std::vector<EmpireCard*> empires = {asia, aztec, africa, noram, europe};
-		
-    	return empires;
+    /// @brief Create the empire card ASIA.
+    /// @param isFaceA State if the empire is played with face A or B.
+    /// @return Pointer to the ASIA empire.
+    EmpireCard* CreateAllCards::createEmpireASIA (bool isFaceA) const
+    {
+        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+
+        ResourceToProduce* firstResourceToProduceASIA = new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE};
+        ResourceToProduce* secondResourceToProduceASIA = new ResourceToProduce{ResourceType::GOLD, 2, CardType::NONETYPE};
+        std::vector<ResourceToProduce*> productionGainASIA = {firstResourceToProduceASIA, secondResourceToProduceASIA};
+        
+        std::string asia_FaceA = "./resources/img/Cards/Empire_Face_A/Asia.png";
+        std::string asia_FaceB = "./resources/img/Cards/Empire_Face_B/Asia.png";
+        
+        CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2, CardType::PROJECT};
+        
+        EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, asia_FaceA, victoryPointsASIA, productionGainB, new CardVictoryPoint{}, ASIA, asia_FaceB, isFaceA);
+        
+        return asia;
+    }
+    
+    /// @brief Create the empire card AZTEC.
+    /// @param isFaceA State if the empire is played with face A or B.
+    /// @return Pointer to the AZTEC empire.
+    EmpireCard* CreateAllCards::createEmpireAZTEC (bool isFaceA) const
+    {
+        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+
+        ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE};
+        ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::EXPLORATION, 1, CardType::NONETYPE};
+        std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC, secondResourceToProduceAZTEC};
+
+        std::string aztec_FaceA = "./resources/img/Cards/Empire_Face_A/Aztec.png";
+        std::string aztec_FaceB = "./resources/img/Cards/Empire_Face_B/Aztec.png";
+
+        CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
+
+        EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, aztec_FaceA, victoryPointsAZTEC, productionGainB, new CardVictoryPoint{}, AZTEC, aztec_FaceB, isFaceA);
+
+        return aztec;
+    }
+    
+    /// @brief Create the empire card EUROPE.
+    /// @param isFaceA State if the empire is played with face A or B.
+    /// @return Pointer to the EUROPE empire.
+    EmpireCard* CreateAllCards::createEmpireEUROPE (bool isFaceA) const
+    {
+        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+
+        ResourceToProduce* firstResourceToProduceEUROPE = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
+        ResourceToProduce* secondResourceToProduceEUROPE = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
+        ResourceToProduce* thirdResourceToProduceEUROPE = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
+        std::vector<ResourceToProduce*> productionGainEUROPE = {firstResourceToProduceEUROPE, secondResourceToProduceEUROPE, thirdResourceToProduceEUROPE};
+        
+        std::string europe_FaceA = "./resources/img/Cards/Empire_Face_A/Europe.png";
+        std::string europe_FaceB = "./resources/img/Cards/Empire_Face_B/Europe.png";
+        
+        CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
+        
+        EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, europe_FaceA, victoryPointsEUROPE, productionGainB, new CardVictoryPoint{}, EUROPE, europe_FaceB, isFaceA);
+    
+        return europe;
+    }
+    
+    /// @brief Create the empire card NORAM.
+    /// @param isFaceA State if the empire is played with face A or B.
+    /// @return Pointer to the NORAM empire.
+    EmpireCard* CreateAllCards::createEmpireNORAM (bool isFaceA) const
+    {
+        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+
+        ResourceToProduce* firstResourceToProduceNORAM = new ResourceToProduce{ResourceType::MATERIAL, 3, CardType::NONETYPE};
+        ResourceToProduce* secondResourceToProduceNORAM = new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE};
+        std::vector<ResourceToProduce*> productionGainNORAM = {firstResourceToProduceNORAM, secondResourceToProduceNORAM};
+        
+        std::string noram_FaceA = "./resources/img/Cards/Empire_Face_A/Noram.png";
+        std::string noram_FaceB = "./resources/img/Cards/Empire_Face_B/Noram.png";
+        
+        CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1, ResourceType::FINANCIER};
+
+        EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, noram_FaceA, victoryPointsNORAM, productionGainB, new CardVictoryPoint{}, NORAM, noram_FaceB, isFaceA);
+    
+        return noram;
+    }
+
+    /// @brief Create the B face of the empires, that are all the same.
+    /// @return Vector of resources to produce when face B is played.
+    std::vector<ResourceToProduce*> CreateAllCards::createFaceBOfEmpires () const
+    {
+        ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
+        ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
+        ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
+        std::vector<ResourceToProduce*> productionGainB = {firstResourceToProduce,secondResourceToProduce, thirdResourceToProduce};
+
+        return productionGainB;
     }
 }
