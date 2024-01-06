@@ -91,7 +91,10 @@ namespace state {
     /// @brief Destructor of the DevelopmentCard class.
     DevelopmentCard::~DevelopmentCard ()
     {
-        for(ResourceToPay* resource : this->costToBuild){delete(resource);}
+        for(ResourceToPay* resource : this->costToBuild)
+        {
+            delete(resource);
+        }
     }
 
     /// @brief Add a ressource into the Card. The resource must be addable. Should also update the quantity and the isPaid value.

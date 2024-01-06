@@ -650,8 +650,8 @@ namespace state
         ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::EXPLORATION, 1, CardType::NONETYPE};
         std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC, secondResourceToProduceAZTEC};
 
-        std::string aztec_FaceA = "./resources/img/Cards/Empire_Face_A/Aztec.png";
-        std::string aztec_FaceB = "./resources/img/Cards/Empire_Face_B/Aztec.png";
+        std::string aztec_FaceA = "./resources/img/Cards/Empire_Face_A/Azteca.png";
+        std::string aztec_FaceB = "./resources/img/Cards/Empire_Face_B/Azteca.png";
 
         CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
 
@@ -672,8 +672,8 @@ namespace state
         ResourceToProduce* thirdResourceToProduceEUROPE = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
         std::vector<ResourceToProduce*> productionGainEUROPE = {firstResourceToProduceEUROPE, secondResourceToProduceEUROPE, thirdResourceToProduceEUROPE};
         
-        std::string europe_FaceA = "./resources/img/Cards/Empire_Face_A/Europe.png";
-        std::string europe_FaceB = "./resources/img/Cards/Empire_Face_B/Europe.png";
+        std::string europe_FaceA = "./resources/img/Cards/Empire_Face_A/Europa.png";
+        std::string europe_FaceB = "./resources/img/Cards/Empire_Face_B/Europa.png";
         
         CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
         
