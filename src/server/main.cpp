@@ -9,8 +9,7 @@
 
 using namespace std;
 
-namespace server
-{
+
     class Request {
     public:
         struct MHD_PostProcessor *pp = nullptr;
@@ -86,25 +85,25 @@ namespace server
             }    
         }
 
-        HttpStatus status;
+        server::HttpStatus status;
         string response;
         try {
 
-            ServicesManager *manager = (ServicesManager*) cls;
+            server::ServicesManager *manager = (server::ServicesManager*) cls;
             status = manager->queryService(response,request->data,url,method);
         }
-        catch(ServiceException& e) {
+        catch(server::ServiceException& e) {
             status = e.status();
             response = e.what();
             response += "\n";
         }
         catch(exception& e) {
-            status = HttpStatus::SERVER_ERROR;
+            status = server::HttpStatus::SERVER_ERROR;
             response = e.what();
             response += "\n";
         }
         catch(...) {
-            status = HttpStatus::SERVER_ERROR;
+            status = server::HttpStatus::SERVER_ERROR;
             response = "Unknown exception\n";
         }
 
@@ -122,12 +121,12 @@ namespace server
     {
         cout << "Server starting..." << endl;
         try {
-            ServicesManager servicesManager;
-            servicesManager.registerService(make_unique<VersionService>());
+            server::ServicesManager servicesManager;
+            servicesManager.registerService(make_unique<server::VersionService>());
 
-            UserDB userDB;
-            userDB.addUser(make_unique<User>("Paul",23));
-            servicesManager.registerService(make_unique<UserService>(std::ref(userDB)));
+            server::UserDB userDB;
+            userDB.addUser(make_unique<server::User>("Paul",23));
+            servicesManager.registerService(make_unique<server::UserService>(std::ref(userDB)));
 
             struct MHD_Daemon *d;
             if (argc != 2) {
@@ -157,4 +156,3 @@ namespace server
         }
         return 0;
     }
-}

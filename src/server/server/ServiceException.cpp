@@ -17,7 +17,7 @@ namespace server
         return httpStatus;
     }
 
-    const char* ServiceException::what() const noexcept {
+    const char* ServiceException::what() const {
         return msg.c_str();
     }
 }
