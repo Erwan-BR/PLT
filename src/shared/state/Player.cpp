@@ -2,26 +2,125 @@
 
 namespace state {
 
-    /// @brief Constructor of the class Player
-    Player::Player() :
-    Observable(),
-    name(""),
-    id(-1),
-    profilePicture(new sf::Texture())
+    /// @brief Create a player from a json file.
+    Player::Player(Json::Value jsonValue) :
+        Observable()
     {
+        this->name = jsonValue["name"].asString();
+        this->id = jsonValue["id"].asInt();
+        this->relativePathToTexture = jsonValue["relativePathToTexture"].asString();
+
+        this->profilePicture = new sf::Texture;
+        this->profilePicture->loadFromFile(this->relativePathToTexture);
+
+        this->empire = new EmpireCard(jsonValue["empire"]);
+
+        this->resourcesInEmpireUnit = jsonValue["resourcesInEmpireUnit"].asInt();
+        this->state = static_cast<PlayerState> (jsonValue["state"].asInt());
+
+        // Retrieve built cards from the JSON.
+        this->builtCards = {};
+        if (jsonValue["builtCards"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["builtCards"];
+        
+            for (const Json::Value& cardJSON : cardArray)
+            {
+                this->builtCards.push_back(new DevelopmentCard(cardJSON));
+            }
+        }
+
+        // Retrieve toBuildCards from the JSON.
+        this->toBuildCards = {};
+        if (jsonValue["toBuildCards"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["toBuildCards"];
+        
+            for (const Json::Value& cardJSON : cardArray)
+            {
+                this->toBuildCards.push_back(new DevelopmentCard(cardJSON));
+            }
+        }
+
+        // Retrieve toBuildCards from the JSON.
+        this->draftingCards = {};
+        if (jsonValue["draftingCards"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["draftingCards"];
+        
+            for (const Json::Value& cardJSON : cardArray)
+            {
+                this->draftingCards.push_back(new DevelopmentCard(cardJSON));
+            }
+        }
+
+        // Retrieve toBuildCards from the JSON.
+        this->draftCards = {};
+        if (jsonValue["draftCards"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["draftCards"];
+        
+            for (const Json::Value& cardJSON : cardArray)
+            {
+                this->draftCards.push_back(new DevelopmentCard(cardJSON));
+            }
+        }
+
         this->initializeMaps();
+
+        // Retrieve currentResources from the JSON
+        const Json::Value& currentResourcesArray = jsonValue["currentResources"];
+        for (const Json::Value& resourceObject : currentResourcesArray)
+        {
+            ResourceType resourceType = static_cast<ResourceType> (resourceObject["resourceType"].asInt());
+            int quantity = resourceObject["quantity"].asInt();
+            this->currentResources[resourceType] = quantity;
+        }
+
+        // Retrieve resourcesProduction from the JSON
+        const Json::Value& resourcesProductionArray = jsonValue["resourcesProduction"];
+        for (const Json::Value& resourceObject : resourcesProductionArray)
+        {
+            ResourceType resourceType = static_cast<ResourceType> (resourceObject["resourceType"].asInt());
+            int quantity = resourceObject["quantity"].asInt();
+            this->resourcesProduction[resourceType] = quantity;
+        }
+
+        // Retrieve cardsTypeList from the JSON
+        const Json::Value& cardsTypeListArray = jsonValue["cardsTypeList"];
+        for (const Json::Value& resourceObject : cardsTypeListArray)
+        {
+            CardType cardType = static_cast<CardType> (resourceObject["cardType"].asInt());
+            int quantity = resourceObject["quantity"].asInt();
+            this->cardsTypeList[cardType] = quantity;
+        }  
     }
-    
+
     /// @brief Constructor of the player, with some parameters.
     /// @param name Name of the player
     /// @param id Id of the player
     /// @param profilePicture Profile Picture of the player
     Player::Player(std::string name, int id, sf::Texture* profilePicture) :
-    Observable(),
-    name(name),
-    id(id),
-    profilePicture(profilePicture)
+        Observable(),
+        name(name),
+        id(id),
+        profilePicture(profilePicture)
     {
+        this->initializeMaps();
+    }
+
+    /// @brief Constructor of player that takes into argument the relative path to the texture.
+    /// @param name Name of the player.
+    /// @param id ID of the player.
+    /// @param relativePathToTexture Relative path of the profile picture, that is loaded in the function.
+    Player::Player (std::string name, int id, std::string relativePathToTexture) :
+        Observable(),
+        name(name),
+        id(id),
+        relativePathToTexture(relativePathToTexture)
+    {
+        this->profilePicture = new sf::Texture;
+        this->profilePicture->loadFromFile(relativePathToTexture);
         this->initializeMaps();
     }
 
@@ -91,14 +190,20 @@ namespace state {
         }
         CardType cardConstructedType = this->toBuildCards[cardIndex]->getType();
         
+        for(ResourceType resource : this->toBuildCards[cardIndex]->getInstantGain())
+        {
+            this->currentResources[resource]++;
+        }
+
         // Transfering the element from a vector to the other one.
         this->builtCards.push_back(this->toBuildCards[cardIndex]);
         this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);
         
         // Add the card to the dictionnary containing constructed cards.
         this->cardsTypeList[cardConstructedType] ++;
+
+
         this->updateProduction();
-        this->notifyObservers();
     }
     
     /// @brief Check if a resource can be played by the player. Does not check if the player has the resource.
@@ -149,7 +254,7 @@ namespace state {
 
         // Convert the resource and propagate the information to observers.
         this->currentResources.at(ResourceType::KRYSTALLIUM) --;
-        this->currentResources.at(targetResource) --;
+        this->currentResources.at(targetResource) ++;
         this->notifyObservers();
     }
     
@@ -313,7 +418,7 @@ namespace state {
         {
             return;
         }
-        this->currentResources.at(resource) --;
+        this->currentResources.at(resource)--;
         this->resourcesInEmpireUnit++;
         this->convertToKrystallium();
         this->notifyObservers();
@@ -394,7 +499,7 @@ namespace state {
         const std::vector<ResourceType> resourcesToSend = {ResourceType::MATERIAL, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION};
         for (ResourceType resourceType : resourcesToSend)
         {
-            for (int i = 0; i < this->currentResources.at(resourceType) ; i++)
+            while(0 != this->currentResources.at(resourceType))
             {
                 this->sendResourceToEmpire(resourceType);
             }
@@ -402,25 +507,84 @@ namespace state {
     }
 
 
-    /// @brief Transform the Player to a readable string.
-    /// @return Readable string that represents the information of the Player.
-    std::string Player::toString () const
+    ///@brief Convert the Player to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the player.
+    Json::Value Player::toJSON () const
     {
-        std::string returnValue = "Name: " + this->name + "\n";
-        
-        returnValue += "Id: " + std::to_string(this->id) + "\n";
-        returnValue += "-----Empire informations:-----\n " + empire->toString() + "\n";
-        returnValue += "builtCards length: " + std::to_string(this->builtCards.size()) + "\n";
-        returnValue += "toBuildCards length: " + std::to_string(this->toBuildCards.size()) + "\n";
-        returnValue += "draftingCards length: " + std::to_string(this->draftingCards.size()) + "\n";
-        returnValue += "dratfCards length: " + std::to_string(this->draftCards.size()) + "\n";
-        returnValue += "State: " + std::to_string(this->state) + "\n";
-        returnValue += "financierTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::FINANCIER)) + "\n";
-        returnValue += "colonelTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::COLONEL)) + "\n";
-        returnValue += "krystalliumTokensUnit: " + std::to_string(this->currentResources.at(ResourceType::KRYSTALLIUM)) + "\n";
-        returnValue += "resourcesInEmpireUnit: " + std::to_string(this->resourcesInEmpireUnit) + "\n";
+        // Instanciation of the player into a JSON format.
+        Json::Value playerJSON;
 
-        return returnValue;
+        playerJSON["name"] = this->name;
+        playerJSON["id"] = this->id;
+        playerJSON["empire"] = this->empire->toJSON();
+
+        // Serialize the vector of builtCards
+        Json::Value builtCardsArray;
+        for (const DevelopmentCard* card : this->builtCards)
+        {
+            builtCardsArray.append(card->toJSON());
+        }
+        playerJSON["builtCards"] = builtCardsArray;
+
+        // Serialize the vector of toBuildCards
+        Json::Value toBuildCardsArray;
+        for (const DevelopmentCard* card : this->toBuildCards)
+        {
+            toBuildCardsArray.append(card->toJSON());
+        }
+        playerJSON["toBuildCards"] = toBuildCardsArray;
+
+        // Serialize the vector of draftingCards
+        Json::Value draftingCardsArray;
+        for (const DevelopmentCard* card : this->draftingCards)
+        {
+            draftingCardsArray.append(card->toJSON());
+        }
+        playerJSON["draftingCards"] = draftingCardsArray;
+
+        // Serialize the vector of draftCards
+        Json::Value draftCardsArray;
+        for (const DevelopmentCard* card : this->draftCards)
+        {
+            draftCardsArray.append(card->toJSON());
+        }
+        playerJSON["draftCards"] = draftCardsArray;
+
+        playerJSON["state"] = static_cast<int> (this->state);
+        playerJSON["resourcesInEmpireUnit"] = this->resourcesInEmpireUnit;
+        playerJSON["relativePathToTexture"] = this->relativePathToTexture;
+        
+        // Serialize the map of currentResources
+        Json::Value currentResourcesArray;
+        for (const auto& entry : this->currentResources) {
+            Json::Value resourceObject;
+            resourceObject["resourceType"] = static_cast<int>(entry.first);
+            resourceObject["quantity"] = entry.second;
+            currentResourcesArray.append(resourceObject);
+        }
+        playerJSON["currentResources"] = currentResourcesArray;
+
+        // Serialize the map of resourcesProduction
+        Json::Value resourcesProductionArray;
+        for (const auto& entry : this->resourcesProduction) {
+            Json::Value resourceObject;
+            resourceObject["resourceType"] = static_cast<int>(entry.first);
+            resourceObject["quantity"] = entry.second;
+            resourcesProductionArray.append(resourceObject);
+        }
+        playerJSON["resourcesProduction"] = resourcesProductionArray;
+
+        // Serialize the map of cardsTypeList
+        Json::Value cardsTypeListArray;
+        for (const auto& entry : this->cardsTypeList) {
+            Json::Value resourceObject;
+            resourceObject["cardType"] = static_cast<int>(entry.first);
+            resourceObject["quantity"] = entry.second;
+            cardsTypeListArray.append(resourceObject);
+        }
+        playerJSON["cardsTypeList"] = cardsTypeListArray;
+
+        return playerJSON;
     }
 
     /************************************* Setters & Getters *************************************/
@@ -569,6 +733,13 @@ namespace state {
         return (this->id < 0);
     }
 
+    /// @brief Get the relative path of a texture.
+    /// @return Relative path of a texture.
+    std::string Player::getRelativePathToTexture () const
+    {
+        return this->relativePathToTexture;
+    }
+
     /************************************* Methods implemented for AI. *************************************/
     
     /// @brief Method for AI, to make them choose their card. Method implemented in Player because both Player and AI are in the same vector in Game.
@@ -587,5 +758,12 @@ namespace state {
     void Player::AIUseProducedResources ()
     {
         return ;
+    }
+
+    /// @brief Method for AI, to make them choose colonel of financier token. Method implemented in Player because both Player and AI are in the same vector in Game.
+    /// @return True if the AI choose colonel, false either.
+    bool Player::AIChooseColonelToken ()
+    {
+        return false;
     }
 }

@@ -1,18 +1,43 @@
 #include "DevelopmentCard.h"
+#include "CreateJSONFormatStructures.h"
 
 namespace state {
-
-    ResourceType resource;
-    /// @brief Empty constructor of the DevelopmentCard class.
-    DevelopmentCard::DevelopmentCard () :
-    Card(),
-    type(CardType::NONETYPE),
-    numberOfCopies(0),
-    costToBuild({}),
-    instantGain({}),
-    discardGain(ResourceType::MATERIAL),
-    quantityResourceMissing(-1) // "Error" value : Empty constructor should never be used.
+    /// @brief Create a development card from a json file.
+    DevelopmentCard::DevelopmentCard (Json::Value jsonValue) :
+        Card(jsonValue)
     {
+        this->type = static_cast<CardType> (jsonValue["type"].asInt());
+
+        this->numberOfCopies = jsonValue["numberOfCopies"].asInt();
+
+        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
+
+        // Retrieve production gain from the JSON.
+        this->costToBuild = {};
+        if (jsonValue["costToBuild"].isArray())
+        {
+            const Json::Value costToBuildArray = jsonValue["costToBuild"];
+            for (const Json::Value& jsonStruct : costToBuildArray)
+            {
+                this->costToBuild.push_back(createInformations->resourceToPayFromJSON(jsonStruct));
+            }
+        }
+
+        // Retrieve instant gain
+        this->instantGain = {};
+        if (jsonValue["instantGain"].isArray())
+        {
+            const Json::Value& instantGainArray = jsonValue["instantGain"];
+
+            for (unsigned int i = 0; i < instantGainArray.size(); ++i)
+            {
+                this->instantGain.push_back(static_cast<ResourceType>(instantGainArray[i].asInt()));
+            }
+        }
+
+        this->discardGain = static_cast<ResourceType> (jsonValue["discardGain"].asInt());
+        this->isPaid = jsonValue["isPaid"].asBool();
+        this->quantityResourceMissing = jsonValue["quantityResourceMissing"].asInt();
     }
 
     /// @brief Full constructor of the DevelopmentCard class.
@@ -33,13 +58,43 @@ namespace state {
         discardGain(discardGain),
         quantityResourceMissing((int)costToBuild.size()) // Because no resource is paid and the size is never 0.
     {
-        for(ResourceToPay* resource : costToBuild){this->costToBuild.push_back(resource);}
+        for(ResourceToPay* resource : costToBuild)
+        {
+            this->costToBuild.push_back(resource);
+        }
+    }
+
+    /// @brief Full constructor of the DevelopmentCard class.
+    /// @param name Name of the Card.
+    /// @param productionGain Production of the Card at each turn.
+    /// @param relativePathOfTexture Relative path of the image that represent the card.
+    /// @param victoryPoints Structures that inform how the card can make some points.
+    /// @param type Type of the card.
+    /// @param numberOfCopies Number of copies of this card in the game.
+    /// @param costToBuild Vector that contains all the resources to pay to build the Card.
+    /// @param instantGain Vector that contains all the resources won at the construction of the Card.
+    /// @param discardGain Pointers to the resources you get when the Card is discarded.
+    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathOfTexture, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
+        Card(name, productionGain, relativePathOfTexture, victoryPoints),
+        type(type),
+        numberOfCopies(numberOfCopies),
+        instantGain(instantGain),
+        discardGain(discardGain),
+        quantityResourceMissing((int)costToBuild.size()) // Because no resource is paid and the size is never 0.
+    {
+        for(ResourceToPay* resource : costToBuild)
+        {
+            this->costToBuild.push_back(resource);
+        }
     }
 
     /// @brief Destructor of the DevelopmentCard class.
     DevelopmentCard::~DevelopmentCard ()
     {
-        for(ResourceToPay* resource : this->costToBuild){delete(resource);}
+        for(ResourceToPay* resource : this->costToBuild)
+        {
+            delete(resource);
+        }
     }
 
     /// @brief Add a ressource into the Card. The resource must be addable. Should also update the quantity and the isPaid value.
@@ -51,26 +106,6 @@ namespace state {
         {
             // Checking if the current resource is not paid, and if the type is the one of the input parameter.
             if ((!resourceToPay->isPaid) && (resourceToPay->type == resource))
-            {
-                resourceToPay->isPaid = true;
-                this->notifyObservers();
-                return (this->decreaseResourceUnitNeeded());
-            } 
-        }
-        // The following line should never be reached.
-        return false;
-    }
-
-    /// @brief /!\ DEPRECATED FUNCTION /!\ Add a krystallium ressource into a Card. A resource should be replaced. 
-    /// @param resourceToReplace Resource that will be replaced by a krystallium.
-    /// @return True if the card is just payed. False either.
-    bool DevelopmentCard::addKrystallium (ResourceType resourceToReplace)
-    {
-        // Iterating among all resources that should be paid
-        for (ResourceToPay* resourceToPay : this->costToBuild)
-        {
-            // Checking if the current resource is not paid, and if the type is the one we want to replace.
-            if ((!resourceToPay->isPaid) && (resourceToPay->type == resourceToReplace))
             {
                 resourceToPay->isPaid = true;
                 this->notifyObservers();
@@ -104,16 +139,6 @@ namespace state {
                 {
                     return true;
                 }
-                // If the input resource is a krysallium, and the resourceToPay is not Colonel / Financier, it can be paid.
-                if ((resource == ResourceType::KRYSTALLIUM) &&
-                (resourceToPay->type == ResourceType::MATERIAL ||
-                resourceToPay->type == ResourceType::ENERGY ||
-                resourceToPay->type == ResourceType::SCIENCE ||
-                resourceToPay->type == ResourceType::GOLD ||
-                resourceToPay->type == ResourceType::EXPLORATION))
-                {
-                    return true;
-                }
             }
         }
         // If this line is reached, it means that none of the ressources to pay may be paid. 
@@ -134,32 +159,42 @@ namespace state {
         return this->isPaid; 
     }
 
-    /// @brief Convert the DevelopmentCard to a readable string.
-    /// @return Readable string that contains the information concerning DevelopmentCard.
-    std::string DevelopmentCard::toString () const
+    ///@brief Convert the Development card to a JSON format. Usefull when the game is saved.
+	///@return Readable JSON of the development card.
+    Json::Value DevelopmentCard::toJSON () const
     {
-        // Instantiation of a string to return.
-        std::string returnValue = "Name: " + this->name + "\n";
-        
-        // Adding some info to returnValue.
-        returnValue += "Type: " + std::to_string(this->type) + "\n";
-        returnValue += "Number Of Copies: " + std::to_string(this->numberOfCopies) + "\n";
-        
-        // Adding a different sentence depending on if the card is paid or not.
-        if (this->isPaid)
-        {
-            returnValue += "This card is paid.\n";
-        }
-        else
-        {
-            returnValue += "Resouces missing: " + std::to_string(this->quantityResourceMissing);
-        }
+        // Instanciation of the card into a JSON format.
+        Json::Value devCardJSON = Card::toJSON();
 
-        // Adding some other info to returnValue.
-        returnValue += "Discard gain: " + std::to_string(this->discardGain) + "\n";
-        
-        // Return the constructed string.
-        return returnValue;
+        devCardJSON["type"] = static_cast<int>(this->type);
+
+        devCardJSON["numberOfCopies"] = this->numberOfCopies;
+
+        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
+
+        // Serialize the vector of the cost to build
+        Json::Value costArray;
+        for (const ResourceToPay* prodGain : this->costToBuild)
+        {
+            costArray.append(createInformations->jsonOfResourceToPay(*prodGain));
+        }
+        devCardJSON["costToBuild"] = costArray;
+
+        // Serialize the vector of the cost to build
+        Json::Value instantGainArray;
+        for (const ResourceType instantGainValue : this->instantGain)
+        {
+            instantGainArray.append(static_cast<int>(instantGainValue));
+        }
+        devCardJSON["instantGain"] = instantGainArray;
+
+        devCardJSON["discardGain"] = this->discardGain;
+
+        devCardJSON["isPaid"] = this->isPaid;
+
+        devCardJSON["quantityResourceMissing"] = this->quantityResourceMissing;
+
+        return devCardJSON;
     }
 
     /************************************* Setters & Getters *************************************/
@@ -183,5 +218,31 @@ namespace state {
     std::vector<ResourceToPay*> DevelopmentCard::getCostToBuild() const
     {
         return this->costToBuild;
+    }
+
+    /// @brief Gettter for the instant gain of the card (gain when the card is constructed.)
+    /// @return Instant gain of the card.
+    std::vector<ResourceType> DevelopmentCard::getInstantGain() const
+    {
+        return this->instantGain;
+    }
+
+    /// @brief Get the number of resources that needs to be paid on this card.
+    /// @return Number of resources to pay on this card.
+    int DevelopmentCard::getQuantityResourcesMissing () const
+    {
+        int quantityResourcesMissing = 0;
+        if (this->isPaid)
+        {
+            return 0;
+        }
+        for (ResourceToPay* resourceToPay : this->costToBuild)
+        {
+            if (! resourceToPay->isPaid)
+            {
+                quantityResourcesMissing ++;
+            }
+        }
+        return quantityResourcesMissing;
     }
 }
