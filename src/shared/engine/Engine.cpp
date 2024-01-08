@@ -2,14 +2,6 @@
 
 namespace engine
 {
-    /// @brief Empty constructor of an engine. Should not be used.
-    Engine::Engine() :
-        currentGame(new state::Game()),
-        currentCommands({})
-    {
-
-    }
-
     /// @brief Full constructor of the engine.
     /// @param currentGame Game that is played.
     /// @param currentCommands Command that can be done in the game.

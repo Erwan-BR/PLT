@@ -2,6 +2,15 @@
 
 namespace engine
 {
+    /// @brief Create a command that doesn't require a player.
+    /// @param id ID of the command.
+    Command::Command(CommandID id) :
+        id(id),
+        player(NULL)
+    {
+
+    }
+
     /// @brief Constructor of a command.
     /// @param id ID of the command. List is on CommandID.h file.
     /// @param player Player that launched the command.

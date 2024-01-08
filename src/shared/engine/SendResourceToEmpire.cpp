@@ -2,9 +2,9 @@
 
 namespace engine
 {
-    /// @brief Constructor of the command that allows to discard a card.
+    /// @brief Constructor of the command that allows to send a resource to the empire.
     /// @param player Player that did the command.
-    /// @param resource Resource that is discarded by the player.
+    /// @param resource Resource that is send to the empire.
     SendResourceToEmpire::SendResourceToEmpire (state::Player* player, state::ResourceType resource) :
         Command(CommandID::SENDRESOURCETOEMPIRE, player, resource)
     {
