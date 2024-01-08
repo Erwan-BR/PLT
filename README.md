@@ -1,6 +1,6 @@
 # PLT
 
-[![Actions Status](https://github.com/Erwan-BR/PLT/workflows/PLT%20build/badge.svg)](https://github.com/Erwan-BR/PLT/actions) [![codecov](https://codecov.io/gh/Erwan-BR/PLT/graph/badge.svg?token=1MESYSIBL5)](https://codecov.io/gh/Erwan-BR/PLT)
+[![Actions Status](https://github.com/Erwan-BR/PLT/workflows/PLT%20build/badge.svg)](https://github.com/Erwan-BR/PLT/actions) [![codecov](https://codecov.io/gh/Erwan-BR/PLT/graph/badge.svg?token=1MESYSIBL5)](https://codecov.io/gh/Erwan-BR/PLT) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/414c58a98ddc4bfab69c81a541bc2b73)](https://app.codacy.com/gh/Erwan-BR/PLT/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ## Introduction
 
