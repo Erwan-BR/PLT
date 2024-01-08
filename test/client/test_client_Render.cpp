@@ -70,10 +70,13 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	//Player took 2 Zeppelin from drafted to toBuild
 	player1->keepCard(0);
 	player1->keepCard(0);
-	//Player Receive 2ENERGY and build 1 Zeppelin
-	player1->receiveResources(state::ENERGY,2);
-	player1->addResource(state::ENERGY,0);
-	player1->addResource(state::ENERGY,0);
+	//Player Built
+	for(state::ResourceToPay* r : player1->getToBuildCards()[0]->getCostToBuild()){
+		state::ResourceType res = r->type;
+		player1->receiveResources(res,1);
+		player1->addResource(res,0);
+	}
+	
 	//Update
 	myscene->update();
 	myscene->changeWindow(MAIN_WINDOW);
