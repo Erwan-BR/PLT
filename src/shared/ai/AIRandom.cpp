@@ -8,9 +8,18 @@ namespace ai
     /// @brief Full constructor of AIRandom, with important information inside.
     /// @param name Name of the AI.
     /// @param id ID of the AI. Should be negative for engine methods.
-    /// @param profilePicture Image of the profile picture of the AI.
-    AIRandom::AIRandom (std::string name, int id, sf::Texture* profilePicture) :
-        Player(name, id, profilePicture)
+    AIRandom::AIRandom (std::string name, int id) :
+        Player(name, id)
+    {
+
+    }
+
+    /// @brief Full constructor of AIRandom, with important information inside.
+    /// @param name Name of the AI.
+    /// @param id ID of the AI. Should be negative for engine methods.
+    /// @param relativePathOfTexture Relative path of the profile picture.
+    AIRandom::AIRandom (std::string name, int id, std::string relativePathOfTexture) :
+        Player(name, id, relativePathOfTexture)
     {
 
     }
@@ -27,7 +36,7 @@ namespace ai
         // Time-base seed to choose if the card is choosed or not.
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::default_random_engine randomness(seed);
-        std::uniform_int_distribution<int> distribution(0, this->draftCards.size() - 1);
+        std::uniform_int_distribution<int> distribution(0, this->draftingCards.size() - 1);
         
         // Generate a random integer.
         int randomInt = distribution(randomness);
@@ -37,7 +46,7 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
     void AIRandom::AIPlanification ()
     {
-        for (int cardIndex = 7; 0 <= cardIndex; cardIndex--)
+        for (int cardIndex = this->draftCards.size() - 1; 0 <= cardIndex; cardIndex--)
         {
             // Time-base seed to choose if the card is choosed or not.
 			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -109,7 +118,7 @@ namespace ai
         std::default_random_engine randomness(seed);
 
         // Here, the resource is playable. Choose a random card to try playing on it.
-        std::uniform_int_distribution<int> distribution(0, numberOfCardsToBuild);
+        std::uniform_int_distribution<int> distribution(0, numberOfCardsToBuild - 1);
         
         // Generate a random integer.
         int randomCardPosition = distribution(randomness);

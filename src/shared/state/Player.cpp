@@ -112,6 +112,19 @@ namespace state {
     /// @brief Constructor of player that takes into argument the relative path to the texture.
     /// @param name Name of the player.
     /// @param id ID of the player.
+    Player::Player (std::string name, int id) :
+        Observable(),
+        name(name),
+        id(id),
+        relativePathToTexture("")
+    {
+        this->profilePicture = new sf::Texture;
+        this->initializeMaps();
+    }
+
+    /// @brief Constructor of player that takes into argument the relative path to the texture.
+    /// @param name Name of the player.
+    /// @param id ID of the player.
     /// @param relativePathToTexture Relative path of the profile picture, that is loaded in the function.
     Player::Player (std::string name, int id, std::string relativePathToTexture) :
         Observable(),
@@ -731,6 +744,13 @@ namespace state {
     bool Player::isAI () const
     {
         return (this->id < 0);
+    }
+
+    /// @brief Check if the player is a real player AND is playing.
+    /// @return Boolean that state if a player is an AI and playing.
+    bool Player::isRealPlayerAndPlaying () const
+    {
+        return (! this->isAI()) && (PlayerState::PLAYING == this->state);
     }
 
     /// @brief Get the relative path of a texture.

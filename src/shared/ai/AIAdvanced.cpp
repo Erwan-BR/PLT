@@ -7,10 +7,29 @@ namespace ai
     /// @brief Full constructor of AIAdvanced, with important information inside.
     /// @param name Name of the AI.
     /// @param id ID of the AI. Should be negative for engine methods.
-    /// @param profilePicture Image of the profile picture of the AI.
-    AIAdvanced::AIAdvanced (std::string name, int id, sf::Texture* profilePicture, state::Game* game) :
-        Player(name, id, profilePicture),
-        game(game)
+    AIAdvanced::AIAdvanced (std::string name, int id) :
+        Player(name, id)
+    {
+        this->initMissingResources();
+    }
+
+    /// @brief Full constructor of AIAdvanced, with important information inside.
+    /// @param name Name of the AI.
+    /// @param id ID of the AI. Should be negative for engine methods.
+    /// @param relativePathOfTexture Relative path of the profile picture.
+    AIAdvanced::AIAdvanced (std::string name, int id, std::string relativePathOfTexture) :
+        Player(name, id, relativePathOfTexture)
+    {
+        this->initMissingResources();
+    }
+    
+    /// @brief Destructor of the AIRandom class. Does not destruct anything for the moment.
+    AIAdvanced::~AIAdvanced ()
+    {
+
+    }
+
+    void AIAdvanced::initMissingResources()
     {
         missingResourcesToConstructAllCards[state::ResourceType::MATERIAL] = 0;
         missingResourcesToConstructAllCards[state::ResourceType::ENERGY] = 0;
@@ -20,12 +39,6 @@ namespace ai
         missingResourcesToConstructAllCards[state::ResourceType::COLONEL] = 0;
         missingResourcesToConstructAllCards[state::ResourceType::FINANCIER] = 0;
     }
-    
-    /// @brief Destructor of the AIRandom class. Does not destruct anything for the moment.
-    AIAdvanced::~AIAdvanced ()
-    {
-
-    }
 
     /// @brief Method used to implement how the AI choose it's card from the draft phase.
     void AIAdvanced::AIChooseDraftingCard()
@@ -34,11 +47,12 @@ namespace ai
         if (0 == this->currentIndexOfDraft)
         {
             this->substractProductionGainToNeededResources();
+            this->gameTurn ++;
         }
 
         // At turn one, the AI takes every possible cards that makes him win flatpoint.
         // For other turns, the AI takes a card only if he doesn't have any card to build left.
-        if (1 == this->game->getTurn() || 0 == this->toBuildCards.size())
+        if (1 == this->gameTurn || 0 == this->toBuildCards.size())
         {
             int indexOfCardToKeep = 0;
             long unsigned int costOfCardToBuid = std::numeric_limits<long unsigned int>::max();

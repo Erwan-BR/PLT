@@ -1,5 +1,7 @@
 #include "Engine.h"
 
+#include <unistd.h>
+
 namespace engine
 {
     /// @brief Full constructor of the engine.
@@ -51,10 +53,10 @@ namespace engine
             }
         }
 
-        // Now, we are waiting for players to play.
+        // Now, we are waiting for players to play. 1 second to avoid making too much computation for nothing.
         while(! this->areAllRealPlayersPending())
         {
-            ;
+            sleep(1);
         }
         // Once finished, we can call the next method of game.
         (this->currentGame->*(gameMethodVector[currentPhase]))();
@@ -67,7 +69,7 @@ namespace engine
         for(state::Player* player : this->currentGame->getPlayers())
         {
             // Checdking for real player if only one is playing.
-            if ((! player->isAI()) && (state::PlayerState::PLAYING == player->getState()))
+            if (player->isRealPlayerAndPlaying())
             {
                 return false;
             }
