@@ -50,7 +50,8 @@ if(BUILD_CODE_COVERAGE)
   set(COVERAGE_LCOV_EXCLUDES
     '/usr/*'
     '${PROJECT_SOURCE_DIR}/test/*'
-    '${PROJECT_SOURCE_DIR}/extern/*')
+    '${PROJECT_SOURCE_DIR}/extern/*'
+    '${PROJECT_SOURCE_DIR}/*/main.cpp')
   set(COVERAGE_GCOVR_EXCLUDES
     /usr/
     "${PROJECT_SOURCE_DIR}/test/"

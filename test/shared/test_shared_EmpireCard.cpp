@@ -1,96 +1,115 @@
 #include <boost/test/unit_test.hpp>
 
 #include "../../src/shared/state/EmpireCard.h"
+#include "../../src/shared/state/CreateAllCards.h"
 
 using namespace ::state;
 
-BOOST_AUTO_TEST_CASE(firstEmpireCardTest)
+BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
-  {
-    // Testing the empty constructor of EmpireCard 
-    EmpireCard* myFirstEmpireCard = new EmpireCard();
+    // Testing conversion of JSON (face A)
+    {
+        CreateAllCards* createEmpire = new CreateAllCards();
+        EmpireCard* empireCardToExport = createEmpire->createEmpireAFRICA(true);
+        
+        Json::Value jsonContent = empireCardToExport->toJSON();
 
-    /*Adding some of those lines if somes getters are done.
-    // Checking default value given by the empty constructor.
-    // Checking values from the empty Card constructor.
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getName(), "");
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getProductionGain(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getDesign(), sf::Texture());
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getVictoryPoints(), {});
+        // Only for debug, the JSON appears in a log file (PLT/build/test/Testing/Temporary/LastTest.log)
+        /*
+        for (int i = 0; i < 7; i++)
+        {
+            std::cout << std::endl;
+        }
+        
+        std::cout << jsonContent;
+        
+        for (int i = 0; i < 7; i++)
+        {
+            std::cout << std::endl;
+        }
+        */
 
-    // Checking default value given by the EmpireCard constructor.
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getProductionGainAdvanced(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getVictoryPointsAdvanced(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getEmpire(), AFRICA);
-    */
-    
-    // Calling methods of EmpireCard.
-    std::string EmpireCardToString = myFirstEmpireCard->toString();
+        EmpireCard* empireFromImport = new EmpireCard(jsonContent);
 
-    // Checking output of EmpireCard method.
-    BOOST_CHECK_EQUAL(EmpireCardToString, "");
+        // Following lines will check all possible attributes from the card.
+        BOOST_CHECK_EQUAL(empireFromImport->getName(), "AFRICA");
 
-    // Delete pointers that won't be used anymore.
-    delete myFirstEmpireCard;
-  }
-  
-  {
-    // Elements to create for testing the full constructor.
-    ResourceToPay* firstResourceToPay = new ResourceToPay{ResourceType::ENERGY, false};
-    ResourceToPay* secondResourceToPay = new ResourceToPay{ResourceType::COLONEL, false};
-    ResourceToPay* thirdResourceToPay = new ResourceToPay{ResourceType::SCIENCE, false};
-    ResourceToPay* fourthResourceToPay = new ResourceToPay{ResourceType::MATERIAL, false};
+        std::vector<ResourceToProduce*> importedCardProduction = empireFromImport->getProductionGain();
+        BOOST_CHECK_EQUAL(importedCardProduction.size(), 2);
 
-    ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::KRYSTALLIUM, 2, state::CardType::VEHICLE};
-    ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::GOLD, 3, state::CardType::PROJECT};
+        BOOST_CHECK_EQUAL(importedCardProduction[0]->type, ResourceType::MATERIAL);
+        BOOST_CHECK_EQUAL(importedCardProduction[0]->quantity, 2);
+        BOOST_CHECK_EQUAL(importedCardProduction[0]->cardType, CardType::NONETYPE);
 
-    // Elements to pass to the constructor.
-    std::string name = "myName";
+        BOOST_CHECK_EQUAL(importedCardProduction[1]->type, ResourceType::SCIENCE);
+        BOOST_CHECK_EQUAL(importedCardProduction[1]->quantity, 2);
+        BOOST_CHECK_EQUAL(importedCardProduction[1]->cardType, CardType::NONETYPE);
 
-    std::vector<ResourceToProduce*> productionGain;
-    productionGain.push_back(firstResourceToProduce);
-    productionGain.push_back(secondResourceToProduce);
+        BOOST_CHECK_EQUAL(empireFromImport->getRelativePathToTexture(), "./resources/img/Cards/Empire_Face_A/Panafricaine.png");
+        BOOST_CHECK_EQUAL(empireFromImport->getRelativePathOfTextureFaceB(), "./resources/img/Cards/Empire_Face_B/Panafricaine.png");
 
-    sf::Texture design = sf::Texture();
+        CardVictoryPoint* importedCardPoints = empireFromImport->getVictoryPoints();
 
-    CardVictoryPoint* victoryPoints = new CardVictoryPoint();
+        BOOST_CHECK_EQUAL(importedCardPoints->numberOfPoints, 2);
+        BOOST_CHECK_EQUAL(importedCardPoints->cardOrResourceType, CardType::RESEARCH);
+    }
 
-    std::vector<ResourceToProduce*> productionGainAdvanced;
-    productionGainAdvanced.push_back(firstResourceToProduce);
-    productionGainAdvanced.push_back(secondResourceToProduce);
+    // Testing conversion of JSON (face B)
+    {
+        CreateAllCards* createEmpire = new CreateAllCards();
+        EmpireCard* empireCardToExport = createEmpire->createEmpireAFRICA(false);
 
-    CardVictoryPoint* victoryPointsAdvanced  = new CardVictoryPoint();
+        Json::Value jsonContent = empireCardToExport->toJSON();
 
-    EmpireLand empire = AZTEC;
-    
-    // Testing the full constructor of EmpireCard.
-    EmpireCard* mySecondEmpireCard = new EmpireCard(name, productionGain, design, victoryPoints, productionGainAdvanced, victoryPointsAdvanced, empire);
+        for (int i = 0; i < 7; i++)
+        {
+            std::cout << std::endl;
+        }
 
-    /*Adding some of those lines if somes getters are done.
-    // Checking default value given by the empty constructor.
-    // Checking values from the empty Card constructor.
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getName(), "");
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getProductionGain(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getDesign(), sf::Texture());
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getVictoryPoints(), {});
+        std::cout << jsonContent;
+        
+        for (int i = 0; i < 7; i++)
+        {
+            std::cout << std::endl;
+        }
 
-    // Checking default value given by the DevelopmentCard constructor.
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getProductionGainAdvanced(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getVictoryPointsAdvanced(), {});
-    BOOST_CHECK_EQUAL(myFirstEmpireCard->getEmpire(), AFRICA);
-    */
+        EmpireCard* empireFromImport = new EmpireCard(jsonContent);
 
-    // Delete pointers that won't be used anymore.
-    delete firstResourceToPay;
-    delete secondResourceToPay;
-    delete thirdResourceToPay;
-    delete fourthResourceToPay;
+        // Following lines will check all possible attributes from the card.
+        BOOST_CHECK_EQUAL(empireFromImport->getName(), "AFRICA");
 
-    delete firstResourceToProduce;
-    delete secondResourceToProduce;
+        std::vector<ResourceToProduce*> importedCardProduction = empireFromImport->getProductionGain();
+        BOOST_CHECK_EQUAL(importedCardProduction.size(), 3);
 
-    delete mySecondEmpireCard;
-  }
+        BOOST_CHECK_EQUAL(importedCardProduction[0]->type, ResourceType::MATERIAL);
+        BOOST_CHECK_EQUAL(importedCardProduction[0]->quantity, 2);
+        BOOST_CHECK_EQUAL(importedCardProduction[0]->cardType, CardType::NONETYPE);
+
+        BOOST_CHECK_EQUAL(importedCardProduction[1]->type, ResourceType::ENERGY);
+        BOOST_CHECK_EQUAL(importedCardProduction[1]->quantity, 1);
+        BOOST_CHECK_EQUAL(importedCardProduction[1]->cardType, CardType::NONETYPE);
+
+        BOOST_CHECK_EQUAL(importedCardProduction[2]->type, ResourceType::SCIENCE);
+        BOOST_CHECK_EQUAL(importedCardProduction[2]->quantity, 1);
+        BOOST_CHECK_EQUAL(importedCardProduction[2]->cardType, CardType::NONETYPE);
+
+        BOOST_CHECK_EQUAL(empireFromImport->getRelativePathToTexture(), "./resources/img/Cards/Empire_Face_A/Panafricaine.png");
+        BOOST_CHECK_EQUAL(empireFromImport->getRelativePathOfTextureFaceB(), "./resources/img/Cards/Empire_Face_B/Panafricaine.png");
+
+        CardVictoryPoint* importedCardPoints = empireFromImport->getVictoryPoints();
+
+        BOOST_CHECK_EQUAL(importedCardPoints->numberOfPoints, 0);
+        BOOST_CHECK_EQUAL(importedCardPoints->cardOrResourceType, 0);
+    }
+}
+
+BOOST_AUTO_TEST_CASE(test_otherMethods)
+{
+    CreateAllCards* createEmpire = new CreateAllCards();
+    EmpireCard* empireExample = createEmpire->createEmpireASIA(false);
+
+    (void) empireExample->getDesign();
+    (void) empireExample->getDesignFaceB();
 }
 
 /* vim: set sw=2 sts=2 et : */
