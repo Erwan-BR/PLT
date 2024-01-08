@@ -162,8 +162,11 @@ namespace state {
         else if(GamePhase::PRODUCTION == this->phase)
         {
             this->newTurn();
-            this->phase = GamePhase::DRAFT;
-            this->initDraft();
+            if (GamePhase::FINISHED != this->phase)
+            {
+                this->phase = GamePhase::DRAFT;
+                this->initDraft();
+            }
         }
         this->notifyObservers();
     }
@@ -272,7 +275,7 @@ namespace state {
     /// @brief Init the production phase.
     void Game::initProduction ()
     {
-        this->resourceProducing = ResourceType::MATERIAL;
+        this->resourceProducing = ResourceType::FINANCIER;
         this->notifyObservers();
         this->nextProduction();
     }
@@ -280,10 +283,12 @@ namespace state {
     /// @brief Launch the next production phase if a production phase arrives, launch the next draft phase if not.
     void Game::nextProduction ()
     {
-        const static std::vector<ResourceType> tableOfResources = {ResourceType::MATERIAL, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION, ResourceType::KRYSTALLIUM};
+        // Financier = Init; krystallium = ended.
+        const static std::vector<ResourceType> tableOfResources = {ResourceType::FINANCIER, ResourceType::MATERIAL, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION, ResourceType::KRYSTALLIUM};
 
         auto indexOfResource = std::find(tableOfResources.begin(), tableOfResources.end(), this->resourceProducing);
-        
+        this->resourceProducing = *(indexOfResource + 1);
+
         // Resource producing is 'Kystallium'. It means that there is no more resource to produce.
         if (ResourceType::KRYSTALLIUM == this->resourceProducing)
         {
@@ -292,7 +297,6 @@ namespace state {
         }
 
         this->produceResource();
-        this->resourceProducing = *(indexOfResource + 1);
         this->notifyObservers();
     }
 
