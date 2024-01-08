@@ -1,4 +1,7 @@
 #include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <vector>
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
@@ -7,21 +10,24 @@
 
 #include <state.h>
 #include <render.h>
+#include <ai.h>
+#include <engine.h>
+
 #include "../shared/state.h"
 #include "render.h"
 
-using namespace std;
 using namespace state;
 using namespace render;
 
 void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene);
 void displayMessage();
+void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
 
 int main(int argc,char* argv[])
 {
     if (1 == argc)
     {
-        std::cout << "Not enough arguments. You can try the following commands:" << endl;
+        std::cout << "Not enough arguments. You can try the following commands:" << std::endl;
         displayMessage();
         return EXIT_FAILURE;
     }
@@ -30,23 +36,23 @@ int main(int argc,char* argv[])
 
     if ("hello" == userInput)
     {
-        std::cout << "Hello World!" << endl;
+        std::cout << "Hello World!" << std::endl;
         return EXIT_SUCCESS;
     }
 	else if ("engine" == userInput)
     {
         //Print Temporary Manual Commands
-        std::cout<<"**Temporary Manual Commands**"<<endl;
-        std::cout<<"*Change Window Commands*"<<endl;
-        std::cout<<"A - Main Window"<<endl;
-        std::cout<<"Z - Drafting Window"<<endl;
-        std::cout<<"E - Planification Window"<<endl;
-        std::cout<<"R - Full Info Player Window"<<endl;
-        std::cout<<"> On This Window (Player Info):"<<endl;
-        std::cout<<"> Q - Display Player 1"<<endl;
-        std::cout<<"> S - Display Player 2"<<endl;
-        std::cout<<"*Game Commands*"<<endl;
-        std::cout<<"Space - Go to the next step of the testing game"<<endl;
+        std::cout<<"**Temporary Manual Commands**" << std::endl;
+        std::cout<<"*Change Window Commands*" << std::endl;
+        std::cout<<"A - Main Window" << std::endl;
+        std::cout<<"Z - Drafting Window" << std::endl;
+        std::cout<<"E - Planification Window" << std::endl;
+        std::cout<<"R - Full Info Player Window" << std::endl;
+        std::cout<<"> On This Window (Player Info):" << std::endl;
+        std::cout<<"> Q - Display Player 1" << std::endl;
+        std::cout<<"> S - Display Player 2" << std::endl;
+        std::cout<<"*Game Commands*" << std::endl;
+        std::cout<<"Space - Go to the next step of the testing game" << std::endl;
 
         //Creation of the window
         int win_length = 1820;
@@ -67,7 +73,7 @@ int main(int argc,char* argv[])
         state::Player* player2 = new state::Player("TOI",1,t2);
 
         //Creation of the vector players
-        vector<state::Player*> players;
+        std::vector<state::Player*> players;
         players.push_back(player1);
         players.push_back(player2);
 
@@ -109,7 +115,7 @@ int main(int argc,char* argv[])
                     window.close();
                 }
                 if (event.type == sf::Event::KeyPressed) {
-                    //std::cout<<to_string(event.key.code)<<endl; //Debug Print the code of pressed key
+                    //std::cout<<to_string(event.key.code) << std::endl; //Debug Print the code of pressed key
                     if (event.key.code == sf::Keyboard::A){
                         scene.changeWindow(MAIN_WINDOW); //Change the window to MAIN_WINDOW
                     }
@@ -141,20 +147,109 @@ int main(int argc,char* argv[])
             //Display the new content of the window
             window.display();
         }
-        std::cout << "Exit Successfully !" << endl;
+        std::cout << "Exit Successfully !" << std::endl;
 
         return EXIT_SUCCESS;
     }
 
-    std::cout << "Invalid argument." << endl;
+    else if ("AI" == userInput)
+    {
+        if (3 == argc)
+        {
+            std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
+            displayMessage();
+            return EXIT_FAILURE;
+        }
+        int numberOfGames = std::atoi(argv[2]);
+        int numberOfAI = std::atoi(argv[3]);
+        if (2 > numberOfAI || 5 < numberOfAI || 1 > numberOfGames || 40 < numberOfGames)
+        {
+            std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
+            std::cout << "You have to respect 1 < x < 40 and 1 < y < 6" << std::endl;
+        }
+        
+        std::cout << numberOfGames << " games containing " << numberOfAI << " random AI are going to be created. When they are finished, some statistics will be displayed." << std::endl << std::endl;
+
+        std::vector<std::vector<int>> AI_numberOfPoints(numberOfAI, std::vector<int>(numberOfGames, 0));
+        std::vector<std::vector<int>> AI_numberOfBuiltCards(numberOfAI, std::vector<int>(numberOfGames, 0));
+
+        std::vector<float> numberOfWins(numberOfAI, 0);
+        float numberOfTie = 0;
+
+        for (int gameNumber = 0; gameNumber < numberOfGames; gameNumber++)
+        {
+            std::vector<state::Player*> ais = {};
+            for (int i = 0; i < numberOfAI; i++)
+            {
+                state::Player* newAI = new ai::AIRandom("dummy", -i);
+                ais.push_back(newAI);
+            }
+
+            state::Game* game = new state::Game(ais);
+            engine::Engine* engineOfGame = new engine::Engine(game, {});
+            engineOfGame->gameRunning();
+
+            for (int i = 0; i < numberOfAI; i++)
+            {
+                AI_numberOfPoints[i].push_back(game->getPlayers()[i]->computeVictoryPoint());
+                AI_numberOfBuiltCards[i].push_back(game->getPlayers()[i]->getBuiltCards().size());
+            }
+
+            // Checking who won.
+            std::vector<int> winners = game->getWinners();
+            if (winners.size() == (size_t) numberOfAI)
+            {
+                numberOfTie++ ;
+            }
+            else
+            {
+                for (int winnerIndex : winners)
+                {
+                    numberOfWins[winnerIndex] ++;
+                }
+            }
+        }
+
+
+        // Display stats of all games per AI.
+        for (int i = 0; i < numberOfAI; i++)
+        {
+            displayInformationFromAnAI("AI " + std::to_string(i), AI_numberOfPoints[i], AI_numberOfBuiltCards[i]);
+        }
+
+        // Display global stats of all games per AI.
+        for (int i = 0; i < numberOfAI; i++)
+        {
+            std::cout << "AI " << i <<" won " << numberOfWins[i] << "/" << numberOfGames << " games, a ratio of " << 100*(numberOfWins[i] / numberOfGames) << "%." << std::endl;
+        }
+        std::cout << "There was a tie in " << numberOfTie << "/" << numberOfGames << " games, a ratio of " << 100*(numberOfTie / numberOfGames) << "%." << std::endl;
+
+        return EXIT_SUCCESS;
+    }
+    std::cout << "Invalid argument." << std::endl;
 	displayMessage();
     return EXIT_FAILURE;
 }
 
+void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt)
+{
+    auto maxScoreElement = std::max_element(numberOfPoints.begin(), numberOfPoints.end());
+    double meanScore = std::accumulate(numberOfPoints.begin(), numberOfPoints.end(), 0.0) / numberOfPoints.size();
+
+    auto maxCardElement = std::max_element(numberOfCardsBuilt.begin(), numberOfCardsBuilt.end());
+    double meanCardBuilt = std::accumulate(numberOfCardsBuilt.begin(), numberOfCardsBuilt.end(), 0.0) / numberOfCardsBuilt.size();
+    
+    std::cout << "Max number of points of " << nameOfAI << ":       " << *maxScoreElement << std::endl;
+    std::cout << "Mean number of points of " << nameOfAI << ":      " << meanScore << std::endl;
+    std::cout << "Max number of built cards by " << nameOfAI << ":  " << *maxCardElement << std::endl;
+    std::cout << "Mean number of built cards by " << nameOfAI << ": " << meanCardBuilt << std::endl << std::endl;
+}
+
 void displayMessage()
 {
-	std::cout << "./bin/client hello:  Display a hello world message, that shows that everything worked." << endl;
-	std::cout << "./bin/client engine: Will show a testing game, which is a game in one turn." << endl;
+	std::cout << "./bin/client hello:  Display a hello world message, that shows that everything worked." << std::endl;
+	std::cout << "./bin/client engine: Will show a testing game, which is a game in one turn." << std::endl;
+	std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
 }
 
 void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
