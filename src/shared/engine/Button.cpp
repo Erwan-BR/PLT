@@ -39,7 +39,9 @@ namespace engine
         {
             return ;
         }
-        // To-complete.
+        // 
+        window.draw(this->rectangle);
+        window.draw(this->text);
     }
 
     /// @brief Handle the event of a click on the window. It will launch the command only if 
