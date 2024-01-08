@@ -760,6 +760,13 @@ namespace state {
         return this->relativePathToTexture;
     }
 
+    /// @brief Function that retrieve the quantity of personnages of a player. Usefull in case of tie in a game.
+    /// @return Numbers of personnages of the players (i.e colonel + financier)
+    int Player::getQuantityPersonnages () const
+    {
+        return this->currentResources.at(ResourceType::COLONEL) + this->currentResources.at(ResourceType::FINANCIER);
+    }
+
     /************************************* Methods implemented for AI. *************************************/
     
     /// @brief Method for AI, to make them choose their card. Method implemented in Player because both Player and AI are in the same vector in Game.
