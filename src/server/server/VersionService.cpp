@@ -9,13 +9,11 @@
 
 namespace server
 {
-    VersionService::VersionService() : 
-        AbstractService("/version")
-    {}
+    VersionService::VersionService () : AbstractService("/version") {
+        
+    }
 
-    HttpStatus VersionService::get (Json::Value& out, int id) const {
-        out["major"] = 1;
-        out["minor"] = 0;
-        return HttpStatus::OK;
+    HttpStatus VersionService::get (Json::Value& jsonOut, int id) const {
+        throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
     }
 }

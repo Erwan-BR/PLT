@@ -7,8 +7,7 @@
 
 #include "AbstractService.hpp"
 
-using namespace std;
-namespace server 
+namespace server
 {
     AbstractService::AbstractService (const string& pattern) {
         setPattern(pattern);
@@ -42,3 +41,5 @@ namespace server
         throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
     }
 }
+
+

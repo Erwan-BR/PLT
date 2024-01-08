@@ -1,4 +1,4 @@
-/** 
+  /** 
  * @file UserDB.cpp
  * @author Philippe-Henri Gosselin
  * @date 9 décembre 2015
@@ -9,9 +9,9 @@
 
 namespace server
 {
-    UserDB::UserDB() : 
-    idseq(1)
-    {}
+    UserDB::UserDB() : idseq(1) {
+        
+    }
 
     const User* UserDB::getUser (int id) const {
         auto ite = users.find(id);
