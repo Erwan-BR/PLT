@@ -161,55 +161,55 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
     switch(etape){
         case 0:         //DRAFT 1ere carte
             scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(5);        //P1 Choose Tresor de Barbe Noire
-            p2->chooseDraftCard(5);        //P2 Choose Ile d'Avalon
+            p1->chooseDraftCard(0);        //P1 Choose J
+            p2->chooseDraftCard(0);        //P2 Choose Z
             game->nextDraft();
             break;
         case 1:         //DRAFT 2eme carte
             scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(5);        //P1 Choose Zeppelin
-            p2->chooseDraftCard(0);        //P2 Choose Zeppelin
+            p1->chooseDraftCard(5);        //P1 Choose To
+            p2->chooseDraftCard(4);        //P2 Choose Î
             game->nextDraft();
             
             break;
         case 2:         //DRAFT 3eme carte
             scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(4);        //P1 Choose Tour géante
-            p2->chooseDraftCard(4);        //P2 Choose Centre de la Terre
+            p1->chooseDraftCard(0);        //P1 Choose B
+            p2->chooseDraftCard(0);        //P2 Choose Z
             game->nextDraft();
             
             break;
         case 3:         //DRAFT 4eme carte
             scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);        //P1 Choose Juggernaut
-            p2->chooseDraftCard(0);        //P2 Choose Brise-blaces
+            p1->chooseDraftCard(3);        //P1 Choose T
+            p2->chooseDraftCard(2);        //P2 Choose C
             game->nextDraft();
             
             break;
         case 4:         //DRAFT 5eme carte
             scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
+            p1->chooseDraftCard(0);//B
+            p2->chooseDraftCard(0);//Z
             game->nextDraft();
             
             break;
         case 5:         //DRAFT 6eme carte
             scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
+            p1->chooseDraftCard(0);//Z
+            p2->chooseDraftCard(1);//Z
             game->nextDraft();
             
             break;
         case 6:         //DRAFT 7eme carte
             scene->changeWindow(DRAFTING_WINDOW);
-            p1->chooseDraftCard(0);
-            p2->chooseDraftCard(0);
+            p1->chooseDraftCard(0);//B
+            p2->chooseDraftCard(0);//Z
             game->nextDraft();
             
             break;
         case 7:         //PLANIFICATION p1 1ere carte
             scene->changeWindow(PLANIFICATION_WINDOW);
-            p1->keepCard(0);    //P1 Keep Tresor de Barbe Noire
+            p1->keepCard(3);    //P1 Keep Tresor de Barbe Noire
             
             break;
         case 8:         //PLANIFICATION 1-2
@@ -219,7 +219,7 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
             break;
         case 9:         //PLANIFICATION 1-3
             scene->changeWindow(PLANIFICATION_WINDOW);
-            p1->discardCard(0,true);                //Discard Exploration for Tresor
+            p1->discardCard(1,true);                //Discard Exploration for Tresor
             p1->addResource(state::EXPLORATION,0);
             
             break;
@@ -250,12 +250,12 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
         case 14:         //PLANIFICATION p2 1ere carte
             scene->changePlayerInfoPlayer(1);
             scene->changeWindow(PLAYER_INFO);
-            p2->keepCard(0);    //P2 Keep Ile d'Avalon
+            p2->keepCard(1);    //P2 Keep Ile d'Avalon
             
             break;
         case 15:         //PLANIFICATION 2-2
             scene->changeWindow(PLAYER_INFO);
-            p2->keepCard(2);    //P2 Keep Zeppelin
+            p2->keepCard(0);    //P2 Keep Zeppelin
             
             break;
         case 16:         //PLANIFICATION 2-3
@@ -293,29 +293,28 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
         break;
         case 22:         //PROD MATERIAL
             scene->changeWindow(MAIN_WINDOW);
-            game->nextProduction();
-            p1->addResource(state::MATERIAL,0);        //P1 Give 1 Material to Tour
+            p1->addResource(state::MATERIAL,1);        //P1 Give 1 Material to Tour
             break;
         case 23:        //PROD ENERGY
             scene->changeWindow(MAIN_WINDOW);
-            p1->endPlanification();
-            p2->endPlanification();
+            p1->endProduction();
+            p2->endProduction();
             game->nextProduction();
             p2->addResource(state::ENERGY,1);        //P2 build Zepellin with 2 Energy
             p2->addResource(state::ENERGY,1);
             break;
         case 24:        //PROD SCIENCE
             scene->changeWindow(MAIN_WINDOW);
-            p1->endPlanification();
-            p2->endPlanification();
+            p1->endProduction();
+            p2->endProduction();
             game->nextProduction();
             p2->sendResourceToEmpire(state::SCIENCE);    //P2 discard 1 Science
             //p1->addResource(state::SCIENCE,0);
             break;
         case 25:        //PROD GOLD
             scene->changeWindow(MAIN_WINDOW);
-            p1->endPlanification();
-            p2->endPlanification();
+            p1->endProduction();
+            p2->endProduction();
             game->nextProduction();
             p1->addResource(state::GOLD,0);            //P1 Finish Tour with 3 Gold and 1 Financier
             p1->addResource(state::GOLD,0);
@@ -325,8 +324,8 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
             break;
         case 26:        //PROD EXPLORATION
             scene->changeWindow(MAIN_WINDOW);
-            p1->endPlanification();
-            p2->endPlanification();
+            p1->endProduction();
+            p2->endProduction();
             game->nextProduction();
             p1->sendResourceToEmpire(state::EXPLORATION);    //P1 Discard 1 Exploration
             p2->addResource(state::EXPLORATION,0);    //P2 Finish Avalon
@@ -334,9 +333,9 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
             //p1->addResource(state::EXPLORATION,0);
             break;
         case 27:        //FINISHED
-            p1->endPlanification();
-            p2->endPlanification();
-            game->endGame();
+            p1->endProduction();
+            p2->endProduction();
+            game->nextProduction();
             break;
         default:
             break;

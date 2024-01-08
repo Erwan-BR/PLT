@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
     instantGain.push_back(ResourceType::SCIENCE);
 
     // Vector created to check the current resource produced.
-    const std::vector<ResourceType> resourceProduced = {ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION, ResourceType::KRYSTALLIUM};
+    const std::vector<ResourceType> resourceProduced = {ResourceType::MATERIAL,  ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::GOLD, ResourceType::EXPLORATION, ResourceType::KRYSTALLIUM};
 
     for (int i=0;i<5;i++)
     {

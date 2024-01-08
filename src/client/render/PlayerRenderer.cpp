@@ -332,7 +332,7 @@ namespace render {
 				}
 				//Create new cards to build
 				for (i=0;i<CARDS_DISPLAY_FULL and i<(int) tobuild.size();i++){
-					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
+					cRenderer = new DevelopmentCardRenderer(tobuild[i],sf::Transform(sprite_transforms[0]).translate(50.f+130.f*(i%14),720.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
 					this->devCardRenderers.push_back(cRenderer);	//Card Renderer
 				}
 				//Update String content
