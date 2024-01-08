@@ -1,4 +1,5 @@
 #include "EmpireCard.h"
+#include "CreateJSONFormatStructures.h"
 
 namespace state {
 
@@ -6,7 +7,30 @@ namespace state {
     EmpireCard::EmpireCard(Json::Value jsonValue) :
         Card(jsonValue)
     {
-        // To-Do
+        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
+
+        // Retrieve productionGainAdvanced from the JSON.
+        this->productionGainAdvanced = {};
+        if (jsonValue["productionGainAdvanced"].isArray())
+        {
+            const Json::Value productionAdvancedArray = jsonValue["productionGainAdvanced"];
+        
+            for (const Json::Value& jsonStruct : productionAdvancedArray)
+            {
+                this->productionGainAdvanced.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
+            }
+        }
+
+        // Retrive victory points
+		this->victoryPointsAdvanced = createInformations->cardVictoryPointFromJSON(jsonValue["victoryPointsAdvanced"]);
+
+        this->empire = static_cast<EmpireLand> (jsonValue["empire"].asInt());
+
+        this->relativePathOfTextureFaceB = jsonValue["relativePathOfTextureFaceB"].asString();
+        this->designFaceB = new sf::Texture;
+        this->designFaceB->loadFromFile(this->relativePathOfTextureFaceB);
+
+        this->isFaceA = jsonValue["isFaceA"].asBool();
     }
 
     /// @brief Full constructor for the EmpireCard class
@@ -71,7 +95,22 @@ namespace state {
     Json::Value EmpireCard::toJSON () const
     {
         // Instanciation of the empire card into a JSON format.
-        Json::Value empireCardJSON;
+        Json::Value empireCardJSON = Card::toJSON();
+        
+        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
+
+        // Serialize the vector of the cost to build
+        Json::Value productionGainAdvancedArray;
+        for (const ResourceToProduce* prodGain : this->productionGainAdvanced)
+        {
+            productionGainAdvancedArray.append(createInformations->jsonOfResourceToProduce(*prodGain));
+        }
+        empireCardJSON["productionGainAdvanced"] = productionGainAdvancedArray;
+
+        empireCardJSON["victoryPointsAdvanced"] = createInformations->jsonOfCardVictoryPoint(*(this->victoryPointsAdvanced));
+        empireCardJSON["empire"] = static_cast<int> (this->empire);
+        empireCardJSON["isFaceA"] = this->isFaceA;
+        empireCardJSON["relativePathOfTextureFaceB"] = this->relativePathOfTextureFaceB;
 
         return empireCardJSON;
     }

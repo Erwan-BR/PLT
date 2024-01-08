@@ -24,14 +24,7 @@ namespace state {
             }
         }
         
-        const Json::Value productionArray = jsonValue["productionGain"];
-        
-        for (const Json::Value& jsonStruct : productionArray)
-        {
-            this->productionGain.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
-        }
-        
-        // Retrive victory points
+        // Retrieve victory points
 		this->victoryPoints = createInformations->cardVictoryPointFromJSON(jsonValue["victoryPoints"]);
 
         // To-do : Use path of images to store it as an attribute, to retrive it and replace folowing lines.
@@ -99,7 +92,7 @@ namespace state {
 
         CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
 
-        // Serialize the vector of structures
+        // Serialize the vector of resources to produce
         Json::Value productionArray;
         for (const ResourceToProduce* prodGain : this->productionGain)
         {
