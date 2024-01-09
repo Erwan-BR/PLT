@@ -9,20 +9,17 @@ using namespace ::state;
 BOOST_AUTO_TEST_CASE(test_Engine)
 {
     std::vector<state::Player*> ais = {};
-    for (int i = 1; i < 3; i++){
-        state::Player* newAI = new ai::AIRandom("dummy", -i);
-        ais.push_back(newAI);
-    }
+    state::Player* rAI = new ai::AIRandom("dummy", -1);
+    ais.push_back(rAI);
+    state::Player* aAI = new ai::AIAdvanced("dummy", -2);
+    ais.push_back(aAI);
+
 
     state::Game* game = new state::Game(ais);
     engine::Engine* engine = new engine::Engine(game, {});
     engine->gameRunning();
     BOOST_CHECK_EQUAL(game->getPhase(),GamePhase::FINISHED);
-    delete game;
     delete engine;
-    for(state::Player* ai : ais){
-        delete ai;
-    }
 }
 
 BOOST_AUTO_TEST_CASE(test_Button)
@@ -34,6 +31,14 @@ BOOST_AUTO_TEST_CASE(test_Button)
 BOOST_AUTO_TEST_CASE(test_Command)
 {
     state::Player* ai = new ai::AIRandom("dummy", -1);
+
+    engine::CommandID i = (engine::CommandID) 0;
+    engine::Command* command0 = new engine::Command(i);
+    command0->launchCommand();
+    engine::CommandID id = command0->getCommandId();
+    BOOST_CHECK_EQUAL(id,i);
+    delete command0;
+
 
     engine::AddResource* command1 = new engine::AddResource(ai,ResourceType::MATERIAL,0);
     command1->launchCommand();
