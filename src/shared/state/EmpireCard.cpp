@@ -68,6 +68,8 @@ namespace state {
     /// @brief Destructor for the EmpireCard class
     EmpireCard::~EmpireCard ()
     {
+        Card::~Card();
+        
         for(ResourceToProduce* resource : productionGainFaceB)
         {
             delete(resource);

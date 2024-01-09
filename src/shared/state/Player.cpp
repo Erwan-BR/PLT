@@ -9,7 +9,10 @@ namespace state {
         this->name = jsonValue["name"].asString();
         this->id = jsonValue["id"].asInt();
 
-        this->empire = new EmpireCard(jsonValue["empire"]);
+        if (! jsonValue["empire"].isNull())
+        {
+            this->empire = new EmpireCard(jsonValue["empire"]);
+        }
 
         this->resourcesInEmpireUnit = jsonValue["resourcesInEmpireUnit"].asInt();
         this->state = static_cast<PlayerState> (jsonValue["state"].asInt());
@@ -106,9 +109,6 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
-        this->resourcesProduction.clear();
-        this->cardsTypeList.clear();
-        
         if (NULL != this->empire)
         {
             delete this->empire;
@@ -135,7 +135,6 @@ namespace state {
         {
             delete card;
         }
-
     }
 
     /// @brief Method called in the constructor. Used to initialize all dictionnary to null values.
@@ -499,7 +498,15 @@ namespace state {
 
         playerJSON["name"] = this->name;
         playerJSON["id"] = this->id;
-        playerJSON["empire"] = this->empire->toJSON();
+        
+        if (NULL == this->empire)
+        {
+            playerJSON["empire"] = Json::nullValue;
+        }
+        else
+        {
+            playerJSON["empire"] = this->empire->toJSON();
+        }
 
         // Serialize the vector of builtCards
         Json::Value builtCardsArray;

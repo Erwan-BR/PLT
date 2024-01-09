@@ -70,6 +70,7 @@ namespace state {
         {
             delete(resource);
         }
+        delete victoryPoints;
     }
 
     ///@brief Convert the Card to a JSON format. Usefull when the game is saved.

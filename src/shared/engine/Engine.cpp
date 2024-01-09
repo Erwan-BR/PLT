@@ -18,6 +18,11 @@ namespace engine
     Engine::~Engine()
     {
         delete currentGame;
+
+        for (Command* command : this->currentCommands)
+        {
+            delete command;
+        }
     }
 
     /// @brief Run the complete game. Logic of the game is done in Game, and waiting for AI / Players to play is done here.
