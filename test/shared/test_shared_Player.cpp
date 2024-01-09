@@ -58,17 +58,17 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     Json::Value playerJSON = playerToExport->toJSON();
 
     // Only for debug, the JSON appears in a log file (PLT/build/test/Testing/Temporary/LastTest.log)
-    for (int i = 0; i < 7; i++)
-    {
-        std::cout << std::endl;
-    }
+    // for (int i = 0; i < 7; i++)
+    // {
+    //     std::cout << std::endl;
+    // }
 
-    std::cout << playerJSON;
+    // std::cout << playerJSON;
 
-    for (int i = 0; i < 7; i++)
-    {
-        std::cout << std::endl;
-    }
+    // for (int i = 0; i < 7; i++)
+    // {
+    //     std::cout << std::endl;
+    // }
 
     Player* playerToImport = new Player(playerJSON);
 
