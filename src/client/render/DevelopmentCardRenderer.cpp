@@ -18,6 +18,8 @@ namespace render
         //Store transform
         this->transform = sf::Transform(transform).scale(scale,scale);
 
+        this->hitbox = sf::FloatRect(this->sprite->getGlobalBounds());
+
         //Initialize Vecotor
         this->vectorOfCrossesSprite = {};
         this->vectorOfCrossesTransform = {};
@@ -72,6 +74,21 @@ namespace render
         window.draw(*this->sprite,this->transform);
         for(int i=0;i<(int) this->vectorOfCrossesSprite.size();i++){
             window.draw(*(this->vectorOfCrossesSprite[i]),this->vectorOfCrossesTransform[i]);
+        }
+    }
+
+    void DevelopmentCardRenderer::handleEvent (sf::Event event, sf::RenderWindow& window)
+    {
+        // Check if the button is enabled, and pressed with a left click
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        {
+            sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+            
+            // Check if the click is inside the button.
+            if (this->hitbox.contains(mousePos))
+            {
+                //TODO
+            }
         }
     }
 }
