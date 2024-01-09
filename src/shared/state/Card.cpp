@@ -29,26 +29,6 @@ namespace state {
 
         // To-do : Use path of images to store it as an attribute, to retrive it and replace folowing lines.
         this->relativePathToTexture = jsonValue["relativePathToTexture"].asString();
-        this->design = new sf::Texture;
-        this->design->loadFromFile(this->relativePathToTexture);
-    }
-
-    /// @brief Create a card with all information that concerned this card.
-    /// @param name Name of the card that will be displayed.
-    /// @param productionGain Represent what kind of resource the card can bring.
-    /// @param design Pointer to the design of the card, loaded in a texture.
-    /// @param victoryPoints Represent what kind of points the card can bring.
-    Card::Card (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints) :
-        Observable(),
-        name(name),
-        design(design),
-        victoryPoints(victoryPoints)
-    {
-        
-        for(ResourceToProduce* resource : productionGain)
-        {
-            this->productionGain.push_back(resource);
-        }
     }
 
     /// @brief Create a card with all information that concerned this card.
@@ -61,10 +41,22 @@ namespace state {
         name(name),
         victoryPoints(victoryPoints),
         relativePathToTexture(relativePathToTexture)
-    {
-        this->design = new sf::Texture;
-        this->design->loadFromFile(relativePathToTexture);
-        
+    {        
+        for(ResourceToProduce* resource : productionGain)
+        {
+            this->productionGain.push_back(resource);
+        }
+    }
+
+    /// @brief Create a card with all information that concerned this card.
+    /// @param name Name of the card that will be displayed.
+    /// @param productionGain Represent what kind of resource the card can bring.
+    /// @param victoryPoints Represent what kind of points the card can bring.
+    Card::Card (std::string name, std::vector<ResourceToProduce*> productionGain, CardVictoryPoint* victoryPoints) :
+        Observable(),
+        name(name),
+        victoryPoints(victoryPoints)
+    {        
         for(ResourceToProduce* resource : productionGain)
         {
             this->productionGain.push_back(resource);
@@ -121,13 +113,6 @@ namespace state {
     std::vector<ResourceToProduce*> Card::getProductionGain () const
     {
         return this->productionGain;
-    }
-
-    /// @brief Get the design of the card.
-    /// @return Design of the card.
-    sf::Texture* Card::getDesign () const
-    {
-        return this->design;
     }
 
     /// @brief Get how much points the card allows to win, according to the type of the object to have.

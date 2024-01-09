@@ -9,8 +9,7 @@ namespace render
     {
         //Get the Texture form Card
         this->texture = new sf::Texture();
-        sf::Texture* cardDesign = this->card->getDesign();
-        this->texture = cardDesign;
+        this->texture->loadFromFile(this->card->getRelativePathToTexture());
 
         //Generate Sprite
         this->sprite = new sf::Sprite();
@@ -67,6 +66,8 @@ namespace render
         }
     }
 
+    /// @brief Draw the card on the screen
+    /// @param window Window were the card has to be displayed.
     void DevelopmentCardRenderer::draw(sf::RenderWindow& window){
         window.draw(*this->sprite,this->transform);
         for(int i=0;i<(int) this->vectorOfCrossesSprite.size();i++){

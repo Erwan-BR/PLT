@@ -537,7 +537,7 @@ namespace state
         
         CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,CardType::RESEARCH};
         
-        EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, africa_FaceA, victoryPointsAFRICA, productionGainB, new CardVictoryPoint{}, AFRICA, africa_FaceB, isFaceA);
+        EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, africa_FaceA, victoryPointsAFRICA, productionGainB, AFRICA, africa_FaceB, isFaceA);
         
         return africa;
     }
@@ -558,7 +558,7 @@ namespace state
         
         CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2, CardType::PROJECT};
         
-        EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, asia_FaceA, victoryPointsASIA, productionGainB, new CardVictoryPoint{}, ASIA, asia_FaceB, isFaceA);
+        EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, asia_FaceA, victoryPointsASIA, productionGainB, ASIA, asia_FaceB, isFaceA);
         
         return asia;
     }
@@ -579,7 +579,7 @@ namespace state
 
         CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
 
-        EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, aztec_FaceA, victoryPointsAZTEC, productionGainB, new CardVictoryPoint{}, AZTEC, aztec_FaceB, isFaceA);
+        EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, aztec_FaceA, victoryPointsAZTEC, productionGainB, AZTEC, aztec_FaceB, isFaceA);
 
         return aztec;
     }
@@ -601,7 +601,7 @@ namespace state
         
         CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
         
-        EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, europe_FaceA, victoryPointsEUROPE, productionGainB, new CardVictoryPoint{}, EUROPE, europe_FaceB, isFaceA);
+        EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, europe_FaceA, victoryPointsEUROPE, productionGainB, EUROPE, europe_FaceB, isFaceA);
     
         return europe;
     }
@@ -622,7 +622,7 @@ namespace state
         
         CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1, ResourceType::FINANCIER};
 
-        EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, noram_FaceA, victoryPointsNORAM, productionGainB, new CardVictoryPoint{}, NORAM, noram_FaceB, isFaceA);
+        EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, noram_FaceA, victoryPointsNORAM, productionGainB, NORAM, noram_FaceB, isFaceA);
     
         return noram;
     }

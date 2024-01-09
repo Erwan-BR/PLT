@@ -1,6 +1,8 @@
 #include "./AIAdvanced.h"
 
 #include "limits"
+#include <algorithm>
+
 
 namespace ai
 {
@@ -19,6 +21,7 @@ namespace ai
 
     }
 
+    /// @brief Init the maping of missing resources to play on cards.
     void AIAdvanced::initMissingResources()
     {
         missingResourcesToConstructAllCards[state::ResourceType::MATERIAL] = 0;
@@ -26,6 +29,7 @@ namespace ai
         missingResourcesToConstructAllCards[state::ResourceType::SCIENCE] = 0;
         missingResourcesToConstructAllCards[state::ResourceType::GOLD] = 0;
         missingResourcesToConstructAllCards[state::ResourceType::EXPLORATION] = 0;
+        missingResourcesToConstructAllCards[state::ResourceType::KRYSTALLIUM] = 0;
         missingResourcesToConstructAllCards[state::ResourceType::COLONEL] = 0;
         missingResourcesToConstructAllCards[state::ResourceType::FINANCIER] = 0;
     }
