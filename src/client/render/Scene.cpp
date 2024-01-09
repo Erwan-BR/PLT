@@ -85,6 +85,32 @@ namespace render {
 			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color::White,NULL);
 			button->setVisible(true);
 			this->btnMain.push_back(button);
+
+			for(int i = 1; i<(int) game->getPlayers().size();i++){
+				button = new Button({300.f,60.f*i},{200.f,50.f},"Switch to:"+game->getPlayers()[i]->getName(),sf::Color(215,47,215),NULL);
+				button->setVisible(true);
+				this->btnMain.push_back(button);
+			}
+
+			button = new Button({20.f,780.f},{220.f,100.f},"KEEP",sf::Color(215,47,215),NULL);
+			button->setVisible(true);
+			this->btnPlan.push_back(button);
+			button = new Button({260.f,780.f},{220.f,100.f},"DISCARD",sf::Color(215,47,215),NULL);
+			button->setVisible(true);
+			this->btnPlan.push_back(button);
+			button = new Button({1680.f,780.f},{220.f,100.f},"DISCARD ALL",sf::Color(215,47,215),NULL);
+			button->setVisible(true);
+			this->btnPlan.push_back(button);
+
+			button = new Button({1600.f,940.f},{220.f,100.f},"CONFIRM",sf::Color(215,47,215),NULL);
+			button->setVisible(true);
+			this->btnDraft.push_back(button);
+
+			for(int i = 0; i<(int) game->getPlayers().size();i++){
+				button = new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to:"+game->getPlayers()[i]->getName(),sf::Color(215,47,215),NULL);
+				button->setVisible(true);
+				this->btnFull.push_back(button);
+			}
 		}
 
 	}
@@ -192,18 +218,27 @@ namespace render {
 				}
 				//Display Drafting Hand
 				this->drafting_hand_renderer->draw(window);
+
+				for (Button* btn: btnDraft){
+					btn->draw(window);
+				}
 				break;
 			case PLAYER_INFO:
 				//Display Player
 				this->player_renderer[4]->draw(window);
+
+				for (Button* btn: btnFull){
+					btn->draw(window);
+				}
 				break;
 			case PLANIFICATION_WINDOW:
 				window.draw(this->background,this->transform);
-
-				//Display Player
-				//this->player_renderer[6]->draw(window);
 				//Display Drafted Hand
 				this->player_renderer[5]->draw(window);
+
+				for (Button* btn: btnPlan){
+					btn->draw(window);
+				}
 				break;
 			default:
 				break;
