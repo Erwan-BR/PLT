@@ -1,7 +1,10 @@
 #include <iostream>
+#include <unistd.h>
+#include <sys/wait.h>
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
 
 #define CROSS_SIZE 0.01f
 
@@ -146,6 +149,85 @@ int main(int argc,char* argv[])
         return EXIT_SUCCESS;
     }
 
+    else if("server" == userInput)
+    {
+        while(1)
+        {
+            //cout << "Please type the server ip (format: X.X.X.X:Port): " << endl;
+            cout << "Type something" << endl;
+            cout << "To leave this section, write 'exit'." << endl;
+            string inputText;
+            cin >> inputText;
+            if("exit" == inputText)
+            {
+                cout << "Disconnecting from server..." << endl;
+                return EXIT_SUCCESS;
+            }
+            // if("192.168.33.122:8888" != inputText)
+            // {
+            //     cout << "Invalid server address." << endl;
+            // }
+            else
+            {
+                pid_t pid;
+                int status;
+                pid = fork();
+                if(0 == pid)
+                {
+                    sf::Http server("127.0.0.1", 8888);
+                    sf::Http::Request request;
+
+                    cout << "Choose the requestmethod (GET, POST, PUT): ";
+                    cin >> inputText;
+
+                    if("GET" == inputText)
+                    {
+                        request.setMethod(sf::Http::Request::Method::Get);
+
+                        cout << "What do you want to get (/version, /user/<id>): ";
+                        cin >> inputText;
+                        request.setUri(inputText);
+                    }
+                    else if("POST" == inputText)
+                    {
+                        request.setMethod(sf::Http::Request::Method::Post);
+
+                        cout << "Where do you want to post (user id): ";
+                        cin >> inputText;
+                        request.setUri(inputText);
+
+                        cout << "What do you want to post (Name or Age): ";
+                        cin >> inputText;
+                        request.setBody(inputText);
+                    }
+                    else if("PUT" == inputText)
+                    {
+                        request.setMethod(sf::Http::Request::Method::Put);
+
+                        cout << "Where do you want to post (user): ";
+                        cin >> inputText;
+                        request.setUri(inputText);
+
+                        cout << "What do you want to put (Name and Age): ";
+                        cin >> inputText;
+                        request.setBody(inputText);
+                    }
+
+                    sf::Http::Response response = server.sendRequest(request);
+                    if(response.getStatus() == sf::Http::Response::Ok)
+                        cout << "Request successful. Response: " << response.getBody() << endl;
+                    else
+                    {
+                        cerr << "Request failed." << endl;
+                        cerr << "Status code: " << response.getStatus() << endl;
+                        cerr << "Error message: " << response.getBody() << endl; 
+                    }
+                }
+                else while(wait(&status) == pid);
+            }
+        }
+    }
+
     std::cout << "Invalid argument." << endl;
 	displayMessage();
     return EXIT_FAILURE;
@@ -155,6 +237,7 @@ void displayMessage()
 {
 	std::cout << "./bin/client hello:  Display a hello world message, that shows that everything worked." << endl;
 	std::cout << "./bin/client engine: Will show a testing game, which is a game in one turn." << endl;
+    std::cout << "./bin/client server: Will allow you to interact with the server." << endl;
 }
 
 void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){

@@ -24,20 +24,27 @@ namespace server
         return HttpStatus::OK;
     }
 
-    HttpStatus UserService::post (const Json::Value& jsonIn, int id) {
+    HttpStatus UserService::post (Json::Value& jsonOut, const Json::Value& jsonIn, int id) {
         const User* user = userDB.getUser(id);
-        if(!user)
+        if(!user && id != 0)
             throw ServiceException(HttpStatus::NOT_FOUND,"Id not specified or wrong id");
 
-        unique_ptr<User> userMod(new User(*user));
+        if(id == 0)
+        {
+            jsonOut["Id"] = userDB.addUser(make_unique<server::User>(jsonIn["Name"].asString(),jsonIn["Age"].asInt()));
+        }
+        else
+        {
+            unique_ptr<User> userMod(new User(*user));
 
-        if(jsonIn.isMember("Age"))
-            userMod->age = jsonIn["Age"].asInt();
+            if(jsonIn.isMember("Age"))
+                userMod->age = jsonIn["Age"].asInt();
 
-        if(jsonIn.isMember("Name"))
-            userMod->name = jsonIn["Name"].asString();
+            if(jsonIn.isMember("Name"))
+                userMod->name = jsonIn["Name"].asString();
 
-        userDB.setUser(id, std::move(userMod));
+            userDB.setUser(id, std::move(userMod));
+        }
         return HttpStatus::OK;
     }
 

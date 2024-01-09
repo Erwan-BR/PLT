@@ -69,9 +69,12 @@ namespace server
             cerr << "POST request " << pattern << " with data: " << in << endl;
             Json::Reader jsonReader;
             Json::Value jsonIn;
+            Json::Value jsonOut;
             if(!jsonReader.parse(in, jsonIn))
                 throw ServiceException(HttpStatus::BAD_REQUEST,"Invalid data sent: "+jsonReader.getFormatedErrorMessages());
-            HttpStatus status = service->post(jsonIn, id);
+            HttpStatus status = service->post(jsonOut, jsonIn, id);
+            
+            out = jsonOut.toStyledString();
             return status;
         }
 
