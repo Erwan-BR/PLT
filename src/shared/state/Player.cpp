@@ -197,7 +197,7 @@ namespace state {
     /// @param cardIndex Index of the card to construct, in the attributes toBuildCard.
     void Player::construct(int cardIndex)
     {
-        if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex))
+        if ((0 > cardIndex) || ((int)this->toBuildCards.size() <= cardIndex))
         {
             return ;
         }
@@ -240,7 +240,7 @@ namespace state {
     void Player::addResource (ResourceType resource, int cardIndex)
     {
         // Checking if the index of the card is valid and if the player has this resource.
-        if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex) || (0 == this->currentResources.at(resource)))
+        if ((0 > cardIndex) || ((int)this->toBuildCards.size() <= cardIndex) || (0 == this->currentResources.at(resource)))
         {
             return ;
         }
@@ -278,7 +278,7 @@ namespace state {
     {
         if(isADraftedCard)
         {
-            if ((0 > cardIndex) || ((int)this->draftCards.size() < cardIndex))
+            if ((0 > cardIndex) || ((int)this->draftCards.size() <= cardIndex))
             {
                 return ;
             }
@@ -288,7 +288,7 @@ namespace state {
         }
         else
         {
-            if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex))
+            if ((0 > cardIndex) || ((int)this->toBuildCards.size() <= cardIndex))
             {
                 return ;
             }
@@ -303,7 +303,7 @@ namespace state {
     /// @param toKeepCardIndex Index of the card to keep.
     void Player::keepCard(int toKeepCardIndex)
     {
-        if (0 > toKeepCardIndex || (int)this->draftCards.size() < toKeepCardIndex)
+        if (0 > toKeepCardIndex || (int)this->draftCards.size() <= toKeepCardIndex)
         {
             return ;
         }
@@ -451,7 +451,7 @@ namespace state {
     /// @param cardIndex Card choosed by the player
     void Player::chooseDraftCard(int cardIndex)
     {
-        if (0 > cardIndex || (int)this->draftingCards.size() < cardIndex)
+        if (0 > cardIndex || (int)this->draftingCards.size() <= cardIndex)
         {
             return ;
         }

@@ -73,6 +73,12 @@ namespace state {
         {
             delete card;
         }
+
+        // Delete all players
+        for (Player* player : this->players)
+        {
+            delete player;
+        }
     }
 
     ///@brief Initialize the game

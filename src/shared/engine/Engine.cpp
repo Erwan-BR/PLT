@@ -17,7 +17,7 @@ namespace engine
     /// @brief Destructor of the engine class. Empty for the moment.
     Engine::~Engine()
     {
-
+        delete currentGame;
     }
 
     /// @brief Run the complete game. Logic of the game is done in Game, and waiting for AI / Players to play is done here.
