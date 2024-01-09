@@ -9,26 +9,21 @@ namespace state {
     {
         CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
 
-        // Retrieve productionGainAdvanced from the JSON.
-        this->productionGainAdvanced = {};
-        if (jsonValue["productionGainAdvanced"].isArray())
+        // Retrieve productionGainFaceB from the JSON.
+        this->productionGainFaceB = {};
+        if (jsonValue["productionGainFaceB"].isArray())
         {
-            const Json::Value productionAdvancedArray = jsonValue["productionGainAdvanced"];
+            const Json::Value productionFaceBArray = jsonValue["productionGainFaceB"];
         
-            for (const Json::Value& jsonStruct : productionAdvancedArray)
+            for (const Json::Value& jsonStruct : productionFaceBArray)
             {
-                this->productionGainAdvanced.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
+                this->productionGainFaceB.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
             }
         }
 
-        // Retrive victory points
-		this->victoryPointsAdvanced = createInformations->cardVictoryPointFromJSON(jsonValue["victoryPointsAdvanced"]);
-
         this->empire = static_cast<EmpireLand> (jsonValue["empire"].asInt());
 
-        this->relativePathOfTextureFaceB = jsonValue["relativePathOfTextureFaceB"].asString();
-        this->designFaceB = new sf::Texture;
-        this->designFaceB->loadFromFile(this->relativePathOfTextureFaceB);
+        this->relativePathToTextureFaceB = jsonValue["relativePathToTextureFaceB"].asString();
 
         this->isFaceA = jsonValue["isFaceA"].asBool();
     }
@@ -37,21 +32,16 @@ namespace state {
     /// @param name Name of the empire
     /// @param productionGain Production provided by the empire
     /// @param victoryPoints Victory points provided by the empire
-    /// @param design Sprite of the empire card
-    /// @param productionGainAdvanced Advanced production provided by the empire
-    /// @param victoryPointsAdvanced Advanced victory points provided by the empire
+    /// @param productionGainFaceB FaceB production provided by the empire
     /// @param empire Region the empire belongs to
-    /// @param designFaceB Design of the backside of the card.
-    EmpireCard::EmpireCard(std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, CardVictoryPoint* victoryPointsAdvanced, EmpireLand empire, sf::Texture* designFaceB, bool isFaceA) :
-        Card(name, productionGain, design, victoryPoints),
-        victoryPointsAdvanced(victoryPointsAdvanced),
+    EmpireCard::EmpireCard (std::string name, std::vector<ResourceToProduce*> productionGain, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainFaceB, EmpireLand empire, bool isFaceA) :
+        Card(name, productionGain, victoryPoints),
         empire(empire),
-        designFaceB(designFaceB),
         isFaceA(isFaceA)
     {
-        for(ResourceToProduce* resource : productionGainAdvanced)
+        for(ResourceToProduce* resource : productionGainFaceB)
         {
-            this->productionGainAdvanced.push_back(resource);
+            this->productionGainFaceB.push_back(resource);
         }
     }
 
@@ -59,32 +49,26 @@ namespace state {
     /// @param name Name of the empire
     /// @param productionGain Production provided by the empire
     /// @param victoryPoints Victory points provided by the empire
-    /// @param relativePathOfTexture Path to find the image of the player face A of the card.
-    /// @param productionGainAdvanced Advanced production provided by the empire
-    /// @param victoryPointsAdvanced Advanced victory points provided by the empire
+    /// @param relativePathToTexture Path to find the image of the player face A of the card.
+    /// @param productionGainFaceB FaceB production provided by the empire
     /// @param empire Region the empire belongs to
-    /// @param relativePathOfTextureFaceB Path to find the image of the player face B of the card.
-    EmpireCard::EmpireCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathOfTexture, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainAdvanced, CardVictoryPoint* victoryPointdAdvanced, EmpireLand empire, std::string relativePathOfTextureFaceB, bool isFaceA) :
-        Card(name, productionGain, relativePathOfTexture, victoryPoints),
-        victoryPointsAdvanced(victoryPointdAdvanced),
+    /// @param relativePathToTextureFaceB Path to find the image of the player face B of the card.
+    EmpireCard::EmpireCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathToTexture, CardVictoryPoint* victoryPoints, std::vector<ResourceToProduce*> productionGainFaceB, EmpireLand empire, std::string relativePathToTextureFaceB, bool isFaceA) :
+        Card(name, productionGain, relativePathToTexture, victoryPoints),
         empire(empire),
         isFaceA(isFaceA),
-        relativePathOfTextureFaceB(relativePathOfTextureFaceB)
+        relativePathToTextureFaceB(relativePathToTextureFaceB)
     {
-        this->designFaceB = new sf::Texture;
-        this->designFaceB->loadFromFile(relativePathOfTextureFaceB);
-        
-        for(ResourceToProduce* resource : productionGainAdvanced)
+        for(ResourceToProduce* resource : productionGainFaceB)
         {
-            this->productionGainAdvanced.push_back(resource);
+            this->productionGainFaceB.push_back(resource);
         }
     }
     
     /// @brief Destructor for the EmpireCard class
     EmpireCard::~EmpireCard ()
     {
-        delete(this->victoryPointsAdvanced);
-        for(ResourceToProduce* resource : productionGainAdvanced)
+        for(ResourceToProduce* resource : productionGainFaceB)
         {
             delete(resource);
         }
@@ -100,29 +84,21 @@ namespace state {
         CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
 
         // Serialize the vector of the cost to build
-        Json::Value productionGainAdvancedArray;
-        for (const ResourceToProduce* prodGain : this->productionGainAdvanced)
+        Json::Value productionGainFaceBArray;
+        for (const ResourceToProduce* prodGain : this->productionGainFaceB)
         {
-            productionGainAdvancedArray.append(createInformations->jsonOfResourceToProduce(*prodGain));
+            productionGainFaceBArray.append(createInformations->jsonOfResourceToProduce(*prodGain));
         }
-        empireCardJSON["productionGainAdvanced"] = productionGainAdvancedArray;
+        empireCardJSON["productionGainFaceB"] = productionGainFaceBArray;
 
-        empireCardJSON["victoryPointsAdvanced"] = createInformations->jsonOfCardVictoryPoint(*(this->victoryPointsAdvanced));
         empireCardJSON["empire"] = static_cast<int> (this->empire);
         empireCardJSON["isFaceA"] = this->isFaceA;
-        empireCardJSON["relativePathOfTextureFaceB"] = this->relativePathOfTextureFaceB;
+        empireCardJSON["relativePathToTextureFaceB"] = this->relativePathToTextureFaceB;
 
         return empireCardJSON;
     }
 
     /************************************* Setters & Getters *************************************/
-
-    /// @brief Getter for the deisgn of the face B.
-    /// @return Design of the face B.
-    sf::Texture* EmpireCard::getDesignFaceB () const
-    {
-        return this->designFaceB;
-    }
 
     /// @brief Returns the production gain, according to the face that is played.
     /// @return Production gain of the Empire.
@@ -132,7 +108,7 @@ namespace state {
         {
             return this->productionGain;
         }
-        return this->productionGainAdvanced;
+        return this->productionGainFaceB;
     }
 
     /// @brief Number of victory points, according to the face that is played.
@@ -143,13 +119,17 @@ namespace state {
         {
             return this->victoryPoints;
         }
-        return this->victoryPointsAdvanced;
+        return new CardVictoryPoint{};
     }
 
     /// @brief Retrieve the path of the texture of the second face of the card.
     /// @return Path to the design of the face B.
-    std::string EmpireCard::getRelativePathOfTextureFaceB () const
+    std::string EmpireCard::getRelativePathToTexture () const
     {
-        return this->relativePathOfTextureFaceB;
+        if (this->isFaceA)
+        {
+            return this->relativePathToTexture;
+        }
+        return this->relativePathToTextureFaceB;
     }
 }

@@ -46,7 +46,6 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
         BOOST_CHECK_EQUAL(importedCardProduction[1]->cardType, CardType::NONETYPE);
 
         BOOST_CHECK_EQUAL(empireFromImport->getRelativePathToTexture(), "./resources/img/Cards/Empire_Face_A/Panafricaine.png");
-        BOOST_CHECK_EQUAL(empireFromImport->getRelativePathOfTextureFaceB(), "./resources/img/Cards/Empire_Face_B/Panafricaine.png");
 
         CardVictoryPoint* importedCardPoints = empireFromImport->getVictoryPoints();
 
@@ -94,7 +93,6 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
         BOOST_CHECK_EQUAL(importedCardProduction[2]->cardType, CardType::NONETYPE);
 
         BOOST_CHECK_EQUAL(empireFromImport->getRelativePathToTexture(), "./resources/img/Cards/Empire_Face_A/Panafricaine.png");
-        BOOST_CHECK_EQUAL(empireFromImport->getRelativePathOfTextureFaceB(), "./resources/img/Cards/Empire_Face_B/Panafricaine.png");
 
         CardVictoryPoint* importedCardPoints = empireFromImport->getVictoryPoints();
 
@@ -108,8 +106,8 @@ BOOST_AUTO_TEST_CASE(test_otherMethods)
     CreateAllCards* createEmpire = new CreateAllCards();
     EmpireCard* empireExample = createEmpire->createEmpireASIA(false);
 
-    (void) empireExample->getDesign();
-    (void) empireExample->getDesignFaceB();
+    delete createEmpire;
+    delete empireExample;
 }
 
 /* vim: set sw=2 sts=2 et : */
