@@ -142,7 +142,11 @@ namespace state {
     {
         this->resourcesProduction.clear();
         this->cardsTypeList.clear();
-        delete this->empire;
+        
+        if (NULL != this->empire)
+        {
+            delete this->empire;
+        }
         
         for(DevelopmentCard* card : this->builtCards)
         {

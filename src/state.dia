@@ -3086,7 +3086,7 @@
             <dia:string>#EmpireCard*#</dia:string>
           </dia:attribute>
           <dia:attribute name="value">
-            <dia:string>##</dia:string>
+            <dia:string>#NULL#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>#Empire of the player, that allows different abilities.#</dia:string>
