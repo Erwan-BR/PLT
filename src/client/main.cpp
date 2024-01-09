@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #define CROSS_SIZE 0.01f
-#define MAX_NUMBER_OF_GAME_IA 50
+#define MAX_NUMBER_OF_GAME_IA 5000
 
 #include <state.h>
 #include <render.h>
@@ -17,10 +17,7 @@
 #include "../shared/state.h"
 #include "render.h"
 
-using namespace state;
-using namespace render;
-
-void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene);
+void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p2, render::Scene* scene);
 void displayMessage();
 void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
 
@@ -80,7 +77,7 @@ int main(int argc,char* argv[])
         game.initGame();
 
         //Creation of the instance of the Scene class
-        Scene scene = Scene(&game,tr_scale);
+        render::Scene scene = render::Scene(&game,tr_scale);
 
         //Observable
         scene.setupObserver(&game);
@@ -114,21 +111,21 @@ int main(int argc,char* argv[])
                 if (event.type == sf::Event::KeyPressed) {
                     //std::cout<<to_string(event.key.code) << std::endl; //Debug Print the code of pressed key
                     if (event.key.code == sf::Keyboard::A){
-                        scene.changeWindow(MAIN_WINDOW); //Change the window to MAIN_WINDOW
+                        scene.changeWindow(render::Window::MAIN_WINDOW); //Change the window to MAIN_WINDOW
                     }
                     if (event.key.code == sf::Keyboard::Z){
-                        scene.changeWindow(DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
+                        scene.changeWindow(render::Window::DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
                     }
                     if (event.key.code == sf::Keyboard::E){
-                        scene.changeWindow(PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
+                        scene.changeWindow(render::Window::PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
                     }
                     if (event.key.code == sf::Keyboard::R){
-                        scene.changeWindow(PLAYER_INFO); //Change the window to PLAYER_INFO
+                        scene.changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
                     }
-                    if (event.key.code == sf::Keyboard::Q and scene.getWindow() == PLAYER_INFO){
+                    if (event.key.code == sf::Keyboard::Q and scene.getWindow() == render::Window::PLAYER_INFO){
                         scene.changePlayerInfoPlayer(0);
                     }
-                    if (event.key.code == sf::Keyboard::S and scene.getWindow() == PLAYER_INFO){
+                    if (event.key.code == sf::Keyboard::S and scene.getWindow() == render::Window::PLAYER_INFO){
                         scene.changePlayerInfoPlayer(1);
                     }
                     if (event.key.code == sf::Keyboard::Space){
@@ -282,180 +279,180 @@ void displayMessage()
 	std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
 }
 
-void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
+void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p2, render::Scene* scene){
     switch(etape){
         case 0:         //DRAFT 1ere carte
-            scene->changeWindow(DRAFTING_WINDOW);
+            scene->changeWindow(render::Window::DRAFTING_WINDOW);
             p1->chooseDraftCard(0);        //P1 Choose J
             p2->chooseDraftCard(0);        //P2 Choose Z
             game->nextDraft();
             break;
         case 1:         //DRAFT 2eme carte
-            scene->changeWindow(DRAFTING_WINDOW);
+            scene->changeWindow(render::Window::DRAFTING_WINDOW);
             p1->chooseDraftCard(5);        //P1 Choose To
             p2->chooseDraftCard(4);        //P2 Choose Î
             game->nextDraft();
             
             break;
         case 2:         //DRAFT 3eme carte
-            scene->changeWindow(DRAFTING_WINDOW);
+            scene->changeWindow(render::Window::DRAFTING_WINDOW);
             p1->chooseDraftCard(0);        //P1 Choose B
             p2->chooseDraftCard(0);        //P2 Choose Z
             game->nextDraft();
             
             break;
         case 3:         //DRAFT 4eme carte
-            scene->changeWindow(DRAFTING_WINDOW);
+            scene->changeWindow(render::Window::DRAFTING_WINDOW);
             p1->chooseDraftCard(3);        //P1 Choose T
             p2->chooseDraftCard(2);        //P2 Choose C
             game->nextDraft();
             
             break;
         case 4:         //DRAFT 5eme carte
-            scene->changeWindow(DRAFTING_WINDOW);
+            scene->changeWindow(render::Window::DRAFTING_WINDOW);
             p1->chooseDraftCard(0);//B
             p2->chooseDraftCard(0);//Z
             game->nextDraft();
             
             break;
         case 5:         //DRAFT 6eme carte
-            scene->changeWindow(DRAFTING_WINDOW);
+            scene->changeWindow(render::Window::DRAFTING_WINDOW);
             p1->chooseDraftCard(0);//Z
             p2->chooseDraftCard(1);//Z
             game->nextDraft();
             
             break;
         case 6:         //DRAFT 7eme carte
-            scene->changeWindow(DRAFTING_WINDOW);
+            scene->changeWindow(render::Window::DRAFTING_WINDOW);
             p1->chooseDraftCard(0);//B
             p2->chooseDraftCard(0);//Z
             game->nextDraft();
             
             break;
         case 7:         //PLANIFICATION p1 1ere carte
-            scene->changeWindow(PLANIFICATION_WINDOW);
+            scene->changeWindow(render::Window::PLANIFICATION_WINDOW);
             p1->keepCard(3);    //P1 Keep Tresor de Barbe Noire
             
             break;
         case 8:         //PLANIFICATION 1-2
-            scene->changeWindow(PLANIFICATION_WINDOW);
+            scene->changeWindow(render::Window::PLANIFICATION_WINDOW);
             p1->keepCard(1);    //P1 Keep Tour Géante
             
             break;
         case 9:         //PLANIFICATION 1-3
-            scene->changeWindow(PLANIFICATION_WINDOW);
+            scene->changeWindow(render::Window::PLANIFICATION_WINDOW);
             p1->discardCard(1,true);                //Discard Exploration for Tresor
-            p1->addResource(state::EXPLORATION,0);
+            p1->addResource(state::ResourceType::EXPLORATION,0);
             
             break;
         case 10:         //PLANIFICATION 1-4
-            scene->changeWindow(PLANIFICATION_WINDOW);
+            scene->changeWindow(render::Window::PLANIFICATION_WINDOW);
             p1->discardCard(0,true);                //Discard Material for Tour
-            p1->addResource(state::MATERIAL,1);
+            p1->addResource(state::ResourceType::MATERIAL,1);
             
             break;
         case 11:         //PLANIFICATION 1-5
-            scene->changeWindow(PLANIFICATION_WINDOW);
+            scene->changeWindow(render::Window::PLANIFICATION_WINDOW);
             p1->discardCard(0,true);                //Discard Exploration for Tresor
-            p1->addResource(state::EXPLORATION,0);
+            p1->addResource(state::ResourceType::EXPLORATION,0);
             
             break;
         case 12:         //PLANIFICATION 1-6
-            scene->changeWindow(PLANIFICATION_WINDOW);
+            scene->changeWindow(render::Window::PLANIFICATION_WINDOW);
             p1->discardCard(0,true);                //Discard Exploration for Tresor
-            p1->addResource(state::EXPLORATION,0);    //Tresor built
+            p1->addResource(state::ResourceType::EXPLORATION,0);    //Tresor built
             
             break;
         case 13:        //PLANIFICATION 1-7
-            scene->changeWindow(PLANIFICATION_WINDOW);
+            scene->changeWindow(render::Window::PLANIFICATION_WINDOW);
             p1->discardCard(0,true);                //Discard Exploration in Empire
-            p1->sendResourceToEmpire(state::EXPLORATION);
+            p1->sendResourceToEmpire(state::ResourceType::EXPLORATION);
             
             break;
         case 14:         //PLANIFICATION p2 1ere carte
             scene->changePlayerInfoPlayer(1);
-            scene->changeWindow(PLAYER_INFO);
+            scene->changeWindow(render::Window::PLAYER_INFO);
             p2->keepCard(1);    //P2 Keep Ile d'Avalon
             
             break;
         case 15:         //PLANIFICATION 2-2
-            scene->changeWindow(PLAYER_INFO);
+            scene->changeWindow(render::Window::PLAYER_INFO);
             p2->keepCard(0);    //P2 Keep Zeppelin
             
             break;
         case 16:         //PLANIFICATION 2-3
-            scene->changeWindow(PLAYER_INFO);
+            scene->changeWindow(render::Window::PLAYER_INFO);
             p2->keepCard(1);    //P2 Keep Centre de la Terre
             
             break;
         case 17:         //PLANIFICATION 2-4
-            scene->changeWindow(PLAYER_INFO);
+            scene->changeWindow(render::Window::PLAYER_INFO);
             p2->discardCard(0,true);                //Discard Exploration for Avalon
-            p2->addResource(state::EXPLORATION,0);
+            p2->addResource(state::ResourceType::EXPLORATION,0);
             
             break;
         case 18:         //PLANIFICATION 2-5
-            scene->changeWindow(PLAYER_INFO);
+            scene->changeWindow(render::Window::PLAYER_INFO);
             p2->discardCard(0,true);                //Discard Exploration for Avalon
-            p2->addResource(state::EXPLORATION,0);
+            p2->addResource(state::ResourceType::EXPLORATION,0);
             
             break;
         case 19:         //PLANIFICATION 2-6
-            scene->changeWindow(PLAYER_INFO);
+            scene->changeWindow(render::Window::PLAYER_INFO);
             p2->discardCard(0,true);                //Discard Exploration for Avalon
-            p2->addResource(state::EXPLORATION,0);
+            p2->addResource(state::ResourceType::EXPLORATION,0);
             
             break;
         case 20:        //PLANIFICATION 2-7
-            scene->changeWindow(PLAYER_INFO);
+            scene->changeWindow(render::Window::PLAYER_INFO);
             p2->discardCard(0,true);                //Discard Exploration for Centre
-            p2->addResource(state::EXPLORATION,2);
+            p2->addResource(state::ResourceType::EXPLORATION,2);
             game->endPlanification();
             break;
         case 21:         //PROD INIT
-            scene->changeWindow(MAIN_WINDOW);
+            scene->changeWindow(render::Window::MAIN_WINDOW);
             game->initProduction();
         break;
         case 22:         //PROD MATERIAL
-            scene->changeWindow(MAIN_WINDOW);
-            p1->addResource(state::MATERIAL,1);        //P1 Give 1 Material to Tour
+            scene->changeWindow(render::Window::MAIN_WINDOW);
+            p1->addResource(state::ResourceType::MATERIAL,1);        //P1 Give 1 Material to Tour
             break;
         case 23:        //PROD ENERGY
-            scene->changeWindow(MAIN_WINDOW);
+            scene->changeWindow(render::Window::MAIN_WINDOW);
             p1->endProduction();
             p2->endProduction();
             game->nextProduction();
-            p2->addResource(state::ENERGY,1);        //P2 build Zepellin with 2 Energy
-            p2->addResource(state::ENERGY,1);
+            p2->addResource(state::ResourceType::ENERGY,1);        //P2 build Zepellin with 2 Energy
+            p2->addResource(state::ResourceType::ENERGY,1);
             break;
         case 24:        //PROD SCIENCE
-            scene->changeWindow(MAIN_WINDOW);
+            scene->changeWindow(render::Window::MAIN_WINDOW);
             p1->endProduction();
             p2->endProduction();
             game->nextProduction();
-            p2->sendResourceToEmpire(state::SCIENCE);    //P2 discard 1 Science
-            //p1->addResource(state::SCIENCE,0);
+            p2->sendResourceToEmpire(state::ResourceType::SCIENCE);    //P2 discard 1 Science
+            //p1->addResource(state::ResourceType::SCIENCE,0);
             break;
         case 25:        //PROD GOLD
-            scene->changeWindow(MAIN_WINDOW);
+            scene->changeWindow(render::Window::MAIN_WINDOW);
             p1->endProduction();
             p2->endProduction();
             game->nextProduction();
-            p1->addResource(state::GOLD,0);            //P1 Finish Tour with 3 Gold and 1 Financier
-            p1->addResource(state::GOLD,0);
-            p1->addResource(state::GOLD,0);
-            p1->addResource(state::FINANCIER,0);
-            //p1->addResource(state::GOLD,0);
+            p1->addResource(state::ResourceType::GOLD,0);            //P1 Finish Tour with 3 Gold and 1 Financier
+            p1->addResource(state::ResourceType::GOLD,0);
+            p1->addResource(state::ResourceType::GOLD,0);
+            p1->addResource(state::ResourceType::FINANCIER,0);
+            //p1->addResource(state::ResourceType::GOLD,0);
             break;
         case 26:        //PROD EXPLORATION
-            scene->changeWindow(MAIN_WINDOW);
+            scene->changeWindow(render::Window::MAIN_WINDOW);
             p1->endProduction();
             p2->endProduction();
             game->nextProduction();
-            p1->sendResourceToEmpire(state::EXPLORATION);    //P1 Discard 1 Exploration
-            p2->addResource(state::EXPLORATION,0);    //P2 Finish Avalon
-            p2->addResource(state::EXPLORATION,0);
-            //p1->addResource(state::EXPLORATION,0);
+            p1->sendResourceToEmpire(state::ResourceType::EXPLORATION);    //P1 Discard 1 Exploration
+            p2->addResource(state::ResourceType::EXPLORATION,0);    //P2 Finish Avalon
+            p2->addResource(state::ResourceType::EXPLORATION,0);
+            //p1->addResource(state::ResourceType::EXPLORATION,0);
             break;
         case 27:        //FINISHED
             p1->endProduction();

@@ -7,13 +7,9 @@ using namespace std;
 
 BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
   {				
-	sf::Texture* t = new sf::Texture();
-	sf::Texture* t2 = new sf::Texture();
 	//Creation of testing instances of Player class
-	t->loadFromFile("./resources/img/pfp_1.png");
-	state::Player* player1 = new state::Player("MOI",0,t);
-	t2->loadFromFile("./resources/img/pfp_2.png");
-	state::Player* player2 = new state::Player("TOI",1,t2);
+	state::Player* player1 = new state::Player("MOI",1);
+	state::Player* player2 = new state::Player("TOI",2);
 
 	//Creation of the vector players
 	std::vector<state::Player*> players;
@@ -102,16 +98,13 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 
 	// Delete pointers
 	delete myscene;
-	delete t;
-	delete t2;
   }
 }
 
 BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
   {
 	//PlayerRenderer
-	sf::Texture* t = new sf::Texture();
-	state::Player* player = new state::Player("",0,t);
+	state::Player* player = new state::Player("TestPlayer",1);
 	PlayerRenderer* pR = new PlayerRenderer(player,sf::Transform(),MAIN_WINDOW);
 	delete pR;
 	//PlayerRenderer with invalid Window
@@ -134,12 +127,11 @@ BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
 	delete pR3;
 
 	//DevellopementCardRenderer
-	state::DevelopmentCard* card = new state::DevelopmentCard("Empty Card",{},t,{},state::STRUCTURE,0,{new state::ResourceToPay{state::ResourceType::SCIENCE, false}},{},state::FINANCIER);
+	state::DevelopmentCard* card = new state::DevelopmentCard("Empty Card",{},{},state::STRUCTURE,0,{new state::ResourceToPay{state::ResourceType::SCIENCE, false}},{},state::FINANCIER);
 	DevelopmentCardRenderer* cR = new DevelopmentCardRenderer(card,sf::Transform(),0.f);
 	delete cR;
 
 	//Delete others pointer
-	delete t;
 	delete player;
 	delete game;
 	delete card;
