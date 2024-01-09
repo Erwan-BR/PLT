@@ -40,6 +40,10 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(gameFromImport->getResourceProducing(), ResourceType::MATERIAL);
     BOOST_CHECK_EQUAL(gameFromImport->getPhase(), GamePhase::DRAFT);
     BOOST_CHECK_EQUAL(gameFromImport->getTurn(), 1);
+
+    // Delete pointers
+    delete gameToExport;
+    delete gameFromImport;
 }
 
 BOOST_AUTO_TEST_CASE(firstGameTest)
@@ -49,20 +53,10 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
     Player* secondPlayer = new Player("Adrien", 2);
 
     std::vector<Player*> players = {firstPlayer, secondPlayer};
-    
-    // Creation of the instance of Game
-    Game* myFirstGame = new Game(players);
-    myFirstGame->initGame();
 
-    Game* myFirstGameTest = new Game(players, true);
+    Game* gameAnotherConstructor = new Game(players, true);
 
-    myFirstGameTest->getTurn();
-    myFirstGameTest->getPhase();
-    myFirstGameTest->getResourceProducing();
-
-    // Delete pointers
-    delete myFirstGame;
-    delete myFirstGameTest;
+    delete gameAnotherConstructor;
 }
 
 BOOST_AUTO_TEST_CASE(secondGameTest)
@@ -212,12 +206,16 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
     mySecondGame->endPlanification();
     BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PRODUCTION);
 
+    (void)mySecondGame->getWinners();
+
     for (int i=0;i<5;i++)
     {
         BOOST_CHECK_EQUAL(mySecondGame->getResourceProducing(), resourceProduced[i]);
         mySecondGame->nextProduction();
     }
 
+    BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::FINISHED);
+    (void)mySecondGame->getWinners();
 
     // Delete pointers
     delete mySecondGame;

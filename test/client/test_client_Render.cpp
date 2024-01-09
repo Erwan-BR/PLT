@@ -2,6 +2,8 @@
 
 #include "../../src/client/render/Scene.h"
 
+#include "../../src/shared/state/CreateAllCards.h"
+
 using namespace ::render;
 using namespace std;
 
@@ -105,16 +107,20 @@ BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
   {
 	//PlayerRenderer
 	state::Player* player = new state::Player("TestPlayer",1);
+	
 	PlayerRenderer* pR = new PlayerRenderer(player,sf::Transform(),MAIN_WINDOW);
+	
 	delete pR;
+	
 	//PlayerRenderer with invalid Window
-	PlayerRenderer* pR2 = new PlayerRenderer(player,sf::Transform(),NONE);
+	state::Player* player2 = new state::Player("TestPlayer",1);
+	PlayerRenderer* pR2 = new PlayerRenderer(player2,sf::Transform(),NONE);
 	delete pR2;
 
 	//GameRenderer
 	std::vector<state::Player*> players;
 	players.push_back(player);
-	players.push_back(player);
+	players.push_back(player2);
 	state::Game* game = new state::Game(players);
 	GameRenderer* gR = new GameRenderer(game,sf::Transform());
 	delete gR;
@@ -132,7 +138,6 @@ BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
 	delete cR;
 
 	//Delete others pointer
-	delete player;
 	delete game;
 	delete card;
   }

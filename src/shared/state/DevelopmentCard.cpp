@@ -90,8 +90,6 @@ namespace state {
     /// @brief Destructor of the DevelopmentCard class.
     DevelopmentCard::~DevelopmentCard ()
     {
-        Card::~Card();
-        
         for(ResourceToPay* resource : this->costToBuild)
         {
             delete(resource);

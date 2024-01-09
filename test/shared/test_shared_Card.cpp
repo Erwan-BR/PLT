@@ -46,7 +46,6 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(cardPoints->cardOrResourceType, CardType::VEHICLE);
 
     // Free memory.
-    delete cardPoints;
     delete cardToExport;
     delete cardFromImport;
 }
@@ -73,7 +72,6 @@ BOOST_AUTO_TEST_CASE(test_Constructor)
     BOOST_CHECK_EQUAL(cardPoints->cardOrResourceType, CardType::VEHICLE);
 
     delete testCard;
-    delete cardPoints;
 }
 
 /* vim: set sw=2 sts=2 et : */

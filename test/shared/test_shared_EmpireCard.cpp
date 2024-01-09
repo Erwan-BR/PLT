@@ -60,17 +60,17 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
         Json::Value jsonContent = empireCardToExport->toJSON();
 
-        for (int i = 0; i < 7; i++)
-        {
-            std::cout << std::endl;
-        }
+        // for (int i = 0; i < 7; i++)
+        // {
+        //     std::cout << std::endl;
+        // }
 
-        std::cout << jsonContent;
+        // std::cout << jsonContent;
         
-        for (int i = 0; i < 7; i++)
-        {
-            std::cout << std::endl;
-        }
+        // for (int i = 0; i < 7; i++)
+        // {
+        //     std::cout << std::endl;
+        // }
 
         EmpireCard* empireFromImport = new EmpireCard(jsonContent);
 
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
         BOOST_CHECK_EQUAL(importedCardProduction[2]->quantity, 1);
         BOOST_CHECK_EQUAL(importedCardProduction[2]->cardType, CardType::NONETYPE);
 
-        BOOST_CHECK_EQUAL(empireFromImport->getRelativePathToTexture(), "./resources/img/Cards/Empire_Face_A/Panafricaine.png");
+        BOOST_CHECK_EQUAL(empireFromImport->getRelativePathToTexture(), "./resources/img/Cards/Empire_Face_B/Panafricaine.png");
 
         CardVictoryPoint* importedCardPoints = empireFromImport->getVictoryPoints();
 

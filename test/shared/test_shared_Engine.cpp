@@ -20,7 +20,7 @@ BOOST_AUTO_TEST_CASE(test_Engine)
     state::Game* game = new state::Game(ais);
     engine::Engine* engine = new engine::Engine(game, {});
     engine->gameRunning();
-    cout<<aAI->toJSON()<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl;
+    //cout<<aAI->toJSON()<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl;
     BOOST_CHECK_EQUAL(game->getPhase(),GamePhase::FINISHED);
     delete engine;
 }

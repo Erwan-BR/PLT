@@ -68,8 +68,6 @@ namespace state {
     /// @brief Destructor for the EmpireCard class
     EmpireCard::~EmpireCard ()
     {
-        Card::~Card();
-        
         for(ResourceToProduce* resource : productionGainFaceB)
         {
             delete(resource);
@@ -117,7 +115,7 @@ namespace state {
     /// @return Victory points of the Empire.
     CardVictoryPoint* EmpireCard::getVictoryPoints () const
     {
-        if (isFaceA)
+        if (this->isFaceA)
         {
             return this->victoryPoints;
         }
