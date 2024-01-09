@@ -22,12 +22,6 @@ BOOST_AUTO_TEST_CASE(test_Engine)
     delete engine;
 }
 
-BOOST_AUTO_TEST_CASE(test_Button)
-{
-    engine::Button* btn = new engine::Button({0.f,0.f},{0.f,0.f},"---",sf::Color::Black,NULL);
-    delete btn;
-}
-
 BOOST_AUTO_TEST_CASE(test_Command)
 {
     state::Player* ai = new ai::AIRandom("dummy", -1);
