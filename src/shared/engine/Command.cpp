@@ -73,4 +73,6 @@ namespace engine
     {
         return this->id;
     }
+
+    void Command::launchCommand() const {}
 }
