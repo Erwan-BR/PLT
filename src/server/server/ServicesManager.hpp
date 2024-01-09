@@ -9,6 +9,7 @@
 #define __ServicesManager_hpp__
 
 #include "AbstractService.hpp"
+#include "VersionService.hpp"
 
 #include <memory>
 #include <iostream>

@@ -120,11 +120,13 @@ int main(int argc, char *const *argv)
 {
     try {
         server::ServicesManager servicesManager;
-//        servicesManager.registerService(make_unique<VersionService>());
+        servicesManager.registerService(make_unique<server::VersionService>());
 
         server::UserDB userDB;
-        userDB.addUser(make_unique<server::User>("Paul",23));
-//        servicesManager.registerService(make_unique<UserService>(std::ref(userDB)));
+        userDB.addUser(make_unique<server::User>("Onur",23));
+        userDB.addUser(make_unique<server::User>("Maxime",22));
+        userDB.addUser(make_unique<server::User>("Adrien",21));
+        servicesManager.registerService(make_unique<server::UserService>(std::ref(userDB)));
 
         struct MHD_Daemon *d;
         if (argc != 2) {

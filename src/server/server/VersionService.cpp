@@ -14,6 +14,9 @@ namespace server
     }
 
     HttpStatus VersionService::get (Json::Value& jsonOut, int id) const {
-        throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
+        std::cout << "Creation of the json object" << std::endl;
+        jsonOut["major"] = 1;
+        jsonOut["minor"] = 0;
+        return HttpStatus::OK;
     }
 }
