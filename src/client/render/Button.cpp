@@ -1,12 +1,12 @@
 #include "Button.h"
 
-namespace engine
+namespace render
 {
-    Button::Button (sf::Vector2f position, sf::Vector2f size, std::string text, sf::Color color, Command* commandOnClick) :
+    Button::Button (sf::Vector2f position, sf::Vector2f size, std::string text, sf::Color color, engine::Command* commandOnClick) :
         position(position),
         size(size),
         textString(text),
-        buttonColor(color),
+        color(color),
         command(commandOnClick)
     {
         sf::Font tempoFont;
@@ -14,7 +14,7 @@ namespace engine
         this->font = tempoFont;
         this->rectangle.setSize(size);
         this->rectangle.setPosition(position);
-        this->rectangle.setFillColor(buttonColor);
+        this->rectangle.setFillColor(color);
 
         this->text.setFont(font);
         this->text.setString(textString);
