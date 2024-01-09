@@ -7,8 +7,8 @@ using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
-    Player* firstPlayerInGame = new Player("Erwan", 10, "./test");
-    Player* secondPlayerInGame = new Player("Adrien", 20, "./test2");
+    Player* firstPlayerInGame = new Player("Erwan", 10);
+    Player* secondPlayerInGame = new Player("Adrien", 20);
 	std::vector<Player*> playersInGame = {firstPlayerInGame, secondPlayerInGame};
 
     // Creating a testing game. It won't shuffle cards so it will be easy to know if exportations worked correctly.
@@ -40,46 +40,33 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(gameFromImport->getResourceProducing(), ResourceType::MATERIAL);
     BOOST_CHECK_EQUAL(gameFromImport->getPhase(), GamePhase::DRAFT);
     BOOST_CHECK_EQUAL(gameFromImport->getTurn(), 1);
+
+    // Delete pointers
+    delete gameToExport;
+    delete gameFromImport;
 }
 
 BOOST_AUTO_TEST_CASE(firstGameTest)
 {
     // Creation Arguments
-    sf::Texture* profilePicture = new sf::Texture();
-    std::vector<Player*> players;
-    Player* firstPlayer = new Player("Maxime", 1, profilePicture);
-    players.push_back(firstPlayer);
-    Player* secondPlayer = new Player("Adrien", 2, profilePicture);
-    players.push_back(secondPlayer);
-    
-    // Creation of the instance of Game
-    Game* myFirstGame = new Game(players);
-    myFirstGame->initGame();
+    Player* firstPlayer = new Player("Maxime", 1);
+    Player* secondPlayer = new Player("Adrien", 2);
 
-    Game* myFirstGameTest = new Game(players, true);
+    std::vector<Player*> players = {firstPlayer, secondPlayer};
 
-    myFirstGameTest->getTurn();
-    myFirstGameTest->getPhase();
-    myFirstGameTest->getResourceProducing();
+    Game* gameAnotherConstructor = new Game(players, true);
 
-    // Delete pointers
-    delete myFirstGame;
-    delete myFirstGameTest;
+    delete gameAnotherConstructor;
 }
 
 BOOST_AUTO_TEST_CASE(secondGameTest)
 {
     // Creation Arguments
-    sf::Texture* profilePicture = new sf::Texture();
-    std::vector<Player*> players;
-    Player* firstPlayer = new Player("Maxime", 1, profilePicture);
-    players.push_back(firstPlayer);
-    Player* secondPlayer = new Player("Adrien", 2, profilePicture);
-    players.push_back(secondPlayer);
-
+    Player* firstPlayer = new Player("Maxime", 1);
+    Player* secondPlayer = new Player("Adrien", 2);
 
     // Call Constructor
-    Game* mySecondGame = new Game(players);
+    Game* mySecondGame = new Game({firstPlayer, secondPlayer});
     
     mySecondGame->initGame();
     BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::DRAFT);
@@ -219,12 +206,16 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
     mySecondGame->endPlanification();
     BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::PRODUCTION);
 
+    (void)mySecondGame->getWinners();
+
     for (int i=0;i<5;i++)
     {
         BOOST_CHECK_EQUAL(mySecondGame->getResourceProducing(), resourceProduced[i]);
         mySecondGame->nextProduction();
     }
 
+    BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::FINISHED);
+    (void)mySecondGame->getWinners();
 
     // Delete pointers
     delete mySecondGame;

@@ -1,0 +1,31 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		}
+	],
+	"discardGain" : 1,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Reseau de transport",
+	"numberOfCopies" : 2,
+	"productionGain" : null,
+	"quantityResourceMissing" : 3,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/reseau_de_transport.png",
+	"type" : 21,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 22,
+		"numberOfPoints" : 1
+	}
+}

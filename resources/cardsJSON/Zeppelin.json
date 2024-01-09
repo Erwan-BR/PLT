@@ -1,0 +1,34 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		}
+	],
+	"discardGain" : 5,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Zeppelin",
+	"numberOfCopies" : 6,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 5
+		}
+	],
+	"quantityResourceMissing" : 2,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/zeppelin.png",
+	"type" : 22,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}
