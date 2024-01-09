@@ -4897,7 +4897,7 @@
         </dia:composite>
         <dia:composite type="umlattribute">
           <dia:attribute name="name">
-            <dia:string>#comand#</dia:string>
+            <dia:string>#command#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#engine::Command*#</dia:string>
@@ -5017,7 +5017,7 @@
                 <dia:string>#size#</dia:string>
               </dia:attribute>
               <dia:attribute name="type">
-                <dia:string>#sf::Vectot2f#</dia:string>
+                <dia:string>#sf::Vector2f#</dia:string>
               </dia:attribute>
               <dia:attribute name="value">
                 <dia:string>##</dia:string>
