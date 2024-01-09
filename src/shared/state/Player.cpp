@@ -8,10 +8,6 @@ namespace state {
     {
         this->name = jsonValue["name"].asString();
         this->id = jsonValue["id"].asInt();
-        this->relativePathToTexture = jsonValue["relativePathToTexture"].asString();
-
-        this->profilePicture = new sf::Texture;
-        this->profilePicture->loadFromFile(this->relativePathToTexture);
 
         this->empire = new EmpireCard(jsonValue["empire"]);
 
@@ -96,44 +92,14 @@ namespace state {
         }  
     }
 
-    /// @brief Constructor of the player, with some parameters.
-    /// @param name Name of the player
-    /// @param id Id of the player
-    /// @param profilePicture Profile Picture of the player
-    Player::Player(std::string name, int id, sf::Texture* profilePicture) :
-        Observable(),
-        name(name),
-        id(id),
-        profilePicture(profilePicture)
-    {
-        this->initializeMaps();
-    }
-
     /// @brief Constructor of player that takes into argument the relative path to the texture.
     /// @param name Name of the player.
     /// @param id ID of the player.
     Player::Player (std::string name, int id) :
         Observable(),
         name(name),
-        id(id),
-        relativePathToTexture("")
+        id(id)
     {
-        this->profilePicture = new sf::Texture;
-        this->initializeMaps();
-    }
-
-    /// @brief Constructor of player that takes into argument the relative path to the texture.
-    /// @param name Name of the player.
-    /// @param id ID of the player.
-    /// @param relativePathToTexture Relative path of the profile picture, that is loaded in the function.
-    Player::Player (std::string name, int id, std::string relativePathToTexture) :
-        Observable(),
-        name(name),
-        id(id),
-        relativePathToTexture(relativePathToTexture)
-    {
-        this->profilePicture = new sf::Texture;
-        this->profilePicture->loadFromFile(relativePathToTexture);
         this->initializeMaps();
     }
 
@@ -569,7 +535,6 @@ namespace state {
 
         playerJSON["state"] = static_cast<int> (this->state);
         playerJSON["resourcesInEmpireUnit"] = this->resourcesInEmpireUnit;
-        playerJSON["relativePathToTexture"] = this->relativePathToTexture;
         
         // Serialize the map of currentResources
         Json::Value currentResourcesArray;
@@ -649,13 +614,6 @@ namespace state {
     std::string Player::getName () const
     {
         return this->name;
-    }
-
-    /// @brief Get the profile picture of the player, to display it
-    /// @return Profile picture of the player
-    sf::Texture* Player::getProfilePicture () const
-    {
-        return this->profilePicture;
     }
 
     /// @brief Get the empire card of the player.
@@ -755,13 +713,6 @@ namespace state {
     bool Player::isRealPlayerAndPlaying () const
     {
         return (! this->isAI()) && (PlayerState::PLAYING == this->state);
-    }
-
-    /// @brief Get the relative path of a texture.
-    /// @return Relative path of a texture.
-    std::string Player::getRelativePathToTexture () const
-    {
-        return this->relativePathToTexture;
     }
 
     /// @brief Function that retrieve the quantity of personnages of a player. Usefull in case of tie in a game.

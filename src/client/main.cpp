@@ -65,13 +65,9 @@ int main(int argc,char* argv[])
         float win_heigth_scale = (win_heigth*1.0f)/(1080.0f);
         sf::Transform tr_scale = sf::Transform().scale(win_length_scale, win_heigth_scale);
 
-        sf::Texture* t = new sf::Texture();
-        sf::Texture* t2 = new sf::Texture();
         //Creation of testing instances of Player class
-        t->loadFromFile("./resources/img/pfp_1.png");
-        state::Player* player1 = new state::Player("MOI",0,t);
-        t2->loadFromFile("./resources/img/pfp_2.png");
-        state::Player* player2 = new state::Player("TOI",1,t2);
+        state::Player* player1 = new state::Player("MOI",0);
+        state::Player* player2 = new state::Player("TOI",1);
 
         //Creation of the vector players
         std::vector<state::Player*> players;

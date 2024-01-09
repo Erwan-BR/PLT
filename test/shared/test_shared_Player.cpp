@@ -8,8 +8,7 @@ using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
-    sf::Texture* profilePicture = new sf::Texture();
-    Player* playerToExport = new Player("Erwan", 1, profilePicture);
+    Player* playerToExport = new Player("Erwan", 1);
 
     CreateAllCards* createEmpire = new CreateAllCards();
 
@@ -90,7 +89,6 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(playerToImport->getEmpire()->getName(), "AFRICA");
     BOOST_CHECK_EQUAL(playerToImport->getState(), PlayerState::PENDING);
     BOOST_CHECK_EQUAL(playerToImport->getResourcesInEmpireUnit(), 0);
-    BOOST_CHECK_EQUAL(playerToImport->getRelativePathToTexture(), "");
 
     BOOST_CHECK_EQUAL(playerToImport->getToBuildCards().size(), 1);
     BOOST_CHECK_EQUAL(playerToImport->getToBuildCards()[0]->getName(), "Animorphes");
@@ -136,9 +134,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
 BOOST_AUTO_TEST_CASE(firstPlayerTest)
 {
-    // Testing the empty contructor of Player
-    sf::Texture* profilePicture = new sf::Texture();
-    Player* myFirstPlayer = new Player("Maxime", 1, profilePicture);
+    Player* myFirstPlayer = new Player("Maxime", 1);
 
     //Defining Empire
     //Producing 2 ENERGY, 1 SCIENCE, gain 3 victory points per DISCOVERY cards
@@ -442,7 +438,6 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     // Testing getters
     (void)myFirstPlayer->getProductionGain(MATERIAL);
     (void)myFirstPlayer->getName();
-    (void)myFirstPlayer->getProfilePicture();
     (void)myFirstPlayer->getEmpire();
     (void)myFirstPlayer->getBuiltCards();
     (void)myFirstPlayer->getToBuildCards();

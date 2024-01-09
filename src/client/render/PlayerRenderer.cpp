@@ -42,13 +42,16 @@ namespace render {
 			this->sprites.push_back(sprite);					//Sprite
 			this->sprite_transforms.push_back(transform);				//Transform
 
+			
+			// To modify to place empire Card instead
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = player->getProfilePicture();
-			this->textures.push_back(texture);					//Texture
-			sprite= new sf::Sprite();
-			sprite->setTexture(*(this->textures[1]));
-			this->sprites.push_back(sprite);					//Sprite
-			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(20.f,20.f));				//Transform
+			
+			// texture = player->getProfilePicture();
+			// this->textures.push_back(texture);					//Texture
+			// sprite= new sf::Sprite();
+			// sprite->setTexture(*(this->textures[1]));
+			// this->sprites.push_back(sprite);					//Sprite
+			// this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(20.f,20.f));				//Transform
 
 			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();
@@ -91,13 +94,15 @@ namespace render {
 			this->sprites.push_back(sprite);					//Sprite
 			this->sprite_transforms.push_back(transform);				//Transform
 
+			// To modify to place empire Card instead
+
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = player->getProfilePicture();
-			this->textures.push_back(texture);					//Texture
-			sprite= new sf::Sprite();
-			sprite->setTexture(*(this->textures[1]));
-			this->sprites.push_back(sprite);					//Sprite
-			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
+			// texture = player->getProfilePicture();
+			// this->textures.push_back(texture);					//Texture
+			// sprite= new sf::Sprite();
+			// sprite->setTexture(*(this->textures[1]));
+			// this->sprites.push_back(sprite);					//Sprite
+			// this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
 
 			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();
@@ -119,13 +124,15 @@ namespace render {
 			this->sprites.push_back(sprite);					//Sprite
 			this->sprite_transforms.push_back(transform);				//Transform
 
+			// To modify to place empire Card instead
+
 			//Enter Player Profile Picture (position 1 in sprites)
-			texture = player->getProfilePicture();
-			this->textures.push_back(texture);					//Texture
-			sprite= new sf::Sprite();
-			sprite->setTexture(*(this->textures[1]));
-			this->sprites.push_back(sprite);					//Sprite
-			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,50.f).scale(2.f,2.f).scale(1.f,(431.f/375.f)));				//Transform
+			// texture = player->getProfilePicture();
+			// this->textures.push_back(texture);					//Texture
+			// sprite= new sf::Sprite();
+			// sprite->setTexture(*(this->textures[1]));
+			// this->sprites.push_back(sprite);					//Sprite
+			// this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(50.f,50.f).scale(2.f,2.f).scale(1.f,(431.f/375.f)));				//Transform
 
 			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();
@@ -212,13 +219,15 @@ namespace render {
 			this->sprites.push_back(sprite);					//Sprite
 			this->sprite_transforms.push_back(sf::Transform(transform).scale(2.f,2.f));				//Transform
 
+			// To modify to place empire Card instead
+
 			//Enter Player Profile Picture (position 3 in sprites)
-			texture = player->getProfilePicture();
-			this->textures.push_back(texture);					//Texture
-			sprite= new sf::Sprite();
-			sprite->setTexture(*(this->textures[3]));
-			this->sprites.push_back(sprite);					//Sprite
-			this->sprite_transforms.push_back(sf::Transform(sprite_transforms[2]).translate(20.f,20.f));				//Transform
+			// texture = player->getProfilePicture();
+			// this->textures.push_back(texture);					//Texture
+			// sprite= new sf::Sprite();
+			// sprite->setTexture(*(this->textures[3]));
+			// this->sprites.push_back(sprite);					//Sprite
+			// this->sprite_transforms.push_back(sf::Transform(sprite_transforms[2]).translate(20.f,20.f));				//Transform
 
 			//Enter Player Name (position 0 in texts)
 			text = new sf::Text();

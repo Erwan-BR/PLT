@@ -13,16 +13,6 @@ namespace ai
     {
 
     }
-
-    /// @brief Full constructor of AIRandom, with important information inside.
-    /// @param name Name of the AI.
-    /// @param id ID of the AI. Should be negative for engine methods.
-    /// @param relativePathOfTexture Relative path of the profile picture.
-    AIRandom::AIRandom (std::string name, int id, std::string relativePathOfTexture) :
-        Player(name, id, relativePathOfTexture)
-    {
-
-    }
     
     /// @brief Destructor of the AIRandom class. Does not destruct anything for the moment.
     AIRandom::~AIRandom ()

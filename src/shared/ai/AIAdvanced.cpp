@@ -12,16 +12,6 @@ namespace ai
     {
         this->initMissingResources();
     }
-
-    /// @brief Full constructor of AIAdvanced, with important information inside.
-    /// @param name Name of the AI.
-    /// @param id ID of the AI. Should be negative for engine methods.
-    /// @param relativePathOfTexture Relative path of the profile picture.
-    AIAdvanced::AIAdvanced (std::string name, int id, std::string relativePathOfTexture) :
-        Player(name, id, relativePathOfTexture)
-    {
-        this->initMissingResources();
-    }
     
     /// @brief Destructor of the AIRandom class. Does not destruct anything for the moment.
     AIAdvanced::~AIAdvanced ()

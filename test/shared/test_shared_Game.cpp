@@ -7,8 +7,8 @@ using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
-    Player* firstPlayerInGame = new Player("Erwan", 10, "./test");
-    Player* secondPlayerInGame = new Player("Adrien", 20, "./test2");
+    Player* firstPlayerInGame = new Player("Erwan", 10);
+    Player* secondPlayerInGame = new Player("Adrien", 20);
 	std::vector<Player*> playersInGame = {firstPlayerInGame, secondPlayerInGame};
 
     // Creating a testing game. It won't shuffle cards so it will be easy to know if exportations worked correctly.
@@ -45,12 +45,10 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 BOOST_AUTO_TEST_CASE(firstGameTest)
 {
     // Creation Arguments
-    sf::Texture* profilePicture = new sf::Texture();
-    std::vector<Player*> players;
-    Player* firstPlayer = new Player("Maxime", 1, profilePicture);
-    players.push_back(firstPlayer);
-    Player* secondPlayer = new Player("Adrien", 2, profilePicture);
-    players.push_back(secondPlayer);
+    Player* firstPlayer = new Player("Maxime", 1);
+    Player* secondPlayer = new Player("Adrien", 2);
+
+    std::vector<Player*> players = {firstPlayer, secondPlayer};
     
     // Creation of the instance of Game
     Game* myFirstGame = new Game(players);
@@ -70,16 +68,11 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
 BOOST_AUTO_TEST_CASE(secondGameTest)
 {
     // Creation Arguments
-    sf::Texture* profilePicture = new sf::Texture();
-    std::vector<Player*> players;
-    Player* firstPlayer = new Player("Maxime", 1, profilePicture);
-    players.push_back(firstPlayer);
-    Player* secondPlayer = new Player("Adrien", 2, profilePicture);
-    players.push_back(secondPlayer);
-
+    Player* firstPlayer = new Player("Maxime", 1);
+    Player* secondPlayer = new Player("Adrien", 2);
 
     // Call Constructor
-    Game* mySecondGame = new Game(players);
+    Game* mySecondGame = new Game({firstPlayer, secondPlayer});
     
     mySecondGame->initGame();
     BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::DRAFT);
