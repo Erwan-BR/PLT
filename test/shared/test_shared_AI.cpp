@@ -19,6 +19,7 @@ BOOST_AUTO_TEST_CASE(test_Advanced_AI)
     ai::AIAdvanced* aAI = new ai::AIAdvanced("dummy", -1);
     //aAI->AIUseProducedResources();
     aAI->AIChooseColonelToken();
+    
     delete aAI;
 }
 

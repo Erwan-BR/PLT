@@ -5,6 +5,7 @@
 #include "../../src/shared/ai.h"
 
 using namespace ::state;
+using namespace std;
 
 BOOST_AUTO_TEST_CASE(test_Engine)
 {
@@ -14,10 +15,12 @@ BOOST_AUTO_TEST_CASE(test_Engine)
     state::Player* aAI = new ai::AIAdvanced("dummy", -2);
     ais.push_back(aAI);
 
+    
 
     state::Game* game = new state::Game(ais);
     engine::Engine* engine = new engine::Engine(game, {});
     engine->gameRunning();
+    cout<<aAI->toJSON()<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl<<endl;
     BOOST_CHECK_EQUAL(game->getPhase(),GamePhase::FINISHED);
     delete engine;
 }
@@ -26,16 +29,13 @@ BOOST_AUTO_TEST_CASE(test_Command)
 {
     state::Player* ai = new ai::AIRandom("dummy", -1);
 
-    engine::CommandID i = (engine::CommandID) 0;
-    engine::Command* command0 = new engine::Command(i);
+    engine::Command* command0 = new engine::Command(engine::CommandID::ADDRESOURCE);
     command0->launchCommand();
-    engine::CommandID id = command0->getCommandId();
-    BOOST_CHECK_EQUAL(id,i);
     delete command0;
-
 
     engine::AddResource* command1 = new engine::AddResource(ai,ResourceType::MATERIAL,0);
     command1->launchCommand();
+    BOOST_CHECK_EQUAL(command1->getCommandId(),engine::CommandID::ADDRESOURCE);
     delete command1;
 
     engine::DiscardCard* command2 = new engine::DiscardCard(ai,0,true);
