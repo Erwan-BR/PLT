@@ -140,6 +140,7 @@ namespace ai
         }
         this->indexesOfCardsToKeep.clear();
         this->indexesOfCardsToDiscard.clear();
+        this->updateCardsToBuildIndexesOrdered();
 
         this->endPlanification();
     }
@@ -230,7 +231,7 @@ namespace ai
     {
         this->cardsToBuildIndexesOrdered.clear();
 
-        for (long unsigned int index = 0; this->toBuildCards.size() < index; index++)
+        for (long unsigned int index = 0; this->toBuildCards.size() > index; index++)
         {
             this->cardsToBuildIndexesOrdered.push_back(index);
         }

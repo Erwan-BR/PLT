@@ -8,7 +8,7 @@ using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(test_Random_AI)
 {
-    ai::AIRandom* rAI = new ai::AIRandom("dummy", -1,"");
+    ai::AIRandom* rAI = new ai::AIRandom("dummy", -1);
     rAI->AIUseProducedResources();
     rAI->AIChooseColonelToken();
     delete rAI;
@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_CASE(test_Random_AI)
 
 BOOST_AUTO_TEST_CASE(test_Advanced_AI)
 {
-    ai::AIAdvanced* aAI = new ai::AIAdvanced("dummy", -1,"");
+    ai::AIAdvanced* aAI = new ai::AIAdvanced("dummy", -1);
     //aAI->AIUseProducedResources();
     aAI->AIChooseColonelToken();
     delete aAI;
