@@ -92,7 +92,7 @@ namespace state {
     {
         for(ResourceToPay* resource : this->costToBuild)
         {
-            delete(resource);
+            delete resource;
         }
     }
 

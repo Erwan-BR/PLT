@@ -53,8 +53,8 @@ int main(int argc,char* argv[])
         std::cout<<"Space - Go to the next step of the testing game" << std::endl;
 
         //Creation of the window
-        int win_length = 1820;
-        int win_heigth = 800;
+        int win_length = 1920;
+        int win_heigth = 1080;
         sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
 
         //Creation of Transform (Scale adjusting to the window size)

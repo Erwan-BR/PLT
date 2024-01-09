@@ -68,7 +68,7 @@ namespace state {
     {
         for(ResourceToProduce* resource : this->productionGain)
         {
-            delete(resource);
+            delete resource;
         }
         delete victoryPoints;
     }

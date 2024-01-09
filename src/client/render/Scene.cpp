@@ -7,6 +7,7 @@ namespace render {
 
 	/// @brief Full constructor of the Scene class.
     Scene::Scene(state::Game* game,sf::Transform transform){
+		this->enableInput = true;
 		//Store game attribute
 		this->game = game;
 		this->transform = transform;
@@ -23,6 +24,7 @@ namespace render {
     	this->current_window = MAIN_WINDOW;
 
 		PlayerRenderer* pRenderer;
+		Button* button;
 
 		//Get Players
 		std::vector<state::Player*> players = game->getPlayers();
@@ -52,6 +54,39 @@ namespace render {
 
 		//Generate GameRenderer
 		this->game_renderer = new GameRenderer(game,transform);
+
+		//Generate Buttons for MAIN_WINDOW only if the Player isn't an AI
+		if(this->enableInput){
+			button = new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(100,100,100),NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+			button = new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color::Black,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+			button = new Button({1650.f,600.f},{100.f,100.f},"SCIENCE",sf::Color::Green,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+			button = new Button({1770.f,600.f},{100.f,100.f},"GOLD",sf::Color::Yellow,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+			button = new Button({1650.f,720.f},{100.f,100.f},"EXPLORATION",sf::Color::Blue,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+			button = new Button({1770.f,720.f},{100.f,100.f},"KRYSTALIUM",sf::Color::Red,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+			button = new Button({1650.f,840.f},{100.f,100.f},"COLONEL",sf::Color::Red,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+			button = new Button({1770.f,840.f},{100.f,100.f},"FINANCIER",sf::Color::Cyan,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+
+			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color::White,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
+		}
+
 	}
 
     /// @brief Full destructor of the Scene class.
@@ -145,6 +180,10 @@ namespace render {
 				for (int i=0; i < 2; i++){
 					this->player_renderer[i]->draw(window);
 				}
+				for (Button* btn: btnMain){
+					btn->draw(window);
+				}
+
 				break;
 			case DRAFTING_WINDOW:
 				//Display players

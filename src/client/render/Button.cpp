@@ -12,6 +12,7 @@ namespace render
         sf::Font tempoFont;
         tempoFont.loadFromFile("./resources/font/arial.ttf");
         this->font = tempoFont;
+        this->rectangle = sf::RectangleShape();
         this->rectangle.setSize(size);
         this->rectangle.setPosition(position);
         this->rectangle.setFillColor(color);
@@ -19,7 +20,8 @@ namespace render
         this->text.setFont(font);
         this->text.setString(textString);
         this->text.setCharacterSize(20);
-        this->text.setFillColor(color);
+        sf::Color text_color = sf::Color(255-color.r,255-color.g,255-color.b);
+        this->text.setFillColor(text_color);
         
         // Center the text within the button
         sf::FloatRect textBounds = this->text.getLocalBounds();
@@ -65,5 +67,10 @@ namespace render
     void Button::setEnabled (bool enabled)
     {
         this->isEnable = enabled;
+    }
+
+    void Button::setVisible (bool visible)
+    {
+        this->isVisible = visible;
     }
 }
