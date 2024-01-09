@@ -51,15 +51,15 @@ namespace ai
         }
 
         // At turn one, the AI takes every possible cards that makes him win flatpoint.
-        // For other turns, the AI takes a card only if he doesn't have any card to build left.
-        if (1 == this->gameTurn || 0 == this->toBuildCards.size())
+        // For other turns, the AI takes a card only if he has less than three cards to construct.
+        if (1 == this->gameTurn || (3 > (this->cardsToBuildIndexesOrdered.size() + this->toBuildCards.size())))
         {
             int indexOfCardToKeep = 0;
             long unsigned int costOfCardToBuid = std::numeric_limits<long unsigned int>::max();
             bool isDesiredCard = false;
             
             // Iterating among all cards to find the one that will earn flat points (without condition), an d which is the less expensive.
-            for (long unsigned int index = 0; this->draftingCards.size() > index; index ++)
+            for (size_t index = 0; this->draftingCards.size() > index; index ++)
             {
                 state::CardVictoryPoint* currentVictoryPoints = this->draftingCards[index]->getVictoryPoints();
                 
@@ -96,7 +96,7 @@ namespace ai
             for (const state::ResourceType resourceDesired : this->resourcesMissingOrdered)
             {
                 // Iterating among all cards to try to have this resource.
-                for (long unsigned int index = 0; this->draftingCards.size(); index++)
+                for (size_t index = 0; this->draftingCards.size() > index ; index++)
                 {
                     state::ResourceType currentDiscardGain = this->draftingCards[index]->getDiscardGain();
                     if (resourceDesired == currentDiscardGain)
@@ -127,21 +127,28 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
     void AIAdvanced::AIPlanification()
     {
+        // Re-initialization for the next draft.
         this->currentIndexOfDraft = 0;
 
-        // Keeping cards that are written as 'to keep'
-        for (int cardToKeep : this->indexesOfCardsToKeep)
+        // Iterating among all cards to build.
+        for (int cardIndex = (int)this->draftCards.size() - 1; 0 <= cardIndex; cardIndex--)
         {
-            this->keepCard(cardToKeep);
+            auto itToKeep = std::find(indexesOfCardsToKeep.begin(), indexesOfCardsToKeep.end(), cardIndex);
+            auto itToDiscard = std::find(indexesOfCardsToDiscard.begin(), indexesOfCardsToDiscard.end(), cardIndex);
+            
+            // If the card is in the ToKeep card, we have to keep it.
+            if (itToKeep != indexesOfCardsToKeep.end())
+            {
+                this->keepCard(itToKeep - indexesOfCardsToKeep.begin());
+            }
+            // If the card is in the ToDiscard, we have to discard it.
+            else if (itToDiscard != indexesOfCardsToDiscard.end())
+            {
+                this->discardCard(itToDiscard - indexesOfCardsToDiscard.begin(), true);
+                this->AIUseProducedResources();
+            }
         }
         this->indexesOfCardsToKeep.clear();
-
-        // Keeping cards that are written as 'to discard'
-        for (int cardToKeep : this->indexesOfCardsToDiscard)
-        {
-            this->discardCard(cardToKeep, true);
-            this->AIUseProducedResources();
-        }
         this->indexesOfCardsToDiscard.clear();
 
         this->endPlanification();
@@ -225,7 +232,7 @@ namespace ai
         // Update resources needed.
         this->updateCardsToBuildIndexesOrdered();
         this->updateResourcesMissingOrdered();
-        this->keepCard(index);
+        this->chooseDraftCard(index);
     }
 
     /// @brief Update the order of the card to build to know which caard the AI should try to construct first.

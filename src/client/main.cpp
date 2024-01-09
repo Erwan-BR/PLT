@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #define CROSS_SIZE 0.01f
+#define MAX_NUMBER_OF_GAME_IA 50
 
 #include <state.h>
 #include <render.h>
@@ -156,19 +157,20 @@ int main(int argc,char* argv[])
     {
         if (3 == argc)
         {
-            std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
+            std::cout << "./bin/client AI <x> <y>: Will run x game played by y AI." << std::endl;
             displayMessage();
             return EXIT_FAILURE;
         }
         int numberOfGames = std::atoi(argv[2]);
         int numberOfAI = std::atoi(argv[3]);
-        if (2 > numberOfAI || 5 < numberOfAI || 1 > numberOfGames || 40 < numberOfGames)
+        if (2 > numberOfAI || 5 < numberOfAI || 1 > numberOfGames || MAX_NUMBER_OF_GAME_IA < numberOfGames)
         {
-            std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
-            std::cout << "You have to respect 1 < x < 40 and 1 < y < 6" << std::endl;
+            std::cout << "./bin/client AI <x> <y>: Will run x game played by y AI." << std::endl;
+            std::cout << "You have to respect 1 < x < " << MAX_NUMBER_OF_GAME_IA << " and 1 < y < 6" << std::endl;
+            return EXIT_FAILURE;
         }
         
-        std::cout << numberOfGames << " games containing " << numberOfAI << " random AI are going to be created. When they are finished, some statistics will be displayed." << std::endl << std::endl;
+        std::cout << numberOfGames << " games containing " << numberOfAI << " AI are going to be created. When they are finished, some statistics will be displayed." << std::endl << std::endl;
 
         std::vector<std::vector<int>> AI_numberOfPoints(numberOfAI, std::vector<int>(numberOfGames, 0));
         std::vector<std::vector<int>> AI_numberOfBuiltCards(numberOfAI, std::vector<int>(numberOfGames, 0));
@@ -181,7 +183,17 @@ int main(int argc,char* argv[])
             std::vector<state::Player*> ais = {};
             for (int i = 0; i < numberOfAI; i++)
             {
-                state::Player* newAI = new ai::AIRandom("dummy", -i);
+                //state::Player* newAI = new ai::AIRandom("dummy", -i);
+                state::Player* newAI;
+                if (i%2)
+                {
+                    newAI = new ai::AIRandom("dummy", -i-1);
+                }
+                else
+                {
+                    newAI = new ai::AIAdvanced("smart", -i-1);
+                }
+                //state::Player* newAI = new ai::AIAdvanced("dummy", -i-1);
                 ais.push_back(newAI);
             }
 
@@ -208,19 +220,41 @@ int main(int argc,char* argv[])
                     numberOfWins[winnerIndex] ++;
                 }
             }
+
+            delete engineOfGame;
+            std::cout << "Game " << gameNumber+1 << "/" << numberOfGames << " finished." << std::endl;
         }
 
 
         // Display stats of all games per AI.
         for (int i = 0; i < numberOfAI; i++)
         {
-            displayInformationFromAnAI("AI " + std::to_string(i), AI_numberOfPoints[i], AI_numberOfBuiltCards[i]);
+            std::string type;
+            if (i%2)
+            {
+                type = "random";
+            }
+            else
+            {
+                type = "advanced";
+            }
+            std::string name = "AI " + std::to_string(i) + " (" + type + ")";
+            displayInformationFromAnAI(name, AI_numberOfPoints[i], AI_numberOfBuiltCards[i]);
         }
 
         // Display global stats of all games per AI.
         for (int i = 0; i < numberOfAI; i++)
         {
-            std::cout << "AI " << i <<" won " << numberOfWins[i] << "/" << numberOfGames << " games, a ratio of " << 100*(numberOfWins[i] / numberOfGames) << "%." << std::endl;
+            std::string type;
+            if (i%2)
+            {
+                type = "random";
+            }
+            else
+            {
+                type = "advanced";
+            }
+            std::cout << "AI " << type << " " << i <<" won " << numberOfWins[i] << "/" << numberOfGames << " games, a ratio of " << 100*(numberOfWins[i] / numberOfGames) << "%." << std::endl;
         }
         std::cout << "There was a tie in " << numberOfTie << "/" << numberOfGames << " games, a ratio of " << 100*(numberOfTie / numberOfGames) << "%." << std::endl;
 
