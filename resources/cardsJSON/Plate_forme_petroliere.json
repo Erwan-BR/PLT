@@ -1,0 +1,50 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		}
+	],
+	"discardGain" : 2,
+	"instantGain" : 
+	[
+		8
+	],
+	"isPaid" : false,
+	"name" : "Plate forme petroliere",
+	"numberOfCopies" : 5,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 2
+		},
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 4
+		}
+	],
+	"quantityResourceMissing" : 4,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/plate_forme_petroliere.png",
+	"type" : 21,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}

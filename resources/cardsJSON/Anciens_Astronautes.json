@@ -1,0 +1,58 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 7
+		}
+	],
+	"discardGain" : 3,
+	"instantGain" : 
+	[
+		6,
+		6
+	],
+	"isPaid" : false,
+	"name" : "Anciens Astronautes",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 25,
+			"quantity" : 1,
+			"type" : 3
+		}
+	],
+	"quantityResourceMissing" : 7,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/anciens_astronautes.png",
+	"type" : 25,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 10
+	}
+}

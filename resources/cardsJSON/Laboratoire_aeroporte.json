@@ -1,0 +1,43 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		}
+	],
+	"discardGain" : 3,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Laboratoire aeroporte",
+	"numberOfCopies" : 3,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 3
+		},
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 5
+		}
+	],
+	"quantityResourceMissing" : 3,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/laboratoire_aeroporte.png",
+	"type" : 22,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}

@@ -1,0 +1,58 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		}
+	],
+	"discardGain" : 1,
+	"instantGain" : 
+	[
+		7,
+		7
+	],
+	"isPaid" : false,
+	"name" : "Porte Avions",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 22,
+			"quantity" : 1,
+			"type" : 5
+		}
+	],
+	"quantityResourceMissing" : 7,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/porte_avions.png",
+	"type" : 22,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}

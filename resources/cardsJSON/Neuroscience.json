@@ -1,0 +1,38 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		}
+	],
+	"discardGain" : 3,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Neuroscience",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 23,
+			"quantity" : 1,
+			"type" : 3
+		}
+	],
+	"quantityResourceMissing" : 3,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/neuroscience.png",
+	"type" : 23,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 1
+	}
+}

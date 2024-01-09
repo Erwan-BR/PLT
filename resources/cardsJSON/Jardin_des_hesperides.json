@@ -1,0 +1,39 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		}
+	],
+	"discardGain" : 5,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Jardin des hesperides",
+	"numberOfCopies" : 1,
+	"productionGain" : null,
+	"quantityResourceMissing" : 5,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/jardin_des_hesperides.png",
+	"type" : 25,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 24,
+		"numberOfPoints" : 2
+	}
+}

@@ -1,0 +1,49 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		}
+	],
+	"discardGain" : 1,
+	"instantGain" : 
+	[
+		7
+	],
+	"isPaid" : false,
+	"name" : "Sous marin",
+	"numberOfCopies" : 3,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 2,
+			"type" : 5
+		}
+	],
+	"quantityResourceMissing" : 5,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/sous_marin.png",
+	"type" : 22,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}

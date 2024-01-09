@@ -1,0 +1,41 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		}
+	],
+	"discardGain" : 4,
+	"instantGain" : 
+	[
+		7
+	],
+	"isPaid" : false,
+	"name" : "Centre de propagande",
+	"numberOfCopies" : 2,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 24,
+			"quantity" : 1,
+			"type" : 4
+		}
+	],
+	"quantityResourceMissing" : 3,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/centre_de_propagande.png",
+	"type" : 24,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 1
+	}
+}

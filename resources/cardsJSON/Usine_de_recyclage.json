@@ -1,0 +1,34 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		}
+	],
+	"discardGain" : 1,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Usine de recyclage",
+	"numberOfCopies" : 7,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 2,
+			"type" : 1
+		}
+	],
+	"quantityResourceMissing" : 2,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/usine_de_recyclage.png",
+	"type" : 21,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}
