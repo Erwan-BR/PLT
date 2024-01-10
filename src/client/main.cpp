@@ -276,8 +276,6 @@ int main(int argc,char* argv[])
 
         std::thread initThread(&engine::Engine::gameRunning, engineOfGame);
 
-        initThread.join();
-
         //Main Loop active while the window is still open
         while (window.isOpen())
         {
@@ -322,6 +320,8 @@ int main(int argc,char* argv[])
             //Display the new content of the window
             window.display();
         }
+
+        initThread.join();
 
         delete scene;
 
