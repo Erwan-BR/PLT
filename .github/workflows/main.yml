@@ -69,6 +69,9 @@ jobs:
         indicators: true
         output: both
         thresholds: '0 50'
+      ignore:
+        - "extern"
+        - "**/main.cpp"
       
     # Automatic comment of the code-coverage on the pull request  
     - name: Add Coverage PR Comment
