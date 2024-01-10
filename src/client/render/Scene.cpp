@@ -240,9 +240,8 @@ namespace render {
 
 	void Scene::setSelectedCard(state::Card* card){
 		state::Player* p = this->game->getPlayers()[0];
-		int index;
-		switch (this->current_window){{
-			case MAIN_WINDOW:
+		switch (this->current_window){
+			case MAIN_WINDOW:{
 				auto cards = p->getToBuildCards();
 				engine::Command* command;
 				bool skip =false;
@@ -286,26 +285,7 @@ namespace render {
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::FINANCIER);
 					this->btnMain[7]->changeCommand(command);
 				}
-				
-					index = itCard -p->getToBuildCards().begin();
-					engine::Command* command;
-					command = new engine::Command(engine::ADDRESOURCE,0,index,state::MATERIAL);
-					this->btnMain[0]->changeCommand(command);
-					command = new engine::Command(engine::ADDRESOURCE,0,index,state::ENERGY);
-					this->btnMain[1]->changeCommand(command);
-					command = new engine::Command(engine::ADDRESOURCE,0,index,state::SCIENCE);
-					this->btnMain[2]->changeCommand(command);
-					command = new engine::Command(engine::ADDRESOURCE,0,index,state::GOLD);
-					this->btnMain[3]->changeCommand(command);
-					command = new engine::Command(engine::ADDRESOURCE,0,index,state::EXPLORATION);
-					this->btnMain[4]->changeCommand(command);
-					command = new engine::Command(engine::ADDRESOURCE,0,index,state::KRYSTALLIUM);
-					this->btnMain[5]->changeCommand(command);
-					command = new engine::Command(engine::ADDRESOURCE,0,index,state::COLONEL);
-					this->btnMain[6]->changeCommand(command);
-					command = new engine::Command(engine::ADDRESOURCE,0,index,state::FINANCIER);
-					this->btnMain[7]->changeCommand(command);
-				}}
+				}
 				break;
 			case DRAFTING_WINDOW:{
 				auto cards = p->getDraftingCards();
@@ -317,31 +297,30 @@ namespace render {
 						this->btnDraft[0]->setEnabled(true);
 					}
 				}
-				
-				break;}
+				}
+				break;
 			case PLANIFICATION_WINDOW:{
-				auto itCard = std::find(p->getToBuildCards().begin(),p->getToBuildCards().end(),card);
-				if (itCard == p->getToBuildCards().end()){
-					auto itCard2 = std::find(p->getDraftCards().begin(),p->getDraftCards().end(),card);
-					if (itCard2 == p->getDraftCards().end()){
-						index = -1;
-					}
-					else{
-						index = itCard2 -p->getDraftCards().begin();
+				auto cards = p->getDraftCards();
+				for(int i=0; i < (int) cards.size();i++){
+					if(cards[i] == card){
 						engine::Command* command;
-						command = new engine::Command(engine::KEEPCARD,0,index);
+						command = new engine::Command(engine::KEEPCARD,0,i);
 						this->btnPlan[1]->changeCommand(command);
-						command = new engine::Command(engine::DISCARDCARD,0,index);
+						command = new engine::Command(engine::DISCARDCARD,0,i);
 						this->btnPlan[1]->changeCommand(command);
 					}
 				}
-				else{
-					index = itCard -p->getToBuildCards().begin();
-					engine::Command* command;
-					this->btnPlan[0]->setEnabled(false);
-					command = new engine::Command(engine::DISCARDCARD,0,index);
-					this->btnPlan[1]->changeCommand(command);
-				}}
+
+				cards = p->getToBuildCards();
+				for(int i=0; i < (int) cards.size();i++){
+					if(cards[i] == card){
+						engine::Command* command;
+						this->btnPlan[0]->setEnabled(false);
+						command = new engine::Command(engine::DISCARDCARD,0,i);
+						this->btnPlan[1]->changeCommand(command);
+					}
+				}
+				}
 				break;
 			default:
 				break;
