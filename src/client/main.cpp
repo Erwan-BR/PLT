@@ -260,7 +260,7 @@ int main(int argc,char* argv[])
         players.push_back(player2);
 
         // Creation of the game, the engine and the render.
-        state::Game* game = new state::Game(players, true);
+        state::Game* game = new state::Game(players);
         game->initGame();
         std::mutex locker;
         engine::Engine* engineOfGame = new engine::Engine(game, locker);
