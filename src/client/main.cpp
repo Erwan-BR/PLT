@@ -248,30 +248,31 @@ int main(int argc,char* argv[])
         //Creation of the window
         int win_length = 1920;
         int win_heigth = 1080;
-        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Default);
 
-        //Creation of testing instances of Player class
+        // Creation of two players : The player, vs the dummy AI.
         std::string nameOfPlayer = "PlayerName";
-
         state::Player* player1 = new state::Player(nameOfPlayer, 10);
-        
         state::Player* player2 ;
         player2 = new ai::AIRandom("dummy", - 10);
-
-        //Creation of the vector players
         std::vector<state::Player*> players;
         players.push_back(player1);
         players.push_back(player2);
 
-        //Creation of the instance of the Game class
+        // Creation of the game, the engine and the render.
         state::Game* game = new state::Game(players, true);
-
         std::mutex locker;
         engine::Engine* engineOfGame = new engine::Engine(game, locker);
+        render::Scene* scene = new render::Scene(game, locker, engineOfGame);
 
-        // To-do : create the render properly and give it the engine.
+        std::thread initThread(&engine::Engine::gameRunning, engineOfGame);
 
-        delete engineOfGame;
+        initThread.join();
+
+        delete scene;
+
+        std::cout << "Game exited with sucess!" << std::endl;
+        return EXIT_SUCCESS;
     }
     
     std::cout << "Invalid argument." << std::endl;

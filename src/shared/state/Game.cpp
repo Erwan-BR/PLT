@@ -210,6 +210,7 @@ namespace state {
             
             // Send cards to players.
             player->setDraftingCards(draftingDeck);
+            player->setState(PlayerState::PLAYING);
         }
         this->notifyObservers();
     }
@@ -254,6 +255,11 @@ namespace state {
 
             // Giving the deck of the first player to the last one.
             this->players[0]->setDraftingCards(lastPlayerDeck);
+        }
+        
+        for (Player* player : this->players)
+        {
+            player->setState(PlayerState::PLAYING);
         }
 
         // Notify observers that the draft is done.
@@ -303,6 +309,12 @@ namespace state {
         }
 
         this->produceResource();
+        
+        for (Player* player : this->players)
+        {
+            player->setState(PlayerState::PLAYING);
+        }
+        
         this->notifyObservers();
     }
 
