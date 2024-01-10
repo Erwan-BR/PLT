@@ -6,10 +6,16 @@
 namespace render {
 
 	/// @brief Full constructor of the Scene class.
-    Scene::Scene(state::Game* game){
+	/// @param game Game that is displayed.
+	/// @param locker Mutex that will lock the action performed by the player.
+	/// @param engineOfGame Engine that make the complete game.
+	Scene::Scene (state::Game* game, std::mutex & locker, engine::Engine* engineOfGame) :
+		game(game),
+		locker(locker),
+		engineOfGame(engineOfGame)
+	{
 		this->enableInput = true;
 		//Store game attribute
-		this->game = game;
 		this->transform = transform;
 
        	//Creation and initialisation of the background texture
@@ -58,50 +64,50 @@ namespace render {
 
 		//Generate Buttons for MAIN_WINDOW only if the Player isn't an AI
 		if(this->enableInput){
-			button = new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(180,180,180),(engine::Command*) NULL);
+			button = new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(180,180,180),nullptr, this->locker);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color(85,76,68),(engine::Command*) NULL);
+			button = new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color(85,76,68),nullptr, this->locker);
 			this->btnMain.push_back(button);
-			button = new Button({1650.f,600.f},{100.f,100.f},"SCIENCE",sf::Color::Green,(engine::Command*) NULL);
+			button = new Button({1650.f,600.f},{100.f,100.f},"SCIENCE",sf::Color::Green,nullptr, this->locker);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,600.f},{100.f,100.f},"GOLD",sf::Color::Yellow,(engine::Command*) NULL);
+			button = new Button({1770.f,600.f},{100.f,100.f},"GOLD",sf::Color::Yellow,nullptr, this->locker);
 			this->btnMain.push_back(button);
-			button = new Button({1650.f,720.f},{100.f,100.f},"EXPLORATION",sf::Color::Blue,(engine::Command*) NULL);
+			button = new Button({1650.f,720.f},{100.f,100.f},"EXPLORATION",sf::Color::Blue,nullptr, this->locker);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,720.f},{100.f,100.f},"KRYSTALIUM",sf::Color::Red,(engine::Command*) NULL);
+			button = new Button({1770.f,720.f},{100.f,100.f},"KRYSTALIUM",sf::Color::Red,nullptr, this->locker);
 			this->btnMain.push_back(button);
-			button = new Button({1650.f,840.f},{100.f,100.f},"COLONEL",sf::Color::Red,(engine::Command*) NULL);
+			button = new Button({1650.f,840.f},{100.f,100.f},"COLONEL",sf::Color::Red,nullptr, this->locker);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,840.f},{100.f,100.f},"FINANCIER",sf::Color::Cyan,(engine::Command*) NULL);
+			button = new Button({1770.f,840.f},{100.f,100.f},"FINANCIER",sf::Color::Cyan,nullptr, this->locker);
 			this->btnMain.push_back(button);
 
 			command = new engine::Command(engine::ENDPRODUCTION,0);
-			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color(215,47,215),command);
+			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color(215,47,215),command, this->locker);
 			this->btnMain.push_back(button);
 			command = new engine::Command(engine::SAVEGAME);
-			button = new Button({50.f,960.f},{220.f,100.f},"SAVE GAME",sf::Color(215,47,215),command);
+			button = new Button({50.f,960.f},{220.f,100.f},"SAVE GAME",sf::Color(215,47,215),command, this->locker);
 			this->btnMain.push_back(button);
 
 			for(int i = 1; i<(int) game->getPlayers().size();i++){
 				command = new engine::Command(engine::SAVEGAME); //TODO change ID
-				button = new Button({300.f,60.f*i},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command);
+				button = new Button({300.f,60.f*i},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker);
 				this->btnMain.push_back(button);
 			}
 
-			button = new Button({20.f,780.f},{220.f,100.f},"KEEP",sf::Color(215,47,215),(engine::Command*) NULL);
+			button = new Button({20.f,780.f},{220.f,100.f},"KEEP",sf::Color(215,47,215),nullptr, this->locker);
 			this->btnPlan.push_back(button);
-			button = new Button({260.f,780.f},{220.f,100.f},"DISCARD",sf::Color(215,47,215),(engine::Command*) NULL);
+			button = new Button({260.f,780.f},{220.f,100.f},"DISCARD",sf::Color(215,47,215),nullptr, this->locker);
 			this->btnPlan.push_back(button);
 			command = new engine::Command(engine::ENDPLANIFICATION,0);
-			button = new Button({1680.f,780.f},{220.f,100.f},"END PLAN",sf::Color(215,47,215),command);
+			button = new Button({1680.f,780.f},{220.f,100.f},"END PLAN",sf::Color(215,47,215), command, this->locker);
 			this->btnPlan.push_back(button);
 
-			button = new Button({1600.f,940.f},{220.f,100.f},"CONFIRM",sf::Color(215,47,215),(engine::Command*) NULL);
+			button = new Button({1600.f,940.f},{220.f,100.f},"CONFIRM",sf::Color(215,47,215),nullptr, this->locker);
 			this->btnDraft.push_back(button);
 
 			for(int i = 0; i<(int) game->getPlayers().size();i++){
 				command = new engine::Command(engine::SAVEGAME); //TODO change ID
-				button = new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command);
+				button = new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker);
 				this->btnFull.push_back(button);
 			}
 
@@ -137,15 +143,15 @@ namespace render {
 		switch(this->current_window){
 			case MAIN_WINDOW:
 				for(int i=0;i<8;i++){
-					this->btnMain[i]->changeCommand((engine::Command*) NULL);
+					this->btnMain[i]->changeCommand(nullptr);
 				}
 				break;
 			case DRAFTING_WINDOW:
-				this->btnDraft[0]->changeCommand((engine::Command*) NULL);
+				this->btnDraft[0]->changeCommand(nullptr);
 				break;
 			case PLANIFICATION_WINDOW:
-				this->btnPlan[0]->changeCommand((engine::Command*) NULL);
-				this->btnPlan[1]->changeCommand((engine::Command*) NULL);
+				this->btnPlan[0]->changeCommand(nullptr);
+				this->btnPlan[1]->changeCommand(nullptr);
 				break;
 			default:
 				break;
@@ -211,25 +217,25 @@ namespace render {
 		switch (this->current_window){
 			case MAIN_WINDOW:
 				for(Button* btn: this->btnMain){
-					btn->handleEvent(event,window);
+					btn->handleEvent(event,window, this->engineOfGame);
 				}
 				this->player_renderer[0]->handleEvent(event,window,this);
 				break;
 			case DRAFTING_WINDOW:
 				for(Button* btn: this->btnDraft){
-					btn->handleEvent(event,window);
+					btn->handleEvent(event,window, this->engineOfGame);
 				}
 				this->drafting_hand_renderer->handleEvent(event,window,this);
 				break;
 			case PLANIFICATION_WINDOW:
 				for(Button* btn: this->btnPlan){
-					btn->handleEvent(event,window);
+					btn->handleEvent(event,window, this->engineOfGame);
 				}
 				this->player_renderer[3]->handleEvent(event,window,this);
 				break;
 			case PLAYER_INFO:
 				for(Button* btn: this->btnFull){
-					btn->handleEvent(event,window);
+					btn->handleEvent(event,window, this->engineOfGame);
 				}
 				break;
 			default:

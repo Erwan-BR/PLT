@@ -3,12 +3,20 @@
 
 namespace render
 {
-    Button::Button (sf::Vector2f position, sf::Vector2f size, std::string text, sf::Color color, engine::Command* commandOnClick) :
+    /// @brief Cnstructor of a button.
+    /// @param position Position of the button.
+    /// @param size Size of the button.
+    /// @param text Text that is inside the button.
+    /// @param color Color of the button.
+    /// @param commandOnClick Command executed on click.
+    /// @param locker mutex that allow to send securely the command to the engine.
+    Button::Button (sf::Vector2f position, sf::Vector2f size, std::string text, sf::Color color, engine::Command* commandOnClick, std::mutex & locker) :
         position(position),
         size(size),
         textString(text),
         color(color),
-        command(commandOnClick)
+        command(commandOnClick),
+        locker(locker)
     {
         sf::Font tempoFont;
         tempoFont.loadFromFile("./resources/font/arial.ttf");
@@ -33,14 +41,17 @@ namespace render
         this->text.setPosition(position.x + size.x / 2.0f, position.y + size.y / 2.0f);
     }
 
+    /// @brief Destructor of the button. Do not destroy anything because commands can be shared.
     Button::~Button ()
     {
 
     }
 
+    /// @brief Draw the button on the main window.
+    /// @param window Window where the button is displayed.
     void Button::draw (sf::RenderWindow& window)
     {
-        if (this->command == NULL)
+        if (nullptr == this->command)
         {
             this->isEnable = false;
         }
@@ -49,11 +60,13 @@ namespace render
         {
             return ;
         }
-        if(this->isEnable){
+        if(this->isEnable)
+        {
             window.draw(this->rectangle);
             window.draw(this->text);
         }
-        else{
+        else
+        {
             this->rectangle.setFillColor(sf::Color::Black);
             window.draw(this->rectangle);
             window.draw(this->text);
@@ -64,37 +77,54 @@ namespace render
     /// @brief Handle the event of a click on the window. It will launch the command only if 
     /// @param event Event that occurs on the window.
     /// @param window Displayed window to the player.
-    void Button::handleEvent (sf::Event event, sf::RenderWindow& window)
+    /// @param engineOfGame Engine that will receive the game.
+    void Button::handleEvent (sf::Event event, sf::RenderWindow& window, engine::Engine* engineOfGame)
     {
         // Check if the button is enabled, and pressed with a left click
         if (this->isEnable && event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
         {
             sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
             
-            // Check if the click is inside the button.
-            if (rectangle.getGlobalBounds().contains(mousePos))
+            // Check if the click is inside the button and if the command is not a nullptr to avoid sending something for nothing.
+            if (rectangle.getGlobalBounds().contains(mousePos) && nullptr != this->command)
             {
-                std::cout<<"Button Clicked:"<<this->textString<<std::endl;
-                //this->command->launchCommand();
+                Json::Value jsonCommand = this->command->toJSON();
+                
+                // Lock the mutex, send the JSON of the command and unlock the mutex.
+                this->locker.lock();
+                engineOfGame->receiveCommand(jsonCommand);
+                this->locker.unlock();
             }
         }
     }
 
+    /************************************* Setters & Getters *************************************/
+
+    /// @brief Set the button enable or not. It indicates if the button can be clicked.
+    /// @param enabled New state of the button.
     void Button::setEnabled (bool enabled)
     {
         this->isEnable = enabled;
     }
 
+    /// @brief Set visible or not the button, to display it or not according to the window.
+    /// @param visible State of the button.
     void Button::setVisible (bool visible)
     {
         this->isVisible = visible;
     }
 
-    void Button::setText(std::string newText){
+    /// @brief Change the text of the button.
+    /// @param newText New string that is inside the button.
+    void Button::setText(std::string newText)
+    {
         this->text.setString(newText);
     }
 
-    void Button::changeCommand(engine::Command* command){
+    /// @brief Change the command performed by the button when clicked.
+    /// @param command New command performed by the click.
+    void Button::changeCommand(engine::Command* command)
+    {
         this->command = command;
     }
 }

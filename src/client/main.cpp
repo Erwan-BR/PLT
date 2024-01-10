@@ -60,15 +60,17 @@ int main(int argc,char* argv[])
         players.push_back(player2);
 
         //Creation of the instance of the Game class
-        state::Game game = state::Game(players,true);
+        state::Game* game = new state::Game(players,true);
 
-        game.initGame();
+        game->initGame();
 
+        std::mutex locker;
         //Creation of the instance of the Scene class
-        render::Scene scene = render::Scene(&game);
+        engine::Engine* engineOfGame = new engine::Engine(game, locker);
+        render::Scene scene = render::Scene(game, locker, engineOfGame);
 
         //Observable
-        scene.setupObserver(&game);
+        scene.setupObserver(game);
         scene.setupObserver(player1);
         scene.setupObserver(player2);
 
@@ -115,10 +117,9 @@ int main(int argc,char* argv[])
                         scene.changePlayerInfoPlayer(1,render::PLAYER_INFO);
                     }
                     if (event.key.code == sf::Keyboard::Space){
-                        next_step(etape,&game,player1,player2,&scene);    //Go to the next step
+                        next_step(etape,game,player1,player2,&scene);    //Go to the next step
                         etape++;
-                    }
-                        
+                    } 
                 }
             }
 
@@ -128,6 +129,8 @@ int main(int argc,char* argv[])
             window.display();
         }
         std::cout << "Exit Successfully !" << std::endl;
+
+        delete engineOfGame;
 
         return EXIT_SUCCESS;
     }
