@@ -40,14 +40,25 @@ namespace render
 
     void Button::draw (sf::RenderWindow& window)
     {
+        if (this->command == NULL)
+        {
+            this->isEnable = false;
+        }
         // Do not display anything if the button is not enabled.
         if (!this->isVisible)
         {
             return ;
         }
-        // 
-        window.draw(this->rectangle);
-        window.draw(this->text);
+        if(this->isEnable){
+            window.draw(this->rectangle);
+            window.draw(this->text);
+        }
+        else{
+            this->rectangle.setFillColor(sf::Color::Black);
+            window.draw(this->rectangle);
+            window.draw(this->text);
+        }
+
     }
 
     /// @brief Handle the event of a click on the window. It will launch the command only if 
@@ -81,5 +92,9 @@ namespace render
 
     void Button::setText(std::string newText){
         this->text.setString(newText);
+    }
+
+    void Button::changeCommand(engine::Command* command){
+        this->command = command;
     }
 }

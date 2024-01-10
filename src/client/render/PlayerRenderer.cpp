@@ -426,7 +426,7 @@ namespace render {
 
     }
 
-    void PlayerRenderer::handleEvent (sf::Event event, sf::RenderWindow& window){
+    void PlayerRenderer::handleEvent (sf::Event event, sf::RenderWindow& window, Scene* scene){
         switch (this->affected_window){
             case MAIN_WINDOW:
             if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && this->sprites.size()>=1){
@@ -434,11 +434,12 @@ namespace render {
                 // Check if the click is inside the Empire Card.
                 if (this->sprites[1]->getGlobalBounds().contains(mousePos)){
                     std::cout<<"Empire Clicked"<<std::endl;
+                    scene->setSelectedCard(this->player->getEmpire());
                 }
             }
             case PLANIFICATION_WINDOW:
 				for(DevelopmentCardRenderer* c: this->devCardRenderers){
-					c->handleEvent(event,window);
+					c->handleEvent(event,window,scene);
 				}
                 break;
 			case PLAYER_INFO:

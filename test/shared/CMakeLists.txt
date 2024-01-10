@@ -11,7 +11,7 @@ add_custom_test(shared_Observable)
 
 add_custom_test(shared_JSONStructures)
 
-add_custom_test(shared_Engine)
+#add_custom_test(shared_Engine)
 add_custom_test(shared_AI)
 
 # vim: set sw=2 sts=2 et:

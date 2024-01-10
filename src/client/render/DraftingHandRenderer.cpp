@@ -97,9 +97,9 @@ namespace render {
 		}
     }
 
-    void DraftingHandRenderer::handleEvent (sf::Event event, sf::RenderWindow& window){
+    void DraftingHandRenderer::handleEvent (sf::Event event, sf::RenderWindow& window, Scene* scene){
         for(DevelopmentCardRenderer* c: this->devCardRenderers){
-			c->handleEvent(event,window);
+			c->handleEvent(event,window,scene);
 		}
     }
 

@@ -77,7 +77,7 @@ namespace render
         }
     }
 
-    void DevelopmentCardRenderer::handleEvent (sf::Event event, sf::RenderWindow& window)
+    void DevelopmentCardRenderer::handleEvent (sf::Event event, sf::RenderWindow& window, Scene* scene)
     {
         // Check if the button is enabled, and pressed with a left click
         if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
@@ -88,6 +88,7 @@ namespace render
             if (this->hitbox.contains(mousePos))
             {
                 std::cout<<"Card Clicked:"<<this->card->getName()<<std::endl;
+                scene->setSelectedCard(this->card);
             }
         }
     }

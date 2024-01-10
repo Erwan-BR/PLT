@@ -55,7 +55,7 @@ int main(int argc,char* argv[])
         //Creation of the window
         int win_length = 1920;
         int win_heigth = 1080;
-        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Default);
 
         //Creation of testing instances of Player class
         state::Player* player1 = new state::Player("MOI",0);
@@ -409,8 +409,7 @@ void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p
             break;
         case 21:         //PROD INIT
             scene->changeWindow(render::Window::MAIN_WINDOW);
-            game->initProduction();
-        break;
+            break;
         case 22:         //PROD MATERIAL
             scene->changeWindow(render::Window::MAIN_WINDOW);
             p1->addResource(state::ResourceType::MATERIAL,1);        //P1 Give 1 Material to Tour

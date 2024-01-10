@@ -25,6 +25,7 @@ namespace render {
 
 		PlayerRenderer* pRenderer;
 		Button* button;
+		engine::Command* command;
 
 		//Get Players
 		std::vector<state::Player*> players = game->getPlayers();
@@ -57,45 +58,50 @@ namespace render {
 
 		//Generate Buttons for MAIN_WINDOW only if the Player isn't an AI
 		if(this->enableInput){
-			button = new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(180,180,180),NULL);
+			button = new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(180,180,180),(engine::Command*) NULL);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color(85,76,68),NULL);
+			button = new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color(85,76,68),(engine::Command*) NULL);
 			this->btnMain.push_back(button);
-			button = new Button({1650.f,600.f},{100.f,100.f},"SCIENCE",sf::Color::Green,NULL);
+			button = new Button({1650.f,600.f},{100.f,100.f},"SCIENCE",sf::Color::Green,(engine::Command*) NULL);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,600.f},{100.f,100.f},"GOLD",sf::Color::Yellow,NULL);
+			button = new Button({1770.f,600.f},{100.f,100.f},"GOLD",sf::Color::Yellow,(engine::Command*) NULL);
 			this->btnMain.push_back(button);
-			button = new Button({1650.f,720.f},{100.f,100.f},"EXPLORATION",sf::Color::Blue,NULL);
+			button = new Button({1650.f,720.f},{100.f,100.f},"EXPLORATION",sf::Color::Blue,(engine::Command*) NULL);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,720.f},{100.f,100.f},"KRYSTALIUM",sf::Color::Red,NULL);
+			button = new Button({1770.f,720.f},{100.f,100.f},"KRYSTALIUM",sf::Color::Red,(engine::Command*) NULL);
 			this->btnMain.push_back(button);
-			button = new Button({1650.f,840.f},{100.f,100.f},"COLONEL",sf::Color::Red,NULL);
+			button = new Button({1650.f,840.f},{100.f,100.f},"COLONEL",sf::Color::Red,(engine::Command*) NULL);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,840.f},{100.f,100.f},"FINANCIER",sf::Color::Cyan,NULL);
+			button = new Button({1770.f,840.f},{100.f,100.f},"FINANCIER",sf::Color::Cyan,(engine::Command*) NULL);
 			this->btnMain.push_back(button);
 
-			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color::White,NULL);
+			command = new engine::Command(engine::ENDPRODUCTION,0);
+			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color(215,47,215),command);
 			this->btnMain.push_back(button);
-			button = new Button({50.f,960.f},{220.f,100.f},"SAVE GAME",sf::Color::White,NULL);
+			command = new engine::Command(engine::SAVEGAME);
+			button = new Button({50.f,960.f},{220.f,100.f},"SAVE GAME",sf::Color(215,47,215),command);
 			this->btnMain.push_back(button);
 
 			for(int i = 1; i<(int) game->getPlayers().size();i++){
-				button = new Button({300.f,60.f*i},{200.f,50.f},"Switch to:"+game->getPlayers()[i]->getName(),sf::Color(215,47,215),NULL);
+				command = new engine::Command(engine::SAVEGAME); //TODO change ID
+				button = new Button({300.f,60.f*i},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command);
 				this->btnMain.push_back(button);
 			}
 
-			button = new Button({20.f,780.f},{220.f,100.f},"KEEP",sf::Color(215,47,215),NULL);
+			button = new Button({20.f,780.f},{220.f,100.f},"KEEP",sf::Color(215,47,215),(engine::Command*) NULL);
 			this->btnPlan.push_back(button);
-			button = new Button({260.f,780.f},{220.f,100.f},"DISCARD",sf::Color(215,47,215),NULL);
+			button = new Button({260.f,780.f},{220.f,100.f},"DISCARD",sf::Color(215,47,215),(engine::Command*) NULL);
 			this->btnPlan.push_back(button);
-			button = new Button({1680.f,780.f},{220.f,100.f},"END PLAN",sf::Color(215,47,215),NULL);
+			command = new engine::Command(engine::ENDPLANIFICATION,0);
+			button = new Button({1680.f,780.f},{220.f,100.f},"END PLAN",sf::Color(215,47,215),command);
 			this->btnPlan.push_back(button);
 
-			button = new Button({1600.f,940.f},{220.f,100.f},"CONFIRM",sf::Color(215,47,215),NULL);
+			button = new Button({1600.f,940.f},{220.f,100.f},"CONFIRM",sf::Color(215,47,215),(engine::Command*) NULL);
 			this->btnDraft.push_back(button);
 
 			for(int i = 0; i<(int) game->getPlayers().size();i++){
-				button = new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to:"+game->getPlayers()[i]->getName(),sf::Color(215,47,215),NULL);
+				command = new engine::Command(engine::SAVEGAME); //TODO change ID
+				button = new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command);
 				this->btnFull.push_back(button);
 			}
 
@@ -128,6 +134,22 @@ namespace render {
 	/// @param window new window
 	void Scene::changeWindow(Window window){
 		this->current_window = window;
+		switch(this->current_window){
+			case MAIN_WINDOW:
+				for(int i=0;i<8;i++){
+					this->btnMain[i]->changeCommand((engine::Command*) NULL);
+				}
+				break;
+			case DRAFTING_WINDOW:
+				this->btnDraft[0]->changeCommand((engine::Command*) NULL);
+				break;
+			case PLANIFICATION_WINDOW:
+				this->btnPlan[0]->changeCommand((engine::Command*) NULL);
+				this->btnPlan[1]->changeCommand((engine::Command*) NULL);
+				break;
+			default:
+				break;
+		}
 	}
 
 	/// @brief Getter for current_window
@@ -191,19 +213,19 @@ namespace render {
 				for(Button* btn: this->btnMain){
 					btn->handleEvent(event,window);
 				}
-				this->player_renderer[0]->handleEvent(event,window);
+				this->player_renderer[0]->handleEvent(event,window,this);
 				break;
 			case DRAFTING_WINDOW:
 				for(Button* btn: this->btnDraft){
 					btn->handleEvent(event,window);
 				}
-				this->drafting_hand_renderer->handleEvent(event,window);
+				this->drafting_hand_renderer->handleEvent(event,window,this);
 				break;
 			case PLANIFICATION_WINDOW:
 				for(Button* btn: this->btnPlan){
 					btn->handleEvent(event,window);
 				}
-				this->player_renderer[3]->handleEvent(event,window);
+				this->player_renderer[3]->handleEvent(event,window,this);
 				break;
 			case PLAYER_INFO:
 				for(Button* btn: this->btnFull){
@@ -214,6 +236,116 @@ namespace render {
 				break;
 		}
 
+	}
+
+	void Scene::setSelectedCard(state::Card* card){
+		state::Player* p = this->game->getPlayers()[0];
+		int index;
+		switch (this->current_window){{
+			case MAIN_WINDOW:
+				auto cards = p->getToBuildCards();
+				engine::Command* command;
+				bool skip =false;
+				for(int i=0; i < (int) cards.size();i++){
+					if(cards[i] == card){
+						engine::Command* command;
+						command = new engine::Command(engine::ADDRESOURCE,0,i,state::MATERIAL);
+						this->btnMain[0]->changeCommand(command);
+						command = new engine::Command(engine::ADDRESOURCE,0,i,state::ENERGY);
+						this->btnMain[1]->changeCommand(command);
+						command = new engine::Command(engine::ADDRESOURCE,0,i,state::SCIENCE);
+						this->btnMain[2]->changeCommand(command);
+						command = new engine::Command(engine::ADDRESOURCE,0,i,state::GOLD);
+						this->btnMain[3]->changeCommand(command);
+						command = new engine::Command(engine::ADDRESOURCE,0,i,state::EXPLORATION);
+						this->btnMain[4]->changeCommand(command);
+						command = new engine::Command(engine::ADDRESOURCE,0,i,state::KRYSTALLIUM);
+						this->btnMain[5]->changeCommand(command);
+						command = new engine::Command(engine::ADDRESOURCE,0,i,state::COLONEL);
+						this->btnMain[6]->changeCommand(command);
+						command = new engine::Command(engine::ADDRESOURCE,0,i,state::FINANCIER);
+						this->btnMain[7]->changeCommand(command);
+						skip = true;
+					}
+				}
+				if(! skip){
+					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL);
+					this->btnMain[0]->changeCommand(command);
+					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL);
+					this->btnMain[1]->changeCommand(command);
+					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::SCIENCE);
+					this->btnMain[2]->changeCommand(command);
+					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::GOLD);
+					this->btnMain[3]->changeCommand(command);
+					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::EXPLORATION);
+					this->btnMain[4]->changeCommand(command);
+					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::KRYSTALLIUM);
+					this->btnMain[5]->changeCommand(command);
+					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::COLONEL);
+					this->btnMain[6]->changeCommand(command);
+					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::FINANCIER);
+					this->btnMain[7]->changeCommand(command);
+				}
+				
+					index = itCard -p->getToBuildCards().begin();
+					engine::Command* command;
+					command = new engine::Command(engine::ADDRESOURCE,0,index,state::MATERIAL);
+					this->btnMain[0]->changeCommand(command);
+					command = new engine::Command(engine::ADDRESOURCE,0,index,state::ENERGY);
+					this->btnMain[1]->changeCommand(command);
+					command = new engine::Command(engine::ADDRESOURCE,0,index,state::SCIENCE);
+					this->btnMain[2]->changeCommand(command);
+					command = new engine::Command(engine::ADDRESOURCE,0,index,state::GOLD);
+					this->btnMain[3]->changeCommand(command);
+					command = new engine::Command(engine::ADDRESOURCE,0,index,state::EXPLORATION);
+					this->btnMain[4]->changeCommand(command);
+					command = new engine::Command(engine::ADDRESOURCE,0,index,state::KRYSTALLIUM);
+					this->btnMain[5]->changeCommand(command);
+					command = new engine::Command(engine::ADDRESOURCE,0,index,state::COLONEL);
+					this->btnMain[6]->changeCommand(command);
+					command = new engine::Command(engine::ADDRESOURCE,0,index,state::FINANCIER);
+					this->btnMain[7]->changeCommand(command);
+				}}
+				break;
+			case DRAFTING_WINDOW:{
+				auto cards = p->getDraftingCards();
+				for(int i=0; i < (int) cards.size();i++){
+					if(cards[i] == card){
+						engine::Command* command;
+						command = new engine::Command(engine::CHOOSEDRAFTCARD,0,i);
+						this->btnDraft[0]->changeCommand(command);
+						this->btnDraft[0]->setEnabled(true);
+					}
+				}
+				
+				break;}
+			case PLANIFICATION_WINDOW:{
+				auto itCard = std::find(p->getToBuildCards().begin(),p->getToBuildCards().end(),card);
+				if (itCard == p->getToBuildCards().end()){
+					auto itCard2 = std::find(p->getDraftCards().begin(),p->getDraftCards().end(),card);
+					if (itCard2 == p->getDraftCards().end()){
+						index = -1;
+					}
+					else{
+						index = itCard2 -p->getDraftCards().begin();
+						engine::Command* command;
+						command = new engine::Command(engine::KEEPCARD,0,index);
+						this->btnPlan[1]->changeCommand(command);
+						command = new engine::Command(engine::DISCARDCARD,0,index);
+						this->btnPlan[1]->changeCommand(command);
+					}
+				}
+				else{
+					index = itCard -p->getToBuildCards().begin();
+					engine::Command* command;
+					this->btnPlan[0]->setEnabled(false);
+					command = new engine::Command(engine::DISCARDCARD,0,index);
+					this->btnPlan[1]->changeCommand(command);
+				}}
+				break;
+			default:
+				break;
+		}
 	}
 
 	void Scene::draw(sf::RenderWindow& window){
