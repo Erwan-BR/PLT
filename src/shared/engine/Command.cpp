@@ -7,7 +7,6 @@ namespace engine
     Command::Command(CommandID id) :
         id(id)
     {
-
     }
 
     /// @brief Constructor of a command.
@@ -21,7 +20,6 @@ namespace engine
         cardIndex(cardIndex),
         resource(resource)        
     {
-
     }
 
     /// @brief Constructor of a command, without the need of resource.
@@ -33,7 +31,6 @@ namespace engine
         playerIndex(playerIndex),
         cardIndex(cardIndex)
     {
-
     }
 
     /// @brief Constructor of a command, without the need of a card.
@@ -45,15 +42,22 @@ namespace engine
         playerIndex(playerIndex),
         resource(resource)
     {
-
     }
 
     /// @brief Constructor of a command.
     /// @param id ID of the command. List is on CommandID.h file.
-    /// @param t playerIndex Player that launched the command.
+    /// @param playerIndex Player that launched the command.
     Command::Command (CommandID id, int playerIndex) :
         id(id),
         playerIndex(playerIndex)
+    {
+    }
+
+    Command::Command (CommandID id, int playerIndex, int cardIndex, bool isADraftedCard) :
+        id(id),
+        playerIndex(playerIndex),
+        cardIndex(cardIndex),
+        isADraftedCard(isADraftedCard)
     {
 
     }
@@ -61,7 +65,6 @@ namespace engine
     /// @brief Destructor of the command. Should destruct anything because pointers are shared.
     Command::~Command ()
     {
-
     }
 
     void Command::launchCommand(state::Game* game) const 
@@ -69,10 +72,17 @@ namespace engine
         return ;
     }
 
-    /*Json::Value Command::toJSON() const 
+    Json::Value Command::toJSON() const 
     {
-        return ;
-    }*/
+        Json::Value jsonContent ;
+
+        jsonContent["playerIndex"] = this->playerIndex;
+        jsonContent["cardIndex"] = this->cardIndex;
+        jsonContent["resource"] = static_cast<int> (this->resource);
+        jsonContent["isADraftedCard"] = this->isADraftedCard;
+
+        return jsonContent;
+    }
 
     /************************************* Setters & Getters *************************************/
 

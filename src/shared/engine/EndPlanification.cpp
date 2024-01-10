@@ -2,6 +2,13 @@
 
 namespace engine
 {
+    /// @brief Constructor of the EndPlanification command from a json. Used by the engine when render send a JSON version of a command.
+    /// @param jsonCommand Json content of the command.
+    EndPlanification::EndPlanification (Json::Value jsonCommand) :
+        Command(CommandID::ENDPLANIFICATION, jsonCommand["playerIndex"].asInt())
+    {
+    }
+
     /// @brief Constructor of the command that allows to end the planification phase.
     /// @param playerIndex Player that did the command.
     /// @param cardIndex Card that is kept during the drafting phase.

@@ -2,6 +2,13 @@
 
 namespace engine
 {
+    /// @brief Constructor of the KeepCard command from a json. Used by the engine when render send a JSON version of a command.
+    /// @param jsonCommand Json content of the command.
+    KeepCard::KeepCard (Json::Value jsonCommand) :
+        Command(CommandID::KEEPCARD, jsonCommand["playerIndex"].asInt(), jsonCommand["cardIndex"].asInt())
+    {
+    }
+
     /// @brief Constructor of the command that allows to keep a card.
     /// @param playerIndex Player that did the command.
     /// @param cardIndex Card that is kept during the pkanification phase.

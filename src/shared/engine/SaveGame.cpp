@@ -2,6 +2,13 @@
 
 namespace engine
 {
+    /// @brief Constructor of the SaveGame command from a json. Used by the engine when render send a JSON version of a command.
+    /// @param jsonCommand Json content of the command.
+    SaveGame::SaveGame (Json::Value jsonCommand) :
+        Command(CommandID::SAVEGAME)
+    {
+    }
+
     /// @brief Constructor of the command that allows to save a game.
     SaveGame::SaveGame () :
         Command(CommandID::SAVEGAME)
