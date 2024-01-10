@@ -12,13 +12,17 @@
 #include "engine/SaveGame.h"
 
 #include <unistd.h>
+#include <thread>
+#include <iostream>
 
 namespace engine
 {
     /// @brief Full constructor of the engine.
     /// @param currentGame Game that is played.
-    Engine::Engine(state::Game* currentGame) :
-        currentGame(currentGame)
+    /// @param locker Mutext that protects commandToExecute to avoid 2 resource using it simultaneously.
+    Engine::Engine(state::Game* currentGame, std::mutex & locker) :
+        currentGame(currentGame),
+        locker(locker)
     {
 
     }
@@ -70,7 +74,10 @@ namespace engine
         // Now, we are waiting for players to play. 1 second to avoid making too much computation for nothing.
         while(! this->areAllRealPlayersPending())
         {
-            sleep(1);
+            locker.lock();
+            this->excuteAllCommands();
+            locker.unlock();
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
         }
         // Once finished, we can call the next method of game.
         (this->currentGame->*(gameMethodVector[currentPhase]))();
