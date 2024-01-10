@@ -5,7 +5,29 @@
  * @copyright CNRS
  */
 
-#include "ServicesManager.hpp"
+#include <json/json.h>
+#include <iostream>
+
+#include "ServiceException.h"
+#include <stdexcept>
+#include <string>
+
+using std::string;
+#include "AbstractService.h"
+
+#include <memory>
+#include <iostream>
+#include <vector>
+
+using std::vector;
+using std::unique_ptr;
+
+template<class T,typename ... Args>
+std::unique_ptr<T> make_unique(Args ... args) {
+    return std::unique_ptr<T>(new T(args ...));
+}
+
+#include "ServicesManager.h"
 #include <string.h>
 #include <unistd.h>
 

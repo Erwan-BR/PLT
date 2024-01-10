@@ -1,5 +1,34 @@
-#include "server/ServicesManager.hpp"
-#include "server/GameService.hpp"
+#include <json/json.h>
+#include <iostream>
+
+#include "./server/ServiceException.h"
+#include <stdexcept>
+#include <string>
+
+using std::string;
+#include "./server/AbstractService.h"
+
+#include <memory>
+#include <iostream>
+#include <vector>
+
+using std::vector;
+using std::unique_ptr;
+
+template<class T,typename ... Args>
+std::unique_ptr<T> make_unique(Args ... args) {
+    return std::unique_ptr<T>(new T(args ...));
+}
+
+#include "./server/ServicesManager.h"
+#include <json/json.h>
+#include <iostream>
+
+#include <stdexcept>
+#include <string>
+
+using std::string;
+#include "./server/GameService.h"
 
 #include <iostream>
 #include <sstream>

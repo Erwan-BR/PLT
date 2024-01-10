@@ -1,4 +1,13 @@
-#include "GameService.hpp"
+#include <json/json.h>
+#include <iostream>
+
+#include "ServiceException.h"
+#include <stdexcept>
+#include <string>
+
+using std::string;
+#include "AbstractService.h"
+#include "GameService.h"
 #include <string.h>
 
 namespace server

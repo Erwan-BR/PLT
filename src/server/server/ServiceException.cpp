@@ -5,7 +5,12 @@
  * @copyright CNRS
  */
 
-#include "ServiceException.hpp"
+#include <stdexcept>
+#include <string>
+
+using std::string;
+
+#include "ServiceException.h"
 
 namespace server
 {

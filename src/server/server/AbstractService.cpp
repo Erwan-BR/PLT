@@ -5,7 +5,15 @@
  * @copyright CNRS
  */
 
-#include "AbstractService.hpp"
+#include <json/json.h>
+#include <iostream>
+
+#include "ServiceException.h"
+#include <stdexcept>
+#include <string>
+
+using std::string;
+#include "AbstractService.h"
 
 namespace server
 {
