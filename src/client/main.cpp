@@ -261,6 +261,7 @@ int main(int argc,char* argv[])
 
         // Creation of the game, the engine and the render.
         state::Game* game = new state::Game(players, true);
+        game->initGame();
         std::mutex locker;
         engine::Engine* engineOfGame = new engine::Engine(game, locker);
         render::Scene* scene = new render::Scene(game, locker, engineOfGame);
@@ -272,6 +273,10 @@ int main(int argc,char* argv[])
 
         //Creation of the instance of sf::Event class that will received user's inputs.
         sf::Event event;
+
+        std::thread initThread(&engine::Engine::gameRunning, engineOfGame);
+
+        initThread.join();
 
         //Main Loop active while the window is still open
         while (window.isOpen())
@@ -317,10 +322,6 @@ int main(int argc,char* argv[])
             //Display the new content of the window
             window.display();
         }
-
-        std::thread initThread(&engine::Engine::gameRunning, engineOfGame);
-
-        initThread.join();
 
         delete scene;
 

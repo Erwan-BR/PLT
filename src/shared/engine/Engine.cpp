@@ -41,7 +41,7 @@ namespace engine
     /// @brief Run the complete game. Logic of the game is done in Game, and waiting for AI / Players to play is done here.
     void Engine::gameRunning()
     {
-        this->currentGame->initGame();
+        //this->currentGame->initGame();
         while(state::GamePhase::FINISHED != this->currentGame->getPhase())
         {
             this->phaseRunning();
