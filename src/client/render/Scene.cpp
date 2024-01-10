@@ -57,62 +57,63 @@ namespace render {
 
 		//Generate Buttons for MAIN_WINDOW only if the Player isn't an AI
 		if(this->enableInput){
-			button = new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(100,100,100),NULL);
-			button->setVisible(true);
+			button = new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(180,180,180),NULL);
 			this->btnMain.push_back(button);
-			button = new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color::Black,NULL);
-			button->setVisible(true);
+			button = new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color(85,76,68),NULL);
 			this->btnMain.push_back(button);
 			button = new Button({1650.f,600.f},{100.f,100.f},"SCIENCE",sf::Color::Green,NULL);
-			button->setVisible(true);
 			this->btnMain.push_back(button);
 			button = new Button({1770.f,600.f},{100.f,100.f},"GOLD",sf::Color::Yellow,NULL);
-			button->setVisible(true);
 			this->btnMain.push_back(button);
 			button = new Button({1650.f,720.f},{100.f,100.f},"EXPLORATION",sf::Color::Blue,NULL);
-			button->setVisible(true);
 			this->btnMain.push_back(button);
 			button = new Button({1770.f,720.f},{100.f,100.f},"KRYSTALIUM",sf::Color::Red,NULL);
-			button->setVisible(true);
 			this->btnMain.push_back(button);
 			button = new Button({1650.f,840.f},{100.f,100.f},"COLONEL",sf::Color::Red,NULL);
-			button->setVisible(true);
 			this->btnMain.push_back(button);
 			button = new Button({1770.f,840.f},{100.f,100.f},"FINANCIER",sf::Color::Cyan,NULL);
-			button->setVisible(true);
 			this->btnMain.push_back(button);
 
 			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color::White,NULL);
-			button->setVisible(true);
 			this->btnMain.push_back(button);
 			button = new Button({50.f,960.f},{220.f,100.f},"SAVE GAME",sf::Color::White,NULL);
-			button->setVisible(true);
 			this->btnMain.push_back(button);
 
 			for(int i = 1; i<(int) game->getPlayers().size();i++){
 				button = new Button({300.f,60.f*i},{200.f,50.f},"Switch to:"+game->getPlayers()[i]->getName(),sf::Color(215,47,215),NULL);
-				button->setVisible(true);
 				this->btnMain.push_back(button);
 			}
 
 			button = new Button({20.f,780.f},{220.f,100.f},"KEEP",sf::Color(215,47,215),NULL);
-			button->setVisible(true);
 			this->btnPlan.push_back(button);
 			button = new Button({260.f,780.f},{220.f,100.f},"DISCARD",sf::Color(215,47,215),NULL);
-			button->setVisible(true);
 			this->btnPlan.push_back(button);
-			button = new Button({1680.f,780.f},{220.f,100.f},"DISCARD ALL",sf::Color(215,47,215),NULL);
-			button->setVisible(true);
+			button = new Button({1680.f,780.f},{220.f,100.f},"END PLAN",sf::Color(215,47,215),NULL);
 			this->btnPlan.push_back(button);
 
 			button = new Button({1600.f,940.f},{220.f,100.f},"CONFIRM",sf::Color(215,47,215),NULL);
-			button->setVisible(true);
 			this->btnDraft.push_back(button);
 
 			for(int i = 0; i<(int) game->getPlayers().size();i++){
 				button = new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to:"+game->getPlayers()[i]->getName(),sf::Color(215,47,215),NULL);
-				button->setVisible(true);
 				this->btnFull.push_back(button);
+			}
+
+			for(Button* btn: this->btnMain){
+				btn->setVisible(true);
+				btn->setEnabled(true);
+			}
+			for(Button* btn: this->btnDraft){
+				btn->setVisible(true);
+				btn->setEnabled(true);
+			}
+			for(Button* btn: this->btnPlan){
+				btn->setVisible(true);
+				btn->setEnabled(true);
+			}
+			for(Button* btn: this->btnFull){
+				btn->setVisible(true);
+				btn->setEnabled(true);
 			}
 		}
 
@@ -184,8 +185,38 @@ namespace render {
 		
 	}
 
+	void Scene::buttonHandle(sf::Event event,sf::RenderWindow& window){
+		switch (this->current_window){
+			case MAIN_WINDOW:
+				for(Button* btn: this->btnMain){
+					btn->handleEvent(event,window);
+				}
+				this->player_renderer[0]->handleEvent(event,window);
+				break;
+			case DRAFTING_WINDOW:
+				for(Button* btn: this->btnDraft){
+					btn->handleEvent(event,window);
+				}
+				this->drafting_hand_renderer->handleEvent(event,window);
+				break;
+			case PLANIFICATION_WINDOW:
+				for(Button* btn: this->btnPlan){
+					btn->handleEvent(event,window);
+				}
+				this->player_renderer[3]->handleEvent(event,window);
+				break;
+			case PLAYER_INFO:
+				for(Button* btn: this->btnFull){
+					btn->handleEvent(event,window);
+				}
+				break;
+			default:
+				break;
+		}
+
+	}
+
 	void Scene::draw(sf::RenderWindow& window){
-		
 		switch (this->current_window){
 			case MAIN_WINDOW:
 				window.draw(this->background);		//Background

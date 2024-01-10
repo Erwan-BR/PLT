@@ -1,5 +1,6 @@
 #include "PlayerRenderer.h"
 #include <string>
+#include <iostream>
 
 #define CARDS_DISPLAY_MAIN_WINDOW 14
 #define CARDS_DISPLAY_DRAFTING 7
@@ -423,6 +424,29 @@ namespace render {
             cRenderer->draw(window);
         }
 
+    }
+
+    void PlayerRenderer::handleEvent (sf::Event event, sf::RenderWindow& window){
+        switch (this->affected_window){
+            case MAIN_WINDOW:
+            if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && this->sprites.size()>=1){
+                sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                // Check if the click is inside the Empire Card.
+                if (this->sprites[1]->getGlobalBounds().contains(mousePos)){
+                    std::cout<<"Empire Clicked"<<std::endl;
+                }
+            }
+            case PLANIFICATION_WINDOW:
+				for(DevelopmentCardRenderer* c: this->devCardRenderers){
+					c->handleEvent(event,window);
+				}
+                break;
+			case PLAYER_INFO:
+            case DRAFTING_WINDOW:
+			default:
+				break;
+        }
+        return ;
     }
 
     sf::Vector2f PlayerRenderer::getPos(){

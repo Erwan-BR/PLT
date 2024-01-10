@@ -1,4 +1,5 @@
 #include "DevelopmentCardRenderer.h"
+#include <iostream>
 
 namespace render
 {
@@ -79,14 +80,14 @@ namespace render
     void DevelopmentCardRenderer::handleEvent (sf::Event event, sf::RenderWindow& window)
     {
         // Check if the button is enabled, and pressed with a left click
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
         {
             sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
             
             // Check if the click is inside the button.
             if (this->hitbox.contains(mousePos))
             {
-                //TODO
+                std::cout<<"Card Clicked:"<<this->card->getName()<<std::endl;
             }
         }
     }

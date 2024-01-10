@@ -1,4 +1,5 @@
 #include "Button.h"
+#include <iostream>
 
 namespace render
 {
@@ -20,8 +21,11 @@ namespace render
         this->text.setFont(font);
         this->text.setString(textString);
         this->text.setCharacterSize(20);
-        sf::Color text_color = sf::Color(255-color.r,255-color.g,255-color.b);
-        this->text.setFillColor(text_color);
+        this->text.setFillColor(sf::Color::Black);
+
+        while(this->text.getLocalBounds().width > this->rectangle.getLocalBounds().width && this->text.getCharacterSize()>0){
+            this->text.setCharacterSize(this->text.getCharacterSize()-1);
+        }
         
         // Center the text within the button
         sf::FloatRect textBounds = this->text.getLocalBounds();
@@ -52,14 +56,15 @@ namespace render
     void Button::handleEvent (sf::Event event, sf::RenderWindow& window)
     {
         // Check if the button is enabled, and pressed with a left click
-        if (this->isEnable && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (this->isEnable && event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
         {
             sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
             
             // Check if the click is inside the button.
             if (rectangle.getGlobalBounds().contains(mousePos))
             {
-                this->command->launchCommand();
+                std::cout<<"Button Clicked:"<<this->textString<<std::endl;
+                //this->command->launchCommand();
             }
         }
     }
