@@ -1,0 +1,46 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		}
+	],
+	"discardGain" : 3,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Ile d avalon",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 3
+		}
+	],
+	"quantityResourceMissing" : 5,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/ile_d_avalon.png",
+	"type" : 25,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 7
+	}
+}

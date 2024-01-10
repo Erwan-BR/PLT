@@ -125,7 +125,7 @@ namespace state {
     void Game::createCards()
     {
         CreateAllCards* developmentCardCreation = new CreateAllCards;
-        this->deck = developmentCardCreation->createAllDevelopmentCards();
+        this->deck = developmentCardCreation->createAllDevelopmentCards(this->isTestingGame);
     }
         
     ///@brief Create and Initialize the Empire for the game
