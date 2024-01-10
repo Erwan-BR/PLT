@@ -3,10 +3,10 @@
 namespace engine
 {
     /// @brief Constructor of the command that allows to keep a card.
-    /// @param player Player that did the command.
+    /// @param playerIndex Player that did the command.
     /// @param cardIndex Card that is kept during the pkanification phase.
-    KeepCard::KeepCard (state::Player* player, int cardIndex) :
-        Command(CommandID::KEEPCARD, player, cardIndex)
+    KeepCard::KeepCard (int playerIndex, int cardIndex) :
+        Command(CommandID::KEEPCARD, playerIndex, cardIndex)
     {
 
     }
@@ -18,8 +18,8 @@ namespace engine
     }
 
     /// @brief Launch the command to keep a card.
-    void KeepCard::launchCommand () const
+    void KeepCard::launchCommand (state::Game* game) const
     {
-        this->player->keepCard(this->cardIndex);
+        game->getPlayers()[this->playerIndex]->keepCard(this->cardIndex);
     }
 }

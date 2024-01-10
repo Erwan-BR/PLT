@@ -3,10 +3,10 @@
 namespace engine
 {
     /// @brief Constructor of the command that convert a krystallium into another resource.
-    /// @param player Player that did the command.
+    /// @param playerIndex Player that did the command.
     /// @param resource Resource that the player wants to have.
-    ConvertResource::ConvertResource (state::Player* player, state::ResourceType resource) :
-        Command(CommandID::CONVERTRESOURCE, player, resource)
+    ConvertResource::ConvertResource (int playerIndex, state::ResourceType resource) :
+        Command(CommandID::CONVERTRESOURCE, playerIndex, resource)
     {
 
     }
@@ -18,8 +18,8 @@ namespace engine
     }
 
     /// @brief Launching the command to convert a krystallium.
-    void ConvertResource::launchCommand () const
+    void ConvertResource::launchCommand (state::Game* game) const
     {
-        this->player->convertKrystallium(this->resource);
+        game->getPlayers()[this->playerIndex]->convertKrystallium(this->resource);
     }
 }

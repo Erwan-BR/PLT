@@ -3,11 +3,11 @@
 namespace engine
 {
     /// @brief Constructor of the command that allows to discard a card.
-    /// @param player Player that did the command.
+    /// @param playerIndex Player that did the command.
     /// @param cardIndex Card that is kept during the drafting phase.
     /// @param isADraftedCard Indicate the origin of the card of the player.
-    DiscardCard::DiscardCard (state::Player* player, int cardIndex, bool isADraftedCard) :
-        Command(CommandID::DISCARDCARD, player, cardIndex),
+    DiscardCard::DiscardCard (int playerIndex, int cardIndex, bool isADraftedCard) :
+        Command(CommandID::DISCARDCARD, playerIndex, cardIndex),
         isADraftedCard(isADraftedCard)
     {
 
@@ -20,8 +20,8 @@ namespace engine
     }
 
     /// @brief Launch the command to discard a card.
-    void DiscardCard::launchCommand () const
+    void DiscardCard::launchCommand (state::Game* game) const
     {
-        this->player->discardCard(this->cardIndex, this->isADraftedCard);
+        game->getPlayers()[this->playerIndex]->discardCard(this->cardIndex, this->isADraftedCard);
     }
 }

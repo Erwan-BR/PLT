@@ -5,20 +5,19 @@ namespace engine
     /// @brief Create a command that doesn't require a player.
     /// @param id ID of the command.
     Command::Command(CommandID id) :
-        id(id),
-        player(NULL)
+        id(id)
     {
 
     }
 
     /// @brief Constructor of a command.
     /// @param id ID of the command. List is on CommandID.h file.
-    /// @param player Player that launched the command.
+    /// @param playerIndex Player that launched the command.
     /// @param cardIndex Index of the card where the command might be used.
     /// @param resource Type of the resource that might be used for the command.
-    Command::Command (CommandID id, state::Player* player, int cardIndex, state::ResourceType resource) :
+    Command::Command (CommandID id, int playerIndex, int cardIndex, state::ResourceType resource) :
         id(id),
-        player(player),
+        playerIndex(playerIndex),
         cardIndex(cardIndex),
         resource(resource)        
     {
@@ -27,11 +26,11 @@ namespace engine
 
     /// @brief Constructor of a command, without the need of resource.
     /// @param id ID of the command.
-    /// @param player Player that launched the command.
+    /// @param playerIndex Player that launched the command.
     /// @param cardIndex Index of the card where the command is used.
-    Command::Command (CommandID id, state::Player* player, int cardIndex) :
+    Command::Command (CommandID id, int playerIndex, int cardIndex) :
         id(id),
-        player(player),
+        playerIndex(playerIndex),
         cardIndex(cardIndex)
     {
 
@@ -39,11 +38,11 @@ namespace engine
 
     /// @brief Constructor of a command, without the need of a card.
     /// @param id ID of the command.
-    /// @param player Player that launched the command.
+    /// @param playerIndex Player that launched the command.
     /// @param cardIndex Resource tha tis needed for the command.
-    Command::Command (CommandID id, state::Player* player, state::ResourceType resource) :
+    Command::Command (CommandID id, int playerIndex, state::ResourceType resource) :
         id(id),
-        player(player),
+        playerIndex(playerIndex),
         resource(resource)
     {
 
@@ -51,10 +50,10 @@ namespace engine
 
     /// @brief Constructor of a command.
     /// @param id ID of the command. List is on CommandID.h file.
-    /// @param player Player that launched the command.
-    Command::Command (CommandID id, state::Player* player) :
+    /// @param t playerIndex Player that launched the command.
+    Command::Command (CommandID id, int playerIndex) :
         id(id),
-        player(player)
+        playerIndex(playerIndex)
     {
 
     }
@@ -65,6 +64,16 @@ namespace engine
 
     }
 
+    void Command::launchCommand(state::Game* game) const 
+    {
+        return ;
+    }
+
+    /*Json::Value Command::toJSON() const 
+    {
+        return ;
+    }*/
+
     /************************************* Setters & Getters *************************************/
 
     /// @brief Allows to get the command ID, that is needed to know which action will be done.
@@ -73,6 +82,4 @@ namespace engine
     {
         return this->id;
     }
-
-    void Command::launchCommand() const {}
 }

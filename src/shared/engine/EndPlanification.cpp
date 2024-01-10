@@ -3,10 +3,10 @@
 namespace engine
 {
     /// @brief Constructor of the command that allows to end the planification phase.
-    /// @param player Player that did the command.
+    /// @param playerIndex Player that did the command.
     /// @param cardIndex Card that is kept during the drafting phase.
-    EndPlanification::EndPlanification (state::Player* player) :
-        Command(CommandID::ENDPLANIFICATION, player)
+    EndPlanification::EndPlanification (int playerIndex) :
+        Command(CommandID::ENDPLANIFICATION, playerIndex)
     {
 
     }
@@ -18,8 +18,8 @@ namespace engine
     }
 
     /// @brief Launch the command to end the planification phase for this player.
-    void EndPlanification::launchCommand () const
+    void EndPlanification::launchCommand (state::Game* game) const
     {
-        this->player->endPlanification();
+        game->getPlayers()[this->playerIndex]->endPlanification();
     }
 }

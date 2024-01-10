@@ -3,10 +3,10 @@
 namespace engine
 {
     /// @brief Constructor of the command that allows to send a resource to the empire.
-    /// @param player Player that did the command.
+    /// @param playerIndex Player that did the command.
     /// @param resource Resource that is send to the empire.
-    SendResourceToEmpire::SendResourceToEmpire (state::Player* player, state::ResourceType resource) :
-        Command(CommandID::SENDRESOURCETOEMPIRE, player, resource)
+    SendResourceToEmpire::SendResourceToEmpire (int playerIndex, state::ResourceType resource) :
+        Command(CommandID::SENDRESOURCETOEMPIRE, playerIndex, resource)
     {
 
     }
@@ -18,8 +18,8 @@ namespace engine
     }
 
     /// @brief Launch the command to send a resource to the empire of a player.
-    void SendResourceToEmpire::launchCommand () const
+    void SendResourceToEmpire::launchCommand (state::Game* game) const
     {
-        this->player->sendResourceToEmpire(this->resource);
+        game->getPlayers()[this->playerIndex]->sendResourceToEmpire(this->resource);
     }
 }

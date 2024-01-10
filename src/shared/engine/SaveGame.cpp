@@ -16,7 +16,7 @@ namespace engine
     }
 
     /// @brief Launch the command to save a game.
-    void SaveGame::launchCommand () const
+    void SaveGame::launchCommand (state::Game* game) const
     {
         // To complete.
         return ;
