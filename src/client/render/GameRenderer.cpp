@@ -5,7 +5,7 @@ namespace render
     /// @brief  Full constructor of GameRenderer
     /// @param game Game to render
     /// @param transform Transformation to do to display it
-    GameRenderer::GameRenderer (state::Game* game, sf::Transform transform)
+    GameRenderer::GameRenderer (state::Game* game, sf::Vector2f position)
     {
         //Store the Game Attribute
         this->game = game;
@@ -19,49 +19,55 @@ namespace render
 		this->boardMaterialTexture->loadFromFile("./resources/img/board_material.png");
 		this->boardMaterialSprite = new sf::Sprite();
 		this->boardMaterialSprite->setTexture(*(this->boardMaterialTexture));
-        this->boardMaterialTransform = sf::Transform(transform).translate(400.0f,500.0f).scale(0.2f,0.2f);
+        this->boardMaterialSprite->setPosition(position+sf::Vector2f({400.f,500.f}));
+        this->boardMaterialSprite->setScale({0.2f,0.2f});
 
         //Generate the Board Part for ENERGY
         this->boardEnergyTexture = new sf::Texture();
 		this->boardEnergyTexture->loadFromFile("./resources/img/board_energy.png");
 		this->boardEnergySprite = new sf::Sprite();
 		this->boardEnergySprite->setTexture(*(this->boardEnergyTexture));
-        this->boardEnergyTransform = sf::Transform(transform).translate(620.0f,500.0f).scale(0.2f,0.2f);
+        this->boardEnergySprite->setPosition(position+sf::Vector2f({620.f,500.f}));
+        this->boardEnergySprite->setScale({0.2f,0.2f});
         
         //Generate the Board Part for GOLD
         this->boardGoldTexture = new sf::Texture();
 		this->boardGoldTexture->loadFromFile("./resources/img/board_gold.png");
 		this->boardGoldSprite = new sf::Sprite();
 		this->boardGoldSprite->setTexture(*(this->boardGoldTexture));
-        this->boardGoldTransform = sf::Transform(transform).translate(1060.0f,500.0f).scale(0.2f,0.2f);
+        this->boardGoldSprite->setPosition(position+sf::Vector2f({1060.f,500.f}));
+        this->boardGoldSprite->setScale({0.2f,0.2f});
 
         //Generate the Board Part for Science
         this->boardScienceTexture = new sf::Texture();
 		this->boardScienceTexture->loadFromFile("./resources/img/board_science.png");
 		this->boardScienceSprite = new sf::Sprite();
 		this->boardScienceSprite->setTexture(*(this->boardScienceTexture));
-        this->boardScienceTransform = sf::Transform(transform).translate(840.0f,500.0f).scale(0.2f,0.2f);
+        this->boardScienceSprite->setPosition(position+sf::Vector2f({840.f,500.f}));
+        this->boardScienceSprite->setScale({0.2f,0.2f});
 
         //Generate the Board Part for EXPLORATION
         this->boardExplorationTexture = new sf::Texture();
 		this->boardExplorationTexture->loadFromFile("./resources/img/board_exploration.png");
 		this->boardExplorationSprite = new sf::Sprite();
 		this->boardExplorationSprite->setTexture(*(this->boardExplorationTexture));
-        this->boardExplorationTransform = sf::Transform(transform).translate(1280.0f,500.0f).scale(0.2f,0.2f);
+        this->boardExplorationSprite->setPosition(position+sf::Vector2f({1280.f,500.f}));
+        this->boardExplorationSprite->setScale({0.2f,0.2f});
 
         //Generate the Turn Token
         this->boardTurnTexture = new sf::Texture();
 		this->boardTurnTexture->loadFromFile("./resources/img/turn_1.png");
 		this->boardTurnSprite = new sf::Sprite();
 		this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
-        this->boardTurnTransform = sf::Transform(transform).translate(900.0f,400.0f).scale(0.2f,0.2f);
+        this->boardTurnSprite->setPosition(position+sf::Vector2f({900.f,400.f}));
+        this->boardTurnSprite->setScale({0.2f,0.2f});
 
         //Generate the text for Phase
         this->phaseIndicator = new sf::Text();
         this->phaseIndicator->setFont(font);
         this->phaseIndicator->setCharacterSize(30);
         this->phaseIndicator->setFillColor(sf::Color::White);
-        this->phaseIndicatorTransform = sf::Transform(transform).translate(1000.0f,400.0f);
+        this->phaseIndicator->setPosition(position+sf::Vector2f({1000.f,400.f}));
     }
 
     /// @brief Destructor of the game renderer.
@@ -137,12 +143,12 @@ namespace render
     }
 
     void GameRenderer::draw(sf::RenderWindow& window){
-        window.draw(*this->boardMaterialSprite,this->boardMaterialTransform);
-        window.draw(*this->boardEnergySprite,this->boardEnergyTransform);
-        window.draw(*this->boardScienceSprite,this->boardScienceTransform);
-        window.draw(*this->boardGoldSprite,this->boardGoldTransform);
-        window.draw(*this->boardExplorationSprite,this->boardExplorationTransform);
-        window.draw(*this->boardTurnSprite,this->boardTurnTransform);
-        window.draw(*this->phaseIndicator,this->phaseIndicatorTransform);
+        window.draw(*this->boardMaterialSprite);
+        window.draw(*this->boardEnergySprite);
+        window.draw(*this->boardScienceSprite);
+        window.draw(*this->boardGoldSprite);
+        window.draw(*this->boardExplorationSprite);
+        window.draw(*this->boardTurnSprite);
+        window.draw(*this->phaseIndicator);
     }
 }

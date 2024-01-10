@@ -57,11 +57,6 @@ int main(int argc,char* argv[])
         int win_heigth = 1080;
         sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
 
-        //Creation of Transform (Scale adjusting to the window size)
-        float win_length_scale = (win_length*1.0f)/(1920.0f);
-        float win_heigth_scale = (win_heigth*1.0f)/(1080.0f);
-        sf::Transform tr_scale = sf::Transform().scale(win_length_scale, win_heigth_scale);
-
         //Creation of testing instances of Player class
         state::Player* player1 = new state::Player("MOI",0);
         state::Player* player2 = new state::Player("TOI",1);
@@ -77,7 +72,7 @@ int main(int argc,char* argv[])
         game.initGame();
 
         //Creation of the instance of the Scene class
-        render::Scene scene = render::Scene(&game,tr_scale);
+        render::Scene scene = render::Scene(&game);
 
         //Observable
         scene.setupObserver(&game);
@@ -123,10 +118,10 @@ int main(int argc,char* argv[])
                         scene.changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
                     }
                     if (event.key.code == sf::Keyboard::Q and scene.getWindow() == render::Window::PLAYER_INFO){
-                        scene.changePlayerInfoPlayer(0);
+                        scene.changePlayerInfoPlayer(0,render::PLAYER_INFO);
                     }
                     if (event.key.code == sf::Keyboard::S and scene.getWindow() == render::Window::PLAYER_INFO){
-                        scene.changePlayerInfoPlayer(1);
+                        scene.changePlayerInfoPlayer(1,render::PLAYER_INFO);
                     }
                     if (event.key.code == sf::Keyboard::Space){
                         next_step(etape,&game,player1,player2,&scene);    //Go to the next step
@@ -370,7 +365,7 @@ void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p
             
             break;
         case 14:         //PLANIFICATION p2 1ere carte
-            scene->changePlayerInfoPlayer(1);
+            scene->changePlayerInfoPlayer(1,render::PLAYER_INFO);
             scene->changeWindow(render::Window::PLAYER_INFO);
             p2->keepCard(1);    //P2 Keep Ile d'Avalon
             

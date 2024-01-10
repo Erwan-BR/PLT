@@ -4,7 +4,7 @@
 #define CARDS_DISPLAY_DRAFTING 7
 
 namespace render {
-    DraftingHandRenderer::DraftingHandRenderer (state::Player* player, sf::Transform transform){
+    DraftingHandRenderer::DraftingHandRenderer (state::Player* player, sf::Vector2f position){
 		//Creation of the Font for the Texts
 		sf::Font f;
 		f.loadFromFile("./resources/font/arial.ttf");
@@ -18,10 +18,8 @@ namespace render {
 
         //Initialize the vectors
 		this->sprites = {};
-		this->sprite_transforms = {};
 		this->devCardRenderers = {};
 		this->texts = {};
-		this->text_transforms = {};
 
 		int i;
 		sf::Texture* texture;
@@ -35,8 +33,8 @@ namespace render {
         this->textures.push_back(texture);					//Texture
         sprite= new sf::Sprite();
         sprite->setTexture(*(this->textures[0]));
+        sprite->setPosition(position);
         this->sprites.push_back(sprite);					//Sprite
-        this->sprite_transforms.push_back(transform);				//Transform
 
         //Enter Player Profile Picture (position 1 in sprites)
         texture = new sf::Texture();
@@ -44,13 +42,13 @@ namespace render {
         this->textures.push_back(texture);					//Texture
         sprite= new sf::Sprite();
         sprite->setTexture(*(this->textures[1]));
+        sprite->setPosition(position+sf::Vector2f({10.f,50.f}));
         this->sprites.push_back(sprite);					//Sprite
-        this->sprite_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,50.f));				//Transform
 
         //Enter Cards (position 2 to 9 in sprites)
         for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++)
         {
-            DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(350.f+180.f*(i),10.f),150.f/375.f);
+            DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],position+sf::Vector2f(350.f+180.f*(i),10.f),170.f/375.f);
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }
 
@@ -60,8 +58,8 @@ namespace render {
         text->setString("Drafting Hand");
         text->setCharacterSize(30);
         text->setFillColor(sf::Color::White);
+        text->setPosition(position+sf::Vector2f({10.f,10.f}));
         this->texts.push_back(text);			//Text
-        this->text_transforms.push_back(sf::Transform(sprite_transforms[0]).translate(10.f,10.0f));		//Transform
     }
     
     /// @brief update the DraftingHandRenderer with the current state of the game
@@ -77,7 +75,7 @@ namespace render {
         //Create new Cards
         for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++)
         {
-            DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],sf::Transform(sprite_transforms[0]).translate(300.f+120.f*(i),0.f),170.f/375.f);
+            DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],sprites[0]->getPosition()+sf::Vector2f(300.f+120.f*(i),0.f),170.f/375.f);
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
         }
 		
@@ -89,10 +87,10 @@ namespace render {
 
     void DraftingHandRenderer::draw(sf::RenderWindow& window){
         for(int i=0;i<(int) this->sprites.size();i++){
-			window.draw(*(this->sprites[i]),(this->sprite_transforms[i]));
+			window.draw(*(this->sprites[i]));
 		}
 		for(int i=0;i<(int) this->texts.size();i++){
-			window.draw(*(this->texts[i]),(this->text_transforms[i]));
+			window.draw(*(this->texts[i]));
 		}
 		for(DevelopmentCardRenderer* cRenderer: this->devCardRenderers){
 			cRenderer->draw(window);

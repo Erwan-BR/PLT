@@ -6,7 +6,7 @@
 namespace render {
 
 	/// @brief Full constructor of the Scene class.
-    Scene::Scene(state::Game* game,sf::Transform transform){
+    Scene::Scene(state::Game* game){
 		this->enableInput = true;
 		//Store game attribute
 		this->game = game;
@@ -30,30 +30,30 @@ namespace render {
 		std::vector<state::Player*> players = game->getPlayers();
 
 		//Generate PlayerRenderer for MAIN_WINDOW
-		for (int i = 0; i<(int) players.size();i++){
-			pRenderer = new PlayerRenderer(players[i],generatePlayerTransform(transform,MAIN_WINDOW,i),MAIN_WINDOW);
-    		this->player_renderer.push_back(pRenderer);
-		}
-
-		//Generate PlayerRenderer for DRAFTING_WINDOW
-		for (int i = 0; i<(int) players.size();i++){
-    		pRenderer = new PlayerRenderer(players[i],generatePlayerTransform(transform,DRAFTING_WINDOW,i),DRAFTING_WINDOW);
-			this->player_renderer.push_back(pRenderer);
-		}
+		pRenderer = new PlayerRenderer(players[0],{525.f,780.f},MAIN_WINDOW);
+    	this->player_renderer.push_back(pRenderer);
+		pRenderer = new PlayerRenderer(players[1],{525.f,0.f},MAIN_WINDOW);
+    	this->player_renderer.push_back(pRenderer);
 		
 		//Generate PlayerRenderer for PLAYER_INFO
-		pRenderer = new PlayerRenderer(game->getPlayers()[0],transform,PLAYER_INFO);
+		pRenderer = new PlayerRenderer(players[0],{0.f,0.f},PLAYER_INFO);
 		this->player_renderer.push_back(pRenderer);
 
 		//Generate PlayerRenderer for PLANIFICATION_WINDOW
-		pRenderer = new PlayerRenderer(game->getPlayers()[0],transform,PLANIFICATION_WINDOW);
+		pRenderer = new PlayerRenderer(players[0],{0.f,0.f},PLANIFICATION_WINDOW);
 		this->player_renderer.push_back(pRenderer);
 
+		//Generate PlayerRenderer for DRAFTING_WINDOW
+		for (int i = 0; i<(int) players.size();i++){
+    		pRenderer = new PlayerRenderer(players[i],{0.f,720.f-i*180.f},DRAFTING_WINDOW);
+			this->player_renderer.push_back(pRenderer);
+		}
+
 		//Generate DraftingHandRenederer
-		this->drafting_hand_renderer = new DraftingHandRenderer((game->getPlayers())[0],sf::Transform(transform).translate(0.f,900.f));
+		this->drafting_hand_renderer = new DraftingHandRenderer(players[0],{0.f,900.f});
 
 		//Generate GameRenderer
-		this->game_renderer = new GameRenderer(game,transform);
+		this->game_renderer = new GameRenderer(game,{0.f,0.f});
 
 		//Generate Buttons for MAIN_WINDOW only if the Player isn't an AI
 		if(this->enableInput){
@@ -136,16 +136,28 @@ namespace render {
 	}
 
 	/// @brief Setter for player displayed in PLAYER_INFO
-	/// @param index index of Player to display in players
-	void Scene::changePlayerInfoPlayer(int index){
+	/// @param p_index index of Player to display in players
+	/// @param window Window where the info are changed (among MAIN_WINDOW & PLAYER_INFO)
+	void Scene::changePlayerInfoPlayer(int p_index,Window window){
 		//Get Player to be display
-		state::Player* player = game->getPlayers()[index];
+		state::Player* player = game->getPlayers()[p_index];
 
+		int r_id;
+		switch(window){
+			case MAIN_WINDOW:
+				r_id = 1;
+				break;
+			case PLAYER_INFO:
+				r_id = 2;
+				break;
+			default:
+				return;
+		}
 		//Get Transform
-		sf::Transform t = this->player_renderer[4]->getPos();
+		sf::Vector2f pos = this->player_renderer[r_id]->getPos();
 
 		//Create Renderer
-		PlayerRenderer* pRenderer = new PlayerRenderer(player,t,PLAYER_INFO);
+		PlayerRenderer* pRenderer = new PlayerRenderer(player,pos,window);
 
 		//Link the renderer (Observer) to its Observable (Game & player) 
 		player->addObserver(pRenderer);
@@ -156,36 +168,7 @@ namespace render {
 		//Update the just created Renderer with the current state of the game
 		pRenderer->update();
 		//Put the new Renderer in its place
-		this->player_renderer[4] = pRenderer;
-	}
-
-	/// @brief Generator for Transform for PlayerRenderer
-	/// @param transform Base Transform of window
-	/// @param window Window where the Renderer will be display
-	/// @param indice index of the player to display
-	/// @return Transform for the PlayerRenderer
-	sf::Transform Scene::generatePlayerTransform(sf::Transform transform, Window window, int indice){
-		if (window == MAIN_WINDOW){
-			if (indice == 0){
-				return sf::Transform(transform).translate(525.f,780.f);
-			}
-			else {
-				return sf::Transform(transform).translate(525.f,0.f);
-				//TODO See for indice>2
-			}
-		}
-		if (window == DRAFTING_WINDOW){
-			if (indice == 0){
-				return sf::Transform(transform).translate(0.f,720.f);
-			}
-			else {
-				return sf::Transform(transform).translate(0.f,(indice-1)*180.f);
-			}
-		if (window == PLANIFICATION_WINDOW){
-			return sf::Transform(transform);
-		}
-		}
-	return sf::Transform(transform);
+		this->player_renderer[r_id] = pRenderer;
 	}
 
 	/// @brief update the Scene with the current state of the game
@@ -205,14 +188,14 @@ namespace render {
 		
 		switch (this->current_window){
 			case MAIN_WINDOW:
-				window.draw(this->background,this->transform);		//Background
+				window.draw(this->background);		//Background
 				//Display GameRenderer
 				this->game_renderer->draw(window);			
 				
 				//Display players
-				for (int i=0; i < 2; i++){
-					this->player_renderer[i]->draw(window);
-				}
+				this->player_renderer[0]->draw(window);
+				this->player_renderer[1]->draw(window);
+				
 				for (Button* btn: btnMain){
 					btn->draw(window);
 				}
@@ -220,7 +203,7 @@ namespace render {
 				break;
 			case DRAFTING_WINDOW:
 				//Display players
-				for (int i=2; i < 4; i++){
+				for (int i=4; i < (int) this->player_renderer.size(); i++){
 					this->player_renderer[i]->draw(window);
 				}
 				//Display Drafting Hand
@@ -232,7 +215,7 @@ namespace render {
 				break;
 			case PLAYER_INFO:
 				//Display Player
-				this->player_renderer[4]->draw(window);
+				this->player_renderer[2]->draw(window);
 
 				for (Button* btn: btnFull){
 					btn->draw(window);
@@ -241,7 +224,7 @@ namespace render {
 			case PLANIFICATION_WINDOW:
 				window.draw(this->background,this->transform);
 				//Display Drafted Hand
-				this->player_renderer[5]->draw(window);
+				this->player_renderer[3]->draw(window);
 
 				for (Button* btn: btnPlan){
 					btn->draw(window);

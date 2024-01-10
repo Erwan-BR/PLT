@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	game.initGame();
 
 	//Creation of the instance of the Scene class
-	Scene* myscene = new Scene(&game,sf::Transform());
+	Scene* myscene = new Scene(&game);
 
 	// Test setWindow
 	Window w = PLAYER_INFO;
@@ -37,7 +37,9 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	myscene->setupObserver(&game);
 
 	//Test changePlayerInfoPlayer
-	myscene->changePlayerInfoPlayer(1);
+	myscene->changePlayerInfoPlayer(1,MAIN_WINDOW);
+	myscene->changePlayerInfoPlayer(1,PLAYER_INFO);
+	myscene->changePlayerInfoPlayer(1,DRAFTING_WINDOW);
 
 	//Test update
 	myscene->update();
@@ -108,13 +110,13 @@ BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
 	//PlayerRenderer
 	state::Player* player = new state::Player("TestPlayer",1);
 	
-	PlayerRenderer* pR = new PlayerRenderer(player,sf::Transform(),MAIN_WINDOW);
+	PlayerRenderer* pR = new PlayerRenderer(player,{0.f,0.f},MAIN_WINDOW);
 	
 	delete pR;
 	
 	//PlayerRenderer with invalid Window
 	state::Player* player2 = new state::Player("TestPlayer",1);
-	PlayerRenderer* pR2 = new PlayerRenderer(player2,sf::Transform(),NONE);
+	PlayerRenderer* pR2 = new PlayerRenderer(player2,{0.f,0.f},NONE);
 	delete pR2;
 
 	//GameRenderer
@@ -122,19 +124,19 @@ BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
 	players.push_back(player);
 	players.push_back(player2);
 	state::Game* game = new state::Game(players);
-	GameRenderer* gR = new GameRenderer(game,sf::Transform());
+	GameRenderer* gR = new GameRenderer(game,{0.f,0.f});
 	delete gR;
 
 	//Player Renderer with cards
 	game->initGame();
 	player->chooseDraftCard(0);
-	PlayerRenderer* pR3 = new PlayerRenderer(player,sf::Transform(),DRAFTING_WINDOW);
+	PlayerRenderer* pR3 = new PlayerRenderer(player,{0.f,0.f},DRAFTING_WINDOW);
 	pR3->update();
 	delete pR3;
 
 	//DevellopementCardRenderer
 	state::DevelopmentCard* card = new state::DevelopmentCard("Empty Card",{},{},state::STRUCTURE,0,{new state::ResourceToPay{state::ResourceType::SCIENCE, false}},{},state::FINANCIER);
-	DevelopmentCardRenderer* cR = new DevelopmentCardRenderer(card,sf::Transform(),0.f);
+	DevelopmentCardRenderer* cR = new DevelopmentCardRenderer(card,{0.f,0.f},0.f);
 	delete cR;
 
 	//Delete others pointer

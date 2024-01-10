@@ -4,7 +4,7 @@ namespace render
 {
     /// @brief Constructor of the card renderer.
     /// @param card Card to render.
-    DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card,sf::Transform transform,float scale) :
+    DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card,sf::Vector2f position,float scale) :
         card(card)
     {
         //Get the Texture form Card
@@ -14,15 +14,13 @@ namespace render
         //Generate Sprite
         this->sprite = new sf::Sprite();
         this->sprite->setTexture(*(this->texture));
-
-        //Store transform
-        this->transform = sf::Transform(transform).scale(scale,scale);
+        this->sprite->setPosition(position);
+        this->sprite->setScale(scale,scale);
 
         this->hitbox = sf::FloatRect(this->sprite->getGlobalBounds());
 
         //Initialize Vecotor
         this->vectorOfCrossesSprite = {};
-        this->vectorOfCrossesTransform = {};
 
         // Creating textures for paid and not paid resources.
         this->paidTexture = new sf::Texture();
@@ -38,7 +36,8 @@ namespace render
         {
             vectorOfCrossesSprite.push_back(new sf::Sprite());
             vectorOfCrossesSprite[index]->setTexture(*(this->notPaidTexture));
-            vectorOfCrossesTransform.push_back(sf::Transform(transform).scale(scale,scale).translate(30.0f,10.0f+35.0f*index).scale(0.035f,0.035f));
+            vectorOfCrossesSprite[index]->setScale(scale*0.035f,scale*0.035f);
+            vectorOfCrossesSprite[index]->setPosition(position+sf::Vector2f(25.f,7.0f+35.0f*index)*(scale));
         }
     }
 
@@ -48,7 +47,7 @@ namespace render
         free(this->paidTexture);
         free(this->notPaidTexture);
         for(sf::Sprite* s : this->vectorOfCrossesSprite){
-            free(s);
+            delete s;
         }
     }
 
@@ -71,9 +70,9 @@ namespace render
     /// @brief Draw the card on the screen
     /// @param window Window were the card has to be displayed.
     void DevelopmentCardRenderer::draw(sf::RenderWindow& window){
-        window.draw(*this->sprite,this->transform);
+        window.draw(*this->sprite);
         for(int i=0;i<(int) this->vectorOfCrossesSprite.size();i++){
-            window.draw(*(this->vectorOfCrossesSprite[i]),this->vectorOfCrossesTransform[i]);
+            window.draw(*(this->vectorOfCrossesSprite[i]));
         }
     }
 
