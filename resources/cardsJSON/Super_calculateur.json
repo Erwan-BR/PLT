@@ -23,7 +23,14 @@
 	"isPaid" : false,
 	"name" : "Super calculateur",
 	"numberOfCopies" : 1,
-	"productionGain" : null,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 3
+		}
+	],
 	"quantityResourceMissing" : 4,
 	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/super_calculateur.png",
 	"type" : 23,

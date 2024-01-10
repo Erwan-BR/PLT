@@ -25,9 +25,9 @@
 	"discardGain" : 3,
 	"instantGain" : null,
 	"isPaid" : false,
-	"name" : "Ile d'Avalon",
+	"name" : "Ile d avalon",
 	"numberOfCopies" : 1,
-	"productionGain" : 	
+	"productionGain" : 
 	[
 		{
 			"cardType" : 0,
