@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <numeric>
 #include <vector>
+#include <thread>
+#include <mutex>
+
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
@@ -19,6 +22,7 @@
 
 void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p2, render::Scene* scene);
 void displayMessage();
+void displayTemporaryCommands();
 void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
 
 int main(int argc,char* argv[])
@@ -39,18 +43,7 @@ int main(int argc,char* argv[])
     }
 	else if ("engine" == userInput)
     {
-        //Print Temporary Manual Commands
-        std::cout<<"**Temporary Manual Commands**" << std::endl;
-        std::cout<<"*Change Window Commands*" << std::endl;
-        std::cout<<"A - Main Window" << std::endl;
-        std::cout<<"Z - Drafting Window" << std::endl;
-        std::cout<<"E - Planification Window" << std::endl;
-        std::cout<<"R - Full Info Player Window" << std::endl;
-        std::cout<<"> On This Window (Player Info):" << std::endl;
-        std::cout<<"> Q - Display Player 1" << std::endl;
-        std::cout<<"> S - Display Player 2" << std::endl;
-        std::cout<<"*Game Commands*" << std::endl;
-        std::cout<<"Space - Go to the next step of the testing game" << std::endl;
+        displayTemporaryCommands();
 
         //Creation of the window
         int win_length = 1920;
@@ -79,13 +72,8 @@ int main(int argc,char* argv[])
         scene.setupObserver(player1);
         scene.setupObserver(player2);
 
-        //Creation of the Font for the Texts
-        sf::Font font;
-        font.loadFromFile("./resources/font/arial.ttf");
-
         //Creation of the instance of sf::Event class that will received user's inputs.
         sf::Event event;
-
 
         //Creation of an int that indicates the step of the test game
         int etape = 0;
@@ -189,7 +177,8 @@ int main(int argc,char* argv[])
             }
 
             state::Game* game = new state::Game(ais);
-            engine::Engine* engineOfGame = new engine::Engine(game);
+            std::mutex locker;
+            engine::Engine* engineOfGame = new engine::Engine(game, locker);
             engineOfGame->gameRunning();
 
             for (int i = 0; i < numberOfAI; i++)
@@ -251,6 +240,35 @@ int main(int argc,char* argv[])
 
         return EXIT_SUCCESS;
     }
+    else if ("Player" == userInput)
+    {
+        //Creation of the window
+        int win_length = 1920;
+        int win_heigth = 1080;
+        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+
+        //Creation of testing instances of Player class
+        std::string nameOfPlayer = "PlayerName";
+
+        state::Player* player1 = new state::Player(nameOfPlayer, 10);
+        
+        state::Player* player2 ;
+        player2 = new ai::AIRandom("dummy", - 10);
+
+        //Creation of the vector players
+        std::vector<state::Player*> players;
+        players.push_back(player1);
+        players.push_back(player2);
+
+        //Creation of the instance of the Game class
+        state::Game* game = new state::Game(players, true);
+
+        std::mutex locker;
+        engine::Engine* engineOfGame = new engine::Engine(game, locker);
+
+        // To-do : create the render properly and give it the engine.
+    }
+    
     std::cout << "Invalid argument." << std::endl;
 	displayMessage();
     return EXIT_FAILURE;
@@ -459,5 +477,20 @@ void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p
         default:
             break;
     }
+}
 
+void displayTemporaryCommands()
+{
+    //Print Temporary Manual Commands
+    std::cout<<"**Temporary Manual Commands**" << std::endl;
+    std::cout<<"*Change Window Commands*" << std::endl;
+    std::cout<<"A - Main Window" << std::endl;
+    std::cout<<"Z - Drafting Window" << std::endl;
+    std::cout<<"E - Planification Window" << std::endl;
+    std::cout<<"R - Full Info Player Window" << std::endl;
+    std::cout<<"> On This Window (Player Info):" << std::endl;
+    std::cout<<"> Q - Display Player 1" << std::endl;
+    std::cout<<"> S - Display Player 2" << std::endl;
+    std::cout<<"*Game Commands*" << std::endl;
+    std::cout<<"Space - Go to the next step of the testing game" << std::endl;
 }
