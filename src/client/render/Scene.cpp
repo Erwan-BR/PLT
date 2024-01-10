@@ -85,6 +85,9 @@ namespace render {
 			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color::White,NULL);
 			button->setVisible(true);
 			this->btnMain.push_back(button);
+			button = new Button({50.f,960.f},{220.f,100.f},"SAVE GAME",sf::Color::White,NULL);
+			button->setVisible(true);
+			this->btnMain.push_back(button);
 
 			for(int i = 1; i<(int) game->getPlayers().size();i++){
 				button = new Button({300.f,60.f*i},{200.f,50.f},"Switch to:"+game->getPlayers()[i]->getName(),sf::Color(215,47,215),NULL);
@@ -187,11 +190,15 @@ namespace render {
 
 	/// @brief update the Scene with the current state of the game
 	void Scene::update(){
-		this->game_renderer->update();
-		this->drafting_hand_renderer->update();
-		for(PlayerRenderer* pRend:this->player_renderer){
-			pRend->update();
-		}
+		btnMain[0]->setText("MATERIAL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::MATERIAL])+")");
+		btnMain[1]->setText("ENERGY\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::ENERGY])+")");
+		btnMain[2]->setText("SCIENCE\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::SCIENCE])+")");
+		btnMain[3]->setText("GOLD\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::GOLD])+")");
+		btnMain[4]->setText("EXPLORATION\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::EXPLORATION])+")");
+		btnMain[5]->setText("KRYSTALLIUM\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::KRYSTALLIUM])+")");
+		btnMain[6]->setText("COLONEL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::COLONEL])+")");
+		btnMain[7]->setText("FINANCIER\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::FINANCIER])+")");
+		
 	}
 
 	void Scene::draw(sf::RenderWindow& window){
@@ -252,5 +259,6 @@ namespace render {
 			observable->addObserver(pRenderer);
 		}
 		observable->addObserver(this->drafting_hand_renderer);
+		observable->addObserver(this);
 	}
 };

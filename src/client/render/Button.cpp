@@ -73,4 +73,8 @@ namespace render
     {
         this->isVisible = visible;
     }
+
+    void Button::setText(std::string newText){
+        this->text.setString(newText);
+    }
 }
