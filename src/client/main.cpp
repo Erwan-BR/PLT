@@ -189,7 +189,7 @@ int main(int argc,char* argv[])
             }
 
             state::Game* game = new state::Game(ais);
-            engine::Engine* engineOfGame = new engine::Engine(game, {});
+            engine::Engine* engineOfGame = new engine::Engine(game);
             engineOfGame->gameRunning();
 
             for (int i = 0; i < numberOfAI; i++)

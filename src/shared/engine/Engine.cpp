@@ -1,15 +1,24 @@
 #include "Engine.h"
 
+// Including thos to construct commands
+#include "engine/EndPlanification.h"
+#include "engine/ChooseDraftCard.h"
+#include "engine/SendResourceToEmpire.h"
+#include "engine/KeepCard.h"
+#include "engine/DiscardCard.h"
+#include "engine/AddResource.h"
+#include "engine/EndProduction.h"
+#include "engine/ConvertResource.h"
+#include "engine/SaveGame.h"
+
 #include <unistd.h>
 
 namespace engine
 {
     /// @brief Full constructor of the engine.
     /// @param currentGame Game that is played.
-    /// @param currentCommands Command that can be done in the game.
-    Engine::Engine(state::Game* currentGame, std::vector<Command*> currentCommands) :
-        currentGame(currentGame),
-        currentCommands(currentCommands)
+    Engine::Engine(state::Game* currentGame) :
+        currentGame(currentGame)
     {
 
     }
@@ -19,7 +28,7 @@ namespace engine
     {
         delete currentGame;
 
-        for (Command* command : this->currentCommands)
+        for (Command* command : this->commandToExecute)
         {
             delete command;
         }
@@ -80,5 +89,58 @@ namespace engine
             }
         }
         return true;
+    }
+
+    /// @brief Execute all commands
+    void Engine::excuteAllCommands ()
+    {
+        // Iterate among all commands to execute them.
+        for (Command* command : this->commandToExecute)
+        {
+            command->launchCommand(this->currentGame);
+        }
+
+        // Clear the vector of command once they are executed.
+        commandToExecute.clear();
+    }
+
+    /// @brief Receive a new command and execute it.
+    /// @param jsonCommand New command that will be performed last.
+    void Engine::receiveCommand (Json::Value jsonCommand)
+    {
+        Command* newCommand ;
+        switch (jsonCommand["id"].asInt())
+        {
+            case CommandID::ADDRESOURCE :
+                newCommand = new AddResource(jsonCommand);
+                break;
+            case CommandID::DISCARDCARD :
+                newCommand = new DiscardCard(jsonCommand);
+                break;
+            case CommandID::CHOOSEDRAFTCARD :
+                newCommand = new ChooseDraftCard(jsonCommand);
+                break;
+            case CommandID::KEEPCARD :
+                newCommand = new KeepCard(jsonCommand);
+                break;
+            case CommandID::SENDRESOURCETOEMPIRE :
+                newCommand = new SendResourceToEmpire(jsonCommand);
+                break;
+            case CommandID::ENDPLANIFICATION :
+                newCommand = new EndPlanification(jsonCommand);
+                break;
+                case CommandID::ENDPRODUCTION :
+                newCommand = new EndProduction(jsonCommand);
+                break;
+            case CommandID::CONVERTRESOURCE :
+                newCommand = new ConvertResource(jsonCommand);
+                break;
+            case CommandID::SAVEGAME :
+                newCommand = new SaveGame(jsonCommand);
+                break;
+            default :
+                return ;
+        }
+        this->commandToExecute.push_back(newCommand);
     }
 }

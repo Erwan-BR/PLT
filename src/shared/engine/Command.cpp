@@ -76,6 +76,7 @@ namespace engine
     {
         Json::Value jsonContent ;
 
+        jsonContent["id"] = static_cast<int> (this->id);
         jsonContent["playerIndex"] = this->playerIndex;
         jsonContent["cardIndex"] = this->cardIndex;
         jsonContent["resource"] = static_cast<int> (this->resource);
