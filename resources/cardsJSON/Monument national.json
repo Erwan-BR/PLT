@@ -1,0 +1,51 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		}
+	],
+	"discardGain" : 4,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Monument national",
+	"numberOfCopies" : 1,
+	"productionGain" : null,
+	"quantityResourceMissing" : 8,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/monument_national.png",
+	"type" : 24,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 24,
+		"numberOfPoints" : 2
+	}
+}

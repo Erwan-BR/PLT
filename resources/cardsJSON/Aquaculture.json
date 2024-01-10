@@ -1,0 +1,46 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		}
+	],
+	"discardGain" : 3,
+	"instantGain" : 
+	[
+		8
+	],
+	"isPaid" : false,
+	"name" : "Aquaculture",
+	"numberOfCopies" : 1,
+	"productionGain" : null,
+	"quantityResourceMissing" : 6,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/aquaculture.png",
+	"type" : 23,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 8,
+		"numberOfPoints" : 1
+	}
+}

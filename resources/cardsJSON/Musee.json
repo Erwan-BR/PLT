@@ -1,0 +1,31 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		}
+	],
+	"discardGain" : 5,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Musee",
+	"numberOfCopies" : 2,
+	"productionGain" : null,
+	"quantityResourceMissing" : 3,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/musee.png",
+	"type" : 24,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 25,
+		"numberOfPoints" : 2
+	}
+}

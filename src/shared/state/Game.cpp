@@ -73,6 +73,12 @@ namespace state {
         {
             delete card;
         }
+
+        // Delete all players
+        for (Player* player : this->players)
+        {
+            delete player;
+        }
     }
 
     ///@brief Initialize the game
@@ -119,7 +125,7 @@ namespace state {
     void Game::createCards()
     {
         CreateAllCards* developmentCardCreation = new CreateAllCards;
-        this->deck = developmentCardCreation->createAllDevelopmentCards();
+        this->deck = developmentCardCreation->createAllDevelopmentCards(this->isTestingGame);
     }
         
     ///@brief Create and Initialize the Empire for the game
@@ -458,5 +464,59 @@ namespace state {
     ResourceType Game::getResourceProducing () const
     {
         return this->resourceProducing;
+    }
+
+    /// @brief Retrieve winners of the game. Called only when a game is finished
+    /// @return A vector containing all indices of winners.
+    std::vector<int> Game::getWinners () const
+    {
+        // Check if a game is finished.
+        if(GamePhase::FINISHED != this->phase)
+        {
+            return {};
+        }
+
+        int maxNumberOfPoints = -1;
+        std::vector<int> winners = {};
+        
+        // Iterating among all players.
+        for (size_t playerIndex = 0; this->players.size() > playerIndex; playerIndex++)
+        {
+            int currentPlayerVictoryPoints = this->players[playerIndex]->computeVictoryPoint();
+
+            // If the current player has most of all the previous one, he is the winner.
+            if (maxNumberOfPoints < this->players[playerIndex]->computeVictoryPoint())
+            {
+                winners.clear();
+                winners.push_back(playerIndex);
+                maxNumberOfPoints = currentPlayerVictoryPoints;
+            }
+            else if (maxNumberOfPoints == currentPlayerVictoryPoints)
+            {
+                // There is already winners in the vector. We have to compare the victory condition.
+                // 1. The player with the most built card win.
+                // 2. If there is a tie on this number, the player with the most personnages win.
+                if (this->players[playerIndex]->getBuiltCards().size() > this->players[winners[0]]->getBuiltCards().size())
+                {
+                    winners.clear();
+                    winners.push_back(playerIndex);
+                }
+                else if (this->players[playerIndex]->getBuiltCards().size() == this->players[winners[0]]->getBuiltCards().size())
+                {
+                    int numberOfPersonnagesOfWinners = this->players[winners[0]]->getQuantityPersonnages();
+                    int numberOfPersonnagesOfCurrentPlayer = this->players[playerIndex]->getQuantityPersonnages();
+                    if (numberOfPersonnagesOfCurrentPlayer > numberOfPersonnagesOfWinners)
+                    {
+                        winners.clear();
+                        winners.push_back(playerIndex);
+                    }
+                    else if (numberOfPersonnagesOfCurrentPlayer == numberOfPersonnagesOfWinners)
+                    {
+                        winners.push_back(playerIndex);
+                    }
+                }
+            }
+        }
+        return winners;
     }
 }

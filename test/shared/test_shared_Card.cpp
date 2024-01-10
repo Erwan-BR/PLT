@@ -46,15 +46,13 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(cardPoints->cardOrResourceType, CardType::VEHICLE);
 
     // Free memory.
-    delete cardPoints;
     delete cardToExport;
     delete cardFromImport;
 }
 
 BOOST_AUTO_TEST_CASE(test_Constructor)
 {
-    sf::Texture* design = new sf::Texture();
-    Card* testCard = new Card("Marc", {new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::SCIENCE,1, CardType::NONETYPE}}, design, new CardVictoryPoint{1, CardType::VEHICLE});
+    Card* testCard = new Card("Marc", {new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::SCIENCE,1, CardType::NONETYPE}}, new CardVictoryPoint{1, CardType::VEHICLE});
     
     BOOST_CHECK_EQUAL(testCard->getName(), "Marc");
 
@@ -73,10 +71,7 @@ BOOST_AUTO_TEST_CASE(test_Constructor)
     BOOST_CHECK_EQUAL(cardPoints->numberOfPoints, 1);
     BOOST_CHECK_EQUAL(cardPoints->cardOrResourceType, CardType::VEHICLE);
 
-    (void) testCard->getDesign();
     delete testCard;
-    delete design;
-    delete cardPoints;
 }
 
 /* vim: set sw=2 sts=2 et : */

@@ -1,0 +1,43 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		}
+	],
+	"discardGain" : 4,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Tresor de barbe noire",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 4
+		},
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 5
+		}
+	],
+	"quantityResourceMissing" : 3,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/tresor_de_barbe_noire.png",
+	"type" : 25,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 2
+	}
+}

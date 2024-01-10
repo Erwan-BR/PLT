@@ -1,0 +1,45 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		}
+	],
+	"discardGain" : 3,
+	"instantGain" : 
+	[
+		6
+	],
+	"isPaid" : false,
+	"name" : "Triangle des bermudes",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 3
+		}
+	],
+	"quantityResourceMissing" : 4,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/triangle_des_bermudes.png",
+	"type" : 25,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 4
+	}
+}

@@ -1,0 +1,47 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 7
+		},
+		{
+			"isPaid" : false,
+			"type" : 7
+		}
+	],
+	"discardGain" : 5,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Centre De La Terre",
+	"numberOfCopies" : 1,
+	"productionGain" : null,
+	"quantityResourceMissing" : 7,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/centre_de_la_terre.png",
+	"type" : 25,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 15
+	}
+}

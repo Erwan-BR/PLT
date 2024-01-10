@@ -43,15 +43,15 @@ namespace state {
     /// @brief Full constructor of the DevelopmentCard class.
     /// @param name Name of the Card.
     /// @param productionGain Production of the Card at each turn.
-    /// @param design Design of the Card.
+    /// @param relativePathOfTexture Relative path of the image that represent the card.
     /// @param victoryPoints Structures that inform how the card can make some points.
     /// @param type Type of the card.
     /// @param numberOfCopies Number of copies of this card in the game.
     /// @param costToBuild Vector that contains all the resources to pay to build the Card.
     /// @param instantGain Vector that contains all the resources won at the construction of the Card.
     /// @param discardGain Pointers to the resources you get when the Card is discarded.
-    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, sf::Texture* design, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
-        Card(name, productionGain, design, victoryPoints),
+    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathOfTexture, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
+        Card(name, productionGain, relativePathOfTexture, victoryPoints),
         type(type),
         numberOfCopies(numberOfCopies),
         instantGain(instantGain),
@@ -67,15 +67,14 @@ namespace state {
     /// @brief Full constructor of the DevelopmentCard class.
     /// @param name Name of the Card.
     /// @param productionGain Production of the Card at each turn.
-    /// @param relativePathOfTexture Relative path of the image that represent the card.
     /// @param victoryPoints Structures that inform how the card can make some points.
     /// @param type Type of the card.
     /// @param numberOfCopies Number of copies of this card in the game.
     /// @param costToBuild Vector that contains all the resources to pay to build the Card.
     /// @param instantGain Vector that contains all the resources won at the construction of the Card.
     /// @param discardGain Pointers to the resources you get when the Card is discarded.
-    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathOfTexture, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
-        Card(name, productionGain, relativePathOfTexture, victoryPoints),
+    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
+        Card(name, productionGain, victoryPoints),
         type(type),
         numberOfCopies(numberOfCopies),
         instantGain(instantGain),

@@ -1,0 +1,51 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 6
+		}
+	],
+	"discardGain" : 5,
+	"instantGain" : 
+	[
+		7,
+		7
+	],
+	"isPaid" : false,
+	"name" : "Base lunaire",
+	"numberOfCopies" : 1,
+	"productionGain" : null,
+	"quantityResourceMissing" : 7,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/base_lunaire.png",
+	"type" : 24,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 10
+	}
+}

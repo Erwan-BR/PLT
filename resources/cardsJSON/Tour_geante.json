@@ -1,0 +1,43 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 4
+		},
+		{
+			"isPaid" : false,
+			"type" : 8
+		}
+	],
+	"discardGain" : 4,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Tour geante",
+	"numberOfCopies" : 1,
+	"productionGain" : null,
+	"quantityResourceMissing" : 6,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/tour_geante.png",
+	"type" : 24,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 10
+	}
+}

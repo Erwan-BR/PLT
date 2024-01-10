@@ -1,0 +1,53 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		}
+	],
+	"discardGain" : 5,
+	"instantGain" : 
+	[
+		7
+	],
+	"isPaid" : false,
+	"name" : "Satellites",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 2,
+			"type" : 5
+		}
+	],
+	"quantityResourceMissing" : 6,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/satellites.png",
+	"type" : 23,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 3
+	}
+}

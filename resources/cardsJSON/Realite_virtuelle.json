@@ -1,0 +1,46 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		}
+	],
+	"discardGain" : 4,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Realite virtuelle",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 23,
+			"quantity" : 1,
+			"type" : 4
+		}
+	],
+	"quantityResourceMissing" : 5,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/realite_virtuelle.png",
+	"type" : 23,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 2
+	}
+}

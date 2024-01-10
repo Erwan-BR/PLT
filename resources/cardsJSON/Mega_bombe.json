@@ -1,0 +1,39 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		}
+	],
+	"discardGain" : 2,
+	"instantGain" : 
+	[
+		7,
+		7
+	],
+	"isPaid" : false,
+	"name" : "Mega bombe",
+	"numberOfCopies" : 1,
+	"productionGain" : null,
+	"quantityResourceMissing" : 4,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/mega_bombe.png",
+	"type" : 23,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 3
+	}
+}

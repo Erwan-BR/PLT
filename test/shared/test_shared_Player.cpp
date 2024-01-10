@@ -8,8 +8,7 @@ using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
-    sf::Texture* profilePicture = new sf::Texture();
-    Player* playerToExport = new Player("Erwan", 1, profilePicture);
+    Player* playerToExport = new Player("Erwan", 1);
 
     CreateAllCards* createEmpire = new CreateAllCards();
 
@@ -17,34 +16,22 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
     // Create multiple cards to send them in vectors and check if they are correctly placed in the JSON.
     // Amelioration genetique
-    sf::Texture* designAmeliorationGenetique = new sf::Texture;
-    designAmeliorationGenetique->loadFromFile("./resources/img/Cards/Development_Cards/amelioration_genetique.png");
-    DevelopmentCard* ameliorationGenetique = new DevelopmentCard ("Amelioration genetique",{},designAmeliorationGenetique,new CardVictoryPoint{3, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::FINANCIER, ResourceType::FINANCIER},ResourceType::SCIENCE);
+    DevelopmentCard* ameliorationGenetique = new DevelopmentCard ("Amelioration genetique",{},new CardVictoryPoint{3, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::FINANCIER, ResourceType::FINANCIER},ResourceType::SCIENCE);
 
     // Animorphes
-    sf::Texture* designAnimorphes = new sf::Texture;
-    designAnimorphes->loadFromFile("./resources/img/Cards/Development_Cards/animorphes.png");
-    DevelopmentCard* animorphes = new DevelopmentCard ("Animorphes",{new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE}},designAnimorphes,new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::COLONEL},ResourceType::ENERGY);
+    DevelopmentCard* animorphes = new DevelopmentCard ("Animorphes",{new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::COLONEL},ResourceType::ENERGY);
 
     // Aquaculture
-    sf::Texture* designAquaculture = new sf::Texture;
-    designAquaculture->loadFromFile("./resources/img/Cards/Development_Cards/aquaculture.png");
-    DevelopmentCard* aquaculture = new DevelopmentCard ("Aquaculture",{},designAquaculture,new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::SCIENCE);
+    DevelopmentCard* aquaculture = new DevelopmentCard ("Aquaculture",{},new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::SCIENCE);
 
     // Automates de controle
-    sf::Texture* designAutomateControle = new sf::Texture;
-    designAutomateControle->loadFromFile("./resources/img/Cards/Development_Cards/automates_de_controle.png");
-    DevelopmentCard* automateControle = new DevelopmentCard ("Automates de controle",{},designAutomateControle,new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},{},ResourceType::GOLD);
+    DevelopmentCard* automateControle = new DevelopmentCard ("Automates de controle",{},new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},{},ResourceType::GOLD);
 
     // Clonage humain
-    sf::Texture* designClonageHumain = new sf::Texture;
-    designClonageHumain->loadFromFile("./resources/img/Cards/Development_Cards/clonage_humain.png");
-    DevelopmentCard* clonageHumain = new DevelopmentCard ("Clonage Humain",{new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},designClonageHumain,new CardVictoryPoint{1, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::GOLD);
+    DevelopmentCard* clonageHumain = new DevelopmentCard ("Clonage Humain",{new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},new CardVictoryPoint{1, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::GOLD);
 
     // Controle du climat
-    sf::Texture* designControlDuClimat = new sf::Texture;
-    designControlDuClimat->loadFromFile("./resources/img/Cards/Development_Cards/controle_du_climat.png");
-    DevelopmentCard* controlDuClimat = new DevelopmentCard ("Controle du climat",{new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE},new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},designControlDuClimat,new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::ENERGY);
+    DevelopmentCard* controlDuClimat = new DevelopmentCard ("Controle du climat",{new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE},new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::ENERGY);
 
     std::vector<DevelopmentCard*> cardsOfPlayertoExport = {ameliorationGenetique, animorphes, aquaculture, automateControle, clonageHumain, controlDuClimat};
 
@@ -71,17 +58,17 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     Json::Value playerJSON = playerToExport->toJSON();
 
     // Only for debug, the JSON appears in a log file (PLT/build/test/Testing/Temporary/LastTest.log)
-    for (int i = 0; i < 7; i++)
-    {
-        std::cout << std::endl;
-    }
+    // for (int i = 0; i < 7; i++)
+    // {
+    //     std::cout << std::endl;
+    // }
 
-    std::cout << playerJSON;
+    // std::cout << playerJSON;
 
-    for (int i = 0; i < 7; i++)
-    {
-        std::cout << std::endl;
-    }
+    // for (int i = 0; i < 7; i++)
+    // {
+    //     std::cout << std::endl;
+    // }
 
     Player* playerToImport = new Player(playerJSON);
 
@@ -90,7 +77,6 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(playerToImport->getEmpire()->getName(), "AFRICA");
     BOOST_CHECK_EQUAL(playerToImport->getState(), PlayerState::PENDING);
     BOOST_CHECK_EQUAL(playerToImport->getResourcesInEmpireUnit(), 0);
-    BOOST_CHECK_EQUAL(playerToImport->getRelativePathToTexture(), "");
 
     BOOST_CHECK_EQUAL(playerToImport->getToBuildCards().size(), 1);
     BOOST_CHECK_EQUAL(playerToImport->getToBuildCards()[0]->getName(), "Animorphes");
@@ -136,9 +122,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
 BOOST_AUTO_TEST_CASE(firstPlayerTest)
 {
-    // Testing the empty contructor of Player
-    sf::Texture* profilePicture = new sf::Texture();
-    Player* myFirstPlayer = new Player("Maxime", 1, profilePicture);
+    Player* myFirstPlayer = new Player("Maxime", 1);
 
     //Defining Empire
     //Producing 2 ENERGY, 1 SCIENCE, gain 3 victory points per DISCOVERY cards
@@ -150,12 +134,9 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE};
     ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
     std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC, secondResourceToProduceAZTEC};
-    sf::Texture* designAZTEC = new sf::Texture;
-    designAZTEC->loadFromFile("./resources/img/Cards/Empire_Face_A/Azteca.png");
-    sf::Texture* designAZTEC_FaceB = new sf::Texture;
-    designAZTEC_FaceB->loadFromFile("./resources/img/Cards/Empire_Face_B/Azteca.png");
+    
     CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
-    EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, true);
+    EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
 
     // Giving the empire to the player
     myFirstPlayer->setEmpire(aztec);
@@ -163,41 +144,31 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     // Defining multiple cards to fully test all functions
     // Card that produces 1 SCIENCE * DISCOVERY cards, 10 victory points, 2 instant KRYSTALLIUM
     // Need to pay 1 EXPLORATION
-    sf::Texture* designAnciensAstronautes = new sf::Texture;
-    designAnciensAstronautes->loadFromFile("./resources/img/Cards/Development_Cards/anciens_astronautes.png");
-    DevelopmentCard* anciensAstronautes = new DevelopmentCard ("Anciens Astronautes",{new ResourceToProduce{ResourceType::SCIENCE,1, CardType::DISCOVERY}},designAnciensAstronautes,new CardVictoryPoint{10, CardType::NONETYPE},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::SCIENCE);
+    DevelopmentCard* anciensAstronautes = new DevelopmentCard ("Anciens Astronautes",{new ResourceToProduce{ResourceType::SCIENCE,1, CardType::DISCOVERY}},new CardVictoryPoint{10, CardType::NONETYPE},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::SCIENCE);
 
 
     // Card that produces 3 EXPLORATION, 2 victory points per DISCOVERY card, 1 instant COLONEL
     // Need to pay 1 ENERGY
-    sf::Texture* designBasePolaire = new sf::Texture;
-    designBasePolaire->loadFromFile("./resources/img/Cards/Development_Cards/base_polaire.png");
-    DevelopmentCard* basePolaire = new DevelopmentCard ("Base polaire",{new ResourceToProduce{ResourceType::EXPLORATION, 3, CardType::NONETYPE}},designBasePolaire,new CardVictoryPoint{2, (int) CardType::DISCOVERY},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::EXPLORATION);
+    DevelopmentCard* basePolaire = new DevelopmentCard ("Base polaire",{new ResourceToProduce{ResourceType::EXPLORATION, 3, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::DISCOVERY},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::EXPLORATION);
 
     // Card that produces nothing, 1 victory points per COLONEL
     // Need to pay 1 SCIENCE
-    sf::Texture* designAutomateControle = new sf::Texture;
-    designAutomateControle->loadFromFile("./resources/img/Cards/Development_Cards/automates_de_controle.png");
-    DevelopmentCard* automateControle = new DevelopmentCard ("Automates de controle",{},designAutomateControle,new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::GOLD);
+    DevelopmentCard* automateControle = new DevelopmentCard ("Automates de controle",{},new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::GOLD);
 
     // Card that produces nothing, 1 victory points per FINANCIER, 1 instant FINANCIER
     // Need to pay 1 ENERGY
-    sf::Texture* designAscenseurSpatial = new sf::Texture;
-    designAscenseurSpatial->loadFromFile("./resources/img/Cards/Development_Cards/ascenseur_spatial.png");
-    DevelopmentCard* ascenseurSpatial = new DevelopmentCard ("Ascenseur spatial",{},designAscenseurSpatial,new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::ENERGY);
+    DevelopmentCard* ascenseurSpatial = new DevelopmentCard ("Ascenseur spatial",{},new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::ENERGY);
 
     // Card that will be discard in toBuildCards
     // Giving 1 EXPLORATION
-    sf::Texture* designZeppelin = new sf::Texture;
-    designZeppelin->loadFromFile("./resources/img/Cards/Development_Cards/zeppelin.png");
-    DevelopmentCard* zeppelinToBuild = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designZeppelin,new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+    DevelopmentCard* zeppelinToBuild = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
 
     // Card that will be discard in draftCards
     // Giving 1 EXPLORATION
-    DevelopmentCard* zeppelinDraft = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designZeppelin,new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+    DevelopmentCard* zeppelinDraft = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
 
     //Card that will remain in draftingCards
-    DevelopmentCard* zeppelinDrafting = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},designZeppelin,new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+    DevelopmentCard* zeppelinDrafting = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
 
     // Adding cards in the drafting deck
     std::vector<DevelopmentCard*> draftingDeck;
@@ -393,7 +364,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 4, CardType::DISCOVERY};
     productionGainAZTEC = {firstResourceToProduceAZTEC};
     victoryPointsAZTEC  = new CardVictoryPoint{2, ResourceType::FINANCIER};
-    aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, true);
+    aztec = new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
 
     myFirstPlayer->setEmpire(aztec);
 
@@ -409,7 +380,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     // Config three
     victoryPointsAZTEC  = new CardVictoryPoint{8, ResourceType::COLONEL};
-    aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, true);
+    aztec = new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
 
     myFirstPlayer->setEmpire(aztec);
 
@@ -425,7 +396,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     // Config four (last one)
     victoryPointsAZTEC  = new CardVictoryPoint{26, CardType::NONETYPE};
-    aztec = new EmpireCard("AZTEC", productionGainAZTEC, designAZTEC, victoryPointsAZTEC, productionGainB, {0}, AZTEC, designAZTEC_FaceB, true);
+    aztec = new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
 
     myFirstPlayer->setEmpire(aztec);
 
@@ -442,7 +413,6 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     // Testing getters
     (void)myFirstPlayer->getProductionGain(MATERIAL);
     (void)myFirstPlayer->getName();
-    (void)myFirstPlayer->getProfilePicture();
     (void)myFirstPlayer->getEmpire();
     (void)myFirstPlayer->getBuiltCards();
     (void)myFirstPlayer->getToBuildCards();

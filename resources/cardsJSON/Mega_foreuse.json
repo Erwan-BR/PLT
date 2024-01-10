@@ -1,0 +1,43 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		}
+	],
+	"discardGain" : 1,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Mega foreuse",
+	"numberOfCopies" : 4,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 1
+		},
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 5
+		}
+	],
+	"quantityResourceMissing" : 3,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/mega_foreuse.png",
+	"type" : 22,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}

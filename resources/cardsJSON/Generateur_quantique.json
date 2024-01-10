@@ -1,0 +1,46 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		}
+	],
+	"discardGain" : 2,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Generateur quantique",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 3,
+			"type" : 2
+		}
+	],
+	"quantityResourceMissing" : 5,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/generateur_quantique.png",
+	"type" : 23,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 22,
+		"numberOfPoints" : 1
+	}
+}

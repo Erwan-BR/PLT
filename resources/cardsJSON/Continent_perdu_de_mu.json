@@ -1,0 +1,54 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		}
+	],
+	"discardGain" : 4,
+	"instantGain" : 
+	[
+		6,
+		6
+	],
+	"isPaid" : false,
+	"name" : "Continent perdu de mu",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 4
+		}
+	],
+	"quantityResourceMissing" : 6,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/continent_perdu_de_mu.png",
+	"type" : 25,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 25,
+		"numberOfPoints" : 2
+	}
+}

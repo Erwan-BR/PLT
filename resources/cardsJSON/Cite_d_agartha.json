@@ -1,0 +1,46 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 5
+		},
+		{
+			"isPaid" : false,
+			"type" : 6
+		}
+	],
+	"discardGain" : 5,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Cite d agartha",
+	"numberOfCopies" : 1,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 2,
+			"type" : 5
+		}
+	],
+	"quantityResourceMissing" : 5,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/cite_d_agartha.png",
+	"type" : 25,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 7,
+		"numberOfPoints" : 1
+	}
+}

@@ -1,0 +1,39 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		},
+		{
+			"isPaid" : false,
+			"type" : 3
+		}
+	],
+	"discardGain" : 3,
+	"instantGain" : 
+	[
+		8,
+		8
+	],
+	"isPaid" : false,
+	"name" : "Amelioration genetique",
+	"numberOfCopies" : 1,
+	"productionGain" : null,
+	"quantityResourceMissing" : 4,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/amelioration_genetique.png",
+	"type" : 23,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 3
+	}
+}

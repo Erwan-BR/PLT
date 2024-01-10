@@ -1,0 +1,50 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 2
+		}
+	],
+	"discardGain" : 1,
+	"instantGain" : 
+	[
+		7
+	],
+	"isPaid" : false,
+	"name" : "Base militaire",
+	"numberOfCopies" : 6,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 1
+		},
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 3
+		}
+	],
+	"quantityResourceMissing" : 4,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/base_militaire.png",
+	"type" : 21,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}
