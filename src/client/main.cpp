@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <fstream>
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
@@ -137,6 +138,17 @@ int main(int argc,char* argv[])
                     if (event.key.code == sf::Keyboard::Space){
                         next_step(etape,&game,player1,player2,&scene);    //Go to the next step
                         etape++;
+
+                        std::ofstream file_id;
+                        file_id.open("./game.txt");
+
+                        Json::Value gameJson = game.toJSON();
+                        
+                        Json::StyledWriter styledWriter;
+                        file_id << styledWriter.write(gameJson);
+
+                        file_id.close();
+
                         postGameOnServer(game);
 
                     }
@@ -493,31 +505,42 @@ void postGameOnServer(Game game)
     {
         if(gameJson[element].isArray())
         {
-            std::cout << element << " is an array" << std::endl;
+            for(int i=0; i<(int)gameJson[element].size(); i++)
+            {
+                request.setUri("/game/"+element+"/"+to_string(i));
+                string body = gameJson[element][i].toStyledString();
+                request.setBody(body);
+
+                sf::Http::Response response = server.sendRequest(request);
+                if(response.getStatus() == sf::Http::Response::Ok)
+                {
+                    cout << "Request successful for " << element << "with id: " << i << endl;
+                }
+                else
+                {
+                    cerr << "Request failed." << endl;
+                    cerr << "Status code: " << response.getStatus() << endl;
+                    cerr << "Error message: " << response.getBody() << endl;
+                }
+            }
         }
         else
         {
-            std::cout << element << " is not an array" << std::endl;
+            request.setUri("/game/"+element);
+            string body = gameJson[element].toStyledString();
+            request.setBody(body);
+
+            sf::Http::Response response = server.sendRequest(request);
+            if(response.getStatus() == sf::Http::Response::Ok)
+            {
+                cout << "Request successful for " << element << endl;
+            }
+            else
+            {
+                cerr << "Request failed." << endl;
+                cerr << "Status code: " << response.getStatus() << endl;
+                cerr << "Error message: " << response.getBody() << endl;
+            }
         }
     }
-
-    for(int i=0; i<(int)gameJson["players"].size();i++)
-    {
-        request.setUri("/game/"+to_string(i));
-        request.setBody(gameJson["players"][i].toStyledString());
-
-        sf::Http::Response response = server.sendRequest(request);
-        if(response.getStatus() == sf::Http::Response::Ok)
-        {
-            cout << "Request successful." << endl;
-        }
-        else
-        {
-            cerr << "Request failed." << endl;
-            cerr << "Status code: " << response.getStatus() << endl;
-            cerr << "Error message: " << response.getBody() << endl;
-        }
-    }
-
-
 }

@@ -1,0 +1,6310 @@
+{
+   "deck" : [
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Base militaire",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Base militaire",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Base militaire",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Base militaire",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Base militaire",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Base militaire",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centrale nucleaire",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centrale nucleaire",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centrale nucleaire",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centrale nucleaire",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centrale nucleaire",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centre de recherche",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centre de recherche",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centre de recherche",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centre de recherche",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centre de recherche",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centre de recherche",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Centre de recherche",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Complexe industriel",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Complexe industriel",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Complexe industriel",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Complexe industriel",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Complexe industriel",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Complexe industriel",
+         "numberOfCopies" : 6,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Eoliennes",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Eoliennes",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Eoliennes",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Eoliennes",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Eoliennes",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Eoliennes",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Eoliennes",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Place financiere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Place financiere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Place financiere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Place financiere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Place financiere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Plate forme petroliere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Plate forme petroliere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Plate forme petroliere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Plate forme petroliere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Plate forme petroliere",
+         "numberOfCopies" : 5,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 2
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Reseau de transport",
+         "numberOfCopies" : 2,
+         "productionGain" : null,
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 22,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Reseau de transport",
+         "numberOfCopies" : 2,
+         "productionGain" : null,
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 22,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Usine de recyclage",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Usine de recyclage",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Usine de recyclage",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Usine de recyclage",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Usine de recyclage",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Usine de recyclage",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Usine de recyclage",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 2,
+         "relativePathToTexture" : "",
+         "type" : 21,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Brise glace",
+         "numberOfCopies" : 4,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Division de chars",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Division de chars",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Division de chars",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Division de chars",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Division de chars",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Division de chars",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Division de chars",
+         "numberOfCopies" : 7,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Escadrille de soucoupes",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Escadrille de soucoupes",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Laboratoire aeroporte",
+         "numberOfCopies" : 3,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Laboratoire aeroporte",
+         "numberOfCopies" : 3,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Laboratoire aeroporte",
+         "numberOfCopies" : 3,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Mega foreuse",
+         "numberOfCopies" : 4,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Mega foreuse",
+         "numberOfCopies" : 4,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Mega foreuse",
+         "numberOfCopies" : 4,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Mega foreuse",
+         "numberOfCopies" : 4,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7, 7 ],
+         "isPaid" : false,
+         "name" : "Porte Avions",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 22,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Sous marin",
+         "numberOfCopies" : 3,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Sous marin",
+         "numberOfCopies" : 3,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Sous marin",
+         "numberOfCopies" : 3,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 22,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 0
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : [ 8, 8 ],
+         "isPaid" : false,
+         "name" : "Amelioration genetique",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Animorphes",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Aquaculture",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 8,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Automates de controle",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 7,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Clonage Humain",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Controle du climat",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 2
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Cryogenisation",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 8,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Generateur quantique",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 22,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Greffes bioniques",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 4
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Inverseur de gravite",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 24,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 7, 7 ],
+         "isPaid" : false,
+         "name" : "Mega bombe",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Neuroscience",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 23,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Realite virtuelle",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 23,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 1,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Robots de compagnie",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 21,
+               "quantity" : 1,
+               "type" : 1
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Satellites",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Super calculateur",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 22,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Super soldats",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 7,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Super sonar",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 22,
+               "quantity" : 1,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Technologie inconnue",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 8,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 23,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : [ 6, 6 ],
+         "isPaid" : false,
+         "name" : "Teleportation",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 8,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 8
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 6 ],
+         "isPaid" : false,
+         "name" : "Transmutation",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Vaccin universel",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 24,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Voyage temporel",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 8,
+         "relativePathToTexture" : "",
+         "type" : 23,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 15
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Agence d'espionnage",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Agence d'espionnage",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Ascenseur spatial",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 8,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Barrage geant",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 4,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : [ 7, 7 ],
+         "isPaid" : false,
+         "name" : "Base lunaire",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 10
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Base polaire",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 25,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Canon solaire",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 7,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Centre de propagande",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 24,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Centre de propagande",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 24,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 8
+            },
+            {
+               "isPaid" : false,
+               "type" : 8
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Congres mondial",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 8,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 24,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 8
+            },
+            {
+               "isPaid" : false,
+               "type" : 8
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Exposition Universelle",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 23,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : [ 6 ],
+         "isPaid" : false,
+         "name" : "Laboratoire secret",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 23,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : [ 6 ],
+         "isPaid" : false,
+         "name" : "Laboratoire secret",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 23,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Monument national",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 8,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 24,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Musee",
+         "numberOfCopies" : 2,
+         "productionGain" : null,
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 25,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Musee",
+         "numberOfCopies" : 2,
+         "productionGain" : null,
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 25,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Societe secrete",
+         "numberOfCopies" : 2,
+         "productionGain" : null,
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 8,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Societe secrete",
+         "numberOfCopies" : 2,
+         "productionGain" : null,
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 8,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8, 8 ],
+         "isPaid" : false,
+         "name" : "Train magnetique",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 21,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Universite",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 24,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 3,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Ville casino",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 8,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8 ],
+         "isPaid" : false,
+         "name" : "Ville casino",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 8,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Ville sous-marine",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 2
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Ville sous-marine",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 6 ],
+         "isPaid" : false,
+         "name" : "Ville souterraine",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 1
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 6 ],
+         "isPaid" : false,
+         "name" : "Ville souterraine",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 2
+            }
+         ],
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8, 8 ],
+         "isPaid" : false,
+         "name" : "Zone portuaire",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            },
+            {
+               "isPaid" : false,
+               "type" : 4
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 8, 8 ],
+         "isPaid" : false,
+         "name" : "Zone portuaire",
+         "numberOfCopies" : 2,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 1
+            },
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 24,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 7
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : [ 6, 6 ],
+         "isPaid" : false,
+         "name" : "Anciens Astronautes",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 25,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 10
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : [ 6 ],
+         "isPaid" : false,
+         "name" : "Arche d alliance",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 5
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Atlantide",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 8,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 7,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 6
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Cite d agartha",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 5
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 7,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Cites d or",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 3,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 6, 6 ],
+         "isPaid" : false,
+         "name" : "Continent perdu de mu",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 25,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 3
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 7
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : [ 6, 6, 6 ],
+         "isPaid" : false,
+         "name" : "Dimension parallele",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 8,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 23,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 2,
+         "instantGain" : [ 6, 6, 6 ],
+         "isPaid" : false,
+         "name" : "Fontaine de jouvence",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 7,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 5,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Jardin des hesperides",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 24,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : null,
+         "isPaid" : false,
+         "name" : "Mines du roi salomon",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 21,
+               "quantity" : 1,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 2
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : [ 7 ],
+         "isPaid" : false,
+         "name" : "Roswell",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 6,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 7,
+            "numberOfPoints" : 1
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 7, 7 ],
+         "isPaid" : false,
+         "name" : "Tombeau d alexandre",
+         "numberOfCopies" : 1,
+         "productionGain" : null,
+         "quantityResourceMissing" : 7,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 10
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 4,
+         "instantGain" : [ 6, 6 ],
+         "isPaid" : false,
+         "name" : "Tresor des templiers",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 2,
+               "type" : 4
+            }
+         ],
+         "quantityResourceMissing" : 5,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 3
+         }
+      },
+      {
+         "costToBuild" : [
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            },
+            {
+               "isPaid" : false,
+               "type" : 5
+            }
+         ],
+         "discardGain" : 3,
+         "instantGain" : [ 6 ],
+         "isPaid" : false,
+         "name" : "Triangle des bermudes",
+         "numberOfCopies" : 1,
+         "productionGain" : [
+            {
+               "cardType" : 0,
+               "quantity" : 1,
+               "type" : 3
+            }
+         ],
+         "quantityResourceMissing" : 4,
+         "relativePathToTexture" : "",
+         "type" : 25,
+         "victoryPoints" : {
+            "cardOrResourceType" : 0,
+            "numberOfPoints" : 4
+         }
+      }
+   ],
+   "isClockwise" : true,
+   "isFaceA" : true,
+   "isTestingGame" : true,
+   "phase" : 0,
+   "players" : [
+      {
+         "builtCards" : null,
+         "cardsTypeList" : [
+            {
+               "cardType" : 21,
+               "quantity" : 0
+            },
+            {
+               "cardType" : 22,
+               "quantity" : 0
+            },
+            {
+               "cardType" : 23,
+               "quantity" : 0
+            },
+            {
+               "cardType" : 24,
+               "quantity" : 0
+            },
+            {
+               "cardType" : 25,
+               "quantity" : 0
+            }
+         ],
+         "currentResources" : [
+            {
+               "quantity" : 0,
+               "resourceType" : 1
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 2
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 3
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 4
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 5
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 6
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 7
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 8
+            }
+         ],
+         "draftCards" : [
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 1
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 1
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 1
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 6
+                  }
+               ],
+               "discardGain" : 1,
+               "instantGain" : [ 7, 7 ],
+               "isPaid" : false,
+               "name" : "Juggernaut",
+               "numberOfCopies" : 1,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 2,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 7,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 22,
+                  "numberOfPoints" : 1
+               }
+            }
+         ],
+         "draftingCards" : [
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Zeppelin",
+               "numberOfCopies" : 6,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 2,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Zeppelin",
+               "numberOfCopies" : 6,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 2,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Zeppelin",
+               "numberOfCopies" : 6,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 2,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Zeppelin",
+               "numberOfCopies" : 6,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 2,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  }
+               ],
+               "discardGain" : 4,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Tresor de barbe noire",
+               "numberOfCopies" : 1,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 4
+                  },
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 3,
+               "relativePathToTexture" : "",
+               "type" : 25,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 2
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 1
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 1
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 4
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 4
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 4
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 8
+                  }
+               ],
+               "discardGain" : 4,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Tour geante",
+               "numberOfCopies" : 1,
+               "productionGain" : null,
+               "quantityResourceMissing" : 6,
+               "relativePathToTexture" : "",
+               "type" : 24,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 10
+               }
+            }
+         ],
+         "empire" : {
+            "empire" : 3,
+            "isFaceA" : true,
+            "name" : "ASIA",
+            "productionGain" : [
+               {
+                  "cardType" : 0,
+                  "quantity" : 1,
+                  "type" : 1
+               },
+               {
+                  "cardType" : 0,
+                  "quantity" : 2,
+                  "type" : 4
+               }
+            ],
+            "productionGainAdvanced" : [
+               {
+                  "cardType" : 0,
+                  "quantity" : 2,
+                  "type" : 1
+               },
+               {
+                  "cardType" : 0,
+                  "quantity" : 1,
+                  "type" : 2
+               },
+               {
+                  "cardType" : 0,
+                  "quantity" : 1,
+                  "type" : 3
+               }
+            ],
+            "relativePathOfTextureFaceB" : "./resources/img/Cards/Empire_Face_B/Asia.png",
+            "relativePathToTexture" : "./resources/img/Cards/Empire_Face_A/Asia.png",
+            "victoryPoints" : {
+               "cardOrResourceType" : 24,
+               "numberOfPoints" : 2
+            },
+            "victoryPointsAdvanced" : {
+               "cardOrResourceType" : 0,
+               "numberOfPoints" : 0
+            }
+         },
+         "id" : 0,
+         "name" : "MOI",
+         "relativePathToTexture" : "",
+         "resourcesInEmpireUnit" : 0,
+         "resourcesProduction" : [
+            {
+               "quantity" : 1,
+               "resourceType" : 1
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 2
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 3
+            },
+            {
+               "quantity" : 2,
+               "resourceType" : 4
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 5
+            }
+         ],
+         "state" : 0,
+         "toBuildCards" : null
+      },
+      {
+         "builtCards" : null,
+         "cardsTypeList" : [
+            {
+               "cardType" : 21,
+               "quantity" : 0
+            },
+            {
+               "cardType" : 22,
+               "quantity" : 0
+            },
+            {
+               "cardType" : 23,
+               "quantity" : 0
+            },
+            {
+               "cardType" : 24,
+               "quantity" : 0
+            },
+            {
+               "cardType" : 25,
+               "quantity" : 0
+            }
+         ],
+         "currentResources" : [
+            {
+               "quantity" : 0,
+               "resourceType" : 1
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 2
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 3
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 4
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 5
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 6
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 7
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 8
+            }
+         ],
+         "draftCards" : [
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Zeppelin",
+               "numberOfCopies" : 6,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 2,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            }
+         ],
+         "draftingCards" : [
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 3
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Brise glace",
+               "numberOfCopies" : 4,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 2,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 4,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 3
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Brise glace",
+               "numberOfCopies" : 4,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 2,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 4,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 3
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Brise glace",
+               "numberOfCopies" : 4,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 2,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 4,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 7
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 7
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Centre De La Terre",
+               "numberOfCopies" : 1,
+               "productionGain" : null,
+               "quantityResourceMissing" : 7,
+               "relativePathToTexture" : "",
+               "type" : 25,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 15
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 5
+                  }
+               ],
+               "discardGain" : 3,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Ile d avalon",
+               "numberOfCopies" : 1,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 3
+                  }
+               ],
+               "quantityResourceMissing" : 5,
+               "relativePathToTexture" : "",
+               "type" : 25,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 7
+               }
+            },
+            {
+               "costToBuild" : [
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  },
+                  {
+                     "isPaid" : false,
+                     "type" : 2
+                  }
+               ],
+               "discardGain" : 5,
+               "instantGain" : null,
+               "isPaid" : false,
+               "name" : "Zeppelin",
+               "numberOfCopies" : 6,
+               "productionGain" : [
+                  {
+                     "cardType" : 0,
+                     "quantity" : 1,
+                     "type" : 5
+                  }
+               ],
+               "quantityResourceMissing" : 2,
+               "relativePathToTexture" : "",
+               "type" : 22,
+               "victoryPoints" : {
+                  "cardOrResourceType" : 0,
+                  "numberOfPoints" : 0
+               }
+            }
+         ],
+         "empire" : {
+            "empire" : 5,
+            "isFaceA" : true,
+            "name" : "AZTEC",
+            "productionGain" : [
+               {
+                  "cardType" : 0,
+                  "quantity" : 2,
+                  "type" : 2
+               },
+               {
+                  "cardType" : 0,
+                  "quantity" : 1,
+                  "type" : 5
+               }
+            ],
+            "productionGainAdvanced" : [
+               {
+                  "cardType" : 0,
+                  "quantity" : 2,
+                  "type" : 1
+               },
+               {
+                  "cardType" : 0,
+                  "quantity" : 1,
+                  "type" : 2
+               },
+               {
+                  "cardType" : 0,
+                  "quantity" : 1,
+                  "type" : 3
+               }
+            ],
+            "relativePathOfTextureFaceB" : "./resources/img/Cards/Empire_Face_B/Azteca.png",
+            "relativePathToTexture" : "./resources/img/Cards/Empire_Face_A/Azteca.png",
+            "victoryPoints" : {
+               "cardOrResourceType" : 25,
+               "numberOfPoints" : 3
+            },
+            "victoryPointsAdvanced" : {
+               "cardOrResourceType" : 0,
+               "numberOfPoints" : 0
+            }
+         },
+         "id" : 1,
+         "name" : "TOI",
+         "relativePathToTexture" : "",
+         "resourcesInEmpireUnit" : 0,
+         "resourcesProduction" : [
+            {
+               "quantity" : 0,
+               "resourceType" : 1
+            },
+            {
+               "quantity" : 2,
+               "resourceType" : 2
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 3
+            },
+            {
+               "quantity" : 0,
+               "resourceType" : 4
+            },
+            {
+               "quantity" : 1,
+               "resourceType" : 5
+            }
+         ],
+         "state" : 0,
+         "toBuildCards" : null
+      }
+   ],
+   "resourceProducing" : 1,
+   "turn" : 1
+}

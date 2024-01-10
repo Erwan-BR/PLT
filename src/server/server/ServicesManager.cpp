@@ -45,29 +45,22 @@ namespace server
             sub_url = sub_url.substr(1);
             if(sub_url.empty())throw ServiceException(HttpStatus::BAD_REQUEST,"Wrong URL, try <service>/<sub_service>(/id)");
 
-            std::cout << sub_url << std::endl;
-
             string ssub_url = sub_url;
             while((ssub_url[0] != '/') && (ssub_url.size() != 0))ssub_url = ssub_url.substr(1);
             
-            if(ssub_url.empty())id=-1;
+            if(ssub_url.empty())id=0;
             else
             {
+                while(sub_url[sub_url.size()-1] != '/')sub_url = sub_url.substr(0,sub_url.size()-1);
+                sub_url = sub_url.substr(0,sub_url.size()-1);
                 ssub_url = ssub_url.substr(1);
                 if(ssub_url.empty())throw ServiceException(HttpStatus::BAD_REQUEST,"Wrong URL, try <service>/<sub_service>(/id)");
+                id = atoi(ssub_url.c_str());
             }
+            std::cout << sub_url << std::endl;
             std::cout << ssub_url << std::endl;
-            std::cout << id << std::endl;
-            try
-            {
-                size_t pos = 0;
-                id = stoi(ssub_url, &pos);
-                if(pos != ssub_url.size())throw ServiceException(HttpStatus::BAD_REQUEST,"You may have used a wrong id, try <service>/<id>");
-            }
-            catch(...)
-            {
-                throw ServiceException(HttpStatus::BAD_REQUEST,"You may have used a wrong id, try <service>/<id>");
-            }            
+  
+            std::cout << id << std::endl;        
         }
 
         if(method == "GET")
@@ -114,6 +107,8 @@ namespace server
             HttpStatus status = service->remove(id);
             return status;
         }
+
+        else std::cout << method << std::endl;
 
         return HttpStatus::BAD_REQUEST;
     }
