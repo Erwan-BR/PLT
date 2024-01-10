@@ -132,8 +132,37 @@ namespace render {
 	}
 
     /// @brief Full destructor of the Scene class.
-    Scene::~Scene (){
+    Scene::~Scene ()
+	{
+		// Delte ongine only, it will delete the game automatically.
+		delete engineOfGame;
+		delete game_renderer;
+		delete drafting_hand_renderer;
 
+		for (PlayerRenderer* playerRenderer: this->player_renderer)
+		{
+			delete playerRenderer;
+		}
+
+		for (Button* button : this->btnMain)
+		{
+			delete button;
+		}
+
+		for (Button* button : this->btnPlan)
+		{
+			delete button;
+		}
+
+		for (Button* button : this->btnFull)
+		{
+			delete button;
+		}
+
+		for (Button* button : this->btnDraft)
+		{
+			delete button;
+		}
     }
 
 	/// @brief Setter for current_window
