@@ -202,7 +202,7 @@ int main(int argc,char* argv[])
 
             // Checking who won.
             std::vector<int> winners = game->getWinners();
-            if (winners.size() == (size_t) numberOfAI)
+            if (1 != winners.size())
             {
                 numberOfTie++ ;
             }
