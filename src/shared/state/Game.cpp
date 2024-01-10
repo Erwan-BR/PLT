@@ -275,7 +275,10 @@ namespace state {
     ///@brief Initialize the Planification phase during which players choose the cards they will try to build
     void Game::initPlanification ()
     {
-        return ;
+        for (Player* player : this->players)
+        {
+            player->setState(PlayerState::PLAYING);
+        }
     }
 
     /// @brief End the planification phase to start the next phase.
