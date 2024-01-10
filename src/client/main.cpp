@@ -265,6 +265,59 @@ int main(int argc,char* argv[])
         engine::Engine* engineOfGame = new engine::Engine(game, locker);
         render::Scene* scene = new render::Scene(game, locker, engineOfGame);
 
+        //Observable
+        scene->setupObserver(game);
+        scene->setupObserver(player1);
+        scene->setupObserver(player2);
+
+        //Creation of the instance of sf::Event class that will received user's inputs.
+        sf::Event event;
+
+        //Main Loop active while the window is still open
+        while (window.isOpen())
+        {
+            //Clear the content of the window
+            window.clear();
+
+            //Test if an event happens and save it in "event"
+            while (window.pollEvent(event))
+            {
+                //Command to close the window
+                if (event.type == sf::Event::Closed){
+                    window.close();
+                }
+                if (event.type == sf::Event::MouseButtonReleased){
+                    scene->buttonHandle(event,window);
+                }
+                if (event.type == sf::Event::KeyPressed) {
+                    //std::cout<<to_string(event.key.code) << std::endl; //Debug Print the code of pressed key
+                    if (event.key.code == sf::Keyboard::A){
+                        scene->changeWindow(render::Window::MAIN_WINDOW); //Change the window to MAIN_WINDOW
+                    }
+                    if (event.key.code == sf::Keyboard::Z){
+                        scene->changeWindow(render::Window::DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
+                    }
+                    if (event.key.code == sf::Keyboard::E){
+                        scene->changeWindow(render::Window::PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
+                    }
+                    if (event.key.code == sf::Keyboard::R){
+                        scene->changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
+                    }
+                    if (event.key.code == sf::Keyboard::Q and scene->getWindow() == render::Window::PLAYER_INFO){
+                        scene->changePlayerInfoPlayer(0,render::PLAYER_INFO);
+                    }
+                    if (event.key.code == sf::Keyboard::S and scene->getWindow() == render::Window::PLAYER_INFO){
+                        scene->changePlayerInfoPlayer(1,render::PLAYER_INFO);
+                    }
+                }
+            }
+
+            scene->draw(window);
+
+            //Display the new content of the window
+            window.display();
+        }
+
         std::thread initThread(&engine::Engine::gameRunning, engineOfGame);
 
         initThread.join();
