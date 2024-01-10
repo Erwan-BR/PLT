@@ -20,6 +20,9 @@ using namespace render;
 void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene);
 void displayMessage();
 
+string getGameFromServer();
+void postGameOnServer(Game game);
+
 int main(int argc,char* argv[])
 {
     if (1 == argc)
@@ -134,6 +137,8 @@ int main(int argc,char* argv[])
                     if (event.key.code == sf::Keyboard::Space){
                         next_step(etape,&game,player1,player2,&scene);    //Go to the next step
                         etape++;
+                        postGameOnServer(game);
+
                     }
                         
                 }
@@ -151,81 +156,101 @@ int main(int argc,char* argv[])
 
     else if("server" == userInput)
     {
-        while(1)
+        //Creation of the window
+        int win_length = 1820;
+        int win_heigth = 800;
+        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+
+        //Creation of Transform (Scale adjusting to the window size)
+        float win_length_scale = (win_length*1.0f)/(1920.0f);
+        float win_heigth_scale = (win_heigth*1.0f)/(1080.0f);
+        sf::Transform tr_scale = sf::Transform().scale(win_length_scale, win_heigth_scale);
+
+        sf::Texture* t = new sf::Texture();
+        sf::Texture* t2 = new sf::Texture();
+        //Creation of testing instances of Player class
+        t->loadFromFile("./resources/img/pfp_1.png");
+        state::Player* player1 = new state::Player("MOI",0,t);
+        t2->loadFromFile("./resources/img/pfp_2.png");
+        state::Player* player2 = new state::Player("TOI",1,t2);
+
+        //Creation of the vector players
+        vector<state::Player*> players;
+        players.push_back(player1);
+        players.push_back(player2);
+
+        //Creation of the instance of the Game class
+        state::Game game = state::Game(players,true);
+
+        game.initGame();
+
+        //Creation of the instance of the Scene class
+        Scene scene = Scene(&game,tr_scale);
+
+        //Observable
+        scene.setupObserver(&game);
+        scene.setupObserver(player1);
+        scene.setupObserver(player2);
+
+        //Creation of the Font for the Texts
+        sf::Font font;
+        font.loadFromFile("./resources/font/arial.ttf");
+
+        //Creation of the instance of sf::Event class that will received user's inputs.
+        sf::Event event;
+
+
+        //Main Loop active while the window is still open
+        while (window.isOpen())
         {
-            //cout << "Please type the server ip (format: X.X.X.X:Port): " << endl;
-            cout << "Type something" << endl;
-            cout << "To leave this section, write 'exit'." << endl;
-            string inputText;
-            cin >> inputText;
-            if("exit" == inputText)
+            //Clear the content of the window
+            window.clear();
+
+            //Test if an event happens and save it in "event"
+            while (window.pollEvent(event))
             {
-                cout << "Disconnecting from server..." << endl;
-                return EXIT_SUCCESS;
-            }
-            // if("192.168.33.122:8888" != inputText)
-            // {
-            //     cout << "Invalid server address." << endl;
-            // }
-            else
-            {
-                pid_t pid;
-                int status;
-                pid = fork();
-                if(0 == pid)
-                {
-                    sf::Http server("127.0.0.1", 8888);
-                    sf::Http::Request request;
-
-                    cout << "Choose the requestmethod (GET, POST, PUT): ";
-                    cin >> inputText;
-
-                    if("GET" == inputText)
-                    {
-                        request.setMethod(sf::Http::Request::Method::Get);
-
-                        cout << "What do you want to get (/version, /user/<id>): ";
-                        cin >> inputText;
-                        request.setUri(inputText);
+                //Command to close the window
+                if (event.type == sf::Event::Closed){
+                    window.close();
+                }
+                if (event.type == sf::Event::KeyPressed) {
+                    //std::cout<<to_string(event.key.code)<<endl; //Debug Print the code of pressed key
+                    if (event.key.code == sf::Keyboard::A){
+                        scene.changeWindow(MAIN_WINDOW); //Change the window to MAIN_WINDOW
                     }
-                    else if("POST" == inputText)
-                    {
-                        request.setMethod(sf::Http::Request::Method::Post);
-
-                        cout << "Where do you want to post (user id): ";
-                        cin >> inputText;
-                        request.setUri(inputText);
-
-                        cout << "What do you want to post (Name or Age): ";
-                        cin >> inputText;
-                        request.setBody(inputText);
+                    if (event.key.code == sf::Keyboard::Z){
+                        scene.changeWindow(DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
                     }
-                    else if("PUT" == inputText)
-                    {
-                        request.setMethod(sf::Http::Request::Method::Put);
-
-                        cout << "Where do you want to post (user): ";
-                        cin >> inputText;
-                        request.setUri(inputText);
-
-                        cout << "What do you want to put (Name and Age): ";
-                        cin >> inputText;
-                        request.setBody(inputText);
+                    if (event.key.code == sf::Keyboard::E){
+                        scene.changeWindow(PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
                     }
-
-                    sf::Http::Response response = server.sendRequest(request);
-                    if(response.getStatus() == sf::Http::Response::Ok)
-                        cout << "Request successful. Response: " << response.getBody() << endl;
-                    else
-                    {
-                        cerr << "Request failed." << endl;
-                        cerr << "Status code: " << response.getStatus() << endl;
-                        cerr << "Error message: " << response.getBody() << endl; 
+                    if (event.key.code == sf::Keyboard::R){
+                        scene.changeWindow(PLAYER_INFO); //Change the window to PLAYER_INFO
+                    }
+                    if (event.key.code == sf::Keyboard::Q and scene.getWindow() == PLAYER_INFO){
+                        scene.changePlayerInfoPlayer(0);
+                    }
+                    if (event.key.code == sf::Keyboard::S and scene.getWindow() == PLAYER_INFO){
+                        scene.changePlayerInfoPlayer(1);
                     }
                 }
-                else while(wait(&status) == pid);
             }
+
+            sleep(1);
+
+            Json::Value gameJson;
+            Json::Reader reader;
+            reader.parse(getGameFromServer(), gameJson);
+            game = Game(gameJson);
+
+            scene.draw(window);
+
+            //Display the new content of the window
+            window.display();
         }
+        std::cout << "Exit Successfully !" << endl;
+
+        return EXIT_SUCCESS;        
     }
 
     std::cout << "Invalid argument." << endl;
@@ -423,5 +448,76 @@ void next_step(int etape,Game* game,Player* p1,Player* p2,Scene* scene){
         default:
             break;
     }
+
+}
+
+string getGameFromServer()
+{
+    Json::Value gameJson;
+
+    sf::Http server("127.0.0.1", 8888);
+    sf::Http::Request request;
+
+    request.setMethod(sf::Http::Request::Method::Get);
+    request.setUri("/game");
+    request.setHttpVersion(1,1);
+
+    sf::Http::Response response = server.sendRequest(request);
+    if(response.getStatus() == sf::Http::Response::Ok)
+    {
+        cout << "Request successful." << endl;
+        return response.getBody();
+    }
+    else
+    {
+        cerr << "Request failed." << endl;
+        cerr << "Status code: " << response.getStatus() << endl;
+        cerr << "Error message: " << response.getBody() << endl;
+        return "";
+    }
+}
+
+void postGameOnServer(Game game)
+{
+    std::cout << "Save on server." << std::endl;
+    sf::Http server("127.0.0.1", 8888);
+    sf::Http::Request request;
+
+    request.setMethod(sf::Http::Request::Method::Post);
+    request.setHttpVersion(1,1);
+
+    Json::Value gameJson = game.toJSON();
+
+    Json::Value::Members members = gameJson.getMemberNames();
+    for(string element: members)
+    {
+        if(gameJson[element].isArray())
+        {
+            std::cout << element << " is an array" << std::endl;
+        }
+        else
+        {
+            std::cout << element << " is not an array" << std::endl;
+        }
+    }
+
+    for(int i=0; i<(int)gameJson["players"].size();i++)
+    {
+        request.setUri("/game/"+to_string(i));
+        request.setBody(gameJson["players"][i].toStyledString());
+
+        sf::Http::Response response = server.sendRequest(request);
+        if(response.getStatus() == sf::Http::Response::Ok)
+        {
+            cout << "Request successful." << endl;
+        }
+        else
+        {
+            cerr << "Request failed." << endl;
+            cerr << "Status code: " << response.getStatus() << endl;
+            cerr << "Error message: " << response.getBody() << endl;
+        }
+    }
+
 
 }

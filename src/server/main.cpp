@@ -1,6 +1,5 @@
 #include "server/ServicesManager.hpp"
-#include "server/VersionService.hpp"
-#include "server/UserService.hpp"
+#include "server/GameService.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -120,13 +119,7 @@ int main(int argc, char *const *argv)
 {
     try {
         server::ServicesManager servicesManager;
-        servicesManager.registerService(make_unique<server::VersionService>());
-
-        server::UserDB userDB;
-        userDB.addUser(make_unique<server::User>("Onur",23));
-        userDB.addUser(make_unique<server::User>("Maxime",22));
-        userDB.addUser(make_unique<server::User>("Adrien",21));
-        servicesManager.registerService(make_unique<server::UserService>(std::ref(userDB)));
+        servicesManager.registerService(make_unique<server::GameService>());
 
         struct MHD_Daemon *d;
         if (argc != 2) {

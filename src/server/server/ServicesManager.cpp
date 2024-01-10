@@ -7,6 +7,7 @@
 
 #include "ServicesManager.hpp"
 #include <string.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -32,31 +33,46 @@ namespace server
         if(!service)
             throw ServiceException(HttpStatus::NOT_FOUND,"Error 404: Page not found");
         const string& pattern(service->getPattern());
+        string sub_url = ""; 
         int id = 0;
+
+        std::cout << url << std::endl;
 
         if(url.size() > pattern.size())
         {
-            string end = url.substr(pattern.size());
-            if(end[0] != '/')throw ServiceException(HttpStatus::BAD_REQUEST,"Wrong URL, try <service>/<id>");
-            end = end.substr(1);
-            if(end.empty())throw ServiceException(HttpStatus::BAD_REQUEST,"Wrong URL, try <service>/<id>");
+            sub_url = url.substr(pattern.size());
+            if(sub_url[0] != '/')throw ServiceException(HttpStatus::BAD_REQUEST,"Wrong URL, try <service>/<id>");
+            sub_url = sub_url.substr(1);
+            if(sub_url.empty())throw ServiceException(HttpStatus::BAD_REQUEST,"Wrong URL, try <service>/<sub_service>(/id)");
+
+            std::cout << sub_url << std::endl;
+
+            string ssub_url = sub_url;
+            while((ssub_url[0] != '/') && (ssub_url.size() != 0))ssub_url = ssub_url.substr(1);
+            
+            if(ssub_url.empty())id=-1;
+            else
+            {
+                ssub_url = ssub_url.substr(1);
+                if(ssub_url.empty())throw ServiceException(HttpStatus::BAD_REQUEST,"Wrong URL, try <service>/<sub_service>(/id)");
+            }
+            std::cout << ssub_url << std::endl;
+            std::cout << id << std::endl;
             try
             {
                 size_t pos = 0;
-                id = stoi(end, &pos);
-                if(pos != end.size())throw ServiceException(HttpStatus::BAD_REQUEST,"You may have used a wrong id, try <service>/<id>");
+                id = stoi(ssub_url, &pos);
+                if(pos != ssub_url.size())throw ServiceException(HttpStatus::BAD_REQUEST,"You may have used a wrong id, try <service>/<id>");
             }
             catch(...)
             {
                 throw ServiceException(HttpStatus::BAD_REQUEST,"You may have used a wrong id, try <service>/<id>");
-            }
-            
-
+            }            
         }
 
         if(method == "GET")
         {
-            cerr << "GET request " << pattern << " with id = " << id << endl;
+            cerr << "GET request " << pattern << endl;
             Json::Value jsonOut;
             HttpStatus status = service->get(jsonOut, id);
 
@@ -66,13 +82,13 @@ namespace server
 
         if(method == "POST")
         {
-            cerr << "POST request " << pattern << " with data: " << in << endl;
+            cerr << "POST request " << pattern << endl;
             Json::Reader jsonReader;
             Json::Value jsonIn;
             Json::Value jsonOut;
             if(!jsonReader.parse(in, jsonIn))
                 throw ServiceException(HttpStatus::BAD_REQUEST,"Invalid data sent: "+jsonReader.getFormatedErrorMessages());
-            HttpStatus status = service->post(jsonOut, jsonIn, id);
+            HttpStatus status = service->post(jsonOut, jsonIn, sub_url, id);
             
             out = jsonOut.toStyledString();
             return status;
@@ -80,7 +96,7 @@ namespace server
 
         if(method == "PUT")
         {
-            cerr << "PUT request " << pattern << " with data: " << in << endl;
+            cerr << "PUT request " << pattern << endl;
             Json::Reader jsonReader;
             Json::Value jsonIn;
             Json::Value jsonOut;

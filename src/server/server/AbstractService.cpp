@@ -29,7 +29,7 @@ namespace server
         throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
     }
 
-    HttpStatus AbstractService::post (Json::Value& out, const Json::Value& in, int id) {
+    HttpStatus AbstractService::post (Json::Value& out, const Json::Value& in, string sub_url, int id) {
         throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
     }
 

@@ -425,6 +425,7 @@ namespace state {
         gameJSON["resourceProducing"] = static_cast<int> (this->resourceProducing);
         gameJSON["isTestingGame"] = this->isTestingGame;
 
+        this->notifyObservers();
 
         return gameJSON;
     }

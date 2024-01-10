@@ -9,7 +9,6 @@
 #define __ServicesManager_hpp__
 
 #include "AbstractService.hpp"
-#include "VersionService.hpp"
 
 #include <memory>
 #include <iostream>
@@ -17,6 +16,11 @@
 
 using std::vector;
 using std::unique_ptr;
+
+template<class T,typename ... Args>
+std::unique_ptr<T> make_unique(Args ... args) {
+    return std::unique_ptr<T>(new T(args ...));
+}
 
 #include "ServicesManager.h"
 
