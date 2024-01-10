@@ -69,9 +69,6 @@ jobs:
         indicators: true
         output: both
         thresholds: '0 50'
-      ignore:
-        - "extern"
-        - "**/main.cpp"
       
     # Automatic comment of the code-coverage on the pull request  
     - name: Add Coverage PR Comment
@@ -86,5 +83,9 @@ jobs:
       uses: codecov/codecov-action@v3
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      ignore:
+        - "extern"
+        - "reports"
+        - "**/main.cpp"
         
 # vim: set sw=2 sts=2 et:
