@@ -267,6 +267,8 @@ int main(int argc,char* argv[])
         engine::Engine* engineOfGame = new engine::Engine(game, locker);
 
         // To-do : create the render properly and give it the engine.
+
+        delete engineOfGame;
     }
     
     std::cout << "Invalid argument." << std::endl;
