@@ -67,7 +67,7 @@ namespace engine
     {
     }
 
-    void Command::launchCommand(state::Game* game) const 
+    void Command::launchCommand(std::shared_ptr<state::Game> game) const 
     {
         return ;
     }

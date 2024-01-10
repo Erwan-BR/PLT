@@ -25,7 +25,7 @@ namespace engine
     }
 
     /// @brief Launch the command to keep a card.
-    void KeepCard::launchCommand (state::Game* game) const
+    void KeepCard::launchCommand (std::shared_ptr<state::Game> game) const
     {
         game->getPlayers()[this->playerIndex]->keepCard(this->cardIndex);
     }

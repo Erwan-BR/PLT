@@ -23,7 +23,7 @@ namespace engine
     }
 
     /// @brief Launch the command to save a game.
-    void SaveGame::launchCommand (state::Game* game) const
+    void SaveGame::launchCommand (std::shared_ptr<state::Game> game) const
     {
         // To complete.
         return ;

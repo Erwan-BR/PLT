@@ -9,7 +9,7 @@ namespace render {
 	/// @param game Game that is displayed.
 	/// @param locker Mutex that will lock the action performed by the player.
 	/// @param engineOfGame Engine that make the complete game.
-	Scene::Scene (state::Game* game, std::mutex & locker, engine::Engine* engineOfGame) :
+	Scene::Scene (std::shared_ptr<state::Game> game, std::mutex & locker, engine::Engine* engineOfGame) :
 		game(game),
 		locker(locker),
 		engineOfGame(engineOfGame)
@@ -34,7 +34,7 @@ namespace render {
 		engine::Command* command;
 
 		//Get Players
-		std::vector<state::Player*> players = game->getPlayers();
+		std::vector<std::shared_ptr<state::Player>> players = game->getPlayers();
 
 		//Generate PlayerRenderer for MAIN_WINDOW
 		pRenderer = new PlayerRenderer(players[0],{525.f,780.f},MAIN_WINDOW);
@@ -198,7 +198,7 @@ namespace render {
 	/// @param window Window where the info are changed (among MAIN_WINDOW & PLAYER_INFO)
 	void Scene::changePlayerInfoPlayer(int p_index,Window window){
 		//Get Player to be display
-		state::Player* player = game->getPlayers()[p_index];
+		std::shared_ptr<state::Player> player = game->getPlayers()[p_index];
 
 		int r_id;
 		switch(window){
@@ -273,8 +273,8 @@ namespace render {
 
 	}
 
-	void Scene::setSelectedCard(state::Card* card){
-		state::Player* p = this->game->getPlayers()[0];
+	void Scene::setSelectedCard(std::shared_ptr<state::Card> card){
+		std::shared_ptr<state::Player> p = this->game->getPlayers()[0];
 		switch (this->current_window){
 			case MAIN_WINDOW:{
 				auto cards = p->getToBuildCards();
@@ -413,7 +413,7 @@ namespace render {
 
 	}
 
-	void Scene::setupObserver(state::Observable* observable){
+	void Scene::setupObserver(std::shared_ptr<state::Observable> observable){
 		observable->addObserver(this->game_renderer);
 		for(PlayerRenderer* pRenderer: player_renderer){
 			observable->addObserver(pRenderer);

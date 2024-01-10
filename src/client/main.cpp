@@ -20,7 +20,7 @@
 #include "../shared/state.h"
 #include "render.h"
 
-void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p2, render::Scene* scene);
+void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
 void displayMessage();
 void displayTemporaryCommands();
 void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
@@ -51,16 +51,16 @@ int main(int argc,char* argv[])
         sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Default);
 
         //Creation of testing instances of Player class
-        state::Player* player1 = new state::Player("MOI",0);
-        state::Player* player2 = new state::Player("TOI",1);
+        std::shared_ptr<state::Player> player1 = std::make_shared<state::Player>("MOI",0);
+        std::shared_ptr<state::Player> player2 = std::make_shared<state::Player>("TOI",1);
 
         //Creation of the vector players
-        std::vector<state::Player*> players;
+        std::vector<std::shared_ptr<state::Player>> players;
         players.push_back(player1);
         players.push_back(player2);
 
         //Creation of the instance of the Game class
-        state::Game* game = new state::Game(players,true);
+        std::shared_ptr<state::Game> game = std::make_shared<state::Game>(players,true);
 
         game->initGame();
 
@@ -130,8 +130,6 @@ int main(int argc,char* argv[])
         }
         std::cout << "Exit Successfully !" << std::endl;
 
-        delete engineOfGame;
-
         return EXIT_SUCCESS;
     }
 
@@ -162,27 +160,25 @@ int main(int argc,char* argv[])
 
         for (int gameNumber = 0; gameNumber < numberOfGames; gameNumber++)
         {
-            std::vector<state::Player*> ais = {};
+            std::vector<std::shared_ptr<state::Player>> ais = {};
             for (int i = 0; i < numberOfAI; i++)
             {
-                //state::Player* newAI = new ai::AIRandom("dummy", -i);
-                state::Player* newAI;
+                std::shared_ptr<state::Player> newAI;
                 if (i%2)
                 {
-                    newAI = new ai::AIRandom("dummy", -i-1);
+                    newAI = std::make_shared<ai::AIRandom>("dummy", -i-1);
                 }
                 else
                 {
-                    newAI = new ai::AIAdvanced("smart", -i-1);
+                    newAI = std::make_shared<ai::AIAdvanced>("smart", -i-1);
                 }
-                //state::Player* newAI = new ai::AIAdvanced("dummy", -i-1);
                 ais.push_back(newAI);
             }
 
-            state::Game* game = new state::Game(ais);
+            std::shared_ptr<state::Game> game = std::make_shared<state::Game>(ais);
             std::mutex locker;
             engine::Engine* engineOfGame = new engine::Engine(game, locker);
-            engineOfGame->gameRunning();
+            engineOfGame->gameRunning(true);
 
             for (int i = 0; i < numberOfAI; i++)
             {
@@ -252,15 +248,14 @@ int main(int argc,char* argv[])
 
         // Creation of two players : The player, vs the dummy AI.
         std::string nameOfPlayer = "PlayerName";
-        state::Player* player1 = new state::Player(nameOfPlayer, 10);
-        state::Player* player2 ;
-        player2 = new ai::AIRandom("dummy", - 10);
-        std::vector<state::Player*> players;
+        std::shared_ptr<state::Player> player1 = std::make_shared<state::Player>(nameOfPlayer, 10);
+        std::shared_ptr<state::Player> player2 = std::make_shared<ai::AIRandom>("dummy", -10);
+        std::vector<std::shared_ptr<state::Player>> players;
         players.push_back(player1);
         players.push_back(player2);
 
         // Creation of the game, the engine and the render.
-        state::Game* game = new state::Game(players);
+        std::shared_ptr<state::Game> game = std::make_shared<state::Game>(players);
         game->initGame();
         std::mutex locker;
         engine::Engine* engineOfGame = new engine::Engine(game, locker);
@@ -274,7 +269,8 @@ int main(int argc,char* argv[])
         //Creation of the instance of sf::Event class that will received user's inputs.
         sf::Event event;
 
-        std::thread initThread(&engine::Engine::gameRunning, engineOfGame);
+        // Creating the thread that contains the engine that does not require to launch the game.
+        std::thread initThread(&engine::Engine::gameRunning, engineOfGame, false);
 
         //Main Loop active while the window is still open
         while (window.isOpen())
@@ -355,7 +351,7 @@ void displayMessage()
 	std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
 }
 
-void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p2, render::Scene* scene){
+void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene){
     switch(etape){
         case 0:         //DRAFT 1ere carte
             scene->changeWindow(render::Window::DRAFTING_WINDOW);

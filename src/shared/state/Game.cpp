@@ -18,7 +18,7 @@ namespace state {
         
             for (const Json::Value& playerJSON : playersArray)
             {
-                this->players.push_back(new Player(playerJSON));
+                this->players.push_back(std::make_shared<Player>(playerJSON));
             }
         }
 
@@ -33,7 +33,7 @@ namespace state {
         
             for (const Json::Value& developmentCardJSON : deckArray)
             {
-                this->deck.push_back(new DevelopmentCard(developmentCardJSON));
+                this->deck.push_back(std::make_shared<DevelopmentCard>(developmentCardJSON));
             }
         }
 
@@ -45,20 +45,16 @@ namespace state {
 
     ///@brief Create an instance of the class Game with players specified
     ///@param players Vector of pointers which designate the players of the game
-    Game::Game(std::vector<Player*> players) :
+    Game::Game(std::vector<std::shared_ptr<Player>> players) :
         Observable(),
-        players(players),
-        turn(0),
-        phase(PRODUCTION),
-        deck(),
-        isClockwise(true)
+        players(players)
     {
     }
 
     ///@brief Create an instance of the class Game with players specified. isTestingGame passed for the creation of a testing game.
     ///@param players Vector of pointers which designate the players of the game.
     /// @param isTestingGame Define if the game is created to be played or just for testing.
-    Game::Game(std::vector<Player*> players, bool isTestingGame) :
+    Game::Game(std::vector<std::shared_ptr<Player>> players, bool isTestingGame) :
         Observable(),
         players(players),
         isTestingGame(isTestingGame)
@@ -68,23 +64,12 @@ namespace state {
     ///@brief Destructor of the Class Game
     Game::~Game ()
     {
-        // Delete all cards from the deck.
-        for (DevelopmentCard* card : this->deck)
-        {
-            delete card;
-        }
-
-        // Delete all players
-        for (Player* player : this->players)
-        {
-            delete player;
-        }
     }
 
     ///@brief Initialize the game
     void Game::initGame ()
     {
-        std::vector<EmpireCard*> empires = this->initEmpire();
+        std::vector<std::shared_ptr<EmpireCard>> empires = this->initEmpire();
         this->initCards();
         this->initPlayers(empires);
         this->startGame();
@@ -106,13 +91,13 @@ namespace state {
     }
 
     /// @brief Distributes the empires to the players
-    void Game::initPlayers (std::vector<EmpireCard*> empires)
+    void Game::initPlayers (std::vector<std::shared_ptr<EmpireCard>> empires)
     {
         // Checking if the number of players is inferior of the number of empires. We should always enter inside.
         if (this->players.size() <= empires.size())
         {
             int empireIndex = 0;
-            for(Player* player : this->players)
+            for(std::shared_ptr<Player> player : this->players)
             {
                 // Initialise the empires that will be given to the players
                 player->setEmpire(empires[empireIndex]);
@@ -129,10 +114,10 @@ namespace state {
     }
         
     ///@brief Create and Initialize the Empire for the game
-    std::vector<EmpireCard*> Game::initEmpire ()
+    std::vector<std::shared_ptr<EmpireCard>> Game::initEmpire ()
     {
         CreateAllCards empireCardCreation;
-        std::vector<EmpireCard*> empires = empireCardCreation.createAllEmpireCards(isFaceA);
+        std::vector<std::shared_ptr<EmpireCard>> empires = empireCardCreation.createAllEmpireCards(isFaceA);
 
         // Shuffle if not a testing game.
         if (! this->isTestingGame)
@@ -196,10 +181,10 @@ namespace state {
     ///@brief Initialize the Draft part of the game during which players select their cards
     void Game::initDraft ()
     {
-        for(Player* player : this->players)
+        for(std::shared_ptr<Player> player : this->players)
         {
             // Re-Initialise the cards that will be given to the players
-            std::vector<DevelopmentCard*> draftingDeck = {};
+            std::vector<std::shared_ptr<DevelopmentCard>> draftingDeck = {};
 
             for(int i = 0; i < 7; i++)
             {
@@ -231,7 +216,7 @@ namespace state {
         if (this->isClockwise)
         {
             // Memorize the first player deck to give it to the last player.
-            std::vector<DevelopmentCard*> firstPlayerDeck = this->players[0]->getDraftingCards();
+            std::vector<std::shared_ptr<DevelopmentCard>> firstPlayerDeck = this->players[0]->getDraftingCards();
 
             // Iterating among all players (except the last one) to make the draft.
             for (long unsigned int playerIndex = 0; playerIndex < this->players.size() - 1; playerIndex++)
@@ -245,7 +230,7 @@ namespace state {
         else
         {
             // Memorize the last player deck to give it to the first player.
-            std::vector<DevelopmentCard*> lastPlayerDeck = this->players[(this->players.size()-1)]->getDraftingCards();
+            std::vector<std::shared_ptr<DevelopmentCard>> lastPlayerDeck = this->players[(this->players.size()-1)]->getDraftingCards();
 
             // Iterating among all players (except the first one) to make the draft.
             for (long unsigned int playerIndex = (this->players.size()-1); playerIndex > 0; playerIndex--)
@@ -257,7 +242,7 @@ namespace state {
             this->players[0]->setDraftingCards(lastPlayerDeck);
         }
         
-        for (Player* player : this->players)
+        for (std::shared_ptr<Player> player : this->players)
         {
             player->setState(PlayerState::PLAYING);
         }
@@ -275,7 +260,7 @@ namespace state {
     ///@brief Initialize the Planification phase during which players choose the cards they will try to build
     void Game::initPlanification ()
     {
-        for (Player* player : this->players)
+        for (std::shared_ptr<Player> player : this->players)
         {
             player->setState(PlayerState::PLAYING);
         }
@@ -313,7 +298,7 @@ namespace state {
 
         this->produceResource();
         
-        for (Player* player : this->players)
+        for (std::shared_ptr<Player> player : this->players)
         {
             player->setState(PlayerState::PLAYING);
         }
@@ -334,7 +319,7 @@ namespace state {
         int index = 0;
 
         // Iterating among all players.
-        for(Player* player : this->players)
+        for(std::shared_ptr<Player> player : this->players)
         {
             int playerProduction = player->getProductionGain(this->resourceProducing);
 
@@ -424,7 +409,7 @@ namespace state {
 
         // Serialize the vector of players
         Json::Value playersArray;
-        for (const Player* player : this->players)
+        for (const std::shared_ptr<Player>& player : this->players)
         {
             playersArray.append(player->toJSON());
         }
@@ -435,7 +420,7 @@ namespace state {
 
         // Serialize the vector of drawable cards
         Json::Value cardsArray;
-        for (const DevelopmentCard* card : this->deck)
+        for (const std::shared_ptr<DevelopmentCard>& card : this->deck)
         {
             cardsArray.append(card->toJSON());
         }
@@ -454,7 +439,7 @@ namespace state {
 
     /// @brief Get Players in the game.
     /// @return All players inside the game.
-    std::vector<Player*> Game::getPlayers () const
+    std::vector<std::shared_ptr<Player>> Game::getPlayers () const
     {
         return this->players;
     }

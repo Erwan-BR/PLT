@@ -25,7 +25,7 @@ namespace engine
     }
 
     /// @brief Launch the command to end the planification phase for this player.
-    void EndPlanification::launchCommand (state::Game* game) const
+    void EndPlanification::launchCommand (std::shared_ptr<state::Game> game) const
     {
         game->getPlayers()[this->playerIndex]->endPlanification();
     }

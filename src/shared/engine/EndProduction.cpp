@@ -24,7 +24,7 @@ namespace engine
     }
 
     /// @brief Launch the command to end the production phase for this player.
-    void EndProduction::launchCommand (state::Game* game) const
+    void EndProduction::launchCommand (std::shared_ptr<state::Game> game) const
     {
         game->getPlayers()[this->playerIndex]->endProduction();
     }

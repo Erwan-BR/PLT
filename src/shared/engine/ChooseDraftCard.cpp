@@ -25,7 +25,7 @@ namespace engine
     }
 
     /// @brief Launching the command to choose the card from the draft cards.
-    void ChooseDraftCard::launchCommand (state::Game* game) const
+    void ChooseDraftCard::launchCommand (std::shared_ptr<state::Game> game) const
     {
         game->getPlayers()[this->playerIndex]->chooseDraftCard(this->cardIndex);
     }

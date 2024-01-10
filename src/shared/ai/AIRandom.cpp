@@ -62,7 +62,7 @@ namespace ai
     /// @brief Method used to implement how the AI uses it's resources (after the planification with instantGains, and after each production).
     void AIRandom::AIUseProducedResources ()
     {
-        const int numberOfCardsToBuild = (const int) this->toBuildCards.size();
+        size_t numberOfCardsToBuild = this->toBuildCards.size();
         // If no card to build, put all resources on the empire.
         if (0 == numberOfCardsToBuild)
         {
@@ -88,6 +88,13 @@ namespace ai
         // Iterating among all resources that needs to be use.
         for (state::ResourceType currentResource : resourceToPlay)
         {
+            // Recompute the number of card to build (could have change when constructing a card)
+            numberOfCardsToBuild = this->toBuildCards.size();
+            // If no card to build, put all resources on the empire.
+            if (0 == numberOfCardsToBuild)
+            {
+                this->sendAllResourcesToEmpire();
+            }
             // Check if the resource is not playable, to send it directly into the empire.
             if (this->isResourcePlayable(currentResource))
             {

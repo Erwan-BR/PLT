@@ -5,7 +5,7 @@ namespace render
 {
     /// @brief Constructor of the card renderer.
     /// @param card Card to render.
-    DevelopmentCardRenderer::DevelopmentCardRenderer (state::DevelopmentCard* card,sf::Vector2f position,float scale) :
+    DevelopmentCardRenderer::DevelopmentCardRenderer (std::shared_ptr<state::DevelopmentCard> card,sf::Vector2f position,float scale) :
         card(card)
     {
         //Get the Texture form Card

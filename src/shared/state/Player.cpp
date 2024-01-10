@@ -11,7 +11,7 @@ namespace state {
 
         if (! jsonValue["empire"].isNull())
         {
-            this->empire = new EmpireCard(jsonValue["empire"]);
+            this->empire = std::make_shared<EmpireCard>(jsonValue["empire"]);
         }
 
         this->resourcesInEmpireUnit = jsonValue["resourcesInEmpireUnit"].asInt();
@@ -25,7 +25,7 @@ namespace state {
         
             for (const Json::Value& cardJSON : cardArray)
             {
-                this->builtCards.push_back(new DevelopmentCard(cardJSON));
+                this->builtCards.push_back(std::make_shared<DevelopmentCard>(cardJSON));
             }
         }
 
@@ -37,7 +37,7 @@ namespace state {
         
             for (const Json::Value& cardJSON : cardArray)
             {
-                this->toBuildCards.push_back(new DevelopmentCard(cardJSON));
+                this->toBuildCards.push_back(std::make_shared<DevelopmentCard>(cardJSON));
             }
         }
 
@@ -49,7 +49,7 @@ namespace state {
         
             for (const Json::Value& cardJSON : cardArray)
             {
-                this->draftingCards.push_back(new DevelopmentCard(cardJSON));
+                this->draftingCards.push_back(std::make_shared<DevelopmentCard>(cardJSON));
             }
         }
 
@@ -61,7 +61,7 @@ namespace state {
         
             for (const Json::Value& cardJSON : cardArray)
             {
-                this->draftCards.push_back(new DevelopmentCard(cardJSON));
+                this->draftCards.push_back(std::make_shared<DevelopmentCard>(cardJSON));
             }
         }
 
@@ -109,32 +109,6 @@ namespace state {
     /// @brief Destructor of the class Player
     Player::~Player()
     {
-        if (NULL != this->empire)
-        {
-            delete this->empire;
-        }
-        
-        for(DevelopmentCard* card : this->builtCards)
-        {
-            delete card;
-        }
-
-
-        for(DevelopmentCard* card : this->toBuildCards)
-        {
-            delete card;
-        }
-
-
-        for(DevelopmentCard* card : this->draftingCards)
-        {
-            delete card;
-        }
-
-        for(DevelopmentCard* card : this->draftCards)
-        {
-            delete card;
-        }
     }
 
     /// @brief Method called in the constructor. Used to initialize all dictionnary to null values.
@@ -193,7 +167,7 @@ namespace state {
     /// @return True if the player can play this resource, false either.
     bool Player::isResourcePlayable (ResourceType resource) const
     {
-        for (DevelopmentCard* cardToBuild : this->toBuildCards)
+        for (std::shared_ptr<DevelopmentCard> cardToBuild : this->toBuildCards)
         {
             if (cardToBuild->isResourceAddable(resource))
             {
@@ -276,7 +250,7 @@ namespace state {
         {
             return ;
         }
-        DevelopmentCard* card = this->draftCards.at(toKeepCardIndex);
+        std::shared_ptr<DevelopmentCard> card = this->draftCards.at(toKeepCardIndex);
         this->toBuildCards.push_back(card);
         this->draftCards.erase(this->draftCards.begin() + toKeepCardIndex);
         this->notifyObservers();
@@ -302,7 +276,7 @@ namespace state {
         int productionValue = 0;
 
         // Iterating among all constructed cards.
-        for(DevelopmentCard* card : this->builtCards)
+        for(std::shared_ptr<DevelopmentCard> card : this->builtCards)
         {
             // Iterating among all resources produced by this card.
             for(ResourceToProduce* resource : card->getProductionGain())
@@ -349,7 +323,7 @@ namespace state {
     int Player::computeVictoryPoint() const
     {
         int victoryPoints = 0;
-        for(DevelopmentCard* card : this->builtCards)
+        for(std::shared_ptr<DevelopmentCard> card : this->builtCards)
         {
             CardVictoryPoint* cardVictoryPoints = card->getVictoryPoints();
 
@@ -455,7 +429,7 @@ namespace state {
     /// @brief End the planificiation for the current player. Send all drafted cards to the to buildCard.
     void Player::endPlanification ()
     {
-        for (DevelopmentCard* card : this->draftCards)
+        for (std::shared_ptr<DevelopmentCard> card : this->draftCards)
         {
             this->toBuildCards.push_back(card);
         }
@@ -499,7 +473,7 @@ namespace state {
         playerJSON["name"] = this->name;
         playerJSON["id"] = this->id;
         
-        if (NULL == this->empire)
+        if (nullptr == this->empire)
         {
             playerJSON["empire"] = Json::nullValue;
         }
@@ -510,7 +484,7 @@ namespace state {
 
         // Serialize the vector of builtCards
         Json::Value builtCardsArray;
-        for (const DevelopmentCard* card : this->builtCards)
+        for (const std::shared_ptr<DevelopmentCard>& card : this->builtCards)
         {
             builtCardsArray.append(card->toJSON());
         }
@@ -518,7 +492,7 @@ namespace state {
 
         // Serialize the vector of toBuildCards
         Json::Value toBuildCardsArray;
-        for (const DevelopmentCard* card : this->toBuildCards)
+        for (const std::shared_ptr<DevelopmentCard>& card : this->toBuildCards)
         {
             toBuildCardsArray.append(card->toJSON());
         }
@@ -526,7 +500,7 @@ namespace state {
 
         // Serialize the vector of draftingCards
         Json::Value draftingCardsArray;
-        for (const DevelopmentCard* card : this->draftingCards)
+        for (const std::shared_ptr<DevelopmentCard>& card : this->draftingCards)
         {
             draftingCardsArray.append(card->toJSON());
         }
@@ -534,7 +508,7 @@ namespace state {
 
         // Serialize the vector of draftCards
         Json::Value draftCardsArray;
-        for (const DevelopmentCard* card : this->draftCards)
+        for (const std::shared_ptr<DevelopmentCard>& card : this->draftCards)
         {
             draftCardsArray.append(card->toJSON());
         }
@@ -580,7 +554,7 @@ namespace state {
 
     /// @brief Setter for the empire card. The resources produced has to be updated.
     /// @param empire Empire to give to the player.
-    void Player::setEmpire(EmpireCard* empire)
+    void Player::setEmpire(std::shared_ptr<EmpireCard> empire)
     {
         this->empire = empire;
 
@@ -589,10 +563,10 @@ namespace state {
 
     /// @brief Setter for the drafting deck
     /// @param draft drafting deck to give to the player
-    void Player::setDraftingCards(std::vector<DevelopmentCard*> draft)
+    void Player::setDraftingCards(std::vector<std::shared_ptr<DevelopmentCard>> draft)
     {
         this->draftingCards = {};
-        for(DevelopmentCard* card : draft)
+        for(std::shared_ptr<DevelopmentCard> card : draft)
         {
             this->draftingCards.push_back(card);
         }
@@ -625,35 +599,35 @@ namespace state {
 
     /// @brief Get the empire card of the player.
     /// @return Empire Card of the player.
-    EmpireCard* Player::getEmpire () const
+    std::shared_ptr<EmpireCard> Player::getEmpire () const
     {
         return this->empire;
     }
 
     /// @brief Get the cards that are already built by the player.
     /// @return Vector of cards built by the player.
-    std::vector<DevelopmentCard*> Player::getBuiltCards () const
+    std::vector<std::shared_ptr<DevelopmentCard>> Player::getBuiltCards () const
     {
         return this->builtCards;
     }
 
     /// @brief Get the cards that are not already built by the player.
     /// @return Vector of cards not built by the player.
-    std::vector<DevelopmentCard*> Player::getToBuildCards () const
+    std::vector<std::shared_ptr<DevelopmentCard>> Player::getToBuildCards () const
     {
         return this->toBuildCards;
     }
 
     /// @brief Get the cards that are in the hand of the player, and he has to choose one.
     /// @return Vector of cards that the player can choose.
-    std::vector<DevelopmentCard*> Player::getDraftingCards () const
+    std::vector<std::shared_ptr<DevelopmentCard>> Player::getDraftingCards () const
     {
         return this->draftingCards;
     }
 
     /// @brief Get the cards that the player choosed during the drafting phase.
     /// @return Vector of cards that the player choosed during the drafting phase.
-    std::vector<DevelopmentCard*> Player::getDraftCards () const
+    std::vector<std::shared_ptr<DevelopmentCard>> Player::getDraftCards () const
     {
         return this->draftCards;
     }

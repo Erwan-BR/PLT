@@ -12,15 +12,15 @@ namespace state
 {
     /// @brief Create all development cards for a game.
     /// @return Vector of all development cards.
-    std::vector<DevelopmentCard*> CreateAllCards::createAllDevelopmentCards (bool isTestingGame) const
+    std::vector<std::shared_ptr<DevelopmentCard>> CreateAllCards::createAllDevelopmentCards (bool isTestingGame) const
     {
-        std::vector<DevelopmentCard*> returnValue = {};
+        std::vector<std::shared_ptr<DevelopmentCard>> returnValue = {};
 
         const std::string folderPath = "./resources/cardsJSON/";  // Update this with your actual folder path
 
         const std::vector<std::string> cardsNameToRetrieve = {"Tour geante", "Tresor de barbe noire", "Zeppelin", "Zeppelin", "Zeppelin", "Zeppelin", "Zeppelin", "Zeppelin", "Ile d avalon", "Centre De La Terre", "Brise glace", "Brise glace", "Brise glace", "Juggernaut"};
 
-        std::vector<std::pair<std::string, DevelopmentCard*>> cards ;
+        std::vector<std::pair<std::string, std::shared_ptr<DevelopmentCard>>> cards ;
 
         if (isTestingGame)
         {
@@ -61,7 +61,7 @@ namespace state
 
                 for (int i = 0; i < root["numberOfCopies"].asInt(); i++)
                 {
-                    DevelopmentCard* card = new DevelopmentCard(root);
+                    std::shared_ptr<DevelopmentCard> card = std::make_shared<DevelopmentCard>(root);
                     bool willBeAdded = true;
 
                     // If it's a testing game, we have to keep in mind the index to retrieve it at the end.
@@ -73,7 +73,7 @@ namespace state
                         // If the card name is found we have to check if an vesion of this card has been stored
                         if (cardsNameToRetrieve.end() != indexOfName)
                         {
-                            for (std::pair<std::string, DevelopmentCard*>& pair: cards)
+                            for (std::pair<std::string, std::shared_ptr<DevelopmentCard>>& pair: cards)
                             {
                                 // Checking if the card has the good name and if it's not added.
                                 if (nullptr == pair.second && cardName == pair.first)
@@ -99,7 +99,7 @@ namespace state
         // If the game is a testing game, we have to retrieve some card to play put them at the end.
         if (isTestingGame)
         {
-            for (std::pair<std::string, DevelopmentCard*> pair: cards)
+            for (std::pair<std::string, std::shared_ptr<DevelopmentCard>> pair: cards)
             {
                 if (nullptr != pair.second)
                 {
@@ -114,15 +114,15 @@ namespace state
     /// @brief Create all empire cards for a game.
     /// @param isFaceA States if the game is played with face A or not.
     /// @return Vector of all empire cards.
-    std::vector<EmpireCard*> CreateAllCards::createAllEmpireCards (bool isFaceA) const
+    std::vector<std::shared_ptr<EmpireCard>> CreateAllCards::createAllEmpireCards (bool isFaceA) const
     {
-        EmpireCard* africa = this->createEmpireAFRICA(isFaceA);
-        EmpireCard* noram = this->createEmpireNORAM(isFaceA);
-        EmpireCard* europe = this->createEmpireEUROPE(isFaceA);
-        EmpireCard* asia = this->createEmpireASIA(isFaceA);
-        EmpireCard* aztec = this->createEmpireAZTEC(isFaceA);
+        std::shared_ptr<EmpireCard> africa = this->createEmpireAFRICA(isFaceA);
+        std::shared_ptr<EmpireCard> noram = this->createEmpireNORAM(isFaceA);
+        std::shared_ptr<EmpireCard> europe = this->createEmpireEUROPE(isFaceA);
+        std::shared_ptr<EmpireCard> asia = this->createEmpireASIA(isFaceA);
+        std::shared_ptr<EmpireCard> aztec = this->createEmpireAZTEC(isFaceA);
 
-        std::vector<EmpireCard*> empires = {asia, aztec, africa, noram, europe};
+        std::vector<std::shared_ptr<EmpireCard>> empires = {asia, aztec, africa, noram, europe};
         
         return empires;
     }
@@ -130,7 +130,7 @@ namespace state
     /// @brief Create the empire card AFRICA.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the AFRICA empire.
-    EmpireCard* CreateAllCards::createEmpireAFRICA (bool isFaceA) const
+    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireAFRICA (bool isFaceA) const
     {
         std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
         
@@ -143,7 +143,7 @@ namespace state
         
         CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,CardType::RESEARCH};
         
-        EmpireCard* africa = new EmpireCard("AFRICA", productionGainAFRICA, africa_FaceA, victoryPointsAFRICA, productionGainB, AFRICA, africa_FaceB, isFaceA);
+        std::shared_ptr<EmpireCard> africa = std::make_shared<EmpireCard>("AFRICA", productionGainAFRICA, africa_FaceA, victoryPointsAFRICA, productionGainB, AFRICA, africa_FaceB, isFaceA);
         
         return africa;
     }
@@ -151,7 +151,7 @@ namespace state
     /// @brief Create the empire card ASIA.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the ASIA empire.
-    EmpireCard* CreateAllCards::createEmpireASIA (bool isFaceA) const
+    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireASIA (bool isFaceA) const
     {
         std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
 
@@ -164,7 +164,7 @@ namespace state
         
         CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2, CardType::PROJECT};
         
-        EmpireCard* asia = new EmpireCard("ASIA", productionGainASIA, asia_FaceA, victoryPointsASIA, productionGainB, ASIA, asia_FaceB, isFaceA);
+        std::shared_ptr<EmpireCard> asia = std::make_shared<EmpireCard>("ASIA", productionGainASIA, asia_FaceA, victoryPointsASIA, productionGainB, ASIA, asia_FaceB, isFaceA);
         
         return asia;
     }
@@ -172,7 +172,7 @@ namespace state
     /// @brief Create the empire card AZTEC.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the AZTEC empire.
-    EmpireCard* CreateAllCards::createEmpireAZTEC (bool isFaceA) const
+    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireAZTEC (bool isFaceA) const
     {
         std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
 
@@ -185,7 +185,7 @@ namespace state
 
         CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
 
-        EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, aztec_FaceA, victoryPointsAZTEC, productionGainB, AZTEC, aztec_FaceB, isFaceA);
+        std::shared_ptr<EmpireCard> aztec = std::make_shared<EmpireCard>("AZTEC", productionGainAZTEC, aztec_FaceA, victoryPointsAZTEC, productionGainB, AZTEC, aztec_FaceB, isFaceA);
 
         return aztec;
     }
@@ -193,7 +193,7 @@ namespace state
     /// @brief Create the empire card EUROPE.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the EUROPE empire.
-    EmpireCard* CreateAllCards::createEmpireEUROPE (bool isFaceA) const
+    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireEUROPE (bool isFaceA) const
     {
         std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
 
@@ -207,7 +207,7 @@ namespace state
         
         CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
         
-        EmpireCard* europe = new EmpireCard("EUROPE", productionGainEUROPE, europe_FaceA, victoryPointsEUROPE, productionGainB, EUROPE, europe_FaceB, isFaceA);
+        std::shared_ptr<EmpireCard> europe = std::make_shared<EmpireCard>("EUROPE", productionGainEUROPE, europe_FaceA, victoryPointsEUROPE, productionGainB, EUROPE, europe_FaceB, isFaceA);
     
         return europe;
     }
@@ -215,7 +215,7 @@ namespace state
     /// @brief Create the empire card NORAM.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the NORAM empire.
-    EmpireCard* CreateAllCards::createEmpireNORAM (bool isFaceA) const
+    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireNORAM (bool isFaceA) const
     {
         std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
 
@@ -228,7 +228,7 @@ namespace state
         
         CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1, ResourceType::FINANCIER};
 
-        EmpireCard* noram = new EmpireCard("NORAM", productionGainNORAM, noram_FaceA, victoryPointsNORAM, productionGainB, NORAM, noram_FaceB, isFaceA);
+        std::shared_ptr<EmpireCard> noram = std::make_shared<EmpireCard>("NORAM", productionGainNORAM, noram_FaceA, victoryPointsNORAM, productionGainB, NORAM, noram_FaceB, isFaceA);
     
         return noram;
     }

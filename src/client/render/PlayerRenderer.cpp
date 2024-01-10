@@ -10,7 +10,7 @@ namespace render {
     /// @brief Full constructor of the PlayerRenderer class.
     /// @param transform indicating the position of the Renderer and passing the scale of the windows.
     /// @param window that will received this PlayerRenderer
-    PlayerRenderer::PlayerRenderer(state::Player* player,sf::Vector2f position,Window window){
+    PlayerRenderer::PlayerRenderer(std::shared_ptr<state::Player> player,sf::Vector2f position,Window window){
         //Creation of the Font for the Texts
         sf::Font f;
         f.loadFromFile("./resources/font/arial.ttf");
@@ -302,9 +302,9 @@ namespace render {
         DevelopmentCardRenderer* cRenderer;
 
         //Get Cards
-        std::vector<state::DevelopmentCard*> tobuild = this->player->getToBuildCards();
-        std::vector<state::DevelopmentCard*> built = this->player->getBuiltCards();
-        std::vector<state::DevelopmentCard*> drafted = this->player->getDraftCards();
+        std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
+        std::vector<std::shared_ptr<state::DevelopmentCard>> built = this->player->getBuiltCards();
+        std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();
         int i;
         
         //Initialize vector

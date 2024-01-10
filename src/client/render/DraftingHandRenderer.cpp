@@ -4,7 +4,7 @@
 #define CARDS_DISPLAY_DRAFTING 7
 
 namespace render {
-    DraftingHandRenderer::DraftingHandRenderer (state::Player* player, sf::Vector2f position){
+    DraftingHandRenderer::DraftingHandRenderer (std::shared_ptr<state::Player> player, sf::Vector2f position){
 		//Creation of the Font for the Texts
 		sf::Font f;
 		f.loadFromFile("./resources/font/arial.ttf");
@@ -14,7 +14,7 @@ namespace render {
 		this->player = player;
 
         //Get cards
-        std::vector<state::DevelopmentCard*> cards = player->getDraftingCards();
+        std::vector<std::shared_ptr<state::DevelopmentCard>> cards = player->getDraftingCards();
 
         //Initialize the vectors
 		this->sprites = {};
@@ -65,7 +65,7 @@ namespace render {
     /// @brief update the DraftingHandRenderer with the current state of the game
     void DraftingHandRenderer::update (){
         //Get Cards
-		std::vector<state::DevelopmentCard*> cards = player->getDraftingCards();
+		std::vector<std::shared_ptr<state::DevelopmentCard>> cards = player->getDraftingCards();
 
 		int i;
 		

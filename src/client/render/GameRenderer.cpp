@@ -5,7 +5,7 @@ namespace render
     /// @brief  Full constructor of GameRenderer
     /// @param game Game to render
     /// @param transform Transformation to do to display it
-    GameRenderer::GameRenderer (state::Game* game, sf::Vector2f position)
+    GameRenderer::GameRenderer (std::shared_ptr<state::Game> game, sf::Vector2f position)
     {
         //Store the Game Attribute
         this->game = game;

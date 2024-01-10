@@ -20,7 +20,7 @@ namespace engine
     /// @brief Full constructor of the engine.
     /// @param currentGame Game that is played.
     /// @param locker Mutext that protects commandToExecute to avoid 2 resource using it simultaneously.
-    Engine::Engine(state::Game* currentGame, std::mutex & locker) :
+    Engine::Engine(std::shared_ptr<state::Game> currentGame, std::mutex & locker) :
         currentGame(currentGame),
         locker(locker)
     {
@@ -30,8 +30,6 @@ namespace engine
     /// @brief Destructor of the engine class. Empty for the moment.
     Engine::~Engine()
     {
-        delete currentGame;
-
         for (Command* command : this->commandToExecute)
         {
             delete command;
@@ -39,9 +37,15 @@ namespace engine
     }
 
     /// @brief Run the complete game. Logic of the game is done in Game, and waiting for AI / Players to play is done here.
-    void Engine::gameRunning()
+    /// @param shouldLaunchGame State if the game is launched from the function. True when the game is not rendered.
+    void Engine::gameRunning(bool shouldLaunchGame)
     {
-        //this->currentGame->initGame();
+        // Launch the game only if needed (the game is launched in main when rendered.)
+        if (shouldLaunchGame)
+        {
+            this->currentGame->initGame();
+        }
+
         while(state::GamePhase::FINISHED != this->currentGame->getPhase())
         {
             this->phaseRunning();
@@ -62,12 +66,12 @@ namespace engine
         int currentPhase = (int) (this->currentGame->getPhase());
 
         // Make AIs play first.
-        for (state::Player* player : this->currentGame->getPlayers())
+        for (std::shared_ptr<state::Player> player : this->currentGame->getPlayers())
         {
             if (player->isAI())
             {
                 // Calling the method linked to the current phase.
-                (player->*(aiMethodVector[currentPhase]))();
+                (player.get()->*(aiMethodVector[currentPhase]))();
             }
         }
 
@@ -80,14 +84,14 @@ namespace engine
             std::this_thread::sleep_for(std::chrono::milliseconds(2));
         }
         // Once finished, we can call the next method of game.
-        (this->currentGame->*(gameMethodVector[currentPhase]))();
+        (this->currentGame.get()->*(gameMethodVector[currentPhase]))();
     }
 
     /// @brief Check if all real players are pending or not.
     /// @return Boolean that state if all players have played. TRUE : all player are waiting. FALSE : At least one player is playing.
     bool Engine::areAllRealPlayersPending()
     {
-        for(state::Player* player : this->currentGame->getPlayers())
+        for(std::shared_ptr<state::Player> player : this->currentGame->getPlayers())
         {
             // Checdking for real player if only one is playing.
             if (player->isRealPlayerAndPlaying())

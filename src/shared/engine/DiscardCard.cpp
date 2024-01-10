@@ -30,7 +30,7 @@ namespace engine
     }
 
     /// @brief Launch the command to discard a card.
-    void DiscardCard::launchCommand (state::Game* game) const
+    void DiscardCard::launchCommand (std::shared_ptr<state::Game> game) const
     {
         game->getPlayers()[this->playerIndex]->discardCard(this->cardIndex, this->isADraftedCard);
     }
