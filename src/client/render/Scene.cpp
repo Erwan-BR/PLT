@@ -231,15 +231,16 @@ namespace render {
 
 	/// @brief update the Scene with the current state of the game
 	void Scene::update(long flags){
-		btnMain[0]->setText("MATERIAL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::MATERIAL])+")");
-		btnMain[1]->setText("ENERGY\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::ENERGY])+")");
-		btnMain[2]->setText("SCIENCE\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::SCIENCE])+")");
-		btnMain[3]->setText("GOLD\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::GOLD])+")");
-		btnMain[4]->setText("EXPLORATION\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::EXPLORATION])+")");
-		btnMain[5]->setText("KRYSTALLIUM\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::KRYSTALLIUM])+")");
-		btnMain[6]->setText("COLONEL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::COLONEL])+")");
-		btnMain[7]->setText("FINANCIER\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::FINANCIER])+")");
-		
+		if(flags && CURRENT_RESOURCES_PLAYER_CHANGED){
+			btnMain[0]->setText("MATERIAL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::MATERIAL])+")");
+			btnMain[1]->setText("ENERGY\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::ENERGY])+")");
+			btnMain[2]->setText("SCIENCE\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::SCIENCE])+")");
+			btnMain[3]->setText("GOLD\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::GOLD])+")");
+			btnMain[4]->setText("EXPLORATION\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::EXPLORATION])+")");
+			btnMain[5]->setText("KRYSTALLIUM\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::KRYSTALLIUM])+")");
+			btnMain[6]->setText("COLONEL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::COLONEL])+")");
+			btnMain[7]->setText("FINANCIER\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::FINANCIER])+")");
+		}
 	}
 
 	void Scene::buttonHandle(sf::Event event,sf::RenderWindow& window){

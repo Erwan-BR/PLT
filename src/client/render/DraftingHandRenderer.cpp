@@ -71,18 +71,16 @@ namespace render {
 		
         //Initialize vector
         this->devCardRenderers = {};
-
-        //Create new Cards
-        for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++)
-        {
-            DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],sprites[0]->getPosition()+sf::Vector2f(300.f+120.f*(i),0.f),170.f/375.f);
-            this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+        
+        if(flags && DRAFTING_CARDS_CHANGED){
+            //Create new Cards
+            for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++)
+            {
+                DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],sprites[0]->getPosition()+sf::Vector2f(300.f+120.f*(i),0.f),170.f/375.f);
+                this->devCardRenderers.push_back(cRenderer);	//Card Renderer
+                cRenderer->update(flags);
+            }
         }
-		
-        //Update Cards
-		for(i=0; i<(int) this->devCardRenderers.size();i++){
-			(this->devCardRenderers[i])->update(0);
-		}
     }
 
     void DraftingHandRenderer::draw(sf::RenderWindow& window){
