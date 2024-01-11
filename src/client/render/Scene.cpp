@@ -98,10 +98,10 @@ namespace render {
 			button = new Button({50.f,720.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO EXPLORATION",sf::Color::Blue,command, this->locker);
 			this->btnMain.push_back(button);
 
-			command = new engine::Command(engine::CHOOSETOKEN,0,state::COLONEL);
+			command = new engine::Command(engine::SETPREFFEREDPERSONNAGE,0,state::COLONEL);
 			button = new Button({50.f,840.f},{100.f,100.f},"CHOOSE\nCOLONEL",sf::Color::Red,command, this->locker);
 			this->btnMain.push_back(button);
-			command = new engine::Command(engine::CHOOSETOKEN,0,state::FINANCIER);
+			command = new engine::Command(engine::SETPREFFEREDPERSONNAGE,0,state::FINANCIER);
 			button = new Button({50.f,840.f},{100.f,100.f},"CHOOSE\nFINANCIER",sf::Color::Cyan,command, this->locker);
 			this->btnMain.push_back(button);
 
