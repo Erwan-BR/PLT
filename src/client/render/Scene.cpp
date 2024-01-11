@@ -231,7 +231,7 @@ namespace render {
 
 	/// @brief update the Scene with the current state of the game
 	void Scene::update(long flags){
-		if(flags && CURRENT_RESOURCES_PLAYER_CHANGED){
+		if(flags & CURRENT_RESOURCES_PLAYER_CHANGED){
 			btnMain[0]->setText("MATERIAL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::MATERIAL])+")");
 			btnMain[1]->setText("ENERGY\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::ENERGY])+")");
 			btnMain[2]->setText("SCIENCE\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::SCIENCE])+")");

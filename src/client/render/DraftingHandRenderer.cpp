@@ -72,7 +72,7 @@ namespace render {
         //Initialize vector
         this->devCardRenderers = {};
         
-        if(flags && DRAFTING_CARDS_CHANGED){
+        if(flags & DRAFTING_CARDS_CHANGED){
             //Create new Cards
             for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++)
             {
