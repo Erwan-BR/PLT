@@ -67,11 +67,9 @@ namespace render {
     void DraftingHandRenderer::update (long flags){
         //Get Cards
 		std::vector<std::shared_ptr<state::DevelopmentCard>> cards = player->getDraftingCards();
-		
-        //Initialize vector
-        this->devCardRenderers = {};
-        
+		        
         if(flags & DRAFTING_CARDS_CHANGED){
+            this->devCardRenderers = {};
             //Create new Cards
             for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (cards.size() > i); i++)
             {

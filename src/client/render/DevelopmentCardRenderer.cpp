@@ -87,7 +87,7 @@ namespace render
             // Check if the click is inside the button.
             if (this->hitbox.contains(mousePos))
             {
-                std::cout<<"Card Clicked:"<<this->card->getName()<<std::endl;
+                //std::cout<<"Card Clicked:"<<this->card->getName()<<std::endl;
                 scene->setSelectedCard(this->card);
             }
         }

@@ -307,14 +307,12 @@ namespace render {
         //Get Cards
         std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
         std::vector<std::shared_ptr<state::DevelopmentCard>> built = this->player->getBuiltCards();
-        std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();
-        
-        //Initialize vector
-        this->devCardRenderers = {};
+        std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();        
 
         switch(this->affected_window){
             case MAIN_WINDOW:
                 if(TO_BUILD_CARDS_CHANGED & flags){
+                    this->devCardRenderers = {};
                     //Create new Cards
                     for (size_t i = 0; (CARDS_DISPLAY_MAIN_WINDOW > i) && (tobuild.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[0]->getPosition()+sf::Vector2f(300.f+100.f*(i%7),0.f+150.f*(i/7)),150.f/375.f);
@@ -347,6 +345,7 @@ namespace render {
                 break;
             case DRAFTING_WINDOW:
                 if( DRAFT_CARDS_CHANGED & flags){
+                    this->devCardRenderers = {};
                     //Create new cards
                     for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (drafted.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(drafted[i],sprites[0]->getPosition()+sf::Vector2f(300.f+120.f*(i),0.f),170.f/375.f);
@@ -356,15 +355,14 @@ namespace render {
                 }
                 break;
             case PLAYER_INFO:
-                if( BUILT_CARDS_CHANGED & flags){
+                if( (BUILT_CARDS_CHANGED & flags) || (TO_BUILD_CARDS_CHANGED & flags)){
+                    this->devCardRenderers = {};
                 //Create new cards built
                     for (size_t i = 0; (CARDS_DISPLAY_FULL > i) && (built.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(built[i],sprites[0]->getPosition()+sf::Vector2f(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
-                }
-                if( TO_BUILD_CARDS_CHANGED & flags){
                 //Create new cards to build
                     for (size_t i = 0; (CARDS_DISPLAY_FULL > i) && (tobuild.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[0]->getPosition()+sf::Vector2f(50.f+130.f*(i%14),720.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
@@ -396,15 +394,14 @@ namespace render {
                 }
                 break;
             case PLANIFICATION_WINDOW:
-                if(DRAFT_CARDS_CHANGED & flags){
+                if((DRAFT_CARDS_CHANGED & flags) || (TO_BUILD_CARDS_CHANGED & flags)){
+                    this->devCardRenderers = {};
                     //Create new Cards drafted
                     for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (drafted.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(drafted[i],sprites[0]->getPosition()+sf::Vector2f(350.f+120.f*(i),10.f),170.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
-                }
-                if(TO_BUILD_CARDS_CHANGED & flags){
                     //Create new Cards to build
                     for (size_t i = 0; (CARDS_DISPLAY_MAIN_WINDOW > i) && (tobuild.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[2]->getPosition()+sf::Vector2f(600.f+250.f*(i%7),300.f*(i/7)),300.f/375.f);

@@ -205,7 +205,7 @@ namespace state {
     void Player::convertKrystallium (ResourceType targetResource)
     {
         // Impossible to convert to colonel / financier. Moreover, the player has to have at least one krystallium to make the conversion.
-        if ((ResourceType::COLONEL == targetResource) || (ResourceType::FINANCIER == targetResource) || (0 > this->currentResources.at(ResourceType::KRYSTALLIUM)))
+        if ((ResourceType::COLONEL == targetResource) || (ResourceType::FINANCIER == targetResource) || (0 >= this->currentResources.at(ResourceType::KRYSTALLIUM)))
         {
             return ;
         }

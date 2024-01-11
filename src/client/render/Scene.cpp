@@ -83,26 +83,26 @@ namespace render {
 			this->btnMain.push_back(button);
 
 			command = new engine::Command(engine::CONVERTRESOURCE,0,state::MATERIAL);
-			button = new Button({50.f,480.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO MATERIAL",sf::Color(180,180,180),command, this->locker);
+			button = new Button({50.f,480.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO MATERIAL",sf::Color(180,180,180),command, this->locker);
 			this->btnMain.push_back(button);
 			command = new engine::Command(engine::CONVERTRESOURCE,0,state::ENERGY);
-			button = new Button({170.f,480.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO ENERGY",sf::Color(85,76,68),command, this->locker);
+			button = new Button({170.f,480.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO ENERGY",sf::Color(85,76,68),command, this->locker);
 			this->btnMain.push_back(button);
 			command = new engine::Command(engine::CONVERTRESOURCE,0,state::SCIENCE);
-			button = new Button({50.f,600.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO SCIENCE",sf::Color::Green,command, this->locker);
+			button = new Button({50.f,600.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO SCIENCE",sf::Color::Green,command, this->locker);
 			this->btnMain.push_back(button);
 			command = new engine::Command(engine::CONVERTRESOURCE,0,state::GOLD);
-			button = new Button({170.f,600.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO GOLD",sf::Color::Yellow,command, this->locker);
+			button = new Button({170.f,600.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO GOLD",sf::Color::Yellow,command, this->locker);
 			this->btnMain.push_back(button);
 			command = new engine::Command(engine::CONVERTRESOURCE,0,state::MATERIAL);
-			button = new Button({50.f,720.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO EXPLORATION",sf::Color::Blue,command, this->locker);
+			button = new Button({50.f,720.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO EXPLORATION",sf::Color::Blue,command, this->locker);
 			this->btnMain.push_back(button);
 
 			command = new engine::Command(engine::SETPREFFEREDPERSONNAGE,0,state::COLONEL);
 			button = new Button({50.f,840.f},{100.f,100.f},"CHOOSE\nCOLONEL",sf::Color::Red,command, this->locker);
 			this->btnMain.push_back(button);
 			command = new engine::Command(engine::SETPREFFEREDPERSONNAGE,0,state::FINANCIER);
-			button = new Button({50.f,840.f},{100.f,100.f},"CHOOSE\nFINANCIER",sf::Color::Cyan,command, this->locker);
+			button = new Button({170.f,840.f},{100.f,100.f},"CHOOSE\nFINANCIER",sf::Color::Cyan,command, this->locker);
 			this->btnMain.push_back(button);
 
 			command = new engine::Command(engine::ENDPRODUCTION,0);
@@ -249,7 +249,7 @@ namespace render {
 		//TODO Destroy previous Renderer?
 
 		//Update the just created Renderer with the current state of the game
-		pRenderer->update(0);
+		pRenderer->update(PLAYER_RESOURCES_PRODUCTION_CHANGED | CARDS_TYPE_LIST_CHANGED |TO_BUILD_CARDS_CHANGED | BUILT_CARDS_CHANGED | PLAYER_CURRENT_RESOURCES_CHANGED);
 		//Put the new Renderer in its place
 		this->player_renderer[r_id] = pRenderer;
 	}
@@ -315,40 +315,56 @@ namespace render {
 						engine::Command* command;
 						command = new engine::Command(engine::ADDRESOURCE,0,i,state::MATERIAL);
 						this->btnMain[0]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 						command = new engine::Command(engine::ADDRESOURCE,0,i,state::ENERGY);
 						this->btnMain[1]->changeCommand(command);
+						this->btnMain[1]->setEnabled(true);
 						command = new engine::Command(engine::ADDRESOURCE,0,i,state::SCIENCE);
 						this->btnMain[2]->changeCommand(command);
+						this->btnMain[2]->setEnabled(true);
 						command = new engine::Command(engine::ADDRESOURCE,0,i,state::GOLD);
 						this->btnMain[3]->changeCommand(command);
+						this->btnMain[3]->setEnabled(true);
 						command = new engine::Command(engine::ADDRESOURCE,0,i,state::EXPLORATION);
 						this->btnMain[4]->changeCommand(command);
+						this->btnMain[4]->setEnabled(true);
 						command = new engine::Command(engine::ADDRESOURCE,0,i,state::KRYSTALLIUM);
 						this->btnMain[5]->changeCommand(command);
+						this->btnMain[5]->setEnabled(true);
 						command = new engine::Command(engine::ADDRESOURCE,0,i,state::COLONEL);
 						this->btnMain[6]->changeCommand(command);
+						this->btnMain[6]->setEnabled(true);
 						command = new engine::Command(engine::ADDRESOURCE,0,i,state::FINANCIER);
 						this->btnMain[7]->changeCommand(command);
+						this->btnMain[7]->setEnabled(true);
 						skip = true;
 					}
 				}
 				if(! skip){
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL);
 					this->btnMain[0]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL);
 					this->btnMain[1]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::SCIENCE);
 					this->btnMain[2]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::GOLD);
 					this->btnMain[3]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::EXPLORATION);
 					this->btnMain[4]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::KRYSTALLIUM);
 					this->btnMain[5]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::COLONEL);
 					this->btnMain[6]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 					command = new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::FINANCIER);
 					this->btnMain[7]->changeCommand(command);
+						this->btnMain[0]->setEnabled(true);
 				}
 				}
 				break;
@@ -369,10 +385,12 @@ namespace render {
 				for(int i=0; i < (int) cards.size();i++){
 					if(cards[i] == card){
 						engine::Command* command;
-						command = new engine::Command(engine::KEEPCARD,0,i);
+						command = new engine::Command(engine::KEEPCARD,0,i,true);
+						this->btnPlan[0]->changeCommand(command);
+						this->btnPlan[0]->setEnabled(true);
+						command = new engine::Command(engine::DISCARDCARD,0,i,true);
 						this->btnPlan[1]->changeCommand(command);
-						command = new engine::Command(engine::DISCARDCARD,0,i);
-						this->btnPlan[1]->changeCommand(command);
+						this->btnPlan[1]->setEnabled(true);
 					}
 				}
 
@@ -381,8 +399,9 @@ namespace render {
 					if(cards[i] == card){
 						engine::Command* command;
 						this->btnPlan[0]->setEnabled(false);
-						command = new engine::Command(engine::DISCARDCARD,0,i);
+						command = new engine::Command(engine::DISCARDCARD,0,i,false);
 						this->btnPlan[1]->changeCommand(command);
+						this->btnPlan[1]->setEnabled(true);
 					}
 				}
 				}
@@ -441,6 +460,23 @@ namespace render {
 				break;
 			}
 
+	}
+
+	void Scene::desactivateButton(int index, Window window){
+		switch (window)
+		{
+		case MAIN_WINDOW:
+			this->btnMain[index]->setEnabled(false);
+			break;
+		case DRAFTING_WINDOW:
+			this->btnDraft[index]->setEnabled(false);
+			break;
+		case PLANIFICATION_WINDOW:
+			this->btnPlan[index]->setEnabled(false);
+			break;
+		default:
+			break;
+		}
 	}
 
 	void Scene::setupObserver(std::shared_ptr<state::Observable> observable){

@@ -62,6 +62,7 @@ namespace render
         }
         if(this->isEnable)
         {
+            this->rectangle.setFillColor(this->color);
             window.draw(this->rectangle);
             window.draw(this->text);
         }
@@ -89,10 +90,28 @@ namespace render
             if (rectangle.getGlobalBounds().contains(mousePos) && nullptr != this->command)
             {
                 Json::Value jsonCommand = this->command->toJSON();
-                if(this->command->getCommandId() == (engine::CommandID) -1){        //Catch Actions which are executed by render and not by the engine
+                engine::CommandID cID = this->command->getCommandId();
+                if(cID == (engine::CommandID) -1){        //Catch Actions which are executed by render and not by the engine
                     scene->changePlayerInfoPlayer(jsonCommand["playerIndex"].asInt());
                 }
                 else{
+                    if(cID == engine::CHOOSEDRAFTCARD){
+                        scene->desactivateButton(0,DRAFTING_WINDOW);
+                    }
+                    if((cID == engine::DISCARDCARD) || (cID == engine::KEEPCARD)){
+                        scene->desactivateButton(0,PLANIFICATION_WINDOW);
+                        scene->desactivateButton(1,PLANIFICATION_WINDOW);
+                    }
+                    if((cID == engine::ADDRESOURCE) || (cID == engine::SENDRESOURCETOEMPIRE)){
+                        scene->desactivateButton(0,MAIN_WINDOW);
+                        scene->desactivateButton(1,MAIN_WINDOW);
+                        scene->desactivateButton(2,MAIN_WINDOW);
+                        scene->desactivateButton(3,MAIN_WINDOW);
+                        scene->desactivateButton(4,MAIN_WINDOW);
+                        scene->desactivateButton(5,MAIN_WINDOW);
+                        scene->desactivateButton(6,MAIN_WINDOW);
+                        scene->desactivateButton(7,MAIN_WINDOW);
+                    }
                     // Lock the mutex, send the JSON of the command and unlock the mutex.
                     this->locker.lock();
                     engineOfGame->receiveCommand(jsonCommand);
