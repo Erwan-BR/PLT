@@ -1,5 +1,7 @@
 #include "GameRenderer.h"
 
+#include "../../constants/constants/GameObserversNotification.h"
+
 namespace render
 {
     /// @brief  Full constructor of GameRenderer
@@ -79,7 +81,7 @@ namespace render
     /// @brief Update the GameRenderer with the current state of the game
     void GameRenderer::update (long flags)
     {
-        if(flags & constants::GAME_TURN_CHANGED){
+        if(GAME_TURN_CHANGED & flags){
             //Update the turn token
             int turn = this->game->getTurn();
             if (turn < 5){
@@ -88,7 +90,7 @@ namespace render
             }
         }
         
-        if(flags & constants::GAME_PHASE_CHANGED){
+        if(GAME_PHASE_CHANGED & flags){
             //Reset the Board of Resources
             this->boardMaterialSprite->setColor(sf::Color::White);
             this->boardEnergySprite->setColor(sf::Color::White);

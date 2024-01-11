@@ -1,9 +1,13 @@
 #include "PlayerRenderer.h"
+
 #include <string>
 #include <iostream>
 
+#include "../../constants/constants/PlayerObserversNotification.h"
+#include "../../constants/constants/GameConstants.h"
+
+
 #define CARDS_DISPLAY_MAIN_WINDOW 14
-#define CARDS_DISPLAY_DRAFTING 7
 #define CARDS_DISPLAY_FULL 28
 
 namespace render {
@@ -25,7 +29,6 @@ namespace render {
         this->devCardRenderers = {};
         this->texts = {};
 
-        int i;
         sf::Texture* texture;
         sf::Sprite* sprite;
         sf::Text* text;
@@ -42,7 +45,7 @@ namespace render {
             this->sprites.push_back(sprite);                    //Sprite
 
             // Enter Player Empire Card (position 1 in sprites)
-            if (NULL != this->player->getEmpire())
+            if (nullptr != this->player->getEmpire())
             {
                 texture = new sf::Texture();
                 texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
@@ -64,7 +67,7 @@ namespace render {
             this->texts.push_back(text);            //Text
 
             //Enter Resources/Constructions Count (position 1 to 10)
-            for (i=0;i<10;i++){
+            for (int i = 0; i < 10; i++){
                 text = new sf::Text();
                 text->setFont(font);
                 text->setString("x0");
@@ -75,7 +78,7 @@ namespace render {
             }
 
             //Enter Victory Point / Token Count (position 11 to 13)
-            for (i=0;i<3;i++){
+            for (int i = 0; i < 3; i++){
                 text = new sf::Text();
                 text->setFont(font);
                 text->setString("x0");
@@ -96,7 +99,7 @@ namespace render {
             this->sprites.push_back(sprite);                    //Sprite
 
             // Enter Player Empire Card (position 1 in sprites)
-            if (NULL != this->player->getEmpire())
+            if (nullptr != this->player->getEmpire())
 			{
 				texture = new sf::Texture();
 				texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
@@ -128,7 +131,7 @@ namespace render {
             this->sprites.push_back(sprite);                    //Sprite
 
             // Enter Player Empire Card (position 1 in sprites)
-            if (NULL != this->player->getEmpire())
+            if (nullptr != this->player->getEmpire())
             {
                 texture = new sf::Texture();
                 texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
@@ -150,7 +153,7 @@ namespace render {
             this->texts.push_back(text);            //Text
 
             //Enter Resources/Constructions Count (position 1 to 10)
-            for (i=0;i<10;i++){
+            for (int i = 0; i < 10; i++){
                 text = new sf::Text();
                 text->setFont(font);
                 text->setString("x0");
@@ -161,7 +164,7 @@ namespace render {
             }
 
             //Enter Victory Point / Token Count (position 11 to 13)
-            for (i=0;i<3;i++){
+            for (int i = 0; i < 3; i++){
                 text = new sf::Text();
                 text->setFont(font);
                 text->setString("x0");
@@ -226,7 +229,7 @@ namespace render {
             this->sprites.push_back(sprite);                    //Sprite
 
             // Enter Player Empire Card (position 1 in sprites)
-            if (NULL != this->player->getEmpire())
+            if (nullptr != this->player->getEmpire())
             {
                 texture = new sf::Texture();
                 texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
@@ -248,7 +251,7 @@ namespace render {
             this->texts.push_back(text);            //Text
 
             //Enter Resources/Constructions Count (position 1 to 10)
-            for (i=0;i<10;i++){
+            for (int i = 0; i < 10; i++){
                 text = new sf::Text();
                 text->setFont(font);
                 text->setString("x0");
@@ -259,7 +262,7 @@ namespace render {
             }
 
             //Enter Victory Point / Token Count (position 11 to 13)
-            for (i=0;i<3;i++){
+            for (int i = 0; i < 3; i++){
                 text = new sf::Text();
                 text->setFont(font);
                 text->setString("x0");
@@ -305,23 +308,22 @@ namespace render {
         std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
         std::vector<std::shared_ptr<state::DevelopmentCard>> built = this->player->getBuiltCards();
         std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();
-        int i;
         
         //Initialize vector
         this->devCardRenderers = {};
 
         switch(this->affected_window){
             case MAIN_WINDOW:
-                if(flags & TO_BUILD_CARDS_CHANGED){
+                if(TO_BUILD_CARDS_CHANGED & flags){
                     //Create new Cards
-                    for (i=0;i<CARDS_DISPLAY_MAIN_WINDOW and i<(int) tobuild.size();i++){
+                    for (size_t i = 0; (CARDS_DISPLAY_MAIN_WINDOW > i) && (tobuild.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[0]->getPosition()+sf::Vector2f(300.f+100.f*(i%7),0.f+150.f*(i/7)),150.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
                 }
 
-                if(flags & RESOURCES_PRODUCTION_PLAYER_CHANGED){
+                if(PLAYER_RESOURCES_PRODUCTION_CHANGED & flags){
                 //Update String content
                     (this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
                     (this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
@@ -338,15 +340,15 @@ namespace render {
 
                 (this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
 
-                if(flags & CURRENT_RESOURCES_PLAYER_CHANGED){
+                if(PLAYER_CURRENT_RESOURCES_CHANGED & flags){
                     (this->texts)[12]->setString("x"+std::to_string(this->player->getCurrentResources()[state::COLONEL]));
                     (this->texts)[13]->setString("x"+std::to_string(this->player->getCurrentResources()[state::FINANCIER]));
                 }
                 break;
             case DRAFTING_WINDOW:
-                if(flags & DRAFT_CARDS_CHANGED){
+                if( DRAFT_CARDS_CHANGED & flags){
                     //Create new cards
-                    for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) drafted.size();i++){
+                    for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (drafted.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(drafted[i],sprites[0]->getPosition()+sf::Vector2f(300.f+120.f*(i),0.f),170.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
@@ -354,23 +356,23 @@ namespace render {
                 }
                 break;
             case PLAYER_INFO:
-                if(flags & BUILT_CARDS_CHANGED){
+                if( BUILT_CARDS_CHANGED & flags){
                 //Create new cards built
-                    for (i=0;i<CARDS_DISPLAY_FULL and i<(int) built.size();i++){
+                    for (size_t i = 0; (CARDS_DISPLAY_FULL > i) && (built.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(built[i],sprites[0]->getPosition()+sf::Vector2f(50.f+130.f*(i%14),350.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
                 }
-                if(flags & TO_BUILD_CARDS_CHANGED){
+                if( TO_BUILD_CARDS_CHANGED & flags){
                 //Create new cards to build
-                    for (i=0;i<CARDS_DISPLAY_FULL and i<(int) tobuild.size();i++){
+                    for (size_t i = 0; (CARDS_DISPLAY_FULL > i) && (tobuild.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[0]->getPosition()+sf::Vector2f(50.f+130.f*(i%14),720.f+160.f*(i/14)+50.f*(i/28)),200.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
                 }
-                if(flags & RESOURCES_PRODUCTION_PLAYER_CHANGED){
+                if(PLAYER_RESOURCES_PRODUCTION_CHANGED & flags){
                     //Update String content
                     (this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
                     (this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
@@ -378,7 +380,7 @@ namespace render {
                     (this->texts)[4]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::GOLD]));
                     (this->texts)[5]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::EXPLORATION]));
                 }
-                if(flags & CARDS_TYPE_LIST_CHANGED){
+                if(CARDS_TYPE_LIST_CHANGED & flags){
                     (this->texts)[6]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::STRUCTURE]));
                     (this->texts)[7]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::VEHICLE]));
                     (this->texts)[8]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::RESEARCH]));
@@ -386,7 +388,7 @@ namespace render {
                     (this->texts)[10]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::DISCOVERY]));
                 }
                 (this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
-                if(flags & CURRENT_RESOURCES_PLAYER_CHANGED){
+                if(PLAYER_CURRENT_RESOURCES_CHANGED & flags){
                     (this->texts)[12]->setString("x"+std::to_string(this->player->getCurrentResources()[state::COLONEL]));
                     (this->texts)[13]->setString("x"+std::to_string(this->player->getCurrentResources()[state::FINANCIER]));
 
@@ -394,24 +396,24 @@ namespace render {
                 }
                 break;
             case PLANIFICATION_WINDOW:
-                if(flags & DRAFT_CARDS_CHANGED){
+                if(DRAFT_CARDS_CHANGED & flags){
                     //Create new Cards drafted
-                    for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) drafted.size();i++){
+                    for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (drafted.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(drafted[i],sprites[0]->getPosition()+sf::Vector2f(350.f+120.f*(i),10.f),170.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
                 }
-                if(flags & TO_BUILD_CARDS_CHANGED){
+                if(TO_BUILD_CARDS_CHANGED & flags){
                     //Create new Cards to build
-                    for (i=0;i<CARDS_DISPLAY_MAIN_WINDOW and i<(int) tobuild.size();i++){
+                    for (size_t i = 0; (CARDS_DISPLAY_MAIN_WINDOW > i) && (tobuild.size() > i); i++){
                         cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[2]->getPosition()+sf::Vector2f(600.f+250.f*(i%7),300.f*(i/7)),300.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
                 }
 
-                if(flags & RESOURCES_PRODUCTION_PLAYER_CHANGED){
+                if(PLAYER_RESOURCES_PRODUCTION_CHANGED & flags){
                     //Update String content
                     (this->texts)[1]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::MATERIAL]));
                     (this->texts)[2]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::ENERGY]));
@@ -419,7 +421,7 @@ namespace render {
                     (this->texts)[4]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::GOLD]));
                     (this->texts)[5]->setString("x"+std::to_string(this->player->getResourcesProduction()[state::EXPLORATION]));
                 }
-                if(flags & CARDS_TYPE_LIST_CHANGED){
+                if( CARDS_TYPE_LIST_CHANGED & flags){
                     (this->texts)[6]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::STRUCTURE]));
                     (this->texts)[7]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::VEHICLE]));
                     (this->texts)[8]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::RESEARCH]));
@@ -427,7 +429,7 @@ namespace render {
                     (this->texts)[10]->setString("x"+std::to_string(this->player->getCardsTypeList()[state::DISCOVERY]));
                 }
                 (this->texts)[11]->setString("x"+std::to_string(this->player->computeVictoryPoint()));
-                if(flags & CURRENT_RESOURCES_PLAYER_CHANGED){
+                if(PLAYER_CURRENT_RESOURCES_CHANGED & flags){
                     (this->texts)[12]->setString("x"+std::to_string(this->player->getCurrentResources()[state::COLONEL]));
                     (this->texts)[13]->setString("x"+std::to_string(this->player->getCurrentResources()[state::FINANCIER]));
                 }
@@ -437,10 +439,10 @@ namespace render {
     }
 
     void PlayerRenderer::draw(sf::RenderWindow& window){
-        for(int i=0;i<(int) this->sprites.size();i++){
+        for(size_t i = 0; this->sprites.size() > i; i++){
             window.draw(*(this->sprites[i]));
         }
-        for(int i=0;i<(int) this->texts.size();i++){
+        for(size_t i = 0; this->texts.size() > i; i++){
             window.draw(*(this->texts[i]));
         }
         for(DevelopmentCardRenderer* cRenderer: this->devCardRenderers){
