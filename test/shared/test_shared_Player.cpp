@@ -16,24 +16,24 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
     // Create multiple cards to send them in vectors and check if they are correctly placed in the JSON.
     // Amelioration genetique
-    DevelopmentCard* ameliorationGenetique = new DevelopmentCard ("Amelioration genetique",{},new CardVictoryPoint{3, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::FINANCIER, ResourceType::FINANCIER},ResourceType::SCIENCE);
+    std::shared_ptr<DevelopmentCard> ameliorationGenetique(new DevelopmentCard ("Amelioration genetique",{},new CardVictoryPoint{3, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::FINANCIER, ResourceType::FINANCIER},ResourceType::SCIENCE));
 
     // Animorphes
-    DevelopmentCard* animorphes = new DevelopmentCard ("Animorphes",{new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::COLONEL},ResourceType::ENERGY);
+    std::shared_ptr<DevelopmentCard> animorphes(new DevelopmentCard ("Animorphes",{new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::COLONEL},ResourceType::ENERGY));
 
     // Aquaculture
-    DevelopmentCard* aquaculture = new DevelopmentCard ("Aquaculture",{},new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::SCIENCE);
+    std::shared_ptr<DevelopmentCard> aquaculture(new DevelopmentCard ("Aquaculture",{},new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::SCIENCE));
 
     // Automates de controle
-    DevelopmentCard* automateControle = new DevelopmentCard ("Automates de controle",{},new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},{},ResourceType::GOLD);
+    std::shared_ptr<DevelopmentCard> automateControle(new DevelopmentCard ("Automates de controle",{},new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},{},ResourceType::GOLD));
 
     // Clonage humain
-    DevelopmentCard* clonageHumain = new DevelopmentCard ("Clonage Humain",{new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},new CardVictoryPoint{1, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::GOLD);
+    std::shared_ptr<DevelopmentCard> clonageHumain(new DevelopmentCard ("Clonage Humain",{new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},new CardVictoryPoint{1, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::GOLD, false}},{ResourceType::FINANCIER},ResourceType::GOLD));
 
     // Controle du climat
-    DevelopmentCard* controlDuClimat = new DevelopmentCard ("Controle du climat",{new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE},new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::ENERGY);
+    std::shared_ptr<DevelopmentCard> controlDuClimat(new DevelopmentCard ("Controle du climat",{new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE},new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::ENERGY));
 
-    std::vector<DevelopmentCard*> cardsOfPlayertoExport = {ameliorationGenetique, animorphes, aquaculture, automateControle, clonageHumain, controlDuClimat};
+    std::vector<std::shared_ptr<DevelopmentCard>> cardsOfPlayertoExport = {ameliorationGenetique, animorphes, aquaculture, automateControle, clonageHumain, controlDuClimat};
 
     playerToExport->setDraftingCards(cardsOfPlayertoExport);
 
@@ -58,17 +58,17 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     Json::Value playerJSON = playerToExport->toJSON();
 
     // Only for debug, the JSON appears in a log file (PLT/build/test/Testing/Temporary/LastTest.log)
-    // for (int i = 0; i < 7; i++)
-    // {
-    //     std::cout << std::endl;
-    // }
+    for (int i = 0; i < 7; i++)
+    {
+        std::cout << std::endl;
+    }
 
-    // std::cout << playerJSON;
+    std::cout << playerJSON;
 
-    // for (int i = 0; i < 7; i++)
-    // {
-    //     std::cout << std::endl;
-    // }
+    for (int i = 0; i < 7; i++)
+    {
+        std::cout << std::endl;
+    }
 
     Player* playerToImport = new Player(playerJSON);
 
@@ -136,7 +136,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC, secondResourceToProduceAZTEC};
     
     CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
-    EmpireCard* aztec = new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
+    std::shared_ptr<EmpireCard> aztec (new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true));
 
     // Giving the empire to the player
     myFirstPlayer->setEmpire(aztec);
@@ -144,34 +144,34 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     // Defining multiple cards to fully test all functions
     // Card that produces 1 SCIENCE * DISCOVERY cards, 10 victory points, 2 instant KRYSTALLIUM
     // Need to pay 1 EXPLORATION
-    DevelopmentCard* anciensAstronautes = new DevelopmentCard ("Anciens Astronautes",{new ResourceToProduce{ResourceType::SCIENCE,1, CardType::DISCOVERY}},new CardVictoryPoint{10, CardType::NONETYPE},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::SCIENCE);
+    std::shared_ptr<DevelopmentCard> anciensAstronautes(new DevelopmentCard ("Anciens Astronautes",{new ResourceToProduce{ResourceType::SCIENCE,1, CardType::DISCOVERY}},new CardVictoryPoint{10, CardType::NONETYPE},CardType::DISCOVERY,1,{new ResourceToPay{ResourceType::EXPLORATION, false}},{ResourceType::KRYSTALLIUM,ResourceType::KRYSTALLIUM},ResourceType::SCIENCE));
 
 
     // Card that produces 3 EXPLORATION, 2 victory points per DISCOVERY card, 1 instant COLONEL
     // Need to pay 1 ENERGY
-    DevelopmentCard* basePolaire = new DevelopmentCard ("Base polaire",{new ResourceToProduce{ResourceType::EXPLORATION, 3, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::DISCOVERY},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::EXPLORATION);
+    std::shared_ptr<DevelopmentCard> basePolaire(new DevelopmentCard ("Base polaire",{new ResourceToProduce{ResourceType::EXPLORATION, 3, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::DISCOVERY},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::COLONEL},ResourceType::EXPLORATION));
 
     // Card that produces nothing, 1 victory points per COLONEL
     // Need to pay 1 SCIENCE
-    DevelopmentCard* automateControle = new DevelopmentCard ("Automates de controle",{},new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::GOLD);
+    std::shared_ptr<DevelopmentCard> automateControle(new DevelopmentCard ("Automates de controle",{},new CardVictoryPoint{1, (int) ResourceType::COLONEL},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::GOLD));
 
     // Card that produces nothing, 1 victory points per FINANCIER, 1 instant FINANCIER
     // Need to pay 1 ENERGY
-    DevelopmentCard* ascenseurSpatial = new DevelopmentCard ("Ascenseur spatial",{},new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::ENERGY);
+    std::shared_ptr<DevelopmentCard> ascenseurSpatial(new DevelopmentCard ("Ascenseur spatial",{},new CardVictoryPoint{1, (int) ResourceType::FINANCIER},CardType::PROJECT,1,{new ResourceToPay{ResourceType::ENERGY, false}},{ResourceType::FINANCIER},ResourceType::ENERGY));
 
     // Card that will be discard in toBuildCards
     // Giving 1 EXPLORATION
-    DevelopmentCard* zeppelinToBuild = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+    std::shared_ptr<DevelopmentCard> zeppelinToBuild(new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION));
 
     // Card that will be discard in draftCards
     // Giving 1 EXPLORATION
-    DevelopmentCard* zeppelinDraft = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+    std::shared_ptr<DevelopmentCard> zeppelinDraft(new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION));
 
     //Card that will remain in draftingCards
-    DevelopmentCard* zeppelinDrafting = new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION);
+    std::shared_ptr<DevelopmentCard> zeppelinDrafting(new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION));
 
     // Adding cards in the drafting deck
-    std::vector<DevelopmentCard*> draftingDeck;
+    std::vector<std::shared_ptr<DevelopmentCard>> draftingDeck;
     draftingDeck.push_back(zeppelinDrafting);
     draftingDeck.push_back(zeppelinDraft);
     draftingDeck.push_back(zeppelinToBuild);
@@ -197,7 +197,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->chooseDraftCard(42);
 
     // Choosing the toBuildCards
-    std::vector<DevelopmentCard*> draftDeck = myFirstPlayer->getDraftCards();
+    std::vector<std::shared_ptr<DevelopmentCard>> draftDeck = myFirstPlayer->getDraftCards();
     for(int i=1; i<6; i++)
     {
         myFirstPlayer->keepCard(1);
@@ -352,8 +352,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
 
     // Test chooseColonel (not implemented yet)
-    bool isColonel = myFirstPlayer->chooseColonelToken();
-    BOOST_CHECK_EQUAL(isColonel, false);
+    BOOST_CHECK_EQUAL(myFirstPlayer->isPreferedPersonnageColonel(), true);
 
     //Test the setter of the player's state
     myFirstPlayer->setState(PLAYING);
@@ -364,7 +363,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 4, CardType::DISCOVERY};
     productionGainAZTEC = {firstResourceToProduceAZTEC};
     victoryPointsAZTEC  = new CardVictoryPoint{2, ResourceType::FINANCIER};
-    aztec = new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
+    aztec = std::make_shared<EmpireCard>(new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true));
 
     myFirstPlayer->setEmpire(aztec);
 
@@ -380,7 +379,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     // Config three
     victoryPointsAZTEC  = new CardVictoryPoint{8, ResourceType::COLONEL};
-    aztec = new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
+    aztec = std::make_shared<EmpireCard>(new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true));
 
     myFirstPlayer->setEmpire(aztec);
 
@@ -396,7 +395,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     // Config four (last one)
     victoryPointsAZTEC  = new CardVictoryPoint{26, CardType::NONETYPE};
-    aztec = new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
+    aztec = std::make_shared<EmpireCard>(new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true));
 
     myFirstPlayer->setEmpire(aztec);
 

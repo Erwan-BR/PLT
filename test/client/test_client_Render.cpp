@@ -10,20 +10,22 @@ using namespace std;
 BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
   {				
 	//Creation of testing instances of Player class
-	state::Player* player1 = new state::Player("MOI",1);
-	state::Player* player2 = new state::Player("TOI",2);
+	std::shared_ptr<state::Player> player1 = std::make_shared<state::Player>("MOI",1);
+	std::shared_ptr<state::Player> player2 = std::make_shared<state::Player>("TOI",2);
 
 	//Creation of the vector players
-	std::vector<state::Player*> players;
+	std::vector<std::shared_ptr<state::Player>> players;
 	players.push_back(player1);
 	players.push_back(player2);
 
 	//Creation of the instance of the Game class
-	state::Game game = state::Game(players,true);
-	game.initGame();
+	std::shared_ptr<state::Game> game = std::make_shared<state::Game>(players,true);
+	game->initGame();
+
+	std::mutex locker;
 
 	//Creation of the instance of the Scene class
-	Scene* myscene = new Scene(&game);
+	Scene* myscene = new Scene(game, locker, nullptr);
 
 	// Test setWindow
 	Window w = PLAYER_INFO;
@@ -34,7 +36,7 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	BOOST_CHECK_EQUAL(w, w2);
 
 	//Test setupObserver
-	myscene->setupObserver(&game);
+	myscene->setupObserver(game);
 
 	//Test changePlayerInfoPlayer
 	myscene->changePlayerInfoPlayer(1,MAIN_WINDOW);
@@ -42,25 +44,25 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	myscene->changePlayerInfoPlayer(1,DRAFTING_WINDOW);
 
 	//Test update
-	myscene->update();
+	myscene->update(0);
 
 	//Test draw & update on all Windows
 	sf::RenderWindow window(sf::VideoMode(10,10),"Test",0);
 	myscene->changeWindow(MAIN_WINDOW);
 	myscene->draw(window);
-	myscene->update();
+	myscene->update(0);
 	myscene->changeWindow(DRAFTING_WINDOW);
 	myscene->draw(window);
-	myscene->update();
+	myscene->update(0);
 	myscene->changeWindow(PLANIFICATION_WINDOW);
 	myscene->draw(window);
-	myscene->update();
+	myscene->update(0);
 	myscene->changeWindow(PLAYER_INFO);
 	myscene->draw(window);
-	myscene->update();
+	myscene->update(0);
 	myscene->changeWindow(NONE);
 	myscene->draw(window);
-	myscene->update();
+	myscene->update(0);
 
 	//Test Cards in all Player's vector
 	//Player took 3 Zeppelin from draft hand to drafted
@@ -78,27 +80,27 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	}
 	
 	//Update
-	myscene->update();
+	myscene->update(0);
 	myscene->changeWindow(MAIN_WINDOW);
 	myscene->draw(window);
 
 	//Pass through all Phase 
-	game.nextPhase();
-	myscene->update();
-	game.nextPhase();
-	myscene->update();
-	game.nextProduction();
-	myscene->update();
-	game.nextProduction();
-	myscene->update();
-	game.nextProduction();
-	myscene->update();
-	game.nextProduction();
-	myscene->update();
-	game.nextProduction();
-	myscene->update();
-	game.endGame();
-	myscene->update();
+	game->nextPhase();
+	myscene->update(0);
+	game->nextPhase();
+	myscene->update(0);
+	game->nextProduction();
+	myscene->update(0);
+	game->nextProduction();
+	myscene->update(0);
+	game->nextProduction();
+	myscene->update(0);
+	game->nextProduction();
+	myscene->update(0);
+	game->nextProduction();
+	myscene->update(0);
+	game->endGame();
+	myscene->update(0);
 
 	// Delete pointers
 	delete myscene;
@@ -108,22 +110,22 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
   {
 	//PlayerRenderer
-	state::Player* player = new state::Player("TestPlayer",1);
+	std::shared_ptr<state::Player> player = std::make_shared<state::Player>("TestPlayer",1);
 	
 	PlayerRenderer* pR = new PlayerRenderer(player,{0.f,0.f},MAIN_WINDOW);
 	
 	delete pR;
 	
 	//PlayerRenderer with invalid Window
-	state::Player* player2 = new state::Player("TestPlayer",1);
+	std::shared_ptr<state::Player> player2 = std::make_shared<state::Player>("TestPlayer",1);
 	PlayerRenderer* pR2 = new PlayerRenderer(player2,{0.f,0.f},NONE);
 	delete pR2;
 
 	//GameRenderer
-	std::vector<state::Player*> players;
+	std::vector<std::shared_ptr<state::Player>> players;
 	players.push_back(player);
 	players.push_back(player2);
-	state::Game* game = new state::Game(players);
+	std::shared_ptr<state::Game> game = std::make_shared<state::Game>(players);
 	GameRenderer* gR = new GameRenderer(game,{0.f,0.f});
 	delete gR;
 
@@ -131,17 +133,15 @@ BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
 	game->initGame();
 	player->chooseDraftCard(0);
 	PlayerRenderer* pR3 = new PlayerRenderer(player,{0.f,0.f},DRAFTING_WINDOW);
-	pR3->update();
+	pR3->update(0);
 	delete pR3;
 
 	//DevellopementCardRenderer
-	state::DevelopmentCard* card = new state::DevelopmentCard("Empty Card",{},{},state::STRUCTURE,0,{new state::ResourceToPay{state::ResourceType::SCIENCE, false}},{},state::FINANCIER);
+	std::shared_ptr<state::DevelopmentCard> card(new state::DevelopmentCard("Empty Card",{},{},state::STRUCTURE,0,{new state::ResourceToPay{state::ResourceType::SCIENCE, false}},{},state::FINANCIER));
+	
 	DevelopmentCardRenderer* cR = new DevelopmentCardRenderer(card,{0.f,0.f},0.f);
+	
 	delete cR;
-
-	//Delete others pointer
-	delete game;
-	delete card;
   }
 }
 

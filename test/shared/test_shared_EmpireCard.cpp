@@ -10,7 +10,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     // Testing conversion of JSON (face A)
     {
         CreateAllCards* createEmpire = new CreateAllCards();
-        EmpireCard* empireCardToExport = createEmpire->createEmpireAFRICA(true);
+        std::shared_ptr<EmpireCard> empireCardToExport = createEmpire->createEmpireAFRICA(true);
         
         Json::Value jsonContent = empireCardToExport->toJSON();
 
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     // Testing conversion of JSON (face B)
     {
         CreateAllCards* createEmpire = new CreateAllCards();
-        EmpireCard* empireCardToExport = createEmpire->createEmpireAFRICA(false);
+        std::shared_ptr<EmpireCard> empireCardToExport = createEmpire->createEmpireAFRICA(false);
 
         Json::Value jsonContent = empireCardToExport->toJSON();
 
@@ -104,10 +104,9 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 BOOST_AUTO_TEST_CASE(test_otherMethods)
 {
     CreateAllCards* createEmpire = new CreateAllCards();
-    EmpireCard* empireExample = createEmpire->createEmpireASIA(false);
+    std::shared_ptr<EmpireCard> empireExample = createEmpire->createEmpireASIA(false);
 
     delete createEmpire;
-    delete empireExample;
 }
 
 /* vim: set sw=2 sts=2 et : */
