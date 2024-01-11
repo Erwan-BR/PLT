@@ -1,9 +1,13 @@
 #include "Game.h"
+
 #include <algorithm>
 #include <random>
 #include <fstream>
 #include <random>
 #include <chrono>
+
+#include "../../constants/constants/GameConstants.h"
+#include "../../constants/constants/GameObserversNotification.h"
 
 namespace state {
     ///@brief Create a game from a json file.
@@ -159,7 +163,7 @@ namespace state {
                 this->initDraft();
             }
         }
-        this->notifyObservers(0);
+        this->notifyObservers(GAME_PHASE_CHANGED);
     }
 
     ///@brief Start one of the four turn of the game
@@ -175,7 +179,7 @@ namespace state {
         // Invert the sens for the draft phase
         this->isClockwise = ! this->isClockwise;
 
-        this->notifyObservers(0);
+        this->notifyObservers(GAME_TURN_CHANGED);
     }
 
     ///@brief Initialize the Draft part of the game during which players select their cards
@@ -186,7 +190,7 @@ namespace state {
             // Re-Initialise the cards that will be given to the players
             std::vector<std::shared_ptr<DevelopmentCard>> draftingDeck = {};
 
-            for(int i = 0; i < 7; i++)
+            for(int i = 0; NUMBER_OF_CARDS_DRAFTED > i; i++)
             {
                 // Add a card to draft and delete it from the deck.
                 draftingDeck.push_back(this->deck.back());
@@ -197,7 +201,6 @@ namespace state {
             player->setDraftingCards(draftingDeck);
             player->setState(PlayerState::PLAYING);
         }
-        this->notifyObservers(0);
     }
 
     ///@brief Launch the next draft.
