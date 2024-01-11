@@ -169,7 +169,7 @@ namespace state {
     ///@brief Start one of the four turn of the game
     void Game::newTurn ()
     {
-        this->turn = this->turn + 1;
+        this->turn ++;
         if ((2 == this->turn && this->isTestingGame) || (5 == this->turn && ! this->isTestingGame))
         {
             this->endGame();
@@ -179,7 +179,7 @@ namespace state {
         // Invert the sens for the draft phase
         this->isClockwise = ! this->isClockwise;
 
-        this->notifyObservers(GAME_TURN_CHANGED);
+        this->notifyObservers(GAME_TURN_CHANGED | GAME_CLOCKWISE_CHANGED);
     }
 
     ///@brief Initialize the Draft part of the game during which players select their cards
@@ -249,9 +249,6 @@ namespace state {
         {
             player->setState(PlayerState::PLAYING);
         }
-
-        // Notify observers that the draft is done.
-        this->notifyObservers(0);
     }
 
     ///@brief End the current Draft phase
@@ -279,7 +276,6 @@ namespace state {
     void Game::initProduction ()
     {
         this->resourceProducing = ResourceType::FINANCIER;
-        this->notifyObservers(0);
         this->nextProduction();
     }
 
@@ -306,7 +302,7 @@ namespace state {
             player->setState(PlayerState::PLAYING);
         }
         
-        this->notifyObservers(0);
+        this->notifyObservers(GAME_RESOURCE_PRODUCING_CHANGED);
     }
 
     ///@brief Manage the phase of production for all player and one resource
@@ -400,7 +396,7 @@ namespace state {
     void Game::endGame ()
     {
         this->phase = GamePhase::FINISHED;
-        this->notifyObservers(0);
+        this->notifyObservers(GAME_PHASE_CHANGED);
     }
 
     ///@brief Convert the Game to a JSON format. Usefull when the game is saved.
