@@ -10,6 +10,7 @@ namespace state {
     {
         this->name = jsonValue["name"].asString();
         this->id = jsonValue["id"].asInt();
+        this->preferedPersonnage = static_cast<ResourceType>(jsonValue["preferedPersonnage"].asInt());
 
         if (! jsonValue["empire"].isNull())
         {
@@ -97,7 +98,7 @@ namespace state {
         }  
     }
 
-    /// @brief Constructor of player that takes into argument the relative path to the texture.
+    /// @brief Basic constructor of player.
     /// @param name Name of the player.
     /// @param id ID of the player.
     Player::Player (std::string name, int id) :
@@ -471,7 +472,8 @@ namespace state {
 
         playerJSON["name"] = this->name;
         playerJSON["id"] = this->id;
-        
+        playerJSON["preferedPersonnage"] = static_cast<int> (this->preferedPersonnage);
+
         if (nullptr == this->empire)
         {
             playerJSON["empire"] = Json::nullValue;
