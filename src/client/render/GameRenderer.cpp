@@ -77,7 +77,7 @@ namespace render
     }
 
     /// @brief Update the GameRenderer with the current state of the game
-    void GameRenderer::update ()
+    void GameRenderer::update (long flags)
     {
         //Update the turn token
         int turn = this->game->getTurn();

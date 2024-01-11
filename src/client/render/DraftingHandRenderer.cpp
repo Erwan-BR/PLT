@@ -63,7 +63,7 @@ namespace render {
     }
     
     /// @brief update the DraftingHandRenderer with the current state of the game
-    void DraftingHandRenderer::update (){
+    void DraftingHandRenderer::update (long flags){
         //Get Cards
 		std::vector<std::shared_ptr<state::DevelopmentCard>> cards = player->getDraftingCards();
 
@@ -81,7 +81,7 @@ namespace render {
 		
         //Update Cards
 		for(i=0; i<(int) this->devCardRenderers.size();i++){
-			(this->devCardRenderers[i])->update();
+			(this->devCardRenderers[i])->update(0);
 		}
     }
 

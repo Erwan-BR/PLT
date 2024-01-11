@@ -53,7 +53,7 @@ namespace render
     }
 
     /// @brief Update the render of the Renderer of Card.
-    void DevelopmentCardRenderer::update ()
+    void DevelopmentCardRenderer::update (long flags)
     {
         // Retrieve the elements to pay.
         std::vector<state::ResourceToPay*> vectorOfElementsToPay = this->card->getCostToBuild();

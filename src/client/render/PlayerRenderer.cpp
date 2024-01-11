@@ -297,7 +297,7 @@ namespace render {
     }
 
     /// @brief update the Player Renderer with the current state of the game
-    void PlayerRenderer::update()
+    void PlayerRenderer::update(long flags)
     {
         DevelopmentCardRenderer* cRenderer;
 
@@ -408,7 +408,7 @@ namespace render {
 
         //Update Cards
         for(i=0; i<(int) this->devCardRenderers.size();i++){
-            (this->devCardRenderers[i])->update();
+            (this->devCardRenderers[i])->update(0);
         }
 
     }

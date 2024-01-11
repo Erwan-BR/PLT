@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include "../../constants/constants/PlayerObserversNotification.h"
+
 namespace state {
 
     /// @brief Create a player from a json file.
@@ -195,7 +197,8 @@ namespace state {
         }
         
         this->currentResources.at(resource) --;
-        this->notifyObservers();
+        // this->notifyObservers(constants::TO_BUILD_CARDS_CHANGED);
+        this->notifyObservers(0);
     }
 
     /// @brief Convert a krystallium into another resource. Used when the player wants to place a krystallium on material/energy/...
@@ -211,7 +214,8 @@ namespace state {
         // Convert the resource and propagate the information to observers.
         this->currentResources.at(ResourceType::KRYSTALLIUM) --;
         this->currentResources.at(targetResource) ++;
-        this->notifyObservers();
+        // this->notifyObservers(constants::CURRENT_RESOURCES_PLAYER_CHANGED);
+        this->notifyObservers(0);
     }
     
     /// @brief Discard a card to gain a discard gain.
@@ -227,7 +231,9 @@ namespace state {
             }
             ResourceType discardGain = this->draftCards.at(cardIndex)->getDiscardGain();
             this->currentResources.at(discardGain) ++ ;
-            this->draftCards.erase(this->draftCards.begin() + cardIndex);            
+            this->draftCards.erase(this->draftCards.begin() + cardIndex);
+            // this->notifyObservers(constants::DRAFT_CARDS_CHANGED);
+            this->notifyObservers(0);
         }
         else
         {
@@ -237,9 +243,11 @@ namespace state {
             }
             this->resourcesInEmpireUnit ++;
             this->convertToKrystallium();
-            this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);             
+            this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);
+            this->notifyObservers(0);
+            // this->notifyObservers(constants::TO_BUILD_CARDS_CHANGED);
         }
-        this->notifyObservers();
+        
     }
 
     /// @brief Function called when the player wants to keep a card from the drafting phase.
@@ -253,7 +261,8 @@ namespace state {
         std::shared_ptr<DevelopmentCard> card = this->draftCards.at(toKeepCardIndex);
         this->toBuildCards.push_back(card);
         this->draftCards.erase(this->draftCards.begin() + toKeepCardIndex);
-        this->notifyObservers();
+        this->notifyObservers(0);
+        // this->notifyObservers(constants::DRAFT_CARDS_CHANGED | constants::TO_BUILD_CARDS_CHANGED);
     }
 
     /// @brief Update the production of every tokens
@@ -265,7 +274,8 @@ namespace state {
         this->resourcesProduction[GOLD] = computeProduction(GOLD);
         this->resourcesProduction[EXPLORATION] = computeProduction(EXPLORATION);
 
-        this->notifyObservers();
+        // this->notifyObservers(constants::RESOURCES_PRODUCTION_PLAYER_CHANGED);
+        this->notifyObservers(0);
     }
 
     /// @brief Compute the quantity of resource named "resourceToProduce" produced by the player
@@ -377,7 +387,8 @@ namespace state {
         this->currentResources.at(resource)--;
         this->resourcesInEmpireUnit++;
         this->convertToKrystallium();
-        this->notifyObservers();
+        // this->notifyObservers(constants::CURRENT_RESOURCES_PLAYER_CHANGED);
+        this->notifyObservers(0);
     }
 
     /// @brief Converts the empire's resources into a krystallium when it reaches 5 resources
@@ -402,7 +413,8 @@ namespace state {
         this->draftingCards.erase(this->draftingCards.begin() + cardIndex);
         this->state = PlayerState::PENDING;
 
-        this->notifyObservers();
+        this->notifyObservers(0);
+        // this->notifyObservers(constants::DRAFTING_CARDS_CHANGED | constants::DRAFTING_CARDS_CHANGED | constants::STATE_PLAYER_CHANGED);
     }
 
     /// @brief Return the selected token by the player (Colonel/Financier)
@@ -423,7 +435,8 @@ namespace state {
             this->currentResources.at(resourceToReceive) ++;
         }
 
-        this->notifyObservers();
+        // this->notifyObservers(constants::CURRENT_RESOURCES_PLAYER_CHANGED);
+        this->notifyObservers(0);
     }
 
     /// @brief End the planificiation for the current player. Send all drafted cards to the to buildCard.
@@ -438,7 +451,8 @@ namespace state {
 
         this->draftCards.clear();
         this->state = PlayerState::PENDING;
-        this->notifyObservers();
+        // this->notifyObservers(constants::TO_BUILD_CARDS_CHANGED | constants::DRAFT_CARDS_CHANGED | constants::STATE_PLAYER_CHANGED);
+        this->notifyObservers(0);
     }
 
     /// @brief End the production for the current player. Send all resources in empires.
@@ -446,7 +460,8 @@ namespace state {
     {
         this->sendAllResourcesToEmpire();
         this->state = PlayerState::PENDING;
-        this->notifyObservers();
+        // this->notifyObservers(constants::STATE_PLAYER_CHANGED);
+        this->notifyObservers(0);
     }
 
     /// @brief Send all resources (material, energy, gold, exploration, science)
@@ -460,6 +475,8 @@ namespace state {
                 this->sendResourceToEmpire(resourceType);
             }
         }
+        // this->notifyObservers(constants::CURRENT_RESOURCES_PLAYER_CHANGED);
+        this->notifyObservers(0);
     }
 
 
@@ -565,13 +582,14 @@ namespace state {
     /// @param draft drafting deck to give to the player
     void Player::setDraftingCards(std::vector<std::shared_ptr<DevelopmentCard>> draft)
     {
-        this->draftingCards = {};
+        this->draftingCards.clear();
         for(std::shared_ptr<DevelopmentCard> card : draft)
         {
             this->draftingCards.push_back(card);
         }
 
-        this->notifyObservers();
+        // this->notifyObservers(constants::DRAFTING_CARDS_CHANGED);
+        this->notifyObservers(0);
     }
 
     /// @brief Setter for the drafting deck
@@ -579,7 +597,8 @@ namespace state {
     void Player::setState(PlayerState state)
     {
         this->state = state;
-        this->notifyObservers();
+        // this->notifyObservers(constants::STATE_PLAYER_CHANGED);
+        this->notifyObservers(0);
     }
 
     /// @brief Get the production of a given resource.

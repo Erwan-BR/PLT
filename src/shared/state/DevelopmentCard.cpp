@@ -107,7 +107,7 @@ namespace state {
             if ((!resourceToPay->isPaid) && (resourceToPay->type == resource))
             {
                 resourceToPay->isPaid = true;
-                this->notifyObservers();
+                this->notifyObservers(0);
                 return (this->decreaseResourceUnitNeeded());
             } 
         }

@@ -20,11 +20,11 @@ namespace state{
     }
 
     /// @brief Notify all observers that the current Observable has a significant change.
-    void Observable::notifyObservers() const
+    void Observable::notifyObservers(long flags) const
     {
         for(Observer* observer : this->observers)
         {
-            observer->update();
+            observer->update(flags);
         }
     }
 }
