@@ -197,7 +197,7 @@ namespace state {
         }
         
         this->currentResources.at(resource) --;
-        this->notifyObservers(TO_BUILD_CARDS_CHANGED);
+        this->notifyObservers(TO_BUILD_CARDS_CHANGED | PLAYER_CURRENT_RESOURCES_CHANGED);
     }
 
     /// @brief Convert a krystallium into another resource. Used when the player wants to place a krystallium on material/energy/...
@@ -230,7 +230,7 @@ namespace state {
             ResourceType discardGain = this->draftCards.at(cardIndex)->getDiscardGain();
             this->currentResources.at(discardGain) ++ ;
             this->draftCards.erase(this->draftCards.begin() + cardIndex);
-            this->notifyObservers(DRAFT_CARDS_CHANGED);
+            this->notifyObservers(DRAFT_CARDS_CHANGED | PLAYER_CURRENT_RESOURCES_CHANGED);
         }
         else
         {

@@ -25,7 +25,7 @@
 
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
 void displayMessage();
-void displayTemporaryCommands();
+void displayTemporaryCommands(bool testing);
 void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
 
 int main(int argc,char* argv[])
@@ -46,7 +46,7 @@ int main(int argc,char* argv[])
     }
 	else if ("engine" == userInput)
     {
-        displayTemporaryCommands();
+        displayTemporaryCommands(true);
 
         //Creation of the window
         int win_length = 1920;
@@ -303,12 +303,6 @@ int main(int argc,char* argv[])
                     }
                     if (event.key.code == sf::Keyboard::R){
                         scene->changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
-                    }
-                    if (event.key.code == sf::Keyboard::Q and scene->getWindow() == render::Window::PLAYER_INFO){
-                        scene->changePlayerInfoPlayer(0,render::PLAYER_INFO);
-                    }
-                    if (event.key.code == sf::Keyboard::S and scene->getWindow() == render::Window::PLAYER_INFO){
-                        scene->changePlayerInfoPlayer(1,render::PLAYER_INFO);
                     }
                 }
             }
@@ -638,18 +632,22 @@ void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<sta
     }
 }
 
-void displayTemporaryCommands()
+void displayTemporaryCommands(bool testing)
 {
     //Print Temporary Manual Commands
-    std::cout<<"**Temporary Manual Commands**" << std::endl;
+    if(testing){
+        std::cout<<"**Temporary Manual Commands**" << std::endl;
+    }
     std::cout<<"*Change Window Commands*" << std::endl;
     std::cout<<"A - Main Window" << std::endl;
     std::cout<<"Z - Drafting Window" << std::endl;
     std::cout<<"E - Planification Window" << std::endl;
     std::cout<<"R - Full Info Player Window" << std::endl;
-    std::cout<<"> On This Window (Player Info):" << std::endl;
-    std::cout<<"> Q - Display Player 1" << std::endl;
-    std::cout<<"> S - Display Player 2" << std::endl;
-    std::cout<<"*Game Commands*" << std::endl;
-    std::cout<<"Space - Go to the next step of the testing game" << std::endl;
+    if(testing){
+        std::cout<<"> On This Window (Player Info):" << std::endl;
+        std::cout<<"> Q - Display Player 1" << std::endl;
+        std::cout<<"> S - Display Player 2" << std::endl;
+        std::cout<<"*Game Commands*" << std::endl;
+        std::cout<<"Space - Go to the next step of the testing game" << std::endl;
+    }
 }
