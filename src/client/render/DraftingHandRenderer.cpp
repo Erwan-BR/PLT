@@ -1,7 +1,9 @@
 #include "DraftingHandRenderer.h"
+
 #include <string>
 
-#define CARDS_DISPLAY_DRAFTING 7
+#include "../../constants/constants/PlayerObserversNotification.h"
+#include "../../constants/constants/GameConstants.h"
 
 namespace render {
     DraftingHandRenderer::DraftingHandRenderer (std::shared_ptr<state::Player> player, sf::Vector2f position){
@@ -21,7 +23,6 @@ namespace render {
 		this->devCardRenderers = {};
 		this->texts = {};
 
-		int i;
 		sf::Texture* texture;
 		sf::Sprite* sprite;
 		sf::Text* text;
@@ -46,7 +47,7 @@ namespace render {
         this->sprites.push_back(sprite);					//Sprite
 
         //Enter Cards (position 2 to 9 in sprites)
-        for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++)
+        for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (cards.size() > i); i++)
         {
             DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],position+sf::Vector2f(350.f+180.f*(i),10.f),170.f/375.f);
             this->devCardRenderers.push_back(cRenderer);	//Card Renderer
@@ -66,15 +67,13 @@ namespace render {
     void DraftingHandRenderer::update (long flags){
         //Get Cards
 		std::vector<std::shared_ptr<state::DevelopmentCard>> cards = player->getDraftingCards();
-
-		int i;
 		
         //Initialize vector
         this->devCardRenderers = {};
         
         if(flags & DRAFTING_CARDS_CHANGED){
             //Create new Cards
-            for (i=0;i<CARDS_DISPLAY_DRAFTING and i<(int) cards.size();i++)
+            for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (cards.size() > i); i++)
             {
                 DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],sprites[0]->getPosition()+sf::Vector2f(300.f+120.f*(i),0.f),170.f/375.f);
                 this->devCardRenderers.push_back(cRenderer);	//Card Renderer
@@ -84,10 +83,10 @@ namespace render {
     }
 
     void DraftingHandRenderer::draw(sf::RenderWindow& window){
-        for(int i=0;i<(int) this->sprites.size();i++){
+        for(size_t i = 0; this->sprites.size() > i; i++){
 			window.draw(*(this->sprites[i]));
 		}
-		for(int i=0;i<(int) this->texts.size();i++){
+		for(size_t i = 0; this->texts.size() > i; i++){
 			window.draw(*(this->texts[i]));
 		}
 		for(DevelopmentCardRenderer* cRenderer: this->devCardRenderers){
