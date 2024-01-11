@@ -410,14 +410,6 @@ namespace state {
 
         this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFTING_CARDS_CHANGED | PLAYER_STATE_CHANGED);
     }
-
-    /// @brief Return the selected token by the player (Colonel/Financier)
-    /// Not implementable as it ask to know on which one does the player clicks.
-    /// @return Boolean returned by the choice of the player (true => Colonel, false => Financier)
-    bool Player::chooseColonelToken() const
-    {
-        return false ;
-    }
     
     /// @brief Receive multiple resources from the game
     /// @param resourceToReceive Type of the resource to receive.
@@ -588,6 +580,16 @@ namespace state {
         this->notifyObservers(PLAYER_STATE_CHANGED);
     }
 
+    /// @brief Set the preferred personnage of the player. Usefull for choosing colonel / financier at third production.
+    /// @param newPreferedPersonnage New preferred personnage.
+    void Player::setPreferedPersonnage (ResourceType newPreferedPersonnage)
+    {
+        if (ResourceType::COLONEL == newPreferedPersonnage || ResourceType::FINANCIER == newPreferedPersonnage)
+        {
+            this->preferedPersonnage = newPreferedPersonnage;
+        }
+    }
+
     /// @brief Get the production of a given resource.
     /// @param resource Resource which the production quantity is asked.
     /// @return Production of this resource.
@@ -686,6 +688,13 @@ namespace state {
     int Player::getID () const
     {
         return this->id;
+    }
+
+    /// @brief Retrieve the prefered personnage of the player.
+    /// @return Preferred personnage of the player.
+    bool Player::isPreferedPersonnageColonel () const
+    {
+        return (ResourceType::COLONEL == this->preferedPersonnage);
     }
 
     /// @brief Check if a player is an AI (because players with negative ID are AIs)

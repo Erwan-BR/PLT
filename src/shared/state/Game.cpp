@@ -364,7 +364,7 @@ namespace state {
         else
         {
             // Retrieve which token the player wants to get, the player can also be an AI.
-            bool chooseColonel ;
+            bool chooseColonel = false;
             
             if (this->players[playerIndexBiggestProduction]->isAI())
             {
@@ -372,7 +372,7 @@ namespace state {
             }
             else
             {
-                chooseColonel = this->players[playerIndexBiggestProduction]->chooseColonelToken();
+                chooseColonel = this->players[playerIndexBiggestProduction]->isPreferedPersonnageColonel();
             }
 
             if (chooseColonel)
