@@ -591,7 +591,7 @@ gen_decl (declaration *d)
         while (umla != NULL) {
             char *literal = umla->key.name;
             check_umlattr (&umla->key, name);
-            if ((strlen (umla->key.value) <= 0) || (strlen(name) <= 0)) {
+            if ((strlen (umla->key.value) <= 0) || (strlen(umla->key.name) <= 0)) {
                 fprintf(stderr, "%s: ignoring define\n", name);
                 umla = umla->next;
                 continue;
@@ -601,7 +601,7 @@ gen_decl (declaration *d)
                 print("/// @brief %s\n", umla->key.comment);
             }
             
-            print("#define %s %s\n", name, umla->key.value);
+            print("#define %s %s\n", umla->key.name, umla->key.value);
             emit ("\n");
             umla = umla->next;
         }

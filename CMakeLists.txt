@@ -114,6 +114,7 @@ find_library(
 # Add source subdirectories
 add_subdirectory(src/shared)
 add_subdirectory(src/client)
+add_subdirectory(src/constants)
 #add_subdirectory(src/server)
 
 # Unit tests
