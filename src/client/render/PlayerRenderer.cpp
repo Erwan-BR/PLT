@@ -4,11 +4,9 @@
 #include <iostream>
 
 #include "../../constants/constants/PlayerObserversNotification.h"
+#include "../../constants/constants/PlayerRendererMacro.h"
 #include "../../constants/constants/GameConstants.h"
 
-
-#define CARDS_DISPLAY_MAIN_WINDOW 14
-#define CARDS_DISPLAY_FULL 28
 
 namespace render {
     /// @brief Full constructor of the PlayerRenderer class.
