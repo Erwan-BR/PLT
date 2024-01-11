@@ -89,11 +89,15 @@ namespace render
             if (rectangle.getGlobalBounds().contains(mousePos) && nullptr != this->command)
             {
                 Json::Value jsonCommand = this->command->toJSON();
-                
-                // Lock the mutex, send the JSON of the command and unlock the mutex.
-                this->locker.lock();
-                engineOfGame->receiveCommand(jsonCommand);
-                this->locker.unlock();
+                if(this->command->getCommandId() == (engine::CommandID) -1){        //Catch Actions which are executed by render and not by the engine
+                    this->scene->changePlayerInfoPlayer(jsonCommand["playerIndex"].asInt());
+                }
+                else{
+                    // Lock the mutex, send the JSON of the command and unlock the mutex.
+                    this->locker.lock();
+                    engineOfGame->receiveCommand(jsonCommand);
+                    this->locker.unlock();
+                }
             }
         }
     }

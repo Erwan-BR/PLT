@@ -81,6 +81,29 @@ namespace render {
 			button = new Button({1770.f,840.f},{100.f,100.f},"FINANCIER",sf::Color::Cyan,nullptr, this->locker);
 			this->btnMain.push_back(button);
 
+			command = new engine::Command(engine::CONVERTRESOURCE,0,state::MATERIAL);
+			button = new Button({50.f,480.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO MATERIAL",sf::Color(180,180,180),command, this->locker);
+			this->btnMain.push_back(button);
+			command = new engine::Command(engine::CONVERTRESOURCE,0,state::ENERGY);
+			button = new Button({170.f,480.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO ENERGY",sf::Color(85,76,68),command, this->locker);
+			this->btnMain.push_back(button);
+			command = new engine::Command(engine::CONVERTRESOURCE,0,state::SCIENCE);
+			button = new Button({50.f,600.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO SCIENCE",sf::Color::Green,command, this->locker);
+			this->btnMain.push_back(button);
+			command = new engine::Command(engine::CONVERTRESOURCE,0,state::GOLD);
+			button = new Button({170.f,600.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO GOLD",sf::Color::Yellow,command, this->locker);
+			this->btnMain.push_back(button);
+			command = new engine::Command(engine::CONVERTRESOURCE,0,state::MATERIAL);
+			button = new Button({50.f,720.f},{100.f,100.f},"CONVERT KRYSTALLIUM\nTO EXPLORATION",sf::Color::Blue,command, this->locker);
+			this->btnMain.push_back(button);
+
+			command = new engine::Command(engine::CHOOSETOKEN,0,state::COLONEL);
+			button = new Button({50.f,840.f},{100.f,100.f},"CHOOSE\nCOLONEL",sf::Color::Red,command, this->locker);
+			this->btnMain.push_back(button);
+			command = new engine::Command(engine::CHOOSETOKEN,0,state::FINANCIER);
+			button = new Button({50.f,840.f},{100.f,100.f},"CHOOSE\nFINANCIER",sf::Color::Cyan,command, this->locker);
+			this->btnMain.push_back(button);
+
 			command = new engine::Command(engine::ENDPRODUCTION,0);
 			button = new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color(215,47,215),command, this->locker);
 			this->btnMain.push_back(button);
@@ -89,7 +112,7 @@ namespace render {
 			this->btnMain.push_back(button);
 
 			for(int i = 1; i<(int) game->getPlayers().size();i++){
-				command = new engine::Command(engine::SAVEGAME); //TODO change ID
+				command = new engine::Command((engine::CommandID) -1,i);
 				button = new Button({300.f,60.f*i},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker);
 				this->btnMain.push_back(button);
 			}
@@ -106,7 +129,7 @@ namespace render {
 			this->btnDraft.push_back(button);
 
 			for(int i = 0; i<(int) game->getPlayers().size();i++){
-				command = new engine::Command(engine::SAVEGAME); //TODO change ID
+				command = new engine::Command((engine::CommandID) -1,i);
 				button = new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker);
 				this->btnFull.push_back(button);
 			}
@@ -193,7 +216,8 @@ namespace render {
 		return (this->current_window);
 	}
 
-	/// @brief Setter for player displayed in PLAYER_INFO
+	
+	/// @brief Setter for player displayed
 	/// @param p_index index of Player to display in players
 	/// @param window Window where the info are changed (among MAIN_WINDOW & PLAYER_INFO)
 	void Scene::changePlayerInfoPlayer(int p_index,Window window){
@@ -211,7 +235,7 @@ namespace render {
 			default:
 				return;
 		}
-		//Get Transform
+		//Get Position
 		sf::Vector2f pos = this->player_renderer[r_id]->getPos();
 
 		//Create Renderer
@@ -227,6 +251,10 @@ namespace render {
 		pRenderer->update(0);
 		//Put the new Renderer in its place
 		this->player_renderer[r_id] = pRenderer;
+	}
+
+	void Scene::changePlayerInfoPlayer(int p_index){
+		changePlayerInfoPlayer(p_index,this->current_window);
 	}
 
 	/// @brief update the Scene with the current state of the game
