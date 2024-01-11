@@ -587,6 +587,27 @@ gen_decl (declaration *d)
     if (eq (stype, "CORBANative")) {
         print ("// CORBANative: %s \n\n", name);
 
+    } else if (is_define_stereo (stype)) {
+        while (umla != NULL) {
+            char *literal = umla->key.name;
+            check_umlattr (&umla->key, name);
+            if ((strlen (umla->key.value) <= 0) || (strlen(name) <= 0)) {
+                fprintf(stderr, "%s: ignoring define\n", name);
+                umla = umla->next;
+                continue;
+            }
+            /* print comments on define */
+            if (strlen(umla->key.comment)) {
+                print("/// @brief %s\n", umla->key.comment);
+            }
+            
+            print("#define %s %s\n", name, umla->key.value);
+            emit ("\n");
+            umla = umla->next;
+        }
+        //indentlevel--;
+        //print ("};\n\n");
+
     } else if (is_const_stereo (stype)) {
         if (umla == NULL) {
             fprintf (stderr, "Error: first attribute not set at %s\n", name);
