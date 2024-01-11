@@ -79,66 +79,70 @@ namespace render
     /// @brief Update the GameRenderer with the current state of the game
     void GameRenderer::update (long flags)
     {
-        //Update the turn token
-        int turn = this->game->getTurn();
-        if (turn < 5){
-            this->boardTurnTexture->loadFromFile("./resources/img/turn_"+std::to_string(turn)+".png");
-            this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
+        if(flags & constants::GAME_TURN_CHANGED){
+            //Update the turn token
+            int turn = this->game->getTurn();
+            if (turn < 5){
+                this->boardTurnTexture->loadFromFile("./resources/img/turn_"+std::to_string(turn)+".png");
+                this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
+            }
         }
         
-        //Reset the Board of Resources
-        this->boardMaterialSprite->setColor(sf::Color::White);
-        this->boardEnergySprite->setColor(sf::Color::White);
-        this->boardScienceSprite->setColor(sf::Color::White);
-        this->boardGoldSprite->setColor(sf::Color::White);
-        this->boardExplorationSprite->setColor(sf::Color::White);
+        if(flags & constants::GAME_PHASE_CHANGED){
+            //Reset the Board of Resources
+            this->boardMaterialSprite->setColor(sf::Color::White);
+            this->boardEnergySprite->setColor(sf::Color::White);
+            this->boardScienceSprite->setColor(sf::Color::White);
+            this->boardGoldSprite->setColor(sf::Color::White);
+            this->boardExplorationSprite->setColor(sf::Color::White);
 
 
-        switch (this->game->getPhase()){
-            case state::DRAFT:
-                //Set the phase text during DRAFT
-                this->phaseIndicator->setString("DRAFT");
-                break;
-            case state::PLANIFICATION:
-                //Set the phase text during PLANIFICATION
-                this->phaseIndicator->setString("PLANIFICATION");
-                break;
-            case state::PRODUCTION:
-                //Set the phase text during PRODUCTION
-                this->phaseIndicator->setString("PRODUCTION");
-                
-                //Make the Board of Resources darker
-                this->boardMaterialSprite->setColor(sf::Color(127,127,127));
-                this->boardEnergySprite->setColor(sf::Color(127,127,127));
-                this->boardScienceSprite->setColor(sf::Color(127,127,127));
-                this->boardGoldSprite->setColor(sf::Color(127,127,127));
-                this->boardExplorationSprite->setColor(sf::Color(127,127,127));
+            switch (this->game->getPhase()){
+                case state::DRAFT:
+                    //Set the phase text during DRAFT
+                    this->phaseIndicator->setString("DRAFT");
+                    break;
+                case state::PLANIFICATION:
+                    //Set the phase text during PLANIFICATION
+                    this->phaseIndicator->setString("PLANIFICATION");
+                    break;
+                case state::PRODUCTION:
+                    //Set the phase text during PRODUCTION
+                    this->phaseIndicator->setString("PRODUCTION");
+                    
+                    //Make the Board of Resources darker
+                    this->boardMaterialSprite->setColor(sf::Color(127,127,127));
+                    this->boardEnergySprite->setColor(sf::Color(127,127,127));
+                    this->boardScienceSprite->setColor(sf::Color(127,127,127));
+                    this->boardGoldSprite->setColor(sf::Color(127,127,127));
+                    this->boardExplorationSprite->setColor(sf::Color(127,127,127));
 
-                //Only ligth up the board of the currently produced resource
-                switch (this->game->getResourceProducing()){
-                    case state::MATERIAL:
-                        this->boardMaterialSprite->setColor(sf::Color::White);
-                        break;
-                    case state::ENERGY:
-                        this->boardEnergySprite->setColor(sf::Color::White);
-                        break;
-                    case state::SCIENCE:
-                        this->boardScienceSprite->setColor(sf::Color::White);
-                        break;
-                    case state::GOLD:
-                        this->boardGoldSprite->setColor(sf::Color::White);
-                        break;
-                    case state::EXPLORATION:
-                        this->boardExplorationSprite->setColor(sf::Color::White);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case state::FINISHED:
-                //Set the phase text when game is ended
-                this->phaseIndicator->setString("FINISHED!");
-                break;
+                    //Only ligth up the board of the currently produced resource
+                    switch (this->game->getResourceProducing()){
+                        case state::MATERIAL:
+                            this->boardMaterialSprite->setColor(sf::Color::White);
+                            break;
+                        case state::ENERGY:
+                            this->boardEnergySprite->setColor(sf::Color::White);
+                            break;
+                        case state::SCIENCE:
+                            this->boardScienceSprite->setColor(sf::Color::White);
+                            break;
+                        case state::GOLD:
+                            this->boardGoldSprite->setColor(sf::Color::White);
+                            break;
+                        case state::EXPLORATION:
+                            this->boardExplorationSprite->setColor(sf::Color::White);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case state::FINISHED:
+                    //Set the phase text when game is ended
+                    this->phaseIndicator->setString("FINISHED!");
+                    break;
+            }
         }
     }
 
