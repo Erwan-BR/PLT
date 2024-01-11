@@ -4,6 +4,9 @@
 #include <vector>
 #include <thread>
 #include <mutex>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
@@ -132,7 +135,6 @@ int main(int argc,char* argv[])
 
         return EXIT_SUCCESS;
     }
-
     else if ("AI" == userInput)
     {
         if (3 == argc)
@@ -324,7 +326,108 @@ int main(int argc,char* argv[])
         std::cout << "Game exited with sucess!" << std::endl;
         return EXIT_SUCCESS;
     }
-    
+    else if ("reload" == userInput)
+    {
+        // Instantiation of a fstream object which is a file.
+        std::ifstream readingFile;
+
+        // Opening the file in reading mode.
+        readingFile.open("./bin/save.json", std::ios::in);
+
+        // Checking if the file is correctly opened.
+        if (! readingFile.is_open())
+        {
+            perror("Error opening the saved game");
+            return EXIT_FAILURE;
+        }
+
+        std::string jsonData((std::istreambuf_iterator<char>(readingFile)), std::istreambuf_iterator<char>());
+
+        // Create a Json::CharReaderBuilder
+        Json::CharReaderBuilder readerBuilder;
+
+        // Parse the JSON data into a Json::Value
+        Json::Value root;
+        std::istringstream jsonStream(jsonData);
+        Json::parseFromStream(readerBuilder, jsonStream, &root, nullptr);
+
+        //Creation of the window
+        int win_length = 1920;
+        int win_heigth = 1080;
+        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Default);
+
+        std::shared_ptr<state::Game> game = std::make_shared<state::Game>(root);
+
+        std::mutex locker;
+        engine::Engine* engineOfGame = new engine::Engine(game, locker);
+        render::Scene* scene = new render::Scene(game, locker, engineOfGame);
+
+        //Observable
+        scene->setupObserver(game);
+        for (std::shared_ptr<state::Player> player : game->getPlayers())
+        {
+            scene->setupObserver(player);
+        }
+
+        //Creation of the instance of sf::Event class that will received user's inputs.
+        sf::Event event;
+
+        // Creating the thread that contains the engine that does not require to launch the game.
+        std::thread initThread(&engine::Engine::gameRunning, engineOfGame, false);
+
+        //Main Loop active while the window is still open
+        while (window.isOpen())
+        {
+            //Clear the content of the window
+            window.clear();
+
+            //Test if an event happens and save it in "event"
+            while (window.pollEvent(event))
+            {
+                //Command to close the window
+                if (event.type == sf::Event::Closed){
+                    window.close();
+                }
+                if (event.type == sf::Event::MouseButtonReleased){
+                    scene->buttonHandle(event,window);
+                }
+                if (event.type == sf::Event::KeyPressed) {
+                    //std::cout<<to_string(event.key.code) << std::endl; //Debug Print the code of pressed key
+                    if (event.key.code == sf::Keyboard::A){
+                        scene->changeWindow(render::Window::MAIN_WINDOW); //Change the window to MAIN_WINDOW
+                    }
+                    if (event.key.code == sf::Keyboard::Z){
+                        scene->changeWindow(render::Window::DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
+                    }
+                    if (event.key.code == sf::Keyboard::E){
+                        scene->changeWindow(render::Window::PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
+                    }
+                    if (event.key.code == sf::Keyboard::R){
+                        scene->changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
+                    }
+                    if (event.key.code == sf::Keyboard::Q and scene->getWindow() == render::Window::PLAYER_INFO){
+                        scene->changePlayerInfoPlayer(0,render::PLAYER_INFO);
+                    }
+                    if (event.key.code == sf::Keyboard::S and scene->getWindow() == render::Window::PLAYER_INFO){
+                        scene->changePlayerInfoPlayer(1,render::PLAYER_INFO);
+                    }
+                }
+            }
+
+            scene->draw(window);
+
+            //Display the new content of the window
+            window.display();
+        }
+
+        initThread.join();
+
+        delete scene;
+
+        std::cout << "Game exited with sucess!" << std::endl;
+        return EXIT_SUCCESS;
+
+    }
     std::cout << "Invalid argument." << std::endl;
 	displayMessage();
     return EXIT_FAILURE;
