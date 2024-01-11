@@ -8,12 +8,11 @@ namespace state {
     {
         this->name = jsonValue["name"].asString();
         this->id = jsonValue["id"].asInt();
-        this->relativePathToTexture = jsonValue["relativePathToTexture"].asString();
 
-        this->profilePicture = new sf::Texture;
-        this->profilePicture->loadFromFile(this->relativePathToTexture);
-
-        this->empire = new EmpireCard(jsonValue["empire"]);
+        if (! jsonValue["empire"].isNull())
+        {
+            this->empire = new EmpireCard(jsonValue["empire"]);
+        }
 
         this->resourcesInEmpireUnit = jsonValue["resourcesInEmpireUnit"].asInt();
         this->state = static_cast<PlayerState> (jsonValue["state"].asInt());
@@ -96,40 +95,24 @@ namespace state {
         }  
     }
 
-    /// @brief Constructor of the player, with some parameters.
-    /// @param name Name of the player
-    /// @param id Id of the player
-    /// @param profilePicture Profile Picture of the player
-    Player::Player(std::string name, int id, sf::Texture* profilePicture) :
-        Observable(),
-        name(name),
-        id(id),
-        profilePicture(profilePicture)
-    {
-        this->initializeMaps();
-    }
-
     /// @brief Constructor of player that takes into argument the relative path to the texture.
     /// @param name Name of the player.
     /// @param id ID of the player.
-    /// @param relativePathToTexture Relative path of the profile picture, that is loaded in the function.
-    Player::Player (std::string name, int id, std::string relativePathToTexture) :
+    Player::Player (std::string name, int id) :
         Observable(),
         name(name),
-        id(id),
-        relativePathToTexture(relativePathToTexture)
+        id(id)
     {
-        this->profilePicture = new sf::Texture;
-        this->profilePicture->loadFromFile(relativePathToTexture);
         this->initializeMaps();
     }
 
     /// @brief Destructor of the class Player
     Player::~Player()
     {
-        this->resourcesProduction.clear();
-        this->cardsTypeList.clear();
-        delete this->empire;
+        if (NULL != this->empire)
+        {
+            delete this->empire;
+        }
         
         for(DevelopmentCard* card : this->builtCards)
         {
@@ -152,7 +135,6 @@ namespace state {
         {
             delete card;
         }
-
     }
 
     /// @brief Method called in the constructor. Used to initialize all dictionnary to null values.
@@ -184,7 +166,7 @@ namespace state {
     /// @param cardIndex Index of the card to construct, in the attributes toBuildCard.
     void Player::construct(int cardIndex)
     {
-        if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex))
+        if ((0 > cardIndex) || ((int)this->toBuildCards.size() <= cardIndex))
         {
             return ;
         }
@@ -227,7 +209,7 @@ namespace state {
     void Player::addResource (ResourceType resource, int cardIndex)
     {
         // Checking if the index of the card is valid and if the player has this resource.
-        if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex) || (0 == this->currentResources.at(resource)))
+        if ((0 > cardIndex) || ((int)this->toBuildCards.size() <= cardIndex) || (0 == this->currentResources.at(resource)))
         {
             return ;
         }
@@ -265,7 +247,7 @@ namespace state {
     {
         if(isADraftedCard)
         {
-            if ((0 > cardIndex) || ((int)this->draftCards.size() < cardIndex))
+            if ((0 > cardIndex) || ((int)this->draftCards.size() <= cardIndex))
             {
                 return ;
             }
@@ -275,7 +257,7 @@ namespace state {
         }
         else
         {
-            if ((0 > cardIndex) || ((int)this->toBuildCards.size() < cardIndex))
+            if ((0 > cardIndex) || ((int)this->toBuildCards.size() <= cardIndex))
             {
                 return ;
             }
@@ -290,7 +272,7 @@ namespace state {
     /// @param toKeepCardIndex Index of the card to keep.
     void Player::keepCard(int toKeepCardIndex)
     {
-        if (0 > toKeepCardIndex || (int)this->draftCards.size() < toKeepCardIndex)
+        if (0 > toKeepCardIndex || (int)this->draftCards.size() <= toKeepCardIndex)
         {
             return ;
         }
@@ -438,7 +420,7 @@ namespace state {
     /// @param cardIndex Card choosed by the player
     void Player::chooseDraftCard(int cardIndex)
     {
-        if (0 > cardIndex || (int)this->draftingCards.size() < cardIndex)
+        if (0 > cardIndex || (int)this->draftingCards.size() <= cardIndex)
         {
             return ;
         }
@@ -516,7 +498,15 @@ namespace state {
 
         playerJSON["name"] = this->name;
         playerJSON["id"] = this->id;
-        playerJSON["empire"] = this->empire->toJSON();
+        
+        if (NULL == this->empire)
+        {
+            playerJSON["empire"] = Json::nullValue;
+        }
+        else
+        {
+            playerJSON["empire"] = this->empire->toJSON();
+        }
 
         // Serialize the vector of builtCards
         Json::Value builtCardsArray;
@@ -552,7 +542,6 @@ namespace state {
 
         playerJSON["state"] = static_cast<int> (this->state);
         playerJSON["resourcesInEmpireUnit"] = this->resourcesInEmpireUnit;
-        playerJSON["relativePathToTexture"] = this->relativePathToTexture;
         
         // Serialize the map of currentResources
         Json::Value currentResourcesArray;
@@ -632,13 +621,6 @@ namespace state {
     std::string Player::getName () const
     {
         return this->name;
-    }
-
-    /// @brief Get the profile picture of the player, to display it
-    /// @return Profile picture of the player
-    sf::Texture* Player::getProfilePicture () const
-    {
-        return this->profilePicture;
     }
 
     /// @brief Get the empire card of the player.
@@ -733,11 +715,18 @@ namespace state {
         return (this->id < 0);
     }
 
-    /// @brief Get the relative path of a texture.
-    /// @return Relative path of a texture.
-    std::string Player::getRelativePathToTexture () const
+    /// @brief Check if the player is a real player AND is playing.
+    /// @return Boolean that state if a player is an AI and playing.
+    bool Player::isRealPlayerAndPlaying () const
     {
-        return this->relativePathToTexture;
+        return (! this->isAI()) && (PlayerState::PLAYING == this->state);
+    }
+
+    /// @brief Function that retrieve the quantity of personnages of a player. Usefull in case of tie in a game.
+    /// @return Numbers of personnages of the players (i.e colonel + financier)
+    int Player::getQuantityPersonnages () const
+    {
+        return this->currentResources.at(ResourceType::COLONEL) + this->currentResources.at(ResourceType::FINANCIER);
     }
 
     /************************************* Methods implemented for AI. *************************************/

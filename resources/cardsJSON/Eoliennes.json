@@ -1,0 +1,34 @@
+{
+	"costToBuild" : 
+	[
+		{
+			"isPaid" : false,
+			"type" : 1
+		},
+		{
+			"isPaid" : false,
+			"type" : 1
+		}
+	],
+	"discardGain" : 2,
+	"instantGain" : null,
+	"isPaid" : false,
+	"name" : "Eoliennes",
+	"numberOfCopies" : 7,
+	"productionGain" : 
+	[
+		{
+			"cardType" : 0,
+			"quantity" : 1,
+			"type" : 2
+		}
+	],
+	"quantityResourceMissing" : 2,
+	"relativePathToTexture" : "./resources/img/Cards/Development_Cards/eoliennes.png",
+	"type" : 21,
+	"victoryPoints" : 
+	{
+		"cardOrResourceType" : 0,
+		"numberOfPoints" : 0
+	}
+}
