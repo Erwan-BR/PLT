@@ -408,7 +408,7 @@ namespace state {
         this->draftingCards.erase(this->draftingCards.begin() + cardIndex);
         this->state = PlayerState::PENDING;
 
-        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFTING_CARDS_CHANGED | PLAYER_STATE_CHANGED);
+        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
     }
     
     /// @brief Receive multiple resources from the game
