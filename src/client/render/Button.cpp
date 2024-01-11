@@ -67,7 +67,7 @@ namespace render
         }
         else
         {
-            this->rectangle.setFillColor(sf::Color::Black);
+            this->rectangle.setFillColor(sf::Color::White);
             window.draw(this->rectangle);
             window.draw(this->text);
         }
@@ -78,7 +78,7 @@ namespace render
     /// @param event Event that occurs on the window.
     /// @param window Displayed window to the player.
     /// @param engineOfGame Engine that will receive the game.
-    void Button::handleEvent (sf::Event event, sf::RenderWindow& window, engine::Engine* engineOfGame)
+    void Button::handleEvent (sf::Event event, sf::RenderWindow& window, engine::Engine* engineOfGame, Scene* scene)
     {
         // Check if the button is enabled, and pressed with a left click
         if (this->isEnable && event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
@@ -90,7 +90,7 @@ namespace render
             {
                 Json::Value jsonCommand = this->command->toJSON();
                 if(this->command->getCommandId() == (engine::CommandID) -1){        //Catch Actions which are executed by render and not by the engine
-                    this->scene->changePlayerInfoPlayer(jsonCommand["playerIndex"].asInt());
+                    scene->changePlayerInfoPlayer(jsonCommand["playerIndex"].asInt());
                 }
                 else{
                     // Lock the mutex, send the JSON of the command and unlock the mutex.

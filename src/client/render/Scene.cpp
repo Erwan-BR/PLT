@@ -275,25 +275,25 @@ namespace render {
 		switch (this->current_window){
 			case MAIN_WINDOW:
 				for(Button* btn: this->btnMain){
-					btn->handleEvent(event,window, this->engineOfGame);
+					btn->handleEvent(event,window, this->engineOfGame, this);
 				}
 				this->player_renderer[0]->handleEvent(event,window,this);
 				break;
 			case DRAFTING_WINDOW:
 				for(Button* btn: this->btnDraft){
-					btn->handleEvent(event,window, this->engineOfGame);
+					btn->handleEvent(event,window, this->engineOfGame, this);
 				}
 				this->drafting_hand_renderer->handleEvent(event,window,this);
 				break;
 			case PLANIFICATION_WINDOW:
 				for(Button* btn: this->btnPlan){
-					btn->handleEvent(event,window, this->engineOfGame);
+					btn->handleEvent(event,window, this->engineOfGame, this);
 				}
 				this->player_renderer[3]->handleEvent(event,window,this);
 				break;
 			case PLAYER_INFO:
 				for(Button* btn: this->btnFull){
-					btn->handleEvent(event,window, this->engineOfGame);
+					btn->handleEvent(event,window, this->engineOfGame, this);
 				}
 				break;
 			default:

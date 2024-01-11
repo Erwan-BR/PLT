@@ -1141,7 +1141,7 @@
         </dia:composite>
         <dia:composite type="umloperation">
           <dia:attribute name="name">
-            <dia:string>#changeOtherPlayerInfo#</dia:string>
+            <dia:string>#changePlayerInfoPlayer#</dia:string>
           </dia:attribute>
           <dia:attribute name="stereotype">
             <dia:string>##</dia:string>
@@ -4970,7 +4970,7 @@
         <dia:point val="12.4224,52.9665"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="12.3724,52.9165;36.0724,72.4165"/>
+        <dia:rectangle val="12.3724,52.9165;36.0724,73.2165"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="12.4224,52.9665"/>
@@ -4979,7 +4979,7 @@
         <dia:real val="23.600000000000001"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="19.399999999999999"/>
+        <dia:real val="20.200000000000003"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#Button#</dia:string>
@@ -5618,6 +5618,23 @@
                 <dia:enum val="0"/>
               </dia:attribute>
             </dia:composite>
+            <dia:composite type="umlparameter">
+              <dia:attribute name="name">
+                <dia:string>#scene#</dia:string>
+              </dia:attribute>
+              <dia:attribute name="type">
+                <dia:string>#Scene*#</dia:string>
+              </dia:attribute>
+              <dia:attribute name="value">
+                <dia:string>##</dia:string>
+              </dia:attribute>
+              <dia:attribute name="comment">
+                <dia:string>##</dia:string>
+              </dia:attribute>
+              <dia:attribute name="kind">
+                <dia:enum val="0"/>
+              </dia:attribute>
+            </dia:composite>
           </dia:attribute>
         </dia:composite>
         <dia:composite type="umloperation">
@@ -5982,7 +5999,7 @@
         <dia:point val="17.5554,26.5001"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="17.5054,26.4501;24.6724,53.3668"/>
+        <dia:rectangle val="17.5054,26.4501;24.6724,53.3673"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -5991,7 +6008,7 @@
         <dia:point val="17.5554,26.5001"/>
         <dia:point val="17.5554,28.0778"/>
         <dia:point val="24.2224,28.0778"/>
-        <dia:point val="24.2224,52.9168"/>
+        <dia:point val="24.2224,52.9173"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>
