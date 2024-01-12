@@ -20,13 +20,24 @@
 #include <ai.h>
 #include <engine.h>
 
+#include "../constants/constants/GameConstants.h"
+
 #include "../shared/state.h"
 #include "render.h"
 
+typedef std::vector<std::shared_ptr<state::Player>> playersList;
+
+sf::RenderWindow* instanciatePLTWindow();
+render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<state::Game>& game, playersList players);
+
+void handleOpenedWindow(sf::RenderWindow* window, render::Scene* scene, std::shared_ptr<state::Game> game, bool isTestingGame);
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
+
 void displayMessage();
 void displayTemporaryCommands(bool testing);
 void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
+
+void addAIToVector(playersList& players, int nmberOfAIToAdd);
 
 int main(int argc,char* argv[])
 {
@@ -49,105 +60,47 @@ int main(int argc,char* argv[])
         displayTemporaryCommands(true);
 
         //Creation of the window
-        int win_length = 1920;
-        int win_heigth = 1080;
-        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Default);
+        sf::RenderWindow* window = instanciatePLTWindow();
 
         //Creation of testing instances of Player class
         std::shared_ptr<state::Player> player1 = std::make_shared<state::Player>("MOI",0);
         std::shared_ptr<state::Player> player2 = std::make_shared<state::Player>("TOI",1);
 
         //Creation of the vector players
-        std::vector<std::shared_ptr<state::Player>> players;
+        playersList players;
         players.push_back(player1);
         players.push_back(player2);
 
         //Creation of the instance of the Game class
-        std::shared_ptr<state::Game> game = std::make_shared<state::Game>(players,true);
+        std::shared_ptr<state::Game> game = nullptr;
+        engine::Engine* engineOfGame = nullptr;
 
-        
-        std::mutex locker;
-        //Creation of the instance of the Scene class
-        engine::Engine* engineOfGame = new engine::Engine(game, locker);
-        render::Scene scene = render::Scene(game, locker, engineOfGame);
+        render::Scene* scene = instanciateRender(engineOfGame, game, players);
 
-        //Observable
-        scene.setupObserver(game);
-        scene.setupObserver(player1);
-        scene.setupObserver(player2);
-
+        // Intialization of the game
         game->initGame();
 
-
-        //Creation of the instance of sf::Event class that will received user's inputs.
-        sf::Event event;
-
-        //Creation of an int that indicates the step of the test game
-        int etape = 0;
-
         //Main Loop active while the window is still open
-        while (window.isOpen())
-        {
-            //Clear the content of the window
-            window.clear();
+        handleOpenedWindow(window, scene, game, true);
 
-            //Test if an event happens and save it in "event"
-            while (window.pollEvent(event))
-            {
-                //Command to close the window
-                if (event.type == sf::Event::Closed){
-                    window.close();
-                }
-                if (event.type == sf::Event::MouseButtonReleased){
-                    scene.buttonHandle(event,window);
-                }
-                if (event.type == sf::Event::KeyPressed) {
-                    //std::cout<<to_string(event.key.code) << std::endl; //Debug Print the code of pressed key
-                    if (event.key.code == sf::Keyboard::A){
-                        scene.changeWindow(render::Window::MAIN_WINDOW); //Change the window to MAIN_WINDOW
-                    }
-                    if (event.key.code == sf::Keyboard::Z){
-                        scene.changeWindow(render::Window::DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
-                    }
-                    if (event.key.code == sf::Keyboard::E){
-                        scene.changeWindow(render::Window::PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
-                    }
-                    if (event.key.code == sf::Keyboard::R){
-                        scene.changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
-                    }
-                    if (event.key.code == sf::Keyboard::Q and scene.getWindow() == render::Window::PLAYER_INFO){
-                        scene.changePlayerInfoPlayer(0,render::PLAYER_INFO);
-                    }
-                    if (event.key.code == sf::Keyboard::S and scene.getWindow() == render::Window::PLAYER_INFO){
-                        scene.changePlayerInfoPlayer(1,render::PLAYER_INFO);
-                    }
-                    if (event.key.code == sf::Keyboard::Space){
-                        next_step(etape,game,player1,player2,&scene);    //Go to the next step
-                        etape++;
-                    } 
-                }
-            }
-
-            scene.draw(window);
-
-            //Display the new content of the window
-            window.display();
-        }
         std::cout << "Exit Successfully !" << std::endl;
 
         return EXIT_SUCCESS;
     }
     else if ("AI" == userInput)
     {
-        if (3 == argc)
+        if (4 != argc)
         {
             std::cout << "./bin/client AI <x> <y>: Will run x game played by y AI." << std::endl;
-            displayMessage();
             return EXIT_FAILURE;
         }
-        int numberOfGames = std::atoi(argv[2]);
+        
+        // Convert user inputs.
+        const int numberOfGames = std::atoi(argv[2]);
         int numberOfAI = std::atoi(argv[3]);
-        if (2 > numberOfAI || 5 < numberOfAI || 1 > numberOfGames || MAX_NUMBER_OF_GAME_IA < numberOfGames)
+        
+        // Checking values.
+        if (MIN_NUMBER_OF_PLAYERS > numberOfAI || MAX_NUMBER_OF_PLAYERS < numberOfAI || 1 > numberOfGames || MAX_NUMBER_OF_GAME_IA < numberOfGames)
         {
             std::cout << "./bin/client AI <x> <y>: Will run x game played by y AI." << std::endl;
             std::cout << "You have to respect 1 < x < " << MAX_NUMBER_OF_GAME_IA << " and 1 < y < 6" << std::endl;
@@ -156,41 +109,36 @@ int main(int argc,char* argv[])
         
         std::cout << numberOfGames << " games containing " << numberOfAI << " AI are going to be created. When they are finished, some statistics will be displayed." << std::endl << std::endl;
 
+        // Vector that contains scores, number of built cards and ties of the AI.
         std::vector<std::vector<int>> AI_numberOfPoints(numberOfAI, std::vector<int>(numberOfGames, 0));
         std::vector<std::vector<int>> AI_numberOfBuiltCards(numberOfAI, std::vector<int>(numberOfGames, 0));
 
         std::vector<float> numberOfWins(numberOfAI, 0);
         float numberOfTie = 0;
 
-        for (int gameNumber = 0; gameNumber < numberOfGames; gameNumber++)
+        // Play numberOfGames games.
+        for (int gameNumber = 0; numberOfGames > gameNumber; gameNumber++)
         {
-            std::vector<std::shared_ptr<state::Player>> ais = {};
-            for (int i = 0; i < numberOfAI; i++)
-            {
-                std::shared_ptr<state::Player> newAI;
-                if (i%2)
-                {
-                    newAI = std::make_shared<ai::AIRandom>("dummy", -i-1);
-                }
-                else
-                {
-                    newAI = std::make_shared<ai::AIAdvanced>("smart", -i-1);
-                }
-                ais.push_back(newAI);
-            }
+            // Construct AI (1 random, 1 advanced, 1 random, ...)
+            playersList ais = {};
+            addAIToVector(ais, numberOfAI);
 
-            std::shared_ptr<state::Game> game = std::make_shared<state::Game>(ais);
-            std::mutex locker;
-            engine::Engine* engineOfGame = new engine::Engine(game, locker);
+            // Construct the game and launch it.
+            std::shared_ptr<state::Game> game = nullptr;
+            engine::Engine* engineOfGame = nullptr;
+            (void) instanciateRender(engineOfGame, game, ais);
+
             engineOfGame->gameRunning(true);
 
+
+            // Add scores of AI to corresponding vectors
             for (int i = 0; i < numberOfAI; i++)
             {
                 AI_numberOfPoints[i].push_back(game->getPlayers()[i]->computeVictoryPoint());
                 AI_numberOfBuiltCards[i].push_back(game->getPlayers()[i]->getBuiltCards().size());
             }
 
-            // Checking who won.
+            // Checking who won and write it into the vector.
             std::vector<int> winners = game->getWinners();
             if (1 != winners.size())
             {
@@ -205,7 +153,12 @@ int main(int argc,char* argv[])
             }
 
             delete engineOfGame;
-            std::cout << "Game " << gameNumber+1 << "/" << numberOfGames << " finished." << std::endl;
+
+            // Display for 1 game / 10 the fact that some game just finished.
+            if (!((gameNumber + 1) % 10))
+            {
+                std::cout << "Game " << gameNumber + 1 << "/" << numberOfGames << " finished." << std::endl;
+            }
         }
 
 
@@ -245,79 +198,46 @@ int main(int argc,char* argv[])
     }
     else if ("Player" == userInput)
     {
+        if (3 != argc)
+        {
+            std::cout << "./bin/client Player <x> <y>: Run a game where you play! x: Number of opponents." << std::endl;
+            return EXIT_FAILURE;
+        }
+
+        // Convert user inputs.
+        const int numberOfOpponents = std::atoi(argv[2]);
+        
+        // Checking values.
+        if ((MIN_NUMBER_OF_PLAYERS-1) > numberOfOpponents || (MAX_NUMBER_OF_PLAYERS-1) < numberOfOpponents)
+        {
+            std::cout << "./bin/client Player <x>: Run a game where you play! x: Number of opponents." << std::endl;
+            std::cout << "You have to respect" << (MIN_NUMBER_OF_PLAYERS-1) << " < x < "   << (MAX_NUMBER_OF_PLAYERS-1) << std::endl;
+            return EXIT_FAILURE;
+        }
+
         //Creation of the window
-        int win_length = 1920;
-        int win_heigth = 1080;
-        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Default);
+        sf::RenderWindow* window = instanciatePLTWindow();
 
-        // Creation of two players : The player, vs the dummy AI.
-        std::string nameOfPlayer = "PlayerName";
-        std::shared_ptr<state::Player> player1 = std::make_shared<state::Player>(nameOfPlayer, 10);
-        std::shared_ptr<state::Player> player2 = std::make_shared<ai::AIRandom>("dummy", -10);
-        std::vector<std::shared_ptr<state::Player>> players;
-        players.push_back(player1);
-        players.push_back(player2);
+        // Creation of the player, adding it to the vector and then create all AI to add them to the game.
+        std::shared_ptr<state::Player> realPlayer = std::make_shared<state::Player>("You!", 10);
+        playersList players;
+        players.push_back(realPlayer);
+        addAIToVector(players, numberOfOpponents);
 
-        // Creation of the game, the engine and the render.
-        std::shared_ptr<state::Game> game = std::make_shared<state::Game>(players);
+        std::shared_ptr<state::Game> game = nullptr;
+        engine::Engine* engineOfGame = nullptr;
+        render::Scene* scene = instanciateRender(engineOfGame, game, players);
+
         game->initGame();
-        std::mutex locker;
-        engine::Engine* engineOfGame = new engine::Engine(game, locker);
-        render::Scene* scene = new render::Scene(game, locker, engineOfGame);
-
-        //Observable
-        scene->setupObserver(game);
-        scene->setupObserver(player1);
-        scene->setupObserver(player2);
-
-        //Creation of the instance of sf::Event class that will received user's inputs.
-        sf::Event event;
 
         // Creating the thread that contains the engine that does not require to launch the game.
         std::thread initThread(&engine::Engine::gameRunning, engineOfGame, false);
 
-        //Main Loop active while the window is still open
-        while (window.isOpen())
-        {
-            //Clear the content of the window
-            window.clear();
+        // Main Loop active while the window is still open
+        handleOpenedWindow(window, scene, game, false);
 
-            //Test if an event happens and save it in "event"
-            while (window.pollEvent(event))
-            {
-                //Command to close the window
-                if (event.type == sf::Event::Closed){
-                    window.close();
-                }
-                if (event.type == sf::Event::MouseButtonReleased){
-                    scene->buttonHandle(event,window);
-                }
-                if (event.type == sf::Event::KeyPressed) {
-                    //std::cout<<to_string(event.key.code) << std::endl; //Debug Print the code of pressed key
-                    if (event.key.code == sf::Keyboard::A){
-                        scene->changeWindow(render::Window::MAIN_WINDOW); //Change the window to MAIN_WINDOW
-                    }
-                    if (event.key.code == sf::Keyboard::Z){
-                        scene->changeWindow(render::Window::DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
-                    }
-                    if (event.key.code == sf::Keyboard::E){
-                        scene->changeWindow(render::Window::PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
-                    }
-                    if (event.key.code == sf::Keyboard::R){
-                        scene->changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
-                    }
-                }
-            }
-
-            scene->draw(window);
-
-            //Display the new content of the window
-            window.display();
-        }
-
+        // Wait the end of the engine thread to exit.
         initThread.join();
-
-        delete scene;
 
         std::cout << "Game exited with sucess!" << std::endl;
         return EXIT_SUCCESS;
@@ -348,12 +268,9 @@ int main(int argc,char* argv[])
         Json::parseFromStream(readerBuilder, jsonStream, &root, nullptr);
 
         //Creation of the window
-        int win_length = 1920;
-        int win_heigth = 1080;
-        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Default);
+        sf::RenderWindow* window = instanciatePLTWindow();
 
         std::shared_ptr<state::Game> game = std::make_shared<state::Game>(root);
-
         std::mutex locker;
         engine::Engine* engineOfGame = new engine::Engine(game, locker);
         render::Scene* scene = new render::Scene(game, locker, engineOfGame);
@@ -366,60 +283,13 @@ int main(int argc,char* argv[])
         }
         game->notifyObservers(4095);
 
-        //Creation of the instance of sf::Event class that will received user's inputs.
-        sf::Event event;
-
         // Creating the thread that contains the engine that does not require to launch the game.
         std::thread initThread(&engine::Engine::gameRunning, engineOfGame, false);
 
         //Main Loop active while the window is still open
-        while (window.isOpen())
-        {
-            //Clear the content of the window
-            window.clear();
-
-            //Test if an event happens and save it in "event"
-            while (window.pollEvent(event))
-            {
-                //Command to close the window
-                if (event.type == sf::Event::Closed){
-                    window.close();
-                }
-                if (event.type == sf::Event::MouseButtonReleased){
-                    scene->buttonHandle(event,window);
-                }
-                if (event.type == sf::Event::KeyPressed) {
-                    //std::cout<<to_string(event.key.code) << std::endl; //Debug Print the code of pressed key
-                    if (event.key.code == sf::Keyboard::A){
-                        scene->changeWindow(render::Window::MAIN_WINDOW); //Change the window to MAIN_WINDOW
-                    }
-                    if (event.key.code == sf::Keyboard::Z){
-                        scene->changeWindow(render::Window::DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
-                    }
-                    if (event.key.code == sf::Keyboard::E){
-                        scene->changeWindow(render::Window::PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
-                    }
-                    if (event.key.code == sf::Keyboard::R){
-                        scene->changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
-                    }
-                    if (event.key.code == sf::Keyboard::Q and scene->getWindow() == render::Window::PLAYER_INFO){
-                        scene->changePlayerInfoPlayer(0,render::PLAYER_INFO);
-                    }
-                    if (event.key.code == sf::Keyboard::S and scene->getWindow() == render::Window::PLAYER_INFO){
-                        scene->changePlayerInfoPlayer(1,render::PLAYER_INFO);
-                    }
-                }
-            }
-
-            scene->draw(window);
-
-            //Display the new content of the window
-            window.display();
-        }
+        handleOpenedWindow(window, scene, game, false);
 
         initThread.join();
-
-        delete scene;
 
         std::cout << "Game exited with sucess!" << std::endl;
         return EXIT_SUCCESS;
@@ -428,6 +298,105 @@ int main(int argc,char* argv[])
     std::cout << "Invalid argument." << std::endl;
 	displayMessage();
     return EXIT_FAILURE;
+}
+
+void addAIToVector(playersList& players, int nmberOfAIToAdd)
+{
+    for (int i = 0; i < nmberOfAIToAdd; i++)
+    {
+        std::shared_ptr<state::Player> newAI;
+        if (i%2)
+        {
+            newAI = std::make_shared<ai::AIRandom>("random", -i-1);
+        }
+        else
+        {
+            newAI = std::make_shared<ai::AIAdvanced>("advanced", -i-1);
+        }
+        players.push_back(newAI);
+    }
+}
+
+void handleOpenedWindow(sf::RenderWindow* window, render::Scene* scene, std::shared_ptr<state::Game> game, bool isTestingGame)
+{
+    //Creation of the instance of sf::Event class that will received user's inputs.
+    sf::Event event;
+
+    // Index of the step we are playing
+    int etape = 0;
+
+    //Main Loop active while the window is still open
+    while (window->isOpen())
+    {
+        //Clear the content of the window
+        window->clear();
+
+        //Test if an event happens and save it in "event"
+        while (window->pollEvent(event))
+        {
+            //Command to close the window
+            if (event.type == sf::Event::Closed){
+                window->close();
+            }
+            if (event.type == sf::Event::MouseButtonReleased){
+                scene->buttonHandle(event, *window);
+            }
+            if (event.type == sf::Event::KeyPressed) {
+                //std::cout<<to_string(event.key.code) << std::endl; //Debug Print the code of pressed key
+                if (event.key.code == sf::Keyboard::A){
+                    scene->changeWindow(render::Window::MAIN_WINDOW); //Change the window to MAIN_WINDOW
+                }
+                if (event.key.code == sf::Keyboard::Z){
+                    scene->changeWindow(render::Window::DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
+                }
+                if (event.key.code == sf::Keyboard::E){
+                    scene->changeWindow(render::Window::PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
+                }
+                if (event.key.code == sf::Keyboard::R){
+                    scene->changeWindow(render::Window::PLAYER_INFO); //Change the window to PLAYER_INFO
+                }
+                if (isTestingGame && event.key.code == sf::Keyboard::Q and scene->getWindow() == render::Window::PLAYER_INFO){
+                    scene->changePlayerInfoPlayer(0,render::PLAYER_INFO);
+                }
+                if (isTestingGame && event.key.code == sf::Keyboard::S and scene->getWindow() == render::Window::PLAYER_INFO){
+                    scene->changePlayerInfoPlayer(1,render::PLAYER_INFO);
+                }
+                if (isTestingGame && event.key.code == sf::Keyboard::Space){
+                    next_step(etape,game,game->getPlayers()[0],game->getPlayers()[1],scene);    //Go to the next step
+                    etape++;
+                } 
+            }
+        }
+
+        scene->draw(*window);
+
+        //Display the new content of the window
+        window->display();
+    }
+}
+
+sf::RenderWindow* instanciatePLTWindow()
+{
+    int win_length = 1920;
+    int win_heigth = 1080;
+    sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(win_length, win_heigth), "It's a Wonderful World!", sf::Style::Default);
+
+    return window;
+}
+
+render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<state::Game>& game, playersList players)
+{
+    game = std::make_shared<state::Game>(players);
+    std::mutex locker;
+    engineOfGame = new engine::Engine(game, locker);
+    render::Scene* scene = new render::Scene(game, locker, engineOfGame);
+    
+    for (auto player: players)
+    {
+        scene->setupObserver(player);
+    }
+
+    return scene;
 }
 
 void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt)
@@ -449,6 +418,8 @@ void displayMessage()
 	std::cout << "./bin/client hello:  Display a hello world message, that shows that everything worked." << std::endl;
 	std::cout << "./bin/client engine: Will show a testing game, which is a game in one turn." << std::endl;
 	std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
+	std::cout << "./bin/client Player <x>: Run a game where you play! x: Number of opponents." << std::endl;
+	std::cout << "./bin/client reload: Reload a game that has been saved. You have to previously save a game (just play 2/3 moves)" << std::endl;
 }
 
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene){
@@ -646,7 +617,8 @@ void displayTemporaryCommands(bool testing)
     std::cout<<"Z - Drafting Window" << std::endl;
     std::cout<<"E - Planification Window" << std::endl;
     std::cout<<"R - Full Info Player Window" << std::endl;
-    if(testing){
+    if(testing)
+    {
         std::cout<<"> On This Window (Player Info):" << std::endl;
         std::cout<<"> Q - Display Player 1" << std::endl;
         std::cout<<"> S - Display Player 2" << std::endl;
