@@ -12,9 +12,9 @@ namespace state
 {
     /// @brief Create all development cards for a game.
     /// @return Vector of all development cards.
-    std::vector<std::shared_ptr<DevelopmentCard>> CreateAllCards::createAllDevelopmentCards (bool isTestingGame) const
+    constants::deckOfCards CreateAllCards::createAllDevelopmentCards (bool isTestingGame) const
     {
-        std::vector<std::shared_ptr<DevelopmentCard>> returnValue = {};
+        constants::deckOfCards returnValue = {};
 
         const std::string folderPath = "./resources/cardsJSON/";  // Update this with your actual folder path
 
@@ -114,7 +114,7 @@ namespace state
     /// @brief Create all empire cards for a game.
     /// @param isFaceA States if the game is played with face A or not.
     /// @return Vector of all empire cards.
-    std::vector<std::shared_ptr<EmpireCard>> CreateAllCards::createAllEmpireCards (bool isFaceA) const
+    constants::deckOfEmpires CreateAllCards::createAllEmpireCards (bool isFaceA) const
     {
         std::shared_ptr<EmpireCard> africa = this->createEmpireAFRICA(isFaceA);
         std::shared_ptr<EmpireCard> noram = this->createEmpireNORAM(isFaceA);
@@ -122,7 +122,7 @@ namespace state
         std::shared_ptr<EmpireCard> asia = this->createEmpireASIA(isFaceA);
         std::shared_ptr<EmpireCard> aztec = this->createEmpireAZTEC(isFaceA);
 
-        std::vector<std::shared_ptr<EmpireCard>> empires = {asia, aztec, africa, noram, europe};
+        constants::deckOfEmpires empires = {asia, aztec, africa, noram, europe};
         
         return empires;
     }
