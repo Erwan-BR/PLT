@@ -25,8 +25,9 @@ void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p
 void displayMessage();
 void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
 
-string getGameFromServer();
-void postGameOnServer(Game game);
+Json::Value getGameFromServer(Json::Value gameJson);
+void postGameOnServer(Json::Value gameJson);
+Json::Value getGameFromServer(state::Game game);
 
 int main(int argc,char* argv[])
 {
@@ -82,6 +83,17 @@ int main(int argc,char* argv[])
         state::Game game = state::Game(players,true);
 
         game.initGame();
+        std::ofstream file_id;
+        file_id.open("./game.txt");
+
+        Json::Value gameJson = game.toJSON();
+        
+        Json::StyledWriter styledWriter;
+        file_id << styledWriter.write(gameJson);
+
+        file_id.close();
+
+        postGameOnServer(gameJson);
 
         //Creation of the instance of the Scene class
         render::Scene scene = render::Scene(&game,tr_scale);
@@ -149,8 +161,7 @@ int main(int argc,char* argv[])
 
                         file_id.close();
 
-                        postGameOnServer(game);
-
+                        postGameOnServer(gameJson);
                     }
                         
                 }
@@ -164,6 +175,134 @@ int main(int argc,char* argv[])
         std::cout << "Exit Successfully !" << std::endl;
 
         return EXIT_SUCCESS;
+    }
+
+    else if("server" == userInput)
+    {
+        //Creation of the window
+        int win_length = 1820;
+        int win_heigth = 800;
+        sf::RenderWindow window(sf::VideoMode(win_length,win_heigth),"It's a Wonderful World!",sf::Style::Titlebar|sf::Style::Close);
+
+        //Creation of Transform (Scale adjusting to the window size)
+        float win_length_scale = (win_length*1.0f)/(1920.0f);
+        float win_heigth_scale = (win_heigth*1.0f)/(1080.0f);
+        sf::Transform tr_scale = sf::Transform().scale(win_length_scale, win_heigth_scale);
+
+        sf::Texture* t = new sf::Texture();
+        sf::Texture* t2 = new sf::Texture();
+        //Creation of testing instances of Player class
+        t->loadFromFile("./resources/img/pfp_1.png");
+        state::Player* player1 = new state::Player("MOI",0);
+        t2->loadFromFile("./resources/img/pfp_2.png");
+        state::Player* player2 = new state::Player("TOI",1);
+
+        //Creation of the vector players
+        std::vector<state::Player*> players;
+        players.push_back(player1);
+        players.push_back(player2);
+
+        //Creation of the instance of the Game class
+        state::Game game = state::Game(players,true);
+
+        game.initGame();
+        std::cout << &game << std::endl;
+        std::ofstream file_id;
+        file_id.open("./game2.txt");
+
+        Json::Value gameJson = game.toJSON();
+        
+        Json::StyledWriter styledWriter;
+        file_id << styledWriter.write(gameJson);
+
+        file_id.close();
+
+        //Creation of the instance of the Scene class
+        render::Scene scene = render::Scene(&game,tr_scale);
+
+        //Observable
+        scene.setupObserver(&game);
+        scene.setupObserver(player1);
+        scene.setupObserver(player2);
+
+        //Creation of the Font for the Texts
+        sf::Font font;
+        font.loadFromFile("./resources/font/arial.ttf");
+
+        //Creation of the instance of sf::Event class that will received user's inputs.
+        sf::Event event;
+
+
+        //Main Loop active while the window is still open
+        while (window.isOpen())
+        {
+            gameJson = game.toJSON();
+            std::cout << "passé" << std::endl;
+
+            //Clear the content of the window
+            window.clear();
+
+            gameJson = game.toJSON();
+            std::cout << "passé" << std::endl;
+
+            //Test if an event happens and save it in "event"
+            while (window.pollEvent(event))
+            {
+                //Command to close the window
+                if (event.type == sf::Event::Closed){
+                    window.close();
+                }
+                if (event.type == sf::Event::KeyPressed) {
+                    //std::cout<<to_string(event.key.code)<<endl; //Debug Print the code of pressed key
+                    if (event.key.code == sf::Keyboard::A){
+                        scene.changeWindow(render::MAIN_WINDOW); //Change the window to MAIN_WINDOW
+                    }
+                    if (event.key.code == sf::Keyboard::Z){
+                        scene.changeWindow(render::DRAFTING_WINDOW); //Change the window to DRAFTING_WINDOW
+                        std::cout << &game << std::endl;
+                    }
+                    if (event.key.code == sf::Keyboard::E){
+                        scene.changeWindow(render::PLANIFICATION_WINDOW); //Change the window to PLAYER_INFO
+                    }
+                    if (event.key.code == sf::Keyboard::R){
+                        scene.changeWindow(render::PLAYER_INFO); //Change the window to PLAYER_INFO
+                    }
+                    if (event.key.code == sf::Keyboard::Q and scene.getWindow() == render::PLAYER_INFO){
+                        scene.changePlayerInfoPlayer(0);
+                    }
+                    if (event.key.code == sf::Keyboard::S and scene.getWindow() == render::PLAYER_INFO){
+                        scene.changePlayerInfoPlayer(1);
+                    }
+                }
+            }
+            sleep(1);
+            std::cout << "Waited 1s" << std::endl;
+
+            std::cout << "getting the game from the server" << std::endl;
+            gameJson = getGameFromServer(game);
+
+            std::ofstream file_id;
+            file_id.open("./game2.txt");
+            
+            Json::StyledWriter styledWriter;
+            file_id << styledWriter.write(gameJson);
+
+            file_id.close();
+            std::cout << "Saved in game2.txt" << std::endl;
+
+
+            state::Game game2 = state::Game(gameJson);
+
+            game = game2;
+
+            scene.draw(window);
+
+            //Display the new content of the window
+            window.display();
+        }
+        std::cout << "Exit Successfully !" << std::endl;
+
+        return EXIT_SUCCESS;        
     }
 
     else if ("AI" == userInput)
@@ -254,7 +393,6 @@ int main(int argc,char* argv[])
             std::string name = "AI " + std::to_string(i) + " (" + type + ")";
             displayInformationFromAnAI(name, AI_numberOfPoints[i], AI_numberOfBuiltCards[i]);
         }
-
         // Display global stats of all games per AI.
         for (int i = 0; i < numberOfAI; i++)
         {
@@ -297,6 +435,7 @@ void displayMessage()
 	std::cout << "./bin/client hello:  Display a hello world message, that shows that everything worked." << std::endl;
 	std::cout << "./bin/client engine: Will show a testing game, which is a game in one turn." << std::endl;
 	std::cout << "./bin/client AI <x> <y>: Will run x game played by y random AI. We highly recommand to have x*y < 100." << std::endl;
+    std::cout << "./bin/client server: Will allow you to interact with the server." << std::endl;
 }
 
 void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p2, render::Scene* scene){
@@ -485,34 +624,63 @@ void next_step(int etape, state::Game* game, state::Player* p1, state::Player* p
 
 }
 
-string getGameFromServer()
+Json::Value getGameFromServer(state::Game game)
 {
-    Json::Value gameJson;
+    Json::Value gameJson = game.toJSON();
 
     sf::Http server("127.0.0.1", 8888);
     sf::Http::Request request;
+    Json::Reader reader;
 
     request.setMethod(sf::Http::Request::Method::Get);
-    request.setUri("/game");
     request.setHttpVersion(1,1);
 
-    sf::Http::Response response = server.sendRequest(request);
-    if(response.getStatus() == sf::Http::Response::Ok)
+    Json::Value::Members members = gameJson.getMemberNames();
+    for(std::string element: members)
     {
-        cout << "Request successful." << endl;
-        return response.getBody();
+        if(gameJson[element].isArray())
+        {
+            for(int i=0; i<(int)gameJson[element].size(); i++)
+            {
+                request.setUri("/game/"+element+"/"+std::to_string(i));
+
+                sf::Http::Response response = server.sendRequest(request);
+                if(response.getStatus() == sf::Http::Response::Ok)
+                {
+                    std::cout << "Request successful for " << element << "with id: " << i << std::endl;
+                    reader.parse(response.getBody(), gameJson[element][i]);
+                }
+                else
+                {
+                    std::cerr << "Request failed for " << element << "with id: " << i << std::endl;
+                    std::cerr << "Status code: " << response.getStatus() << std::endl;
+                }
+            }
+        }
+        else
+        {
+            request.setUri("/game/"+element);
+
+            sf::Http::Response response = server.sendRequest(request);
+            if(response.getStatus() == sf::Http::Response::Ok)
+            {
+                std::cout << "Request successful for " << element << std::endl;
+                reader.parse(response.getBody(), gameJson[element]);
+            }
+            else
+            {
+                std::cerr << "Request failed." << std::endl;
+                std::cerr << "Status code: " << response.getStatus() << std::endl;
+                std::cerr << "Error message: " << response.getBody() << std::endl;
+            }
+        }
     }
-    else
-    {
-        cerr << "Request failed." << endl;
-        cerr << "Status code: " << response.getStatus() << endl;
-        cerr << "Error message: " << response.getBody() << endl;
-        return "";
-    }
+    return gameJson;
 }
 
-void postGameOnServer(Game game)
+void postGameOnServer(Json::Value gameJson)
 {
+
     std::cout << "Save on server." << std::endl;
     sf::Http server("127.0.0.1", 8888);
     sf::Http::Request request;
@@ -520,48 +688,46 @@ void postGameOnServer(Game game)
     request.setMethod(sf::Http::Request::Method::Post);
     request.setHttpVersion(1,1);
 
-    Json::Value gameJson = game.toJSON();
-
     Json::Value::Members members = gameJson.getMemberNames();
-    for(string element: members)
+    for(std::string element: members)
     {
         if(gameJson[element].isArray())
         {
             for(int i=0; i<(int)gameJson[element].size(); i++)
             {
-                request.setUri("/game/"+element+"/"+to_string(i));
-                string body = gameJson[element][i].toStyledString();
+                request.setUri("/game/"+element+"/"+std::to_string(i));
+                std::string body = gameJson[element][i].toStyledString();
                 request.setBody(body);
 
                 sf::Http::Response response = server.sendRequest(request);
                 if(response.getStatus() == sf::Http::Response::Ok)
                 {
-                    cout << "Request successful for " << element << "with id: " << i << endl;
+                    std::cout << "Request successful for " << element << " with id: " << i << std::endl;
                 }
                 else
                 {
-                    cerr << "Request failed." << endl;
-                    cerr << "Status code: " << response.getStatus() << endl;
-                    cerr << "Error message: " << response.getBody() << endl;
+                    std::cerr << "Request failed." << std::endl;
+                    std::cerr << "Status code: " << response.getStatus() << std::endl;
+                    std::cerr << "Error message: " << response.getBody() << std::endl;
                 }
             }
         }
         else
         {
             request.setUri("/game/"+element);
-            string body = gameJson[element].toStyledString();
+            std::string body = gameJson[element].toStyledString();
             request.setBody(body);
 
             sf::Http::Response response = server.sendRequest(request);
             if(response.getStatus() == sf::Http::Response::Ok)
             {
-                cout << "Request successful for " << element << endl;
+                std::cout << "Request successful for " << element << std::endl;
             }
             else
             {
-                cerr << "Request failed." << endl;
-                cerr << "Status code: " << response.getStatus() << endl;
-                cerr << "Error message: " << response.getBody() << endl;
+                std::cerr << "Request failed." << std::endl;
+                std::cerr << "Status code: " << response.getStatus() << std::endl;
+                std::cerr << "Error message: " << response.getBody() << std::endl;
             }
         }
     }

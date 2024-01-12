@@ -5,6 +5,8 @@
 #include <random>
 #include <chrono>
 
+#include <iostream>
+
 namespace state {
     ///@brief Create a game from a json file.
     Game::Game(Json::Value jsonValue) :
@@ -41,6 +43,8 @@ namespace state {
         this->isFaceA = jsonValue["isFaceA"].asBool();
         this->resourceProducing = static_cast<ResourceType> (jsonValue["resourceProducing"].asInt());
         this->isTestingGame = jsonValue["isTestingGame"].asBool();
+
+        this->notifyObservers();
     }
 
     ///@brief Create an instance of the class Game with players specified
@@ -411,7 +415,9 @@ namespace state {
         Json::Value playersArray;
         for (const Player* player : this->players)
         {
+            std::cout << "game ici" << std::endl;
             playersArray.append(player->toJSON());
+            std::cout << "game ici" << std::endl;
         }
         gameJSON["players"] = playersArray;
 

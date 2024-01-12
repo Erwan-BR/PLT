@@ -89,7 +89,7 @@ namespace server
         {
             cerr << "GET request " << pattern << endl;
             Json::Value jsonOut;
-            HttpStatus status = service->get(jsonOut, id);
+            HttpStatus status = service->get(jsonOut, sub_url, id);
 
             out = jsonOut.toStyledString();
             return status;

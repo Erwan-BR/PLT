@@ -33,7 +33,7 @@ namespace server
         this->pattern = pattern;
     }
 
-    HttpStatus AbstractService::get (Json::Value& out, int id) const {
+    HttpStatus AbstractService::get (Json::Value& out, string sub_url, int id) const {
         throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
     }
 
