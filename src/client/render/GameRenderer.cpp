@@ -90,7 +90,7 @@ namespace render
             }
         }
         
-        if(GAME_PHASE_CHANGED & flags){
+        if((GAME_PHASE_CHANGED & flags) || (GAME_RESOURCE_PRODUCING_CHANGED & flags)){
             //Reset the Board of Resources
             this->boardMaterialSprite->setColor(sf::Color::White);
             this->boardEnergySprite->setColor(sf::Color::White);

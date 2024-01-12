@@ -214,6 +214,7 @@ namespace state {
         if(0 == numberOfCardsToDraft)
         {
             this->endDraft();
+            return ;
         }
 
         // According of how we are turning cards, behaviour are differents.

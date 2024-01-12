@@ -78,9 +78,9 @@ namespace engine
         // Now, we are waiting for players to play. 1 second to avoid making too much computation for nothing.
         while(! this->areAllRealPlayersPending())
         {
-            locker.lock();
+            this->locker.lock();
             this->excuteAllCommands();
-            locker.unlock();
+            this->locker.unlock();
             std::this_thread::sleep_for(std::chrono::milliseconds(2));
         }
         // Once finished, we can call the next method of game.

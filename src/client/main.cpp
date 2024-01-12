@@ -27,7 +27,7 @@
 #include "render.h"
 
 sf::RenderWindow* instanciatePLTWindow();
-render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players);
+render::Scene* instanciateRender(engine::Engine*& engineOfGame, std::shared_ptr<state::Game>& game, playersList players, std::mutex& locker);
 
 void handleOpenedWindow(sf::RenderWindow* window, render::Scene* scene, std::shared_ptr<state::Game> game, bool isTestingGame);
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
@@ -73,8 +73,9 @@ int main(int argc,char* argv[])
         //Creation of the instance of the Game class
         std::shared_ptr<state::Game> game = nullptr;
         engine::Engine* engineOfGame = nullptr;
+        std::mutex locker;
 
-        render::Scene* scene = instanciateRender(engineOfGame, game, players);
+        render::Scene* scene = instanciateRender(engineOfGame, game, players,locker);
 
         // Intialization of the game
         game->initGame();
@@ -125,7 +126,8 @@ int main(int argc,char* argv[])
             // Construct the game and launch it.
             std::shared_ptr<state::Game> game = nullptr;
             engine::Engine* engineOfGame = nullptr;
-            (void) instanciateRender(engineOfGame, game, ais);
+            std::mutex locker;
+            (void) instanciateRender(engineOfGame, game, ais, locker);
 
             engineOfGame->gameRunning(true);
 
@@ -225,7 +227,8 @@ int main(int argc,char* argv[])
 
         std::shared_ptr<state::Game> game = nullptr;
         engine::Engine* engineOfGame = nullptr;
-        render::Scene* scene = instanciateRender(engineOfGame, game, players);
+        std::mutex locker;
+        render::Scene* scene = instanciateRender(engineOfGame, game, players, locker);
 
         game->initGame();
 
@@ -238,7 +241,7 @@ int main(int argc,char* argv[])
         // Wait the end of the engine thread to exit.
         initThread.join();
 
-        std::cout << "Game exited with sucess!" << std::endl;
+        std::cout << "Game exited with success!" << std::endl;
         return EXIT_SUCCESS;
     }
     else if ("reload" == userInput)
@@ -383,10 +386,10 @@ sf::RenderWindow* instanciatePLTWindow()
     return window;
 }
 
-render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players)
+render::Scene* instanciateRender(engine::Engine*& engineOfGame, std::shared_ptr<state::Game>& game, playersList players,std::mutex& locker)
 {
     game = std::make_shared<state::Game>(players);
-    std::mutex locker;
+    
     engineOfGame = new engine::Engine(game, locker);
     render::Scene* scene = new render::Scene(game, locker, engineOfGame);
     
@@ -394,6 +397,7 @@ render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<s
     {
         scene->setupObserver(player);
     }
+    scene->setupObserver(game);
 
     return scene;
 }
