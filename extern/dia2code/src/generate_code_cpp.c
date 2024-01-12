@@ -982,6 +982,12 @@ gen_namespace(batch *b, declaration *nsd) {
             print("\n");
         }
 
+        char* comment = d->u.this_class->key->comment;
+        if(*comment != NULL) {
+            print("%s\n", comment);
+            print("\n");
+        }
+
         print("namespace %s {\n\n", nsname);
         indentlevel++;
         gen_decl(d);
