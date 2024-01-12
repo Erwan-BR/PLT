@@ -133,9 +133,13 @@ BOOST_AUTO_TEST_CASE(test_ConstructorAndMethods)
     (void) testDevCard->addResource(ResourceType::SCIENCE);
     building = testDevCard->addResource(ResourceType::SCIENCE);
     BOOST_CHECK_EQUAL(building, false);
+    BOOST_CHECK_EQUAL(testDevCard->getQuantityResourcesMissing(),1);
 
     building = testDevCard->addResource(ResourceType::SCIENCE);
     BOOST_CHECK_EQUAL(building, true);
+    BOOST_CHECK_EQUAL(testDevCard->getQuantityResourcesMissing(),0);
+    BOOST_CHECK_EQUAL(building, true);
+
     building = testDevCard->addResource(ResourceType::SCIENCE);// For this is paid
     addable = testDevCard->isResourceAddable(ResourceType::ENERGY);// For this is paid
 
