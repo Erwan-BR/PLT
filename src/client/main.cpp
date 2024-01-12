@@ -362,6 +362,7 @@ int main(int argc,char* argv[])
         {
             scene->setupObserver(player);
         }
+        game->notifyObservers(4095);
 
         //Creation of the instance of sf::Event class that will received user's inputs.
         sf::Event event;

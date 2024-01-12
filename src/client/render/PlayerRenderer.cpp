@@ -50,8 +50,8 @@ namespace render {
                 this->textures.push_back(texture);                    //Texture
                 sprite= new sf::Sprite();
                 sprite->setTexture(*(this->textures[1]));
-                sprite->setPosition(position+sf::Vector2f(20.f,20.f));
-                sprite->setScale(0.2f,0.2f);
+                sprite->setPosition(position+sf::Vector2f(20.f,30.f));
+                sprite->setScale(0.19f,0.19f);
                 this->sprites.push_back(sprite);                    //Sprite
             }
 
@@ -61,7 +61,10 @@ namespace render {
             text->setString(player->getName());
             text->setCharacterSize(30);
             text->setFillColor(sf::Color::White);
-            text->setPosition(position+sf::Vector2f(200.f,30.f));
+            text->setPosition(position+sf::Vector2f(20.f,0.f));
+            while(text->getLocalBounds().width > 260 && text->getCharacterSize()>0){
+                text->setCharacterSize(text->getCharacterSize()-1);
+            }
             this->texts.push_back(text);            //Text
 
             //Enter Resources/Constructions Count (position 1 to 10)
@@ -115,6 +118,9 @@ namespace render {
             text->setCharacterSize(30);
             text->setFillColor(sf::Color::White);
             text->setPosition(position+sf::Vector2f(10.f,10.f));
+            while(text->getLocalBounds().width > 300 && text->getCharacterSize()>0){
+                text->setCharacterSize(text->getCharacterSize()-1);
+            }
             this->texts.push_back(text);            //Text
 
             break;
@@ -136,7 +142,7 @@ namespace render {
                 this->textures.push_back(texture);                    //Texture
                 sprite= new sf::Sprite();
                 sprite->setTexture(*(this->textures[1]));
-                sprite->setPosition(position+sf::Vector2f(50.f,70.f));
+                sprite->setPosition(position+sf::Vector2f(50.f,90.f));
                 sprite->setScale(0.3f,0.3f);
                 this->sprites.push_back(sprite);                    //Sprite
             }
@@ -146,8 +152,11 @@ namespace render {
             text->setFont(font);
             text->setString(player->getName());
             text->setCharacterSize(50);
+            while(text->getLocalBounds().width > 500 && text->getCharacterSize()>0){
+                text->setCharacterSize(text->getCharacterSize()-1);
+            }
             text->setFillColor(sf::Color::White);
-            text->setPosition(position+sf::Vector2f(300.f,50.f));
+            text->setPosition(position+sf::Vector2f(50.f,0.f));
             this->texts.push_back(text);            //Text
 
             //Enter Resources/Constructions Count (position 1 to 10)
@@ -234,7 +243,7 @@ namespace render {
                 this->textures.push_back(texture);                    //Texture
                 sprite= new sf::Sprite();
                 sprite->setTexture(*(this->textures[3]));
-                sprite->setPosition(position+sf::Vector2f(40.f,40.f));
+                sprite->setPosition(position+sf::Vector2f(40.f,60.f));
                 sprite->setScale(0.4f,0.4f);
                 this->sprites.push_back(sprite);                    //Sprite
             }
@@ -245,7 +254,10 @@ namespace render {
             text->setString(player->getName());
             text->setCharacterSize(60);
             text->setFillColor(sf::Color::White);
-            text->setPosition(position+sf::Vector2f(400.f,60.0f));
+            text->setPosition(position+sf::Vector2f(40.f,0.0f));
+            while(text->getLocalBounds().width > 520 && text->getCharacterSize()>0){
+                text->setCharacterSize(text->getCharacterSize()-1);
+            }
             this->texts.push_back(text);            //Text
 
             //Enter Resources/Constructions Count (position 1 to 10)
@@ -302,18 +314,14 @@ namespace render {
     {
         DevelopmentCardRenderer* cRenderer;
 
-        //Get Cards
-        std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
-        std::vector<std::shared_ptr<state::DevelopmentCard>> built = this->player->getBuiltCards();
-        std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();        
-
         switch(this->affected_window){
             case MAIN_WINDOW:
                 if(TO_BUILD_CARDS_CHANGED & flags){
+                    std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
                     this->devCardRenderers = {};
                     //Create new Cards
                     for (size_t i = 0; (CARDS_DISPLAY_MAIN_WINDOW > i) && (tobuild.size() > i); i++){
-                        cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[0]->getPosition()+sf::Vector2f(300.f+100.f*(i%7),0.f+150.f*(i/7)),150.f/375.f);
+                        cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[0]->getPosition()+sf::Vector2f(300.f+100.f*(i%5),0.f+150.f*(i/5)),150.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
@@ -343,6 +351,7 @@ namespace render {
                 break;
             case DRAFTING_WINDOW:
                 if( DRAFT_CARDS_CHANGED & flags){
+                    std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();
                     this->devCardRenderers = {};
                     //Create new cards
                     for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (drafted.size() > i); i++){
@@ -354,6 +363,8 @@ namespace render {
                 break;
             case PLAYER_INFO:
                 if( (BUILT_CARDS_CHANGED & flags) || (TO_BUILD_CARDS_CHANGED & flags)){
+                    std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
+                    std::vector<std::shared_ptr<state::DevelopmentCard>> built = this->player->getBuiltCards();
                     this->devCardRenderers = {};
                 //Create new cards built
                     for (size_t i = 0; (CARDS_DISPLAY_FULL > i) && (built.size() > i); i++){
@@ -393,6 +404,8 @@ namespace render {
                 break;
             case PLANIFICATION_WINDOW:
                 if((DRAFT_CARDS_CHANGED & flags) || (TO_BUILD_CARDS_CHANGED & flags)){
+                    std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
+                    std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();
                     this->devCardRenderers = {};
                     //Create new Cards drafted
                     for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (drafted.size() > i); i++){
@@ -402,7 +415,7 @@ namespace render {
                     }
                     //Create new Cards to build
                     for (size_t i = 0; (CARDS_DISPLAY_MAIN_WINDOW > i) && (tobuild.size() > i); i++){
-                        cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[2]->getPosition()+sf::Vector2f(600.f+250.f*(i%7),300.f*(i/7)),300.f/375.f);
+                        cRenderer = new DevelopmentCardRenderer(tobuild[i],sprites[2]->getPosition()+sf::Vector2f(600.f+200.f*(i%5),300.f*(i/5)),300.f/375.f);
                         this->devCardRenderers.push_back(cRenderer);    //Card Renderer
                         cRenderer->update(flags);
                     }
