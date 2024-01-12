@@ -3,6 +3,7 @@
 #include "Scene.h"
 
 #include "../../constants/constants/PlayerObserversNotification.h"
+#include "../../constants/constants/GameObserversNotification.h"
 
 namespace render {
 
@@ -269,6 +270,22 @@ namespace render {
 			btnMain[5]->setText("KRYSTALLIUM\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::KRYSTALLIUM])+")");
 			btnMain[6]->setText("COLONEL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::COLONEL])+")");
 			btnMain[7]->setText("FINANCIER\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::FINANCIER])+")");
+		}
+		if(flags & GAME_PHASE_CHANGED){
+		switch(game->getPhase()){
+			case state::PRODUCTION:
+				btnMain[15]->setEnabled(true);
+				btnPlan[2]->setEnabled(false);
+				break;
+			case state::PLANIFICATION:
+				btnMain[15]->setEnabled(false);
+				btnPlan[2]->setEnabled(true);
+				break;
+			default:
+				btnMain[15]->setEnabled(false);
+				btnPlan[2]->setEnabled(false);
+				break;
+		}
 		}
 	}
 
