@@ -59,17 +59,10 @@
       <dia:color val="#d8e5e5ff"/>
     </dia:attribute>
     <dia:attribute name="guides">
-      <dia:composite type="guide">
-        <dia:attribute name="position">
-          <dia:real val="0"/>
-        </dia:attribute>
-        <dia:attribute name="orientation">
-          <dia:int val="0"/>
-        </dia:attribute>
+      <dia:composite type="guides">
+        <dia:attribute name="hguides"/>
+        <dia:attribute name="vguides"/>
       </dia:composite>
-    </dia:attribute>
-    <dia:attribute name="guide_color">
-      <dia:color val="#00ff00ff"/>
     </dia:attribute>
     <dia:attribute name="display">
       <dia:composite type="display">
@@ -79,16 +72,10 @@
         <dia:attribute name="snap-to-grid">
           <dia:boolean val="false"/>
         </dia:attribute>
-        <dia:attribute name="snap-to-guides">
-          <dia:boolean val="true"/>
-        </dia:attribute>
         <dia:attribute name="snap-to-object">
           <dia:boolean val="true"/>
         </dia:attribute>
         <dia:attribute name="show-grid">
-          <dia:boolean val="true"/>
-        </dia:attribute>
-        <dia:attribute name="show-guides">
           <dia:boolean val="true"/>
         </dia:attribute>
         <dia:attribute name="show-connection-points">
@@ -1041,13 +1028,13 @@
     </dia:object>
     <dia:object type="UML - Class" version="0" id="O5">
       <dia:attribute name="obj_pos">
-        <dia:point val="21.8803,25.249"/>
+        <dia:point val="10.8303,14.849"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="21.8303,25.199;48.2253,31.899"/>
+        <dia:rectangle val="10.7803,14.799;37.1753,21.499"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="21.8803,25.249"/>
+        <dia:point val="10.8303,14.849"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="26.294999999999998"/>
@@ -1104,7 +1091,7 @@
         <dia:color val="#000000ff"/>
       </dia:attribute>
       <dia:attribute name="fill_color">
-        <dia:color val="#ffffffff"/>
+        <dia:color val="#f1b49eff"/>
       </dia:attribute>
       <dia:attribute name="text_color">
         <dia:color val="#000000ff"/>
