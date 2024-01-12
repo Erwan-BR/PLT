@@ -4,6 +4,7 @@
 
 #include "../../constants/constants/PlayerObserversNotification.h"
 #include "../../constants/constants/GameObserversNotification.h"
+#include "../../constants/constants/CustomTypes.h"
 
 namespace render {
 
@@ -36,7 +37,7 @@ namespace render {
 		engine::Command* command;
 
 		//Get Players
-		std::vector<std::shared_ptr<state::Player>> players = game->getPlayers();
+		constants::playersList players = game->getPlayers();
 
 		//Generate PlayerRenderer for MAIN_WINDOW
 		pRenderer = new PlayerRenderer(players[0],{525.f,780.f},MAIN_WINDOW);

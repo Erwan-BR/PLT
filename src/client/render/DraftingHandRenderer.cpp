@@ -4,6 +4,7 @@
 
 #include "../../constants/constants/PlayerObserversNotification.h"
 #include "../../constants/constants/GameConstants.h"
+#include "../../constants/constants/CustomTypes.h"
 
 namespace render {
     DraftingHandRenderer::DraftingHandRenderer (std::shared_ptr<state::Player> player, sf::Vector2f position){
@@ -16,7 +17,7 @@ namespace render {
 		this->player = player;
 
         //Get cards
-        std::vector<std::shared_ptr<state::DevelopmentCard>> cards = player->getDraftingCards();
+        constants::deckOfCards cards = player->getDraftingCards();
 
         //Initialize the vectors
 		this->sprites = {};
@@ -66,7 +67,7 @@ namespace render {
     /// @brief update the DraftingHandRenderer with the current state of the game
     void DraftingHandRenderer::update (long flags){
         //Get Cards
-		std::vector<std::shared_ptr<state::DevelopmentCard>> cards = player->getDraftingCards();
+		constants::deckOfCards cards = player->getDraftingCards();
 		        
         if(flags & DRAFTING_CARDS_CHANGED){
             this->devCardRenderers = {};

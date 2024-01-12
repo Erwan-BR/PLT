@@ -6,7 +6,7 @@
 #include "../../constants/constants/PlayerObserversNotification.h"
 #include "../../constants/constants/PlayerRendererMacro.h"
 #include "../../constants/constants/GameConstants.h"
-
+#include "../../constants/constants/CustomTypes.h"
 
 namespace render {
     /// @brief Full constructor of the PlayerRenderer class.
@@ -331,7 +331,7 @@ namespace render {
                     }
                 }
                 if(TO_BUILD_CARDS_CHANGED & flags){
-                    std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
+                    constants::deckOfCards tobuild = this->player->getToBuildCards();
                     this->devCardRenderers = {};
                     //Create new Cards
                     for (size_t i = 0; (CARDS_DISPLAY_MAIN_WINDOW > i) && (tobuild.size() > i); i++){
@@ -379,7 +379,7 @@ namespace render {
                     }
                 }
                 if( DRAFT_CARDS_CHANGED & flags){
-                    std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();
+                    constants::deckOfCards drafted = this->player->getDraftCards();
                     this->devCardRenderers = {};
                     //Create new cards
                     for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (drafted.size() > i); i++){
@@ -391,8 +391,8 @@ namespace render {
                 break;
             case PLAYER_INFO:
                 if( (BUILT_CARDS_CHANGED & flags) || (TO_BUILD_CARDS_CHANGED & flags)){
-                    std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
-                    std::vector<std::shared_ptr<state::DevelopmentCard>> built = this->player->getBuiltCards();
+                    constants::deckOfCards tobuild = this->player->getToBuildCards();
+                    constants::deckOfCards built = this->player->getBuiltCards();
                     this->devCardRenderers = {};
                 //Create new cards built
                     for (size_t i = 0; (CARDS_DISPLAY_FULL > i) && (built.size() > i); i++){
@@ -446,8 +446,8 @@ namespace render {
                     }
                 }
                 if((DRAFT_CARDS_CHANGED & flags) || (TO_BUILD_CARDS_CHANGED & flags)){
-                    std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
-                    std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();
+                    constants::deckOfCards tobuild = this->player->getToBuildCards();
+                    constants::deckOfCards drafted = this->player->getDraftCards();
                     this->devCardRenderers = {};
                     //Create new Cards drafted
                     for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (drafted.size() > i); i++){

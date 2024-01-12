@@ -21,14 +21,13 @@
 #include <engine.h>
 
 #include "../constants/constants/GameConstants.h"
+#include "../constants/constants/CustomTypes.h"
 
 #include "../shared/state.h"
 #include "render.h"
 
-typedef std::vector<std::shared_ptr<state::Player>> playersList;
-
 sf::RenderWindow* instanciatePLTWindow();
-render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<state::Game>& game, playersList players);
+render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players);
 
 void handleOpenedWindow(sf::RenderWindow* window, render::Scene* scene, std::shared_ptr<state::Game> game, bool isTestingGame);
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
@@ -37,7 +36,7 @@ void displayMessage();
 void displayTemporaryCommands(bool testing);
 void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
 
-void addAIToVector(playersList& players, int nmberOfAIToAdd);
+void addAIToVector(constants::playersList& players, int nmberOfAIToAdd);
 
 int main(int argc,char* argv[])
 {
@@ -67,7 +66,7 @@ int main(int argc,char* argv[])
         std::shared_ptr<state::Player> player2 = std::make_shared<state::Player>("TOI",1);
 
         //Creation of the vector players
-        playersList players;
+        constants::playersList players;
         players.push_back(player1);
         players.push_back(player2);
 
@@ -120,7 +119,7 @@ int main(int argc,char* argv[])
         for (int gameNumber = 0; numberOfGames > gameNumber; gameNumber++)
         {
             // Construct AI (1 random, 1 advanced, 1 random, ...)
-            playersList ais = {};
+            constants::playersList ais = {};
             addAIToVector(ais, numberOfAI);
 
             // Construct the game and launch it.
@@ -220,7 +219,7 @@ int main(int argc,char* argv[])
 
         // Creation of the player, adding it to the vector and then create all AI to add them to the game.
         std::shared_ptr<state::Player> realPlayer = std::make_shared<state::Player>("You!", 10);
-        playersList players;
+        constants::playersList players;
         players.push_back(realPlayer);
         addAIToVector(players, numberOfOpponents);
 
@@ -300,7 +299,7 @@ int main(int argc,char* argv[])
     return EXIT_FAILURE;
 }
 
-void addAIToVector(playersList& players, int nmberOfAIToAdd)
+void addAIToVector(constants::playersList& players, int nmberOfAIToAdd)
 {
     for (int i = 0; i < nmberOfAIToAdd; i++)
     {
@@ -384,7 +383,7 @@ sf::RenderWindow* instanciatePLTWindow()
     return window;
 }
 
-render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<state::Game>& game, playersList players)
+render::Scene* instanciateRender(engine::Engine* engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players)
 {
     game = std::make_shared<state::Game>(players);
     std::mutex locker;
