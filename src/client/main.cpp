@@ -65,8 +65,7 @@ int main(int argc,char* argv[])
         //Creation of the instance of the Game class
         std::shared_ptr<state::Game> game = std::make_shared<state::Game>(players,true);
 
-        game->initGame();
-
+        
         std::mutex locker;
         //Creation of the instance of the Scene class
         engine::Engine* engineOfGame = new engine::Engine(game, locker);
@@ -76,6 +75,9 @@ int main(int argc,char* argv[])
         scene.setupObserver(game);
         scene.setupObserver(player1);
         scene.setupObserver(player2);
+
+        game->initGame();
+
 
         //Creation of the instance of sf::Event class that will received user's inputs.
         sf::Event event;

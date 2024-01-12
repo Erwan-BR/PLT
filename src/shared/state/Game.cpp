@@ -207,12 +207,11 @@ namespace state {
     void Game::nextDraft ()
     {
         // Number of cards that needs to be draft
-        static int numberOfCardsToDraft = NUMBER_OF_CARDS_DRAFTED - 1;
+        int numberOfCardsToDraft = this->players[0]->getDraftingCards().size();
 
         // If there is no cards left, we can continue to play.
         if(0 == numberOfCardsToDraft)
         {
-            numberOfCardsToDraft = NUMBER_OF_CARDS_DRAFTED - 1;
             this->endDraft();
         }
 
@@ -246,7 +245,6 @@ namespace state {
             this->players[0]->setDraftingCards(lastPlayerDeck);
         }
 
-        numberOfCardsToDraft--;
         
         for (std::shared_ptr<Player> player : this->players)
         {

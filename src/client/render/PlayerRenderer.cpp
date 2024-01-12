@@ -235,14 +235,15 @@ namespace render {
             sprite->setScale(2.f,2.f);
             this->sprites.push_back(sprite);                    //Sprite
 
-            // Enter Player Empire Card (position 1 in sprites)
+            // Enter Player Empire Card (position 3 in sprites)
             if (nullptr != this->player->getEmpire())
             {
-                texture = new sf::Texture();
+                sf::Texture* texture = new sf::Texture();
                 texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
                 this->textures.push_back(texture);                    //Texture
-                sprite= new sf::Sprite();
+                sf::Sprite* sprite= new sf::Sprite();
                 sprite->setTexture(*(this->textures[3]));
+                sf::Vector2f position = this->sprites[0]->getPosition();
                 sprite->setPosition(position+sf::Vector2f(40.f,60.f));
                 sprite->setScale(0.4f,0.4f);
                 this->sprites.push_back(sprite);                    //Sprite
@@ -316,6 +317,19 @@ namespace render {
 
         switch(this->affected_window){
             case MAIN_WINDOW:
+                if(this->sprites.size() == 1){
+                    if (nullptr != this->player->getEmpire()){
+                        sf::Texture* texture = new sf::Texture();
+                        texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                        this->textures.push_back(texture);                    //Texture
+                        sf::Sprite* sprite= new sf::Sprite();
+                        sprite->setTexture(*(this->textures[1]));
+                        sf::Vector2f position = this->sprites[0]->getPosition();
+                        sprite->setPosition(position+sf::Vector2f(20.f,30.f));
+                        sprite->setScale(0.19f,0.19f);
+                        this->sprites.push_back(sprite);                    //Sprite
+                    }
+                }
                 if(TO_BUILD_CARDS_CHANGED & flags){
                     std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
                     this->devCardRenderers = {};
@@ -350,6 +364,20 @@ namespace render {
                 }
                 break;
             case DRAFTING_WINDOW:
+                if(this->sprites.size() == 1){
+                    if (nullptr != this->player->getEmpire())
+                    {
+                        sf::Texture* texture = new sf::Texture();
+                        texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                        this->textures.push_back(texture);                    //Texture
+                        sf::Sprite* sprite= new sf::Sprite();
+                        sprite->setTexture(*(this->textures[1]));
+                        sf::Vector2f position = this->sprites[0]->getPosition();
+                        sprite->setPosition(position+sf::Vector2f(10.f,50.f));
+                        sprite->setScale(0.2f,0.2f);
+                        this->sprites.push_back(sprite);                    //Sprite
+                    }
+                }
                 if( DRAFT_CARDS_CHANGED & flags){
                     std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();
                     this->devCardRenderers = {};
@@ -403,6 +431,20 @@ namespace render {
                 }
                 break;
             case PLANIFICATION_WINDOW:
+                if(this->sprites.size() == 3){
+                    if (nullptr != this->player->getEmpire())
+                    {
+                        sf::Texture* texture = new sf::Texture();
+                        texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                        this->textures.push_back(texture);                    //Texture
+                        sf::Sprite* sprite= new sf::Sprite();
+                        sprite->setTexture(*(this->textures[3]));
+                        sf::Vector2f position = this->sprites[2]->getPosition();
+                        sprite->setPosition(position+sf::Vector2f(40.f,60.f));
+                        sprite->setScale(0.4f,0.4f);
+                        this->sprites.push_back(sprite);                    //Sprite
+                    }
+                }
                 if((DRAFT_CARDS_CHANGED & flags) || (TO_BUILD_CARDS_CHANGED & flags)){
                     std::vector<std::shared_ptr<state::DevelopmentCard>> tobuild = this->player->getToBuildCards();
                     std::vector<std::shared_ptr<state::DevelopmentCard>> drafted = this->player->getDraftCards();

@@ -352,6 +352,11 @@ namespace state {
             }
         }
 
+        if (nullptr == this->empire)
+        {
+            return victoryPoints;
+        }
+
         CardVictoryPoint* empireVictoryPoints = this->empire->getVictoryPoints();
         if(0 == empireVictoryPoints->cardOrResourceType)
         {
