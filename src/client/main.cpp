@@ -27,7 +27,7 @@
 #include "render.h"
 
 sf::RenderWindow* instanciatePLTWindow();
-render::Scene* instanciateRender(engine::Engine*& engineOfGame, std::shared_ptr<state::Game>& game, playersList players, std::mutex& locker);
+render::Scene* instanciateRender(engine::Engine*& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players, std::mutex& locker);
 
 void handleOpenedWindow(sf::RenderWindow* window, render::Scene* scene, std::shared_ptr<state::Game> game, bool isTestingGame);
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
@@ -386,7 +386,7 @@ sf::RenderWindow* instanciatePLTWindow()
     return window;
 }
 
-render::Scene* instanciateRender(engine::Engine*& engineOfGame, std::shared_ptr<state::Game>& game, playersList players,std::mutex& locker)
+render::Scene* instanciateRender(engine::Engine*& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players,std::mutex& locker)
 {
     game = std::make_shared<state::Game>(players);
     
