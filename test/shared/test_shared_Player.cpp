@@ -361,13 +361,14 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->setPreferedPersonnage(COLONEL);
     BOOST_CHECK_EQUAL(myFirstPlayer->isRealPlayerAndPlaying(), true);
 
-/*
+
     // Testing different empire configuration
     // Config two
     firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 4, CardType::DISCOVERY};
     productionGainAZTEC = {firstResourceToProduceAZTEC};
+    productionGainB = {};
     victoryPointsAZTEC  = new CardVictoryPoint{2, ResourceType::FINANCIER};
-    aztec = std::make_shared<EmpireCard>(new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true));
+    aztec = std::make_shared<EmpireCard>("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
 
     myFirstPlayer->setEmpire(aztec);
 
@@ -382,8 +383,11 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     BOOST_CHECK_EQUAL(victoryPoints, 16);
 
     // Config three
+    firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 4, CardType::DISCOVERY};
+    productionGainAZTEC = {firstResourceToProduceAZTEC};
+    productionGainB = {};
     victoryPointsAZTEC  = new CardVictoryPoint{8, ResourceType::COLONEL};
-    aztec = std::make_shared<EmpireCard>(new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true));
+    aztec = std::make_shared<EmpireCard>("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
 
     myFirstPlayer->setEmpire(aztec);
 
@@ -398,8 +402,11 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     BOOST_CHECK_EQUAL(victoryPoints, 22);
 
     // Config four (last one)
+    firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 4, CardType::DISCOVERY};
+    productionGainAZTEC = {firstResourceToProduceAZTEC};
+    productionGainB = {};
     victoryPointsAZTEC  = new CardVictoryPoint{26, CardType::NONETYPE};
-    aztec = std::make_shared<EmpireCard>(new EmpireCard("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true));
+    aztec = std::make_shared<EmpireCard>("AZTEC", productionGainAZTEC, victoryPointsAZTEC, productionGainB, AZTEC, true);
 
     myFirstPlayer->setEmpire(aztec);
 
@@ -412,7 +419,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     victoryPoints = myFirstPlayer->computeVictoryPoint();
     BOOST_CHECK_EQUAL(victoryPoints, 40);
-*/
+
     // Testing getters
     (void)myFirstPlayer->getProductionGain(MATERIAL);
     (void)myFirstPlayer->getName();
