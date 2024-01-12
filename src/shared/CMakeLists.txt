@@ -17,5 +17,7 @@ target_include_directories(${lib_shared_target} PUBLIC
   ${jsoncpp_include_dir}
   )
 
-# vim: set sw=2 sts=2 et:
+# Link against the constants_interface library
+target_link_libraries(${lib_shared_target} PUBLIC constants_interface)
 
+# vim: set sw=2 sts=2 et:

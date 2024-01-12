@@ -695,17 +695,16 @@ gen_decl (declaration *d)
                    These dimensions are given in square brackets, e.g.
                    [3][10]
          */
-        if (umla == NULL) {
-            fprintf (stderr, "Error: first attribute (impl type) not set "
-                             "at typedef %s\n", name);
-            exit (1);
+        indentlevel++;
+        while (umla != NULL) {
+            /* print comments on enum */
+            if (strlen(umla->key.comment)) {
+                print("/// @brief %s\n", umla->key.comment);
+            }
+            print ("typedef %s %s ;\n\n", umla->key.value, cppname (umla->key.type));
+            umla = umla->next;
         }
-        if (strlen (umla->key.name) > 0)  {
-            fprintf (stderr, "Warning: typedef %s: ignoring name field "
-                        "in implementation type attribute\n", name);
-        }
-        print ("typedef %s %s%s;\n\n", cppname (umla->key.type), name,
-                                                umla->key.value);
+        indentlevel--;
     } else {
         gen_class (node);
     }

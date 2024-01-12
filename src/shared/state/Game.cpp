@@ -6,7 +6,8 @@
 #include <random>
 #include <chrono>
 
-#include "../../constants/constants/GameConstants.h"
+#include "constants/GameConstants.h"
+// #include "../../constants/constants/GameConstants.h"
 #include "../../constants/constants/GameObserversNotification.h"
 
 namespace state {
