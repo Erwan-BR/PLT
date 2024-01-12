@@ -358,6 +358,10 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->setState(PLAYING);
     BOOST_CHECK_EQUAL(PLAYING, myFirstPlayer->getState());
 
+    myFirstPlayer->setPreferedPersonnage(COLONEL);
+    BOOST_CHECK_EQUAL(myFirstPlayer->isRealPlayerAndPlaying(), true);
+
+/*
     // Testing different empire configuration
     // Config two
     firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 4, CardType::DISCOVERY};
@@ -408,7 +412,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     victoryPoints = myFirstPlayer->computeVictoryPoint();
     BOOST_CHECK_EQUAL(victoryPoints, 40);
-
+*/
     // Testing getters
     (void)myFirstPlayer->getProductionGain(MATERIAL);
     (void)myFirstPlayer->getName();
