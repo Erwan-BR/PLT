@@ -6,7 +6,8 @@
 #include <random>
 #include <chrono>
 
-#include "../../constants/constants/GameConstants.h"
+#include "constants/GameConstants.h"
+// #include "../../constants/constants/GameConstants.h"
 #include "../../constants/constants/GameObserversNotification.h"
 
 namespace state {
@@ -49,7 +50,7 @@ namespace state {
 
     ///@brief Create an instance of the class Game with players specified
     ///@param players Vector of pointers which designate the players of the game
-    Game::Game(std::vector<std::shared_ptr<Player>> players) :
+    Game::Game(constants::playersList players) :
         Observable(),
         players(players)
     {
@@ -58,7 +59,7 @@ namespace state {
     ///@brief Create an instance of the class Game with players specified. isTestingGame passed for the creation of a testing game.
     ///@param players Vector of pointers which designate the players of the game.
     /// @param isTestingGame Define if the game is created to be played or just for testing.
-    Game::Game(std::vector<std::shared_ptr<Player>> players, bool isTestingGame) :
+    Game::Game(constants::playersList players, bool isTestingGame) :
         Observable(),
         players(players),
         isTestingGame(isTestingGame)
@@ -73,7 +74,7 @@ namespace state {
     ///@brief Initialize the game
     void Game::initGame ()
     {
-        std::vector<std::shared_ptr<EmpireCard>> empires = this->initEmpire();
+        constants::deckOfEmpires empires = this->initEmpire();
         this->initCards();
         this->initPlayers(empires);
         this->startGame();
@@ -95,7 +96,7 @@ namespace state {
     }
 
     /// @brief Distributes the empires to the players
-    void Game::initPlayers (std::vector<std::shared_ptr<EmpireCard>> empires)
+    void Game::initPlayers (constants::deckOfEmpires empires)
     {
         // Checking if the number of players is inferior of the number of empires. We should always enter inside.
         if (this->players.size() <= empires.size())
@@ -118,10 +119,10 @@ namespace state {
     }
         
     ///@brief Create and Initialize the Empire for the game
-    std::vector<std::shared_ptr<EmpireCard>> Game::initEmpire ()
+    constants::deckOfEmpires Game::initEmpire ()
     {
         CreateAllCards empireCardCreation;
-        std::vector<std::shared_ptr<EmpireCard>> empires = empireCardCreation.createAllEmpireCards(isFaceA);
+        constants::deckOfEmpires empires = empireCardCreation.createAllEmpireCards(isFaceA);
 
         // Shuffle if not a testing game.
         if (! this->isTestingGame)
@@ -188,7 +189,7 @@ namespace state {
         for(std::shared_ptr<Player> player : this->players)
         {
             // Re-Initialise the cards that will be given to the players
-            std::vector<std::shared_ptr<DevelopmentCard>> draftingDeck = {};
+            constants::deckOfCards draftingDeck = {};
 
             for(int i = 0; NUMBER_OF_CARDS_DRAFTED > i; i++)
             {
@@ -219,7 +220,7 @@ namespace state {
         if (this->isClockwise)
         {
             // Memorize the first player deck to give it to the last player.
-            std::vector<std::shared_ptr<DevelopmentCard>> firstPlayerDeck = this->players[0]->getDraftingCards();
+            constants::deckOfCards firstPlayerDeck = this->players[0]->getDraftingCards();
 
             // Iterating among all players (except the last one) to make the draft.
             for (long unsigned int playerIndex = 0; playerIndex < this->players.size() - 1; playerIndex++)
@@ -233,7 +234,7 @@ namespace state {
         else
         {
             // Memorize the last player deck to give it to the first player.
-            std::vector<std::shared_ptr<DevelopmentCard>> lastPlayerDeck = this->players[(this->players.size()-1)]->getDraftingCards();
+            constants::deckOfCards lastPlayerDeck = this->players[(this->players.size()-1)]->getDraftingCards();
 
             // Iterating among all players (except the first one) to make the draft.
             for (long unsigned int playerIndex = (this->players.size()-1); playerIndex > 0; playerIndex--)
@@ -439,7 +440,7 @@ namespace state {
 
     /// @brief Get Players in the game.
     /// @return All players inside the game.
-    std::vector<std::shared_ptr<Player>> Game::getPlayers () const
+    constants::playersList Game::getPlayers () const
     {
         return this->players;
     }

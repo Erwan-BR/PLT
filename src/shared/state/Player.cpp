@@ -569,7 +569,7 @@ namespace state {
 
     /// @brief Setter for the drafting deck
     /// @param draft drafting deck to give to the player
-    void Player::setDraftingCards(std::vector<std::shared_ptr<DevelopmentCard>> draft)
+    void Player::setDraftingCards(constants::deckOfCards draft)
     {
         this->draftingCards.clear();
         for(std::shared_ptr<DevelopmentCard> card : draft)
@@ -621,28 +621,28 @@ namespace state {
 
     /// @brief Get the cards that are already built by the player.
     /// @return Vector of cards built by the player.
-    std::vector<std::shared_ptr<DevelopmentCard>> Player::getBuiltCards () const
+    constants::deckOfCards Player::getBuiltCards () const
     {
         return this->builtCards;
     }
 
     /// @brief Get the cards that are not already built by the player.
     /// @return Vector of cards not built by the player.
-    std::vector<std::shared_ptr<DevelopmentCard>> Player::getToBuildCards () const
+    constants::deckOfCards Player::getToBuildCards () const
     {
         return this->toBuildCards;
     }
 
     /// @brief Get the cards that are in the hand of the player, and he has to choose one.
     /// @return Vector of cards that the player can choose.
-    std::vector<std::shared_ptr<DevelopmentCard>> Player::getDraftingCards () const
+    constants::deckOfCards Player::getDraftingCards () const
     {
         return this->draftingCards;
     }
 
     /// @brief Get the cards that the player choosed during the drafting phase.
     /// @return Vector of cards that the player choosed during the drafting phase.
-    std::vector<std::shared_ptr<DevelopmentCard>> Player::getDraftCards () const
+    constants::deckOfCards Player::getDraftCards () const
     {
         return this->draftCards;
     }
