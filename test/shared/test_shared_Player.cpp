@@ -3,6 +3,7 @@
 #include "../../src/shared/state/Player.h"
 #include "../../src/shared/state/Game.h"
 #include "../../src/shared/state/CreateAllCards.h"
+#include "../../src/constants/constants/CustomTypes.h"
 
 using namespace ::state;
 
@@ -33,7 +34,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     // Controle du climat
     std::shared_ptr<DevelopmentCard> controlDuClimat(new DevelopmentCard ("Controle du climat",{new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE},new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE}},new CardVictoryPoint{2, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{},ResourceType::ENERGY));
 
-    std::vector<std::shared_ptr<DevelopmentCard>> cardsOfPlayertoExport = {ameliorationGenetique, animorphes, aquaculture, automateControle, clonageHumain, controlDuClimat};
+    constants::deckOfCards cardsOfPlayertoExport = {ameliorationGenetique, animorphes, aquaculture, automateControle, clonageHumain, controlDuClimat};
 
     playerToExport->setDraftingCards(cardsOfPlayertoExport);
 
@@ -171,7 +172,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     std::shared_ptr<DevelopmentCard> zeppelinDrafting(new DevelopmentCard ("Zeppelin",{new ResourceToProduce{ResourceType::EXPLORATION,1, CardType::NONETYPE}},new CardVictoryPoint{0, CardType::NONETYPE},CardType::VEHICLE,6,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}},{},ResourceType::EXPLORATION));
 
     // Adding cards in the drafting deck
-    std::vector<std::shared_ptr<DevelopmentCard>> draftingDeck;
+    constants::deckOfCards draftingDeck;
     draftingDeck.push_back(zeppelinDrafting);
     draftingDeck.push_back(zeppelinDraft);
     draftingDeck.push_back(zeppelinToBuild);
@@ -197,7 +198,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->chooseDraftCard(42);
 
     // Choosing the toBuildCards
-    std::vector<std::shared_ptr<DevelopmentCard>> draftDeck = myFirstPlayer->getDraftCards();
+    constants::deckOfCards draftDeck = myFirstPlayer->getDraftCards();
     for(int i=1; i<6; i++)
     {
         myFirstPlayer->keepCard(1);

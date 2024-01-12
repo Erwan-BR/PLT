@@ -2,6 +2,7 @@
 
 #include "../../src/shared/state/Game.h"
 #include "../../src/shared/state/CreateAllCards.h"
+#include "../../src/constants/constants/CustomTypes.h"
 
 using namespace ::state;
 
@@ -9,7 +10,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
     std::shared_ptr<Player> firstPlayerInGame = std::make_shared<Player>("Erwan", 10);
     std::shared_ptr<Player> secondPlayerInGame = std::make_shared<Player>("Adrien", 20);
-	std::vector<std::shared_ptr<Player>> playersInGame = {firstPlayerInGame, secondPlayerInGame};
+	constants::playersList playersInGame = {firstPlayerInGame, secondPlayerInGame};
 
     // Creating a testing game. It won't shuffle cards so it will be easy to know if exportations worked correctly.
     std::shared_ptr<Game> gameToExport = std::make_shared<Game>(playersInGame, true);
@@ -48,7 +49,7 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
     std::shared_ptr<Player> firstPlayer = std::make_shared<Player>("Maxime", 1);
     std::shared_ptr<Player> secondPlayer = std::make_shared<Player>("Adrien", 2);
 
-    std::vector<std::shared_ptr<Player>> players = {firstPlayer, secondPlayer};
+    constants::playersList players = {firstPlayer, secondPlayer};
 
     std::shared_ptr<Game> gameAnotherConstructor = std::make_shared<Game>(players, true);
     gameAnotherConstructor->initGame();
@@ -112,7 +113,7 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
     std::shared_ptr<Player> firstPlayer = std::make_shared<Player>("Maxime", 1);
     std::shared_ptr<Player> secondPlayer = std::make_shared<Player>("Adrien", 2);
 
-    std::vector<std::shared_ptr<Player>> players = {firstPlayer, secondPlayer};
+    constants::playersList players = {firstPlayer, secondPlayer};
 
     // Call Constructor
     std::shared_ptr<Game> mySecondGame = std::make_shared<Game>(players);

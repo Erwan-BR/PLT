@@ -3,6 +3,8 @@
 #include "../../src/client/render/Scene.h"
 
 #include "../../src/shared/state/CreateAllCards.h"
+#include "../../src/constants/constants/CustomTypes.h"
+
 
 using namespace ::render;
 using namespace std;
@@ -14,7 +16,7 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	std::shared_ptr<state::Player> player2 = std::make_shared<state::Player>("TOI",2);
 
 	//Creation of the vector players
-	std::vector<std::shared_ptr<state::Player>> players;
+	constants::playersList players;
 	players.push_back(player1);
 	players.push_back(player2);
 
@@ -122,7 +124,7 @@ BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
 	delete pR2;
 
 	//GameRenderer
-	std::vector<std::shared_ptr<state::Player>> players;
+	constants::playersList players;
 	players.push_back(player);
 	players.push_back(player2);
 	std::shared_ptr<state::Game> game = std::make_shared<state::Game>(players);

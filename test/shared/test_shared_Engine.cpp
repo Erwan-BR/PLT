@@ -3,13 +3,14 @@
 #include "../../src/shared/state.h"
 #include "../../src/shared/engine.h"
 #include "../../src/shared/ai.h"
+#include "../../src/constants/constants/CustomTypes.h"
 
 using namespace ::state;
 using namespace std;
 
 BOOST_AUTO_TEST_CASE(test_Engine)
 {
-    std::vector<std::shared_ptr<Player>> ais = {};
+    constants::playersList ais = {};
     std::shared_ptr<Player> rAI = std::make_shared<ai::AIRandom>("dummy", -1);
     ais.push_back(rAI);
     std::shared_ptr<Player> aAI = std::make_shared<ai::AIAdvanced>("dummy", -2);
@@ -26,7 +27,7 @@ BOOST_AUTO_TEST_CASE(test_Engine)
 
 BOOST_AUTO_TEST_CASE(test_ExecutingCommand)
 {
-    std::vector<std::shared_ptr<Player>> ais = {};
+    constants::playersList ais = {};
     std::shared_ptr<Player> rAI = std::make_shared<ai::AIRandom>("dummy", -1);
     ais.push_back(rAI);
     std::shared_ptr<Player> aAI = std::make_shared<ai::AIAdvanced>("dummy", -2);
@@ -83,7 +84,7 @@ BOOST_AUTO_TEST_CASE(test_ExecutingCommand)
 BOOST_AUTO_TEST_CASE(test_Command)
 {
     std::shared_ptr<Player> ai = std::make_shared<ai::AIRandom>("dummy", -1);
-    std::vector<std::shared_ptr<Player>> ais = {ai};
+    constants::playersList ais = {ai};
     std::shared_ptr<state::Game> game = std::make_shared<state::Game>(ais);
 
 
