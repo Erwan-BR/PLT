@@ -206,12 +206,13 @@ namespace state {
     ///@brief Launch the next draft.
     void Game::nextDraft ()
     {
-        // Retrieve the number of cards to draft.
-        int numberOfCardsToDraft = this->players[0]->getDraftingCards().size();
+        // Number of cards that needs to be draft
+        static int numberOfCardsToDraft = NUMBER_OF_CARDS_DRAFTED - 1;
 
         // If there is no cards left, we can continue to play.
         if(0 == numberOfCardsToDraft)
         {
+            numberOfCardsToDraft = NUMBER_OF_CARDS_DRAFTED - 1;
             this->endDraft();
         }
 
@@ -244,6 +245,8 @@ namespace state {
             // Giving the deck of the first player to the last one.
             this->players[0]->setDraftingCards(lastPlayerDeck);
         }
+
+        numberOfCardsToDraft--;
         
         for (std::shared_ptr<Player> player : this->players)
         {
