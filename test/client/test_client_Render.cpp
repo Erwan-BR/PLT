@@ -12,8 +12,8 @@ using namespace std;
 BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
   {				
 	//Creation of testing instances of Player class
-	std::shared_ptr<state::Player> player1 = std::make_shared<state::Player>("MOI",1);
-	std::shared_ptr<state::Player> player2 = std::make_shared<state::Player>("TOI",2);
+	constants::playerPtr player1 = std::make_shared<state::Player>("MOI",1);
+	constants::playerPtr player2 = std::make_shared<state::Player>("TOI",2);
 
 	//Creation of the vector players
 	constants::playersList players;
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	player1->keepCard(0);
 	player1->keepCard(0);
 	//Player Built
-	for(state::ResourceToPay* r : player1->getToBuildCards()[0]->getCostToBuild()){
+	for(constants::resourcePayPtr r : player1->getToBuildCards()[0]->getCostToBuild()){
 		state::ResourceType res = r->type;
 		player1->receiveResources(res,1);
 		player1->addResource(res,0);
@@ -112,14 +112,14 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
   {
 	//PlayerRenderer
-	std::shared_ptr<state::Player> player = std::make_shared<state::Player>("TestPlayer",1);
+	constants::playerPtr player = std::make_shared<state::Player>("TestPlayer",1);
 	
 	PlayerRenderer* pR = new PlayerRenderer(player,{0.f,0.f},MAIN_WINDOW);
 	
 	delete pR;
 	
 	//PlayerRenderer with invalid Window
-	std::shared_ptr<state::Player> player2 = std::make_shared<state::Player>("TestPlayer",1);
+	constants::playerPtr player2 = std::make_shared<state::Player>("TestPlayer",1);
 	PlayerRenderer* pR2 = new PlayerRenderer(player2,{0.f,0.f},NONE);
 	delete pR2;
 
@@ -139,7 +139,11 @@ BOOST_AUTO_TEST_CASE(DestructorTest){	//Second Test Destruction of Renderer
 	delete pR3;
 
 	//DevellopementCardRenderer
-	std::shared_ptr<state::DevelopmentCard> card(new state::DevelopmentCard("Empty Card",{},{},state::STRUCTURE,0,{new state::ResourceToPay{state::ResourceType::SCIENCE, false}},{},state::FINANCIER));
+	constants::resourcePayPtr resourcePaying = std::make_shared<state::ResourceToPay>();
+	resourcePaying->isPaid = false;
+	resourcePaying->type = state::ResourceType::SCIENCE;
+
+	constants::devCardPtr card(new state::DevelopmentCard("Empty Card",{},{},state::STRUCTURE,0,{resourcePaying},{},state::FINANCIER));
 	
 	DevelopmentCardRenderer* cR = new DevelopmentCardRenderer(card,{0.f,0.f},0.f);
 	
