@@ -4,6 +4,8 @@
 #include <chrono>
 #include <algorithm>
 
+#include "../../constants/constants/PlayerObserversNotification.h"
+
 namespace ai
 {
     /// @brief Full constructor of AIRandom, with important information inside.
@@ -32,6 +34,7 @@ namespace ai
         // Generate a random integer.
         int randomInt = distribution(randomness);
         this->chooseDraftCard(randomInt);
+        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
     }
 
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
@@ -105,6 +108,7 @@ namespace ai
                 this->sendResourceToEmpire(currentResource);
             }
         }
+        this->notifyObservers(PLAYER_ALL_CHANGED);
         this->endProduction();
     }
 

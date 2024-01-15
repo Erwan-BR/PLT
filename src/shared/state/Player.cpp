@@ -199,7 +199,10 @@ namespace state {
         }
         
         this->currentResources.at(resource) --;
-        this->notifyObservers(TO_BUILD_CARDS_CHANGED | PLAYER_CURRENT_RESOURCES_CHANGED);
+        if (! this->isAI())
+        {
+            this->notifyObservers(TO_BUILD_CARDS_CHANGED | PLAYER_CURRENT_RESOURCES_CHANGED);
+        }
     }
 
     /// @brief Convert a krystallium into another resource. Used when the player wants to place a krystallium on material/energy/...
@@ -215,7 +218,11 @@ namespace state {
         // Convert the resource and propagate the information to observers.
         this->currentResources.at(ResourceType::KRYSTALLIUM) --;
         this->currentResources.at(targetResource) ++;
-        this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
+        
+        if (! this->isAI())
+        {
+            this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
+        }
     }
     
     /// @brief Discard a card to gain a discard gain.
@@ -232,7 +239,11 @@ namespace state {
             ResourceType discardGain = this->draftCards.at(cardIndex)->getDiscardGain();
             this->currentResources.at(discardGain) ++ ;
             this->draftCards.erase(this->draftCards.begin() + cardIndex);
-            this->notifyObservers(DRAFT_CARDS_CHANGED | PLAYER_CURRENT_RESOURCES_CHANGED);
+            
+            if (! this->isAI())
+            {
+                this->notifyObservers(DRAFT_CARDS_CHANGED | PLAYER_CURRENT_RESOURCES_CHANGED);
+            }
         }
         else
         {
@@ -244,7 +255,11 @@ namespace state {
             this->convertToKrystallium();
             this->toBuildCards.erase(this->toBuildCards.begin() + cardIndex);
 
-            this->notifyObservers(TO_BUILD_CARDS_CHANGED);
+            
+            if (! this->isAI())
+            {
+                this->notifyObservers(TO_BUILD_CARDS_CHANGED);
+            }
         }
         
     }
@@ -261,7 +276,11 @@ namespace state {
         this->toBuildCards.push_back(card);
         this->draftCards.erase(this->draftCards.begin() + toKeepCardIndex);
         
-        this->notifyObservers(DRAFT_CARDS_CHANGED | TO_BUILD_CARDS_CHANGED);
+        
+        if (! this->isAI())
+        {
+            this->notifyObservers(DRAFT_CARDS_CHANGED | TO_BUILD_CARDS_CHANGED);
+        }
     }
 
     /// @brief Update the production of every tokens
@@ -273,7 +292,10 @@ namespace state {
         this->resourcesProduction[GOLD] = computeProduction(GOLD);
         this->resourcesProduction[EXPLORATION] = computeProduction(EXPLORATION);
 
-        this->notifyObservers(PLAYER_RESOURCES_PRODUCTION_CHANGED);
+        if (! this->isAI())
+        {
+            this->notifyObservers(PLAYER_RESOURCES_PRODUCTION_CHANGED);
+        }
     }
 
     /// @brief Compute the quantity of resource named "resourceToProduce" produced by the player
@@ -399,7 +421,11 @@ namespace state {
         this->currentResources.at(resource)--;
         this->resourcesInEmpireUnit++;
         this->convertToKrystallium();
-        this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
+        
+        if (! this->isAI())
+        {
+            this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
+        }
     }
 
     /// @brief Converts the empire's resources into a krystallium when it reaches 5 resources
@@ -424,7 +450,11 @@ namespace state {
         this->draftingCards.erase(this->draftingCards.begin() + cardIndex);
         this->state = PlayerState::PENDING;
 
-        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
+        
+        if (! this->isAI())
+        {
+            this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
+        }
     }
     
     /// @brief Receive multiple resources from the game
@@ -436,8 +466,11 @@ namespace state {
         {
             this->currentResources.at(resourceToReceive) ++;
         }
-        this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
         
+        if (! this->isAI())
+        {
+            this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
+        }
     }
 
     /// @brief End the planificiation for the current player. Send all drafted cards to the to buildCard.
@@ -452,7 +485,11 @@ namespace state {
 
         this->draftCards.clear();
         this->state = PlayerState::PENDING;
-        this->notifyObservers(TO_BUILD_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
+
+        if (! this->isAI())
+        {
+           this->notifyObservers(TO_BUILD_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
+        }
     }
 
     /// @brief End the production for the current player. Send all resources in empires.
@@ -460,7 +497,10 @@ namespace state {
     {
         this->sendAllResourcesToEmpire();
         this->state = PlayerState::PENDING;
-        this->notifyObservers(PLAYER_STATE_CHANGED);
+        if (! this->isAI())
+        {
+           this->notifyObservers(PLAYER_STATE_CHANGED);
+        }
     }
 
     /// @brief Send all resources (material, energy, gold, exploration, science)
@@ -474,7 +514,10 @@ namespace state {
                 this->sendResourceToEmpire(resourceType);
             }
         }
-        this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
+        if (! this->isAI())
+        {
+           this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
+        }
     }
 
 

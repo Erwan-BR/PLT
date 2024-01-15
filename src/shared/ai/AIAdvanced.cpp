@@ -3,7 +3,7 @@
 #include "limits"
 #include <algorithm>
 
-#include "../../constants/constants/CustomTypes.h"
+#include "../../constants/constants/PlayerObserversNotification.h"
 
 namespace ai
 {
@@ -106,6 +106,8 @@ namespace ai
                         // Note the card to discard.
                         this->indexesOfCardsToDiscard.push_back(this->currentIndexOfDraft);
                         this->currentIndexOfDraft ++;
+                        
+                        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
                         return ;
                     }
                 }
@@ -117,6 +119,8 @@ namespace ai
             this->indexesOfCardsToDiscard.push_back(this->currentIndexOfDraft);
             this->currentIndexOfDraft ++;
         }
+
+        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
     }
 
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
@@ -146,6 +150,8 @@ namespace ai
         this->indexesOfCardsToKeep.clear();
         this->indexesOfCardsToDiscard.clear();
         this->updateCardsToBuildIndexesOrdered();
+
+        this->notifyObservers(PLAYER_ALL_CHANGED);
 
         this->endPlanification();
     }
@@ -179,6 +185,7 @@ namespace ai
                 }
             }
         }
+        this->notifyObservers(PLAYER_ALL_CHANGED);
     }
 
     /// @brief Choose colonel if the quantity of colonel is superior or equal to the quantity of financier that the player needs.
