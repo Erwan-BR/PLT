@@ -479,7 +479,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     // Compute victory points
     int victoryPoints = myFirstPlayer->computeVictoryPoint();
-    BOOST_CHECK_EQUAL(victoryPoints, 17);
+    BOOST_CHECK_EQUAL(victoryPoints, 19);
 
     // Ending the production
     myFirstPlayer->endProduction();

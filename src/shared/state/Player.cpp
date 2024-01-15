@@ -355,15 +355,18 @@ namespace state {
     /// @return Number of victory points of the player on the moment
     int Player::computeVictoryPoint() const
     {
-        int victoryPoints = 0;
+        int victoryPoints = this->currentResources.at(ResourceType::COLONEL) + this->currentResources.at(ResourceType::FINANCIER);
+
         for(constants::devCardPtr card : this->builtCards)
         {
             constants::victoryPointsPtr cardVictoryPoints = card->getVictoryPoints();
 
+            // Flat points
             if(0 == cardVictoryPoints->cardOrResourceType)
             {
                 victoryPoints += cardVictoryPoints->numberOfPoints;
             }
+            // Points earned by colonel / financier tokens.
             else if(ResourceType::COLONEL == cardVictoryPoints->cardOrResourceType)
             {
                 victoryPoints += cardVictoryPoints->numberOfPoints * this->currentResources.at(ResourceType::COLONEL);
@@ -372,6 +375,7 @@ namespace state {
             {
                 victoryPoints += cardVictoryPoints->numberOfPoints * this->currentResources.at(ResourceType::FINANCIER);
             }
+            // Points earned by type of constructed cards
             else if((20 < cardVictoryPoints->cardOrResourceType) && (26 > cardVictoryPoints->cardOrResourceType))
             {
                 victoryPoints += (cardVictoryPoints->numberOfPoints) * this->cardsTypeList.at((state::CardType)(cardVictoryPoints->cardOrResourceType));
@@ -390,10 +394,12 @@ namespace state {
             return victoryPoints;
         }
 
+        // Flat points
         if(0 == empireVictoryPoints->cardOrResourceType)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints;
         }
+        // Points earned by colonel / financier tokens.
         else if(ResourceType::COLONEL == empireVictoryPoints->cardOrResourceType)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints * this->currentResources.at(ResourceType::COLONEL);
@@ -402,6 +408,7 @@ namespace state {
         {
             victoryPoints += empireVictoryPoints->numberOfPoints * this->currentResources.at(ResourceType::FINANCIER);
         }
+        // Points earned by type of constructed cards
         else if((20 < empireVictoryPoints->cardOrResourceType) && (26 > empireVictoryPoints->cardOrResourceType))
         {
             victoryPoints += (empireVictoryPoints->numberOfPoints) * this->cardsTypeList.at((state::CardType)empireVictoryPoints->cardOrResourceType);
