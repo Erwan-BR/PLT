@@ -22,7 +22,7 @@ namespace state
 
         const std::vector<std::string> cardsNameToRetrieve = {"Tour geante", "Tresor de barbe noire", "Zeppelin", "Zeppelin", "Zeppelin", "Zeppelin", "Zeppelin", "Zeppelin", "Ile d avalon", "Centre De La Terre", "Brise glace", "Brise glace", "Brise glace", "Juggernaut"};
 
-        std::vector<std::pair<std::string, std::shared_ptr<DevelopmentCard>>> cards ;
+        std::vector<std::pair<std::string, constants::devCardPtr>> cards ;
 
         if (isTestingGame)
         {
@@ -63,7 +63,7 @@ namespace state
 
                 for (int i = 0; i < root["numberOfCopies"].asInt(); i++)
                 {
-                    std::shared_ptr<DevelopmentCard> card = std::make_shared<DevelopmentCard>(root);
+                    constants::devCardPtr card = std::make_shared<DevelopmentCard>(root);
                     bool willBeAdded = true;
 
                     // If it's a testing game, we have to keep in mind the index to retrieve it at the end.
@@ -75,7 +75,7 @@ namespace state
                         // If the card name is found we have to check if an vesion of this card has been stored
                         if (cardsNameToRetrieve.end() != indexOfName)
                         {
-                            for (std::pair<std::string, std::shared_ptr<DevelopmentCard>>& pair: cards)
+                            for (std::pair<std::string, constants::devCardPtr>& pair: cards)
                             {
                                 // Checking if the card has the good name and if it's not added.
                                 if (nullptr == pair.second && cardName == pair.first)
@@ -101,7 +101,7 @@ namespace state
         // If the game is a testing game, we have to retrieve some card to play put them at the end.
         if (isTestingGame)
         {
-            for (std::pair<std::string, std::shared_ptr<DevelopmentCard>> pair: cards)
+            for (std::pair<std::string, constants::devCardPtr> pair: cards)
             {
                 if (nullptr != pair.second)
                 {

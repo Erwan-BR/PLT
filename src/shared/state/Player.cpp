@@ -186,7 +186,8 @@ namespace state {
     void Player::addResource (ResourceType resource, int cardIndex)
     {
         // Checking if the index of the card is valid and if the player has this resource.
-        if ((0 > cardIndex) || ((int)this->toBuildCards.size() <= cardIndex) || (0 == this->currentResources.at(resource)))
+        if ((0 > cardIndex) || ((int)this->toBuildCards.size() <= cardIndex)
+             || (0 == this->currentResources.at(resource)) || ! this->toBuildCards[cardIndex]->isResourceAddable(resource))
         {
             return ;
         }
@@ -303,9 +304,12 @@ namespace state {
                 }
             }
         }
-
+        if (nullptr == this->empire)
+        {
+            return productionValue;
+        }
         // Iterating among all resources produced by the empire.
-        for(constants::resourceProdPtr resource : this->empire->getProductionGain())
+        for(const constants::resourceProdPtr& resource : this->empire->getProductionGain())
         {
             // Checking if the resource is the same as the one we are constructing.
             if(resourceToProduce == resource->type)
