@@ -199,7 +199,7 @@ int main(int argc,char* argv[])
     {
         if (3 != argc)
         {
-            std::cout << "./bin/client Player <x> <y>: Run a game where you play! x: Number of opponents." << std::endl;
+            std::cout << "./bin/client Player <x>: Run a game where you play! x: Number of opponents." << std::endl;
             return EXIT_FAILURE;
         }
 
