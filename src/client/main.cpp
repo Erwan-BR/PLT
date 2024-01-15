@@ -124,10 +124,10 @@ int main(int argc,char* argv[])
             addAIToVector(ais, numberOfAI);
 
             // Construct the game and launch it.
-            std::shared_ptr<state::Game> game = nullptr;
-            engine::Engine* engineOfGame = nullptr;
             std::mutex locker;
-            (void) instanciateRender(engineOfGame, game, ais, locker);
+
+            std::shared_ptr<state::Game> game = std::make_shared<state::Game>(ais);
+            engine::Engine* engineOfGame = new engine::Engine(game, locker);
 
             engineOfGame->gameRunning(true);
 
