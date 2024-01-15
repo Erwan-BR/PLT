@@ -200,7 +200,7 @@ namespace state {
             
             // Send cards to players.
             player->setDraftingCards(draftingDeck);
-            player->setState(PlayerState::PLAYING);
+            player->setStatePlaying();
         }
     }
 
@@ -250,7 +250,7 @@ namespace state {
         
         for (std::shared_ptr<Player> player : this->players)
         {
-            player->setState(PlayerState::PLAYING);
+            player->setStatePlaying();
         }
     }
 
@@ -265,7 +265,7 @@ namespace state {
     {
         for (std::shared_ptr<Player> player : this->players)
         {
-            player->setState(PlayerState::PLAYING);
+            player->setStatePlaying();
         }
     }
 
@@ -302,7 +302,7 @@ namespace state {
         
         for (std::shared_ptr<Player> player : this->players)
         {
-            player->setState(PlayerState::PLAYING);
+            player->setStatePlaying();
         }
         
         this->notifyObservers(GAME_RESOURCE_PRODUCING_CHANGED);

@@ -402,11 +402,11 @@ namespace state {
         }
     }
 
-    /// @brief Add the selected card from the drafting deck to the selected one
-    /// @param cardIndex Card choosed by the player
+    /// @brief Function called during the drafting phase. Used to choose a card from the drafting deck to de draft deck.
+    /// @param cardIndex Card choosed by the player.
     void Player::chooseDraftCard(int cardIndex)
     {
-        if (0 > cardIndex || (int)this->draftingCards.size() <= cardIndex)
+        if ((0 > cardIndex || (int)this->draftingCards.size() <= cardIndex) && (PlayerState::PLAYING == this->state))
         {
             return ;
         }
@@ -579,11 +579,10 @@ namespace state {
         this->notifyObservers(DRAFTING_CARDS_CHANGED);
     }
 
-    /// @brief Setter for the drafting deck
-    /// @param draft drafting deck to give to the player
-    void Player::setState(PlayerState state)
+    /// @brief Set the player as playing when the phase is updated in the game.
+    void Player::setStatePlaying()
     {
-        this->state = state;
+        this->state = PlayerState::PLAYING;
         this->notifyObservers(PLAYER_STATE_CHANGED);
     }
 

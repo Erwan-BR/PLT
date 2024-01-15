@@ -39,7 +39,9 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     playerToExport->setDraftingCards(cardsOfPlayertoExport);
 
     playerToExport->chooseDraftCard(0);
+    playerToExport->setStatePlaying();
     playerToExport->chooseDraftCard(0);
+    playerToExport->setStatePlaying();
     playerToExport->chooseDraftCard(0);
 
     playerToExport->receiveResources(ResourceType::SCIENCE, 5);
@@ -59,17 +61,17 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     Json::Value playerJSON = playerToExport->toJSON();
 
     // Only for debug, the JSON appears in a log file (PLT/build/test/Testing/Temporary/LastTest.log)
-    for (int i = 0; i < 7; i++)
-    {
-        std::cout << std::endl;
-    }
+    // for (int i = 0; i < 7; i++)
+    // {
+    //     std::cout << std::endl;
+    // }
 
-    std::cout << playerJSON;
+    // std::cout << playerJSON;
 
-    for (int i = 0; i < 7; i++)
-    {
-        std::cout << std::endl;
-    }
+    // for (int i = 0; i < 7; i++)
+    // {
+    //     std::cout << std::endl;
+    // }
 
     Player* playerToImport = new Player(playerJSON);
 
@@ -188,6 +190,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     for(int i=1; i<(int)draftingDeck.size(); i++)
     {
         myFirstPlayer->chooseDraftCard(1);
+        myFirstPlayer->setStatePlaying();
         int stringCompare = strcmp(draftingDeck.at(i)->getName().data(), myFirstPlayer->getDraftCards().at(i-1)->getName().data());
         BOOST_CHECK_EQUAL(stringCompare, 0);
     }
@@ -196,6 +199,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
 
     // Choosing out of bound draft card
     myFirstPlayer->chooseDraftCard(42);
+    myFirstPlayer->setStatePlaying();
 
     // Choosing the toBuildCards
     constants::deckOfCards draftDeck = myFirstPlayer->getDraftCards();
@@ -337,6 +341,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     draftingDeck = {zeppelinDraft};
     myFirstPlayer->setDraftingCards(draftingDeck);
     myFirstPlayer->chooseDraftCard(0);
+    myFirstPlayer->setStatePlaying();
     stringCompare = strcmp(draftingDeck.at(0)->getName().data(), myFirstPlayer->getDraftCards().at(0)->getName().data());
     BOOST_CHECK_EQUAL(stringCompare, 0);
     BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 1);
@@ -356,7 +361,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     BOOST_CHECK_EQUAL(myFirstPlayer->isPreferedPersonnageColonel(), true);
 
     //Test the setter of the player's state
-    myFirstPlayer->setState(PLAYING);
+    myFirstPlayer->setStatePlaying();
     BOOST_CHECK_EQUAL(PLAYING, myFirstPlayer->getState());
 
     myFirstPlayer->setPreferedPersonnage(COLONEL);

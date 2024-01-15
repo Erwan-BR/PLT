@@ -37,18 +37,18 @@ BOOST_AUTO_TEST_CASE(test_ExecutingCommand)
     std::mutex locker;
     engine::Engine* engine = new engine::Engine(game, locker);
 
-    engine::Command commandToExport1 = engine::Command(engine::CommandID::ADDRESOURCE, 0, 0);
-    engine::Command commandToExport2 = engine::Command(engine::CommandID::DISCARDCARD, 0, 0);
-    engine::Command commandToExport3 = engine::Command(engine::CommandID::KEEPCARD, 0, 0);
-    engine::Command commandToExport4 = engine::Command(engine::CommandID::SENDRESOURCETOEMPIRE, 0, 0);
-    engine::Command commandToExport5 = engine::Command(engine::CommandID::ENDPRODUCTION, 0, 0);
-    engine::Command commandToExport6 = engine::Command(engine::CommandID::ENDPLANIFICATION, 0, 0);
-    engine::Command commandToExport7 = engine::Command(engine::CommandID::CONVERTRESOURCE, 0, 0);
-    engine::Command commandToExport8 = engine::Command(engine::CommandID::SETPREFFEREDPERSONNAGE, 0, 0);
-    engine::Command commandToExport9 = engine::Command(engine::CommandID::CHOOSEDRAFTCARD, 0, 0);
+    engine::Command commandToExport1  = engine::Command(engine::CommandID::ADDRESOURCE, 0, 0);
+    engine::Command commandToExport2  = engine::Command(engine::CommandID::DISCARDCARD, 0, 0);
+    engine::Command commandToExport3  = engine::Command(engine::CommandID::KEEPCARD, 0, 0);
+    engine::Command commandToExport4  = engine::Command(engine::CommandID::SENDRESOURCETOEMPIRE, 0, 0);
+    engine::Command commandToExport5  = engine::Command(engine::CommandID::ENDPRODUCTION, 0, 0);
+    engine::Command commandToExport6  = engine::Command(engine::CommandID::ENDPLANIFICATION, 0, 0);
+    engine::Command commandToExport7  = engine::Command(engine::CommandID::CONVERTRESOURCE, 0, 0);
+    engine::Command commandToExport8  = engine::Command(engine::CommandID::SETPREFFEREDPERSONNAGE, 0, 0);
+    engine::Command commandToExport9  = engine::Command(engine::CommandID::CHOOSEDRAFTCARD, 0, 0);
     engine::Command commandToExport10 = engine::Command(engine::CommandID::SAVEGAME, 0, 0);
 
-    Json::Value jsonContent  = commandToExport1.toJSON();
+    Json::Value jsonContent1  = commandToExport1.toJSON();
     Json::Value jsonContent2  = commandToExport2.toJSON();
     Json::Value jsonContent3  = commandToExport3.toJSON();
     Json::Value jsonContent4  = commandToExport4.toJSON();
@@ -56,20 +56,21 @@ BOOST_AUTO_TEST_CASE(test_ExecutingCommand)
     Json::Value jsonContent6  = commandToExport6.toJSON();
     Json::Value jsonContent7  = commandToExport7.toJSON();
     Json::Value jsonContent8  = commandToExport8.toJSON();
-    Json::Value jsonContent9  = commandToExport7.toJSON();
-    Json::Value jsonContent10  = commandToExport8.toJSON();
+    Json::Value jsonContent9  = commandToExport9.toJSON();
+    Json::Value jsonContent10 = commandToExport10.toJSON();
 
-    engine::DiscardCard command2             = engine::DiscardCard(jsonContent);
-    engine::ChooseDraftCard command3         = engine::ChooseDraftCard(jsonContent);
-    engine::KeepCard command4                = engine::KeepCard(jsonContent);
-    engine::SendResourceToEmpire command5    = engine::SendResourceToEmpire(jsonContent);
-    engine::EndPlanification command6        = engine::EndPlanification(jsonContent);
-    engine::EndProduction command7           = engine::EndProduction(jsonContent);
-    engine::ConvertResource command8         = engine::ConvertResource(jsonContent);
-    engine::SetPreferredPersonnage command9  = engine::SetPreferredPersonnage(jsonContent);
-    engine::SaveGame command10                = engine::SaveGame(jsonContent);
+    engine::AddResource command1             = engine::AddResource(jsonContent1);
+    engine::DiscardCard command2             = engine::DiscardCard(jsonContent2);
+    engine::KeepCard command3                = engine::KeepCard(jsonContent3);
+    engine::SendResourceToEmpire command4    = engine::SendResourceToEmpire(jsonContent4);
+    engine::EndProduction command5           = engine::EndProduction(jsonContent5);
+    engine::EndPlanification command6        = engine::EndPlanification(jsonContent6);
+    engine::ConvertResource command7         = engine::ConvertResource(jsonContent7);
+    engine::SetPreferredPersonnage command8  = engine::SetPreferredPersonnage(jsonContent8);
+    engine::ChooseDraftCard command9         = engine::ChooseDraftCard(jsonContent9);
+    engine::SaveGame command10                = engine::SaveGame(jsonContent10);
 
-    engine->receiveCommand(jsonContent);
+    engine->receiveCommand(jsonContent1);
     engine->receiveCommand(jsonContent2);
     engine->receiveCommand(jsonContent3);
     engine->receiveCommand(jsonContent4);
@@ -83,9 +84,11 @@ BOOST_AUTO_TEST_CASE(test_ExecutingCommand)
 
 BOOST_AUTO_TEST_CASE(test_Command)
 {
-    std::shared_ptr<Player> ai = std::make_shared<ai::AIRandom>("dummy", -1);
-    constants::playersList ais = {ai};
+    std::shared_ptr<Player> playerFoTests = std::make_shared<state::Player>("player", 1);
+    std::shared_ptr<Player> aiIntelligent = std::make_shared<ai::AIAdvanced>("advanced", -2);
+    constants::playersList ais = {playerFoTests, aiIntelligent};
     std::shared_ptr<state::Game> game = std::make_shared<state::Game>(ais);
+    game->initGame();
 
 
     engine::Command* command0 = new engine::Command(engine::CommandID::ADDRESOURCE);
