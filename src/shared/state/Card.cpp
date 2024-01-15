@@ -10,8 +10,6 @@ namespace state {
         // Retrive name.
         this->name = jsonValue["name"].asString();
 
-        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
-
         // Retrieve production gain from the JSON.
         this->productionGain = {};
         if (jsonValue["productionGain"].isArray())
@@ -20,12 +18,12 @@ namespace state {
         
             for (const Json::Value& jsonStruct : productionArray)
             {
-                this->productionGain.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
+                this->productionGain.push_back(CreateJSONFormatStructures::resourceToProduceFromJSON(jsonStruct));
             }
         }
         
         // Retrieve victory points
-		this->victoryPoints = createInformations->cardVictoryPointFromJSON(jsonValue["victoryPoints"]);
+		this->victoryPoints = CreateJSONFormatStructures::cardVictoryPointFromJSON(jsonValue["victoryPoints"]);
 
         // To-do : Use path of images to store it as an attribute, to retrive it and replace folowing lines.
         this->relativePathToTexture = jsonValue["relativePathToTexture"].asString();
@@ -78,17 +76,15 @@ namespace state {
         // Writing basic information
         cardJson["name"] = this->name;
 
-        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
-
         // Serialize the vector of resources to produce
         Json::Value productionArray;
         for (const constants::resourceProdPtr& prodGain : this->productionGain)
         {
-            productionArray.append(createInformations->jsonOfResourceToProduce(*prodGain));
+            productionArray.append(CreateJSONFormatStructures::jsonOfResourceToProduce(*prodGain));
         }
         cardJson["productionGain"] = productionArray;
 
-        cardJson["victoryPoints"] = createInformations->jsonOfCardVictoryPoint(*(this->victoryPoints));
+        cardJson["victoryPoints"] = CreateJSONFormatStructures::jsonOfCardVictoryPoint(*(this->victoryPoints));
 
         cardJson["relativePathToTexture"] = this->relativePathToTexture;
 

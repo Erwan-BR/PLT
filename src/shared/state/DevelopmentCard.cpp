@@ -10,8 +10,6 @@ namespace state {
 
         this->numberOfCopies = jsonValue["numberOfCopies"].asInt();
 
-        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
-
         // Retrieve production gain from the JSON.
         this->costToBuild = {};
         if (jsonValue["costToBuild"].isArray())
@@ -19,7 +17,7 @@ namespace state {
             const Json::Value costToBuildArray = jsonValue["costToBuild"];
             for (const Json::Value& jsonStruct : costToBuildArray)
             {
-                this->costToBuild.push_back(createInformations->resourceToPayFromJSON(jsonStruct));
+                this->costToBuild.push_back(CreateJSONFormatStructures::resourceToPayFromJSON(jsonStruct));
             }
         }
 

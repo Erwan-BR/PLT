@@ -7,8 +7,6 @@ namespace state {
     EmpireCard::EmpireCard(Json::Value jsonValue) :
         Card(jsonValue)
     {
-        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
-
         // Retrieve productionGainFaceB from the JSON.
         this->productionGainFaceB = {};
         if (jsonValue["productionGainFaceB"].isArray())
@@ -17,7 +15,7 @@ namespace state {
         
             for (const Json::Value& jsonStruct : productionFaceBArray)
             {
-                this->productionGainFaceB.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
+                this->productionGainFaceB.push_back(CreateJSONFormatStructures::resourceToProduceFromJSON(jsonStruct));
             }
         }
 
@@ -77,13 +75,11 @@ namespace state {
         // Instanciation of the empire card into a JSON format.
         Json::Value empireCardJSON = Card::toJSON();
         
-        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
-
         // Serialize the vector of the cost to build
         Json::Value productionGainFaceBArray;
         for (const constants::resourceProdPtr& prodGain : this->productionGainFaceB)
         {
-            productionGainFaceBArray.append(createInformations->jsonOfResourceToProduce(*prodGain));
+            productionGainFaceBArray.append(CreateJSONFormatStructures::jsonOfResourceToProduce(*prodGain));
         }
         empireCardJSON["productionGainFaceB"] = productionGainFaceBArray;
 

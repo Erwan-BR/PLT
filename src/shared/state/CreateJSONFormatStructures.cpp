@@ -2,7 +2,7 @@
 
 namespace state
 {
-    Json::Value CreateJSONFormatStructures::jsonOfResourceToPay (const ResourceToPay resourceToPay) const
+    Json::Value CreateJSONFormatStructures::jsonOfResourceToPay (const ResourceToPay resourceToPay)
     {
         Json::Value jsonRepresentationOfResourceToPay;
         
@@ -12,7 +12,7 @@ namespace state
         return jsonRepresentationOfResourceToPay;
     }
 
-    Json::Value CreateJSONFormatStructures::jsonOfResourceToProduce (const ResourceToProduce resourceToProduce) const
+    Json::Value CreateJSONFormatStructures::jsonOfResourceToProduce (const ResourceToProduce resourceToProduce)
     {
         Json::Value jsonRepresentationOfResourceToProduce;
         
@@ -23,7 +23,7 @@ namespace state
         return jsonRepresentationOfResourceToProduce;
     }
 
-    Json::Value CreateJSONFormatStructures::jsonOfCardVictoryPoint (const CardVictoryPoint victoryPoints) const
+    Json::Value CreateJSONFormatStructures::jsonOfCardVictoryPoint (const CardVictoryPoint victoryPoints)
     {
         Json::Value jsonRepresentationOfCardVictoryPoint;
         
@@ -33,7 +33,7 @@ namespace state
         return jsonRepresentationOfCardVictoryPoint;
     }
 
-    constants::resourcePayPtr CreateJSONFormatStructures::resourceToPayFromJSON (const Json::Value jsonInput) const
+    constants::resourcePayPtr CreateJSONFormatStructures::resourceToPayFromJSON (const Json::Value jsonInput)
     {
         constants::resourcePayPtr resourceToPay = std::make_shared<ResourceToPay>();
 
@@ -43,7 +43,7 @@ namespace state
         return resourceToPay;
     }
 
-    constants::resourceProdPtr CreateJSONFormatStructures::resourceToProduceFromJSON (const Json::Value jsonInput) const
+    constants::resourceProdPtr CreateJSONFormatStructures::resourceToProduceFromJSON (const Json::Value jsonInput)
     {
         constants::resourceProdPtr resourceToProduce = std::make_shared<ResourceToProduce>();
 
@@ -54,7 +54,7 @@ namespace state
         return resourceToProduce;
     }
 
-    constants::victoryPointsPtr CreateJSONFormatStructures::cardVictoryPointFromJSON (const Json::Value jsonInput) const
+    constants::victoryPointsPtr CreateJSONFormatStructures::cardVictoryPointFromJSON (const Json::Value jsonInput)
     {
         constants::victoryPointsPtr cardVictoryPoint = std::make_shared<CardVictoryPoint>();
 

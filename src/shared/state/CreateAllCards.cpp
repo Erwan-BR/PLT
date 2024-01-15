@@ -14,7 +14,7 @@ namespace state
     /// @brief Create all development cards for a game.
     /// @param isTestingGame True if the deck is for a testing game. WIll order some cards at the end of the deck to provide some cards we know.
     /// @return Vector of all development cards.
-    constants::deckOfCards CreateAllCards::createAllDevelopmentCards (bool isTestingGame) const
+    constants::deckOfCards CreateAllCards::createAllDevelopmentCards (bool isTestingGame)
     {
         constants::deckOfCards returnValue = {};
 
@@ -116,13 +116,13 @@ namespace state
     /// @brief Create all empire cards for a game.
     /// @param isFaceA States if the game is played with face A or not.
     /// @return Vector of all empire cards.
-    constants::deckOfEmpires CreateAllCards::createAllEmpireCards (bool isFaceA) const
+    constants::deckOfEmpires CreateAllCards::createAllEmpireCards (bool isFaceA)
     {
-        constants::empireCardPtr africa = this->createEmpireAFRICA(isFaceA);
-        constants::empireCardPtr noram = this->createEmpireNORAM(isFaceA);
-        constants::empireCardPtr europe = this->createEmpireEUROPE(isFaceA);
-        constants::empireCardPtr asia = this->createEmpireASIA(isFaceA);
-        constants::empireCardPtr aztec = this->createEmpireAZTEC(isFaceA);
+        constants::empireCardPtr africa = createEmpireAFRICA(isFaceA);
+        constants::empireCardPtr noram = createEmpireNORAM(isFaceA);
+        constants::empireCardPtr europe = createEmpireEUROPE(isFaceA);
+        constants::empireCardPtr asia = createEmpireASIA(isFaceA);
+        constants::empireCardPtr aztec = createEmpireAZTEC(isFaceA);
 
         constants::deckOfEmpires empires = {asia, aztec, africa, noram, europe};
         
@@ -132,9 +132,9 @@ namespace state
     /// @brief Create the empire card AFRICA.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the AFRICA empire.
-    constants::empireCardPtr CreateAllCards::createEmpireAFRICA (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireAFRICA (bool isFaceA)
     {
-        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = createFaceBOfEmpires();
         
         constants::resourceProdPtr firstResourceToProduceAFRICA = std::make_shared<ResourceToProduce>();
         firstResourceToProduceAFRICA->type = ResourceType::MATERIAL;
@@ -161,9 +161,9 @@ namespace state
     /// @brief Create the empire card ASIA.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the ASIA empire.
-    constants::empireCardPtr CreateAllCards::createEmpireASIA (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireASIA (bool isFaceA)
     {
-        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = createFaceBOfEmpires();
 
         constants::resourceProdPtr firstResourceToProduceASIA = std::make_shared<ResourceToProduce>();
         firstResourceToProduceASIA->type = ResourceType::MATERIAL;
@@ -190,9 +190,9 @@ namespace state
     /// @brief Create the empire card AZTEC.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the AZTEC empire.
-    constants::empireCardPtr CreateAllCards::createEmpireAZTEC (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireAZTEC (bool isFaceA)
     {
-        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = createFaceBOfEmpires();
 
         constants::resourceProdPtr firstResourceToProduceAZTEC = std::make_shared<ResourceToProduce>();
         firstResourceToProduceAZTEC->type = ResourceType::ENERGY;
@@ -219,9 +219,9 @@ namespace state
     /// @brief Create the empire card EUROPE.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the EUROPE empire.
-    constants::empireCardPtr CreateAllCards::createEmpireEUROPE (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireEUROPE (bool isFaceA)
     {
-        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = createFaceBOfEmpires();
 
         constants::resourceProdPtr firstResourceToProduceEUROPE = std::make_shared<ResourceToProduce>();
         firstResourceToProduceEUROPE->type = ResourceType::MATERIAL;
@@ -252,9 +252,9 @@ namespace state
     /// @brief Create the empire card NORAM.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the NORAM empire.
-    constants::empireCardPtr CreateAllCards::createEmpireNORAM (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireNORAM (bool isFaceA)
     {
-        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = createFaceBOfEmpires();
 
         constants::resourceProdPtr firstResourceToProduceNORAM = std::make_shared<ResourceToProduce>();
         firstResourceToProduceNORAM->type = ResourceType::MATERIAL;
@@ -280,7 +280,7 @@ namespace state
 
     /// @brief Create the B face of the empires, that are all the same.
     /// @return Vector of resources to produce when face B is played.
-    constants::resourceProdList CreateAllCards::createFaceBOfEmpires () const
+    constants::resourceProdList CreateAllCards::createFaceBOfEmpires ()
     {
         constants::resourceProdPtr firstResourceToProduce = std::make_shared<ResourceToProduce>();
         firstResourceToProduce->type = ResourceType::MATERIAL;
