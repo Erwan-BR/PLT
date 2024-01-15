@@ -50,7 +50,7 @@ namespace state {
     /// @param costToBuild Vector that contains all the resources to pay to build the Card.
     /// @param instantGain Vector that contains all the resources won at the construction of the Card.
     /// @param discardGain Pointers to the resources you get when the Card is discarded.
-    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathOfTexture, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
+    DevelopmentCard::DevelopmentCard (std::string name, constants::resourceProdList productionGain, std::string relativePathOfTexture, constants::victoryPointsPtr victoryPoints, CardType type, int numberOfCopies, constants::resourcePayList costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
         Card(name, productionGain, relativePathOfTexture, victoryPoints),
         type(type),
         numberOfCopies(numberOfCopies),
@@ -58,7 +58,7 @@ namespace state {
         discardGain(discardGain),
         quantityResourceMissing((int)costToBuild.size()) // Because no resource is paid and the size is never 0.
     {
-        for(ResourceToPay* resource : costToBuild)
+        for(constants::resourcePayPtr resource : costToBuild)
         {
             this->costToBuild.push_back(resource);
         }
@@ -73,7 +73,7 @@ namespace state {
     /// @param costToBuild Vector that contains all the resources to pay to build the Card.
     /// @param instantGain Vector that contains all the resources won at the construction of the Card.
     /// @param discardGain Pointers to the resources you get when the Card is discarded.
-    DevelopmentCard::DevelopmentCard (std::string name, std::vector<ResourceToProduce*> productionGain, CardVictoryPoint* victoryPoints, CardType type, int numberOfCopies, std::vector<ResourceToPay*> costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
+    DevelopmentCard::DevelopmentCard (std::string name, constants::resourceProdList productionGain, constants::victoryPointsPtr victoryPoints, CardType type, int numberOfCopies, constants::resourcePayList costToBuild, std::vector<ResourceType> instantGain, ResourceType discardGain) :
         Card(name, productionGain, victoryPoints),
         type(type),
         numberOfCopies(numberOfCopies),
@@ -81,7 +81,7 @@ namespace state {
         discardGain(discardGain),
         quantityResourceMissing((int)costToBuild.size()) // Because no resource is paid and the size is never 0.
     {
-        for(ResourceToPay* resource : costToBuild)
+        for(constants::resourcePayPtr resource : costToBuild)
         {
             this->costToBuild.push_back(resource);
         }
@@ -90,10 +90,6 @@ namespace state {
     /// @brief Destructor of the DevelopmentCard class.
     DevelopmentCard::~DevelopmentCard ()
     {
-        for(ResourceToPay* resource : this->costToBuild)
-        {
-            delete resource;
-        }
     }
 
     /// @brief Add a ressource into the Card. The resource must be addable. Should also update the quantity and the isPaid value.
@@ -101,7 +97,7 @@ namespace state {
     /// @return True if the card is just payed. False either.
     bool DevelopmentCard::addResource (ResourceType resource)
     {
-        for (ResourceToPay* resourceToPay : this->costToBuild)
+        for (constants::resourcePayPtr resourceToPay : this->costToBuild)
         {
             // Checking if the current resource is not paid, and if the type is the one of the input parameter.
             if ((!resourceToPay->isPaid) && (resourceToPay->type == resource))
@@ -128,7 +124,7 @@ namespace state {
         // If this line is reached, the card is not paid.
 
         // Iterating among all resources that should be paid
-        for (ResourceToPay* resourceToPay : this->costToBuild)
+        for (constants::resourcePayPtr resourceToPay : this->costToBuild)
         {
             // If the current ressource is not paid, we check if the resource can be added.
             if (!resourceToPay->isPaid)
@@ -173,7 +169,7 @@ namespace state {
 
         // Serialize the vector of the cost to build
         Json::Value costArray;
-        for (const ResourceToPay* prodGain : this->costToBuild)
+        for (const constants::resourcePayPtr& prodGain : this->costToBuild)
         {
             costArray.append(createInformations->jsonOfResourceToPay(*prodGain));
         }
@@ -214,7 +210,7 @@ namespace state {
 
     /// @brief Getter for the cost to build.
     /// @return Cost to build.
-    std::vector<ResourceToPay*> DevelopmentCard::getCostToBuild() const
+    constants::resourcePayList DevelopmentCard::getCostToBuild() const
     {
         return this->costToBuild;
     }
@@ -235,7 +231,7 @@ namespace state {
         {
             return 0;
         }
-        for (ResourceToPay* resourceToPay : this->costToBuild)
+        for (constants::resourcePayPtr resourceToPay : this->costToBuild)
         {
             if (! resourceToPay->isPaid)
             {

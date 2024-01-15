@@ -7,10 +7,12 @@
 #include <dirent.h>
 #include <utility>
 #include <algorithm>
+#include <memory>
 
 namespace state
 {
     /// @brief Create all development cards for a game.
+    /// @param isTestingGame True if the deck is for a testing game. WIll order some cards at the end of the deck to provide some cards we know.
     /// @return Vector of all development cards.
     constants::deckOfCards CreateAllCards::createAllDevelopmentCards (bool isTestingGame) const
     {
@@ -116,11 +118,11 @@ namespace state
     /// @return Vector of all empire cards.
     constants::deckOfEmpires CreateAllCards::createAllEmpireCards (bool isFaceA) const
     {
-        std::shared_ptr<EmpireCard> africa = this->createEmpireAFRICA(isFaceA);
-        std::shared_ptr<EmpireCard> noram = this->createEmpireNORAM(isFaceA);
-        std::shared_ptr<EmpireCard> europe = this->createEmpireEUROPE(isFaceA);
-        std::shared_ptr<EmpireCard> asia = this->createEmpireASIA(isFaceA);
-        std::shared_ptr<EmpireCard> aztec = this->createEmpireAZTEC(isFaceA);
+        constants::empireCardPtr africa = this->createEmpireAFRICA(isFaceA);
+        constants::empireCardPtr noram = this->createEmpireNORAM(isFaceA);
+        constants::empireCardPtr europe = this->createEmpireEUROPE(isFaceA);
+        constants::empireCardPtr asia = this->createEmpireASIA(isFaceA);
+        constants::empireCardPtr aztec = this->createEmpireAZTEC(isFaceA);
 
         constants::deckOfEmpires empires = {asia, aztec, africa, noram, europe};
         
@@ -130,20 +132,28 @@ namespace state
     /// @brief Create the empire card AFRICA.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the AFRICA empire.
-    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireAFRICA (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireAFRICA (bool isFaceA) const
     {
-        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
         
-        ResourceToProduce* firstResourceToProduceAFRICA = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
-        ResourceToProduce* secondResourceToProduceAFRICA = new ResourceToProduce{ResourceType::SCIENCE, 2, CardType::NONETYPE};
-        std::vector<ResourceToProduce*> productionGainAFRICA = {firstResourceToProduceAFRICA, secondResourceToProduceAFRICA};
+        constants::resourceProdPtr firstResourceToProduceAFRICA = std::make_shared<ResourceToProduce>();
+        firstResourceToProduceAFRICA->type = ResourceType::MATERIAL;
+        firstResourceToProduceAFRICA->quantity = 2;
+        firstResourceToProduceAFRICA->cardType = CardType::NONETYPE;
+        constants::resourceProdPtr secondResourceToProduceAFRICA = std::make_shared<ResourceToProduce>();
+        secondResourceToProduceAFRICA->type = ResourceType::SCIENCE;
+        secondResourceToProduceAFRICA->quantity = 2;
+        secondResourceToProduceAFRICA->cardType = CardType::NONETYPE;
+        constants::resourceProdList productionGainAFRICA = {firstResourceToProduceAFRICA, secondResourceToProduceAFRICA};
         
         std::string africa_FaceA = "./resources/img/Cards/Empire_Face_A/Panafricaine.png";
         std::string africa_FaceB = "./resources/img/Cards/Empire_Face_B/Panafricaine.png";
         
-        CardVictoryPoint* victoryPointsAFRICA  = new CardVictoryPoint{2,CardType::RESEARCH};
+        constants::victoryPointsPtr victoryPointsAFRICA = std::make_shared<state::CardVictoryPoint>();
+        victoryPointsAFRICA->numberOfPoints = 2;
+        victoryPointsAFRICA->cardOrResourceType = static_cast<int>(CardType::RESEARCH);
         
-        std::shared_ptr<EmpireCard> africa = std::make_shared<EmpireCard>("AFRICA", productionGainAFRICA, africa_FaceA, victoryPointsAFRICA, productionGainB, AFRICA, africa_FaceB, isFaceA);
+        constants::empireCardPtr africa = std::make_shared<EmpireCard>("AFRICA", productionGainAFRICA, africa_FaceA, victoryPointsAFRICA, productionGainB, AFRICA, africa_FaceB, isFaceA);
         
         return africa;
     }
@@ -151,20 +161,28 @@ namespace state
     /// @brief Create the empire card ASIA.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the ASIA empire.
-    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireASIA (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireASIA (bool isFaceA) const
     {
-        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
 
-        ResourceToProduce* firstResourceToProduceASIA = new ResourceToProduce{ResourceType::MATERIAL, 1, CardType::NONETYPE};
-        ResourceToProduce* secondResourceToProduceASIA = new ResourceToProduce{ResourceType::GOLD, 2, CardType::NONETYPE};
-        std::vector<ResourceToProduce*> productionGainASIA = {firstResourceToProduceASIA, secondResourceToProduceASIA};
+        constants::resourceProdPtr firstResourceToProduceASIA = std::make_shared<ResourceToProduce>();
+        firstResourceToProduceASIA->type = ResourceType::MATERIAL;
+        firstResourceToProduceASIA->quantity = 1;
+        firstResourceToProduceASIA->cardType = CardType::NONETYPE;
+        constants::resourceProdPtr secondResourceToProduceASIA = std::make_shared<ResourceToProduce>();
+        secondResourceToProduceASIA->type = ResourceType::GOLD;
+        secondResourceToProduceASIA->quantity = 2;
+        secondResourceToProduceASIA->cardType = CardType::NONETYPE;
+        constants::resourceProdList productionGainASIA = {firstResourceToProduceASIA, secondResourceToProduceASIA};
         
         std::string asia_FaceA = "./resources/img/Cards/Empire_Face_A/Asia.png";
         std::string asia_FaceB = "./resources/img/Cards/Empire_Face_B/Asia.png";
         
-        CardVictoryPoint* victoryPointsASIA  = new CardVictoryPoint{2, CardType::PROJECT};
+        constants::victoryPointsPtr victoryPointsASIA  = std::make_shared<state::CardVictoryPoint>();
+        victoryPointsASIA->numberOfPoints = 2;
+        victoryPointsASIA->cardOrResourceType = static_cast<int>(CardType::PROJECT);
         
-        std::shared_ptr<EmpireCard> asia = std::make_shared<EmpireCard>("ASIA", productionGainASIA, asia_FaceA, victoryPointsASIA, productionGainB, ASIA, asia_FaceB, isFaceA);
+        constants::empireCardPtr asia = std::make_shared<EmpireCard>("ASIA", productionGainASIA, asia_FaceA, victoryPointsASIA, productionGainB, ASIA, asia_FaceB, isFaceA);
         
         return asia;
     }
@@ -172,20 +190,28 @@ namespace state
     /// @brief Create the empire card AZTEC.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the AZTEC empire.
-    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireAZTEC (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireAZTEC (bool isFaceA) const
     {
-        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
 
-        ResourceToProduce* firstResourceToProduceAZTEC = new ResourceToProduce{ResourceType::ENERGY, 2, CardType::NONETYPE};
-        ResourceToProduce* secondResourceToProduceAZTEC = new ResourceToProduce{ResourceType::EXPLORATION, 1, CardType::NONETYPE};
-        std::vector<ResourceToProduce*> productionGainAZTEC = {firstResourceToProduceAZTEC, secondResourceToProduceAZTEC};
+        constants::resourceProdPtr firstResourceToProduceAZTEC = std::make_shared<ResourceToProduce>();
+        firstResourceToProduceAZTEC->type = ResourceType::ENERGY;
+        firstResourceToProduceAZTEC->quantity = 2;
+        firstResourceToProduceAZTEC->cardType = CardType::NONETYPE;
+        constants::resourceProdPtr secondResourceToProduceAZTEC = std::make_shared<ResourceToProduce>();
+        secondResourceToProduceAZTEC->type = ResourceType::EXPLORATION;
+        secondResourceToProduceAZTEC->quantity = 1;
+        secondResourceToProduceAZTEC->cardType = CardType::NONETYPE;
+        constants::resourceProdList productionGainAZTEC = {firstResourceToProduceAZTEC, secondResourceToProduceAZTEC};
 
         std::string aztec_FaceA = "./resources/img/Cards/Empire_Face_A/Azteca.png";
         std::string aztec_FaceB = "./resources/img/Cards/Empire_Face_B/Azteca.png";
 
-        CardVictoryPoint* victoryPointsAZTEC  = new CardVictoryPoint{3, CardType::DISCOVERY};
+        constants::victoryPointsPtr victoryPointsAZTEC  = std::make_shared<state::CardVictoryPoint>();
+        victoryPointsAZTEC->numberOfPoints = 3;
+        victoryPointsAZTEC->cardOrResourceType = static_cast<int>(CardType::DISCOVERY);
 
-        std::shared_ptr<EmpireCard> aztec = std::make_shared<EmpireCard>("AZTEC", productionGainAZTEC, aztec_FaceA, victoryPointsAZTEC, productionGainB, AZTEC, aztec_FaceB, isFaceA);
+        constants::empireCardPtr aztec = std::make_shared<EmpireCard>("AZTEC", productionGainAZTEC, aztec_FaceA, victoryPointsAZTEC, productionGainB, AZTEC, aztec_FaceB, isFaceA);
 
         return aztec;
     }
@@ -193,21 +219,32 @@ namespace state
     /// @brief Create the empire card EUROPE.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the EUROPE empire.
-    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireEUROPE (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireEUROPE (bool isFaceA) const
     {
-        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
 
-        ResourceToProduce* firstResourceToProduceEUROPE = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
-        ResourceToProduce* secondResourceToProduceEUROPE = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
-        ResourceToProduce* thirdResourceToProduceEUROPE = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
-        std::vector<ResourceToProduce*> productionGainEUROPE = {firstResourceToProduceEUROPE, secondResourceToProduceEUROPE, thirdResourceToProduceEUROPE};
+        constants::resourceProdPtr firstResourceToProduceEUROPE = std::make_shared<ResourceToProduce>();
+        firstResourceToProduceEUROPE->type = ResourceType::MATERIAL;
+        firstResourceToProduceEUROPE->quantity = 2;
+        firstResourceToProduceEUROPE->cardType = CardType::NONETYPE;
+        constants::resourceProdPtr secondResourceToProduceEUROPE = std::make_shared<ResourceToProduce>();
+        secondResourceToProduceEUROPE->type = ResourceType::ENERGY;
+        secondResourceToProduceEUROPE->quantity = 1;
+        secondResourceToProduceEUROPE->cardType = CardType::NONETYPE;
+        constants::resourceProdPtr thirdResourceToProduceEUROPE = std::make_shared<ResourceToProduce>();
+        secondResourceToProduceEUROPE->type = ResourceType::SCIENCE;
+        secondResourceToProduceEUROPE->quantity = 1;
+        secondResourceToProduceEUROPE->cardType = CardType::NONETYPE;
+        constants::resourceProdList productionGainEUROPE = {firstResourceToProduceEUROPE, secondResourceToProduceEUROPE, thirdResourceToProduceEUROPE};
         
         std::string europe_FaceA = "./resources/img/Cards/Empire_Face_A/Europa.png";
         std::string europe_FaceB = "./resources/img/Cards/Empire_Face_B/Europa.png";
         
-        CardVictoryPoint* victoryPointsEUROPE  = new CardVictoryPoint{1, ResourceType::COLONEL};
+        constants::victoryPointsPtr victoryPointsEUROPE  = std::make_shared<state::CardVictoryPoint>();
+        victoryPointsEUROPE->numberOfPoints = 1;
+        victoryPointsEUROPE->cardOrResourceType = static_cast<int>(ResourceType::COLONEL);
         
-        std::shared_ptr<EmpireCard> europe = std::make_shared<EmpireCard>("EUROPE", productionGainEUROPE, europe_FaceA, victoryPointsEUROPE, productionGainB, EUROPE, europe_FaceB, isFaceA);
+        constants::empireCardPtr europe = std::make_shared<EmpireCard>("EUROPE", productionGainEUROPE, europe_FaceA, victoryPointsEUROPE, productionGainB, EUROPE, europe_FaceB, isFaceA);
     
         return europe;
     }
@@ -215,32 +252,49 @@ namespace state
     /// @brief Create the empire card NORAM.
     /// @param isFaceA State if the empire is played with face A or B.
     /// @return Pointer to the NORAM empire.
-    std::shared_ptr<EmpireCard> CreateAllCards::createEmpireNORAM (bool isFaceA) const
+    constants::empireCardPtr CreateAllCards::createEmpireNORAM (bool isFaceA) const
     {
-        std::vector<ResourceToProduce*> productionGainB = this->createFaceBOfEmpires();
+        constants::resourceProdList productionGainB = this->createFaceBOfEmpires();
 
-        ResourceToProduce* firstResourceToProduceNORAM = new ResourceToProduce{ResourceType::MATERIAL, 3, CardType::NONETYPE};
-        ResourceToProduce* secondResourceToProduceNORAM = new ResourceToProduce{ResourceType::GOLD, 1, CardType::NONETYPE};
-        std::vector<ResourceToProduce*> productionGainNORAM = {firstResourceToProduceNORAM, secondResourceToProduceNORAM};
+        constants::resourceProdPtr firstResourceToProduceNORAM = std::make_shared<ResourceToProduce>();
+        firstResourceToProduceNORAM->type = ResourceType::MATERIAL;
+        firstResourceToProduceNORAM->quantity = 3;
+        firstResourceToProduceNORAM->cardType = CardType::NONETYPE;
+        constants::resourceProdPtr secondResourceToProduceNORAM = std::make_shared<ResourceToProduce>();
+        secondResourceToProduceNORAM->type = ResourceType::GOLD;
+        secondResourceToProduceNORAM->quantity = 1;
+        secondResourceToProduceNORAM->cardType = CardType::NONETYPE;
+        constants::resourceProdList productionGainNORAM = {firstResourceToProduceNORAM, secondResourceToProduceNORAM};
         
         std::string noram_FaceA = "./resources/img/Cards/Empire_Face_A/Noram.png";
         std::string noram_FaceB = "./resources/img/Cards/Empire_Face_B/Noram.png";
         
-        CardVictoryPoint* victoryPointsNORAM  = new CardVictoryPoint{1, ResourceType::FINANCIER};
+        constants::victoryPointsPtr victoryPointsNORAM  = std::make_shared<state::CardVictoryPoint>();
+        victoryPointsNORAM->numberOfPoints = 1;
+        victoryPointsNORAM->cardOrResourceType = static_cast<int>(ResourceType::FINANCIER);
 
-        std::shared_ptr<EmpireCard> noram = std::make_shared<EmpireCard>("NORAM", productionGainNORAM, noram_FaceA, victoryPointsNORAM, productionGainB, NORAM, noram_FaceB, isFaceA);
+        constants::empireCardPtr noram = std::make_shared<EmpireCard>("NORAM", productionGainNORAM, noram_FaceA, victoryPointsNORAM, productionGainB, NORAM, noram_FaceB, isFaceA);
     
         return noram;
     }
 
     /// @brief Create the B face of the empires, that are all the same.
     /// @return Vector of resources to produce when face B is played.
-    std::vector<ResourceToProduce*> CreateAllCards::createFaceBOfEmpires () const
+    constants::resourceProdList CreateAllCards::createFaceBOfEmpires () const
     {
-        ResourceToProduce* firstResourceToProduce = new ResourceToProduce{ResourceType::MATERIAL, 2, CardType::NONETYPE};
-        ResourceToProduce* secondResourceToProduce = new ResourceToProduce{ResourceType::ENERGY, 1, CardType::NONETYPE};
-        ResourceToProduce* thirdResourceToProduce = new ResourceToProduce{ResourceType::SCIENCE, 1, CardType::NONETYPE};
-        std::vector<ResourceToProduce*> productionGainB = {firstResourceToProduce,secondResourceToProduce, thirdResourceToProduce};
+        constants::resourceProdPtr firstResourceToProduce = std::make_shared<ResourceToProduce>();
+        firstResourceToProduce->type = ResourceType::MATERIAL;
+        firstResourceToProduce->quantity = 2;
+        firstResourceToProduce->cardType = CardType::NONETYPE;
+        constants::resourceProdPtr secondResourceToProduce = std::make_shared<ResourceToProduce>();
+        secondResourceToProduce->type = ResourceType::ENERGY;
+        secondResourceToProduce->quantity = 1;
+        secondResourceToProduce->cardType = CardType::NONETYPE;
+        constants::resourceProdPtr thirdResourceToProduce = std::make_shared<ResourceToProduce>();
+        thirdResourceToProduce->type = ResourceType::SCIENCE;
+        thirdResourceToProduce->quantity = 1;
+        thirdResourceToProduce->cardType = CardType::NONETYPE;
+        constants::resourceProdList productionGainB = {firstResourceToProduce,secondResourceToProduce, thirdResourceToProduce};
 
         return productionGainB;
     }

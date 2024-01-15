@@ -3,6 +3,7 @@
 #include "limits"
 #include <algorithm>
 
+#include "../../constants/constants/CustomTypes.h"
 
 namespace ai
 {
@@ -55,7 +56,7 @@ namespace ai
             // Iterating among all cards to find the one that will earn flat points (without condition), an d which is the less expensive.
             for (size_t index = 0; this->draftingCards.size() > index; index ++)
             {
-                state::CardVictoryPoint* currentVictoryPoints = this->draftingCards[index]->getVictoryPoints();
+                constants::victoryPointsPtr currentVictoryPoints = this->draftingCards[index]->getVictoryPoints();
                 
                 // Searching a card that earns flat points.
                 if ((0 < currentVictoryPoints->numberOfPoints) && (0 == (int) currentVictoryPoints->cardOrResourceType))
@@ -214,7 +215,7 @@ namespace ai
         // If the card is going to be constructed, we have to had the neede resources to the mapping and the index in the vector.
         if (isDesiredToBuild)
         {
-            for (state::ResourceToPay* resourceToPay: this->draftingCards[index]->getCostToBuild())
+            for (constants::resourcePayPtr resourceToPay: this->draftingCards[index]->getCostToBuild())
             {
                 this->missingResourcesToConstructAllCards[resourceToPay->type] ++;
             }

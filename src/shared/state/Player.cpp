@@ -170,7 +170,7 @@ namespace state {
     /// @return True if the player can play this resource, false either.
     bool Player::isResourcePlayable (ResourceType resource) const
     {
-        for (std::shared_ptr<DevelopmentCard> cardToBuild : this->toBuildCards)
+        for (constants::devCardPtr cardToBuild : this->toBuildCards)
         {
             if (cardToBuild->isResourceAddable(resource))
             {
@@ -256,7 +256,7 @@ namespace state {
         {
             return ;
         }
-        std::shared_ptr<DevelopmentCard> card = this->draftCards.at(toKeepCardIndex);
+        constants::devCardPtr card = this->draftCards.at(toKeepCardIndex);
         this->toBuildCards.push_back(card);
         this->draftCards.erase(this->draftCards.begin() + toKeepCardIndex);
         
@@ -283,10 +283,10 @@ namespace state {
         int productionValue = 0;
 
         // Iterating among all constructed cards.
-        for(std::shared_ptr<DevelopmentCard> card : this->builtCards)
+        for(const constants::devCardPtr& card : this->builtCards)
         {
             // Iterating among all resources produced by this card.
-            for(ResourceToProduce* resource : card->getProductionGain())
+            for(constants::resourceProdPtr resource : card->getProductionGain())
             {
                 // Checking if the resource is the same as the one we are constructing.
                 if(resourceToProduce == resource->type)
@@ -305,7 +305,7 @@ namespace state {
         }
 
         // Iterating among all resources produced by the empire.
-        for(ResourceToProduce* resource : this->empire->getProductionGain())
+        for(constants::resourceProdPtr resource : this->empire->getProductionGain())
         {
             // Checking if the resource is the same as the one we are constructing.
             if(resourceToProduce == resource->type)
@@ -330,9 +330,9 @@ namespace state {
     int Player::computeVictoryPoint() const
     {
         int victoryPoints = 0;
-        for(std::shared_ptr<DevelopmentCard> card : this->builtCards)
+        for(constants::devCardPtr card : this->builtCards)
         {
-            CardVictoryPoint* cardVictoryPoints = card->getVictoryPoints();
+            constants::victoryPointsPtr cardVictoryPoints = card->getVictoryPoints();
 
             if(0 == cardVictoryPoints->cardOrResourceType)
             {
@@ -357,7 +357,13 @@ namespace state {
             return victoryPoints;
         }
 
-        CardVictoryPoint* empireVictoryPoints = this->empire->getVictoryPoints();
+        // Retrieve the victory points gained by the empire (if an empire is set)
+        constants::victoryPointsPtr empireVictoryPoints = this->empire->getVictoryPoints();
+        if (nullptr == empireVictoryPoints)
+        {
+            return victoryPoints;
+        }
+
         if(0 == empireVictoryPoints->cardOrResourceType)
         {
             victoryPoints += empireVictoryPoints->numberOfPoints;
@@ -433,7 +439,7 @@ namespace state {
     /// @brief End the planificiation for the current player. Send all drafted cards to the to buildCard.
     void Player::endPlanification ()
     {
-        for (std::shared_ptr<DevelopmentCard> card : this->draftCards)
+        for (constants::devCardPtr card : this->draftCards)
         {
             this->toBuildCards.push_back(card);
         }
@@ -490,7 +496,7 @@ namespace state {
 
         // Serialize the vector of builtCards
         Json::Value builtCardsArray;
-        for (const std::shared_ptr<DevelopmentCard>& card : this->builtCards)
+        for (const constants::devCardPtr& card : this->builtCards)
         {
             builtCardsArray.append(card->toJSON());
         }
@@ -498,7 +504,7 @@ namespace state {
 
         // Serialize the vector of toBuildCards
         Json::Value toBuildCardsArray;
-        for (const std::shared_ptr<DevelopmentCard>& card : this->toBuildCards)
+        for (const constants::devCardPtr& card : this->toBuildCards)
         {
             toBuildCardsArray.append(card->toJSON());
         }
@@ -506,7 +512,7 @@ namespace state {
 
         // Serialize the vector of draftingCards
         Json::Value draftingCardsArray;
-        for (const std::shared_ptr<DevelopmentCard>& card : this->draftingCards)
+        for (const constants::devCardPtr& card : this->draftingCards)
         {
             draftingCardsArray.append(card->toJSON());
         }
@@ -514,7 +520,7 @@ namespace state {
 
         // Serialize the vector of draftCards
         Json::Value draftCardsArray;
-        for (const std::shared_ptr<DevelopmentCard>& card : this->draftCards)
+        for (const constants::devCardPtr& card : this->draftCards)
         {
             draftCardsArray.append(card->toJSON());
         }
@@ -560,7 +566,7 @@ namespace state {
 
     /// @brief Setter for the empire card. The resources produced has to be updated.
     /// @param empire Empire to give to the player.
-    void Player::setEmpire(std::shared_ptr<EmpireCard> empire)
+    void Player::setEmpire(constants::empireCardPtr empire)
     {
         this->empire = empire;
 
@@ -572,7 +578,7 @@ namespace state {
     void Player::setDraftingCards(constants::deckOfCards draft)
     {
         this->draftingCards.clear();
-        for(std::shared_ptr<DevelopmentCard> card : draft)
+        for(constants::devCardPtr card : draft)
         {
             this->draftingCards.push_back(card);
         }
@@ -613,7 +619,7 @@ namespace state {
 
     /// @brief Get the empire card of the player.
     /// @return Empire Card of the player.
-    std::shared_ptr<EmpireCard> Player::getEmpire () const
+    constants::empireCardPtr Player::getEmpire () const
     {
         return this->empire;
     }

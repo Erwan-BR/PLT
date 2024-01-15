@@ -1,6 +1,8 @@
 #include "DevelopmentCardRenderer.h"
 #include <iostream>
 
+#include "../../constants/constants/CustomTypes.h"
+
 namespace render
 {
     /// @brief Constructor of the card renderer.
@@ -56,7 +58,7 @@ namespace render
     void DevelopmentCardRenderer::update (long flags)
     {
         // Retrieve the elements to pay.
-        std::vector<state::ResourceToPay*> vectorOfElementsToPay = this->card->getCostToBuild();
+        constants::resourcePayList vectorOfElementsToPay = this->card->getCostToBuild();
         
         // Iterating among all resources that needs to be paid.
         for (long unsigned int index = 0; index < vectorOfCrossesSprite.size(); index++)
