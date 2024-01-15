@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include "../../constants/constants/PlayerObserversNotification.h"
+#include "../state/PlayerState.h"
 
 namespace ai
 {
@@ -26,6 +27,12 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card from the draft phase. It's completely random.
     void AIRandom::AIChooseDraftingCard ()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
+
         // Time-base seed to choose if the card is choosed or not.
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::default_random_engine randomness(seed);
@@ -40,6 +47,12 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
     void AIRandom::AIPlanification ()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
+
         for (int cardIndex = this->draftCards.size() - 1; 0 <= cardIndex; cardIndex--)
         {
             // Time-base seed to choose if the card is choosed or not.
@@ -65,6 +78,12 @@ namespace ai
     /// @brief Method used to implement how the AI uses it's resources (after the planification with instantGains, and after each production).
     void AIRandom::AIUseProducedResources ()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
+
         size_t numberOfCardsToBuild = this->toBuildCards.size();
         // If no card to build, put all resources on the empire.
         if (0 == numberOfCardsToBuild)

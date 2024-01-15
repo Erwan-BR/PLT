@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "../../constants/constants/PlayerObserversNotification.h"
+#include "../state/PlayerState.h"
 
 namespace ai
 {
@@ -38,6 +39,11 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card from the draft phase.
     void AIAdvanced::AIChooseDraftingCard()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
         // If it's the first draft from a turn, we have to substract the production gain from the resources to obtain. 
         if (0 == this->currentIndexOfDraft)
         {
@@ -126,6 +132,11 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
     void AIAdvanced::AIPlanification()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
         // Re-initialization for the next draft.
         this->currentIndexOfDraft = 0;
 
@@ -159,6 +170,11 @@ namespace ai
     /// @brief Method used to implement how the AI uses it's resources (during the planification with instantGains, and after each production).
     void AIAdvanced::AIUseProducedResources ()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
         // Iterating among all resources that needs to be used.
         for (const auto& pair : this->currentResources)
         {

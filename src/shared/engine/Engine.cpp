@@ -53,11 +53,11 @@ namespace engine
     {
         // Vector of method of AI
         using AIMethodPtr = void (state::Player::*)();
-        const std::vector<AIMethodPtr> aiMethodVector = {&state::Player::AIChooseDraftingCard, &state::Player::AIPlanification, &state::Player::AIUseProducedResources};
+        static const std::vector<AIMethodPtr> aiMethodVector = {&state::Player::AIChooseDraftingCard, &state::Player::AIPlanification, &state::Player::AIUseProducedResources};
         
         // Vector of method of Game to call at the end.
         using GameMethodPtr = void (state::Game::*)();
-        const std::vector<GameMethodPtr> gameMethodVector = {&state::Game::nextDraft, &state::Game::endPlanification, &state::Game::nextProduction};
+        static const std::vector<GameMethodPtr> gameMethodVector = {&state::Game::nextDraft, &state::Game::endPlanification, &state::Game::nextProduction};
 
         int currentPhase = (int) (this->currentGame->getPhase());
 
