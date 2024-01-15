@@ -17,49 +17,49 @@ namespace render
         this->font.loadFromFile("./resources/font/arial.ttf");
 
         //Generate the Board Part for MATERIAL
-        this->boardMaterialTexture = new sf::Texture();
+        this->boardMaterialTexture= std::make_shared<sf::Texture>();
 		this->boardMaterialTexture->loadFromFile("./resources/img/board_material.png");
-		this->boardMaterialSprite = new sf::Sprite();
+		this->boardMaterialSprite = std::make_shared<sf::Sprite>();
 		this->boardMaterialSprite->setTexture(*(this->boardMaterialTexture));
         this->boardMaterialSprite->setPosition(position+sf::Vector2f({400.f,500.f}));
         this->boardMaterialSprite->setScale({0.2f,0.2f});
 
         //Generate the Board Part for ENERGY
-        this->boardEnergyTexture = new sf::Texture();
+        this->boardEnergyTexture= std::make_shared<sf::Texture>();
 		this->boardEnergyTexture->loadFromFile("./resources/img/board_energy.png");
-		this->boardEnergySprite = new sf::Sprite();
+		this->boardEnergySprite = std::make_shared<sf::Sprite>();
 		this->boardEnergySprite->setTexture(*(this->boardEnergyTexture));
         this->boardEnergySprite->setPosition(position+sf::Vector2f({620.f,500.f}));
         this->boardEnergySprite->setScale({0.2f,0.2f});
         
         //Generate the Board Part for GOLD
-        this->boardGoldTexture = new sf::Texture();
+        this->boardGoldTexture= std::make_shared<sf::Texture>();
 		this->boardGoldTexture->loadFromFile("./resources/img/board_gold.png");
-		this->boardGoldSprite = new sf::Sprite();
+		this->boardGoldSprite = std::make_shared<sf::Sprite>();
 		this->boardGoldSprite->setTexture(*(this->boardGoldTexture));
         this->boardGoldSprite->setPosition(position+sf::Vector2f({1060.f,500.f}));
         this->boardGoldSprite->setScale({0.2f,0.2f});
 
         //Generate the Board Part for Science
-        this->boardScienceTexture = new sf::Texture();
+        this->boardScienceTexture= std::make_shared<sf::Texture>();
 		this->boardScienceTexture->loadFromFile("./resources/img/board_science.png");
-		this->boardScienceSprite = new sf::Sprite();
+		this->boardScienceSprite = std::make_shared<sf::Sprite>();
 		this->boardScienceSprite->setTexture(*(this->boardScienceTexture));
         this->boardScienceSprite->setPosition(position+sf::Vector2f({840.f,500.f}));
         this->boardScienceSprite->setScale({0.2f,0.2f});
 
         //Generate the Board Part for EXPLORATION
-        this->boardExplorationTexture = new sf::Texture();
+        this->boardExplorationTexture= std::make_shared<sf::Texture>();
 		this->boardExplorationTexture->loadFromFile("./resources/img/board_exploration.png");
-		this->boardExplorationSprite = new sf::Sprite();
+		this->boardExplorationSprite = std::make_shared<sf::Sprite>();
 		this->boardExplorationSprite->setTexture(*(this->boardExplorationTexture));
         this->boardExplorationSprite->setPosition(position+sf::Vector2f({1280.f,500.f}));
         this->boardExplorationSprite->setScale({0.2f,0.2f});
 
         //Generate the Turn Token
-        this->boardTurnTexture = new sf::Texture();
+        this->boardTurnTexture= std::make_shared<sf::Texture>();
 		this->boardTurnTexture->loadFromFile("./resources/img/turn_1.png");
-		this->boardTurnSprite = new sf::Sprite();
+		this->boardTurnSprite = std::make_shared<sf::Sprite>();
 		this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
         this->boardTurnSprite->setPosition(position+sf::Vector2f({900.f,400.f}));
         this->boardTurnSprite->setScale({0.2f,0.2f});

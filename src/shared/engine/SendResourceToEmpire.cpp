@@ -28,7 +28,7 @@ namespace engine
     }
 
     /// @brief Launch the command to send a resource to the empire of a player.
-    void SendResourceToEmpire::launchCommand (std::shared_ptr<state::Game> game) const
+    void SendResourceToEmpire::launchCommand (constants::gamePtr game) const
     {
         game->getPlayers()[this->playerIndex]->sendResourceToEmpire(this->resource);
     }

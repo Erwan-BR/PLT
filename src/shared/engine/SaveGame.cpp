@@ -28,7 +28,7 @@ namespace engine
 
     /// @brief Launch the command to save a game.
     /// @param game Game where the command is launched.
-    void SaveGame::launchCommand (std::shared_ptr<state::Game> game) const
+    void SaveGame::launchCommand (constants::gamePtr game) const
     {
         const std::string outputFileName = "./bin/save.json";
         const Json::Value jsonVersionOfGame = game->toJSON();

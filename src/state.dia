@@ -7279,7 +7279,7 @@
         <dia:point val="114.847,136.682"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="114.847,136.682;124.195,141.482"/>
+        <dia:rectangle val="114.847,136.682;124.194,141.482"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="114.847,136.682"/>
@@ -9801,16 +9801,16 @@
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O40">
       <dia:attribute name="obj_pos">
-        <dia:point val="124.195,139.382"/>
+        <dia:point val="124.194,139.382"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="124.145,138.637;132.114,154.493"/>
+        <dia:rectangle val="124.144,138.637;132.114,154.493"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="124.195,139.382"/>
+        <dia:point val="124.194,139.382"/>
         <dia:point val="131.664,139.382"/>
         <dia:point val="131.664,154.043"/>
       </dia:attribute>
@@ -10631,7 +10631,7 @@
         <dia:point val="150.458,128.186"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="119.071,128.136;150.508,137.131"/>
+        <dia:rectangle val="119.071,128.136;150.508,137.132"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -10640,7 +10640,7 @@
         <dia:point val="150.458,128.186"/>
         <dia:point val="150.458,132.234"/>
         <dia:point val="119.521,132.234"/>
-        <dia:point val="119.521,136.681"/>
+        <dia:point val="119.521,136.682"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>
@@ -11101,7 +11101,7 @@
         <dia:point val="150.458,128.136"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="33.7153,49.7484;150.508,174.788"/>
+        <dia:rectangle val="33.7153,49.7484;150.508,174.043"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -11149,6 +11149,57 @@
       <dia:connections>
         <dia:connection handle="0" to="O46" connection="6"/>
         <dia:connection handle="1" to="O52" connection="4"/>
+      </dia:connections>
+    </dia:object>
+    <dia:object type="UML - Dependency" version="1" id="O58">
+      <dia:attribute name="obj_pos">
+        <dia:point val="56.6417,6.04025"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="30.4853,5.29525;56.6917,49.5484"/>
+      </dia:attribute>
+      <dia:attribute name="meta">
+        <dia:composite type="dict"/>
+      </dia:attribute>
+      <dia:attribute name="orth_points">
+        <dia:point val="56.6417,6.04025"/>
+        <dia:point val="30.9353,6.04025"/>
+        <dia:point val="30.9353,49.0984"/>
+      </dia:attribute>
+      <dia:attribute name="orth_orient">
+        <dia:enum val="0"/>
+        <dia:enum val="1"/>
+      </dia:attribute>
+      <dia:attribute name="orth_autoroute">
+        <dia:boolean val="true"/>
+      </dia:attribute>
+      <dia:attribute name="name">
+        <dia:string>##</dia:string>
+      </dia:attribute>
+      <dia:attribute name="stereotype">
+        <dia:string>##</dia:string>
+      </dia:attribute>
+      <dia:attribute name="draw_arrow">
+        <dia:boolean val="true"/>
+      </dia:attribute>
+      <dia:attribute name="text_font">
+        <dia:font family="monospace" style="0" name="Courier"/>
+      </dia:attribute>
+      <dia:attribute name="text_height">
+        <dia:real val="0.80000000000000004"/>
+      </dia:attribute>
+      <dia:attribute name="text_colour">
+        <dia:color val="#000000ff"/>
+      </dia:attribute>
+      <dia:attribute name="line_width">
+        <dia:real val="0.10000000000000001"/>
+      </dia:attribute>
+      <dia:attribute name="line_colour">
+        <dia:color val="#000000ff"/>
+      </dia:attribute>
+      <dia:connections>
+        <dia:connection handle="0" to="O14" connection="8"/>
+        <dia:connection handle="1" to="O52" connection="1"/>
       </dia:connections>
     </dia:object>
   </dia:layer>

@@ -10,7 +10,7 @@ namespace render
     /// @param color Color of the button.
     /// @param commandOnClick Command executed on click.
     /// @param locker mutex that allow to send securely the command to the engine.
-    Button::Button (sf::Vector2f position, sf::Vector2f size, std::string text, sf::Color color, engine::Command* commandOnClick, std::mutex & locker) :
+    Button::Button (sf::Vector2f position, sf::Vector2f size, std::string text, sf::Color color, constants::commandPtr commandOnClick, std::mutex & locker) :
         position(position),
         size(size),
         textString(text),
@@ -79,7 +79,7 @@ namespace render
     /// @param event Event that occurs on the window.
     /// @param window Displayed window to the player.
     /// @param engineOfGame Engine that will receive the game.
-    void Button::handleEvent (sf::Event event, sf::RenderWindow& window, engine::Engine* engineOfGame, Scene* scene)
+    void Button::handleEvent (sf::Event event, sf::RenderWindow& window, constants::enginePtr engineOfGame, Scene* scene)
     {
         // Check if the button is enabled, and pressed with a left click
         if (this->isEnable && event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
@@ -146,7 +146,7 @@ namespace render
 
     /// @brief Change the command performed by the button when clicked.
     /// @param command New command performed by the click.
-    void Button::changeCommand(engine::Command* command)
+    void Button::changeCommand(constants::commandPtr command)
     {
         this->command = command;
     }

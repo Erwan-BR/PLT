@@ -28,7 +28,7 @@ namespace engine
     }
 
     /// @brief Launch the command to send a resource to the empire of a player.
-    void SetPreferredPersonnage::launchCommand (std::shared_ptr<state::Game> game) const
+    void SetPreferredPersonnage::launchCommand (constants::gamePtr game) const
     {
         game->getPlayers()[this->playerIndex]->setPreferedPersonnage(this->resource);
     }

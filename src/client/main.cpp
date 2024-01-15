@@ -27,7 +27,7 @@
 #include "render.h"
 
 sf::RenderWindow* instanciatePLTWindow();
-render::Scene* instanciateRender(engine::Engine*& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players, std::mutex& locker);
+render::Scene* instanciateRender(constants::enginePtr& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players, std::mutex& locker);
 
 void handleOpenedWindow(sf::RenderWindow* window, render::Scene* scene, std::shared_ptr<state::Game> game, bool isTestingGame);
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
@@ -72,7 +72,7 @@ int main(int argc,char* argv[])
 
         //Creation of the instance of the Game class
         std::shared_ptr<state::Game> game = nullptr;
-        engine::Engine* engineOfGame = nullptr;
+        constants::enginePtr engineOfGame = nullptr;
         std::mutex locker;
 
         render::Scene* scene = instanciateRender(engineOfGame, game, players,locker);
@@ -127,7 +127,7 @@ int main(int argc,char* argv[])
             std::mutex locker;
 
             std::shared_ptr<state::Game> game = std::make_shared<state::Game>(ais);
-            engine::Engine* engineOfGame = new engine::Engine(game, locker);
+            constants::enginePtr engineOfGame = constants::enginePtr(new engine::Engine(game, locker));
 
             engineOfGame->gameRunning(true);
 
@@ -152,8 +152,6 @@ int main(int argc,char* argv[])
                     numberOfWins[winnerIndex] ++;
                 }
             }
-
-            delete engineOfGame;
 
             // Display for 1 game / 10 the fact that some game just finished.
             if (!((gameNumber + 1) % 10))
@@ -226,7 +224,7 @@ int main(int argc,char* argv[])
         addAIToVector(players, numberOfOpponents);
 
         std::shared_ptr<state::Game> game = nullptr;
-        engine::Engine* engineOfGame = nullptr;
+        constants::enginePtr engineOfGame = nullptr;
         std::mutex locker;
         render::Scene* scene = instanciateRender(engineOfGame, game, players, locker);
 
@@ -272,16 +270,16 @@ int main(int argc,char* argv[])
         //Creation of the window
         sf::RenderWindow* window = instanciatePLTWindow();
 
-        std::shared_ptr<state::Game> game = std::make_shared<state::Game>(root);
+        constants::gamePtr game = std::make_shared<state::Game>(root);
         std::mutex locker;
-        engine::Engine* engineOfGame = new engine::Engine(game, locker);
+        constants::enginePtr engineOfGame = constants::enginePtr(new engine::Engine(game, locker));
         render::Scene* scene = new render::Scene(game, locker, engineOfGame);
 
         //Observable
-        scene->setupObserver(game);
+        scene->setupObserver(game.get());
         for (std::shared_ptr<state::Player> player : game->getPlayers())
         {
-            scene->setupObserver(player);
+            scene->setupObserver(player.get());
         }
         game->notifyObservers(4095);
 
@@ -386,18 +384,18 @@ sf::RenderWindow* instanciatePLTWindow()
     return window;
 }
 
-render::Scene* instanciateRender(engine::Engine*& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players,std::mutex& locker)
+render::Scene* instanciateRender(constants::enginePtr& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players,std::mutex& locker)
 {
     game = std::make_shared<state::Game>(players);
     
-    engineOfGame = new engine::Engine(game, locker);
+    engineOfGame = constants::enginePtr(new engine::Engine(game, locker));
     render::Scene* scene = new render::Scene(game, locker, engineOfGame);
     
     for (auto player: players)
     {
-        scene->setupObserver(player);
+        scene->setupObserver(player.get());
     }
-    scene->setupObserver(game);
+    scene->setupObserver(game.get());
 
     return scene;
 }

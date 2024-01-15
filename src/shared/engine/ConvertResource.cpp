@@ -25,7 +25,7 @@ namespace engine
     }
 
     /// @brief Launching the command to convert a krystallium.
-    void ConvertResource::launchCommand (std::shared_ptr<state::Game> game) const
+    void ConvertResource::launchCommand (constants::gamePtr game) const
     {
         game->getPlayers()[this->playerIndex]->convertKrystallium(this->resource);
     }

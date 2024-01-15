@@ -20,7 +20,7 @@ namespace engine
     /// @brief Full constructor of the engine.
     /// @param currentGame Game that is played.
     /// @param locker Mutext that protects commandToExecute to avoid 2 resource using it simultaneously.
-    Engine::Engine(std::shared_ptr<state::Game> currentGame, std::mutex & locker) :
+    Engine::Engine(constants::gamePtr currentGame, std::mutex & locker) :
         currentGame(currentGame),
         locker(locker)
     {
@@ -30,10 +30,6 @@ namespace engine
     /// @brief Destructor of the engine class. Empty for the moment.
     Engine::~Engine()
     {
-        for (Command* command : this->commandToExecute)
-        {
-            delete command;
-        }
     }
 
     /// @brief Run the complete game. Logic of the game is done in Game, and waiting for AI / Players to play is done here.
@@ -66,7 +62,7 @@ namespace engine
         int currentPhase = (int) (this->currentGame->getPhase());
 
         // Make AIs play first.
-        for (std::shared_ptr<state::Player> player : this->currentGame->getPlayers())
+        for (constants::playerPtr player : this->currentGame->getPlayers())
         {
             if (player->isAI())
             {
@@ -91,7 +87,7 @@ namespace engine
     /// @return Boolean that state if all players have played. TRUE : all player are waiting. FALSE : At least one player is playing.
     bool Engine::areAllRealPlayersPending()
     {
-        for(std::shared_ptr<state::Player> player : this->currentGame->getPlayers())
+        for(constants::playerPtr player : this->currentGame->getPlayers())
         {
             // Checdking for real player if only one is playing.
             if (player->isRealPlayerAndPlaying())
@@ -106,7 +102,7 @@ namespace engine
     void Engine::excuteAllCommands ()
     {
         // Iterate among all commands to execute them.
-        for (Command* command : this->commandToExecute)
+        for (constants::commandPtr command : this->commandToExecute)
         {
             command->launchCommand(this->currentGame);
         }
@@ -119,35 +115,35 @@ namespace engine
     /// @param jsonCommand New command that will be performed last.
     void Engine::receiveCommand (Json::Value jsonCommand)
     {
-        Command* newCommand ;
+        constants::commandPtr newCommand;
         switch (jsonCommand["id"].asInt())
         {
             case CommandID::ADDRESOURCE :
-                newCommand = new AddResource(jsonCommand);
+                newCommand = std::make_shared<AddResource>(jsonCommand);
                 break;
             case CommandID::DISCARDCARD :
-                newCommand = new DiscardCard(jsonCommand);
+                newCommand = std::make_shared<DiscardCard>(jsonCommand);
                 break;
             case CommandID::CHOOSEDRAFTCARD :
-                newCommand = new ChooseDraftCard(jsonCommand);
+                newCommand = std::make_shared<ChooseDraftCard>(jsonCommand);
                 break;
             case CommandID::KEEPCARD :
-                newCommand = new KeepCard(jsonCommand);
+                newCommand = std::make_shared<KeepCard>(jsonCommand);
                 break;
             case CommandID::SENDRESOURCETOEMPIRE :
-                newCommand = new SendResourceToEmpire(jsonCommand);
+                newCommand = std::make_shared<SendResourceToEmpire>(jsonCommand);
                 break;
             case CommandID::ENDPLANIFICATION :
-                newCommand = new EndPlanification(jsonCommand);
+                newCommand = std::make_shared<EndPlanification>(jsonCommand);
                 break;
                 case CommandID::ENDPRODUCTION :
-                newCommand = new EndProduction(jsonCommand);
+                newCommand = std::make_shared<EndProduction>(jsonCommand);
                 break;
             case CommandID::CONVERTRESOURCE :
-                newCommand = new ConvertResource(jsonCommand);
+                newCommand = std::make_shared<ConvertResource>(jsonCommand);
                 break;
             case CommandID::SAVEGAME :
-                newCommand = new SaveGame(jsonCommand);
+                newCommand = std::make_shared<SaveGame>(jsonCommand);
                 break;
             default :
                 return ;

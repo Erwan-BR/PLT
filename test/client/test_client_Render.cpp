@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(SceneTest){	//First Test : Test Game & Scene methods
 	BOOST_CHECK_EQUAL(w, w2);
 
 	//Test setupObserver
-	myscene->setupObserver(game);
+	myscene->setupObserver(game.get());
 
 	//Test changePlayerInfoPlayer
 	myscene->changePlayerInfoPlayer(1,MAIN_WINDOW);
