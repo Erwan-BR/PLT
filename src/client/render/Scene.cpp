@@ -12,24 +12,13 @@ namespace render {
     /// @param locker Mutex that will lock the action performed by the player.
     /// @param engineOfGame Engine that make the complete game.
     Scene::Scene (std::shared_ptr<state::Game> game, std::mutex & locker, constants::enginePtr engineOfGame) :
+        background_texture(constants::ResourceManager::getTexture("./resources/img/background.png")),
         game(game),
         locker(locker),
         engineOfGame(engineOfGame)
     {
-        this->enableInput = true;
-        //Store game attribute
-        this->transform = transform;
-
-           //Creation and initialisation of the background texture
-        this->background_texture =sf::Texture();
-        (this->background_texture).loadFromFile("./resources/img/background.png");
-
-        //Creation and initialisation of the background sprite
-        this->background=sf::Sprite();
-        (this->background).setTexture(this->background_texture);
-
-        //Set Starting Window
-        this->current_window = MAIN_WINDOW;
+        // Initialisation of the background sprite
+        this->background.setTexture(this->background_texture);
 
         PlayerRenderer* pRenderer;
         constants::buttonPtr button;
@@ -53,7 +42,8 @@ namespace render {
         this->player_renderer.push_back(pRenderer);
 
         //Generate PlayerRenderer for DRAFTING_WINDOW
-        for (int i = 0; i<(int) players.size();i++){
+        for (size_t i = 0; players.size() > i; i++)
+        {
             pRenderer = new PlayerRenderer(players[i],{0.f,720.f-i*180.f},DRAFTING_WINDOW);
             this->player_renderer.push_back(pRenderer);
         }
@@ -65,7 +55,8 @@ namespace render {
         this->game_renderer = new GameRenderer(game,{0.f,0.f});
 
         //Generate Buttons for MAIN_WINDOW only if the Player isn't an AI
-        if(this->enableInput){
+        if(this->enableInput)
+        {
             button = constants::buttonPtr(new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(180,180,180),nullptr, this->locker));
             this->btnMain.push_back(button);
             button = constants::buttonPtr(new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color(85,76,68),nullptr, this->locker));
@@ -113,7 +104,8 @@ namespace render {
             button = constants::buttonPtr(new Button({50.f,960.f},{220.f,100.f},"SAVE GAME",sf::Color(215,47,215),command, this->locker));
             this->btnMain.push_back(button);
 
-            for(int i = 1; i<(int) game->getPlayers().size();i++){
+            for(size_t i = 1; game->getPlayers().size() > i; i++)
+            {
                 command = constants::commandPtr(new engine::Command((engine::CommandID) -1,i));
                 button = constants::buttonPtr(new Button({300.f,60.f*i},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker));
                 this->btnMain.push_back(button);
@@ -130,25 +122,30 @@ namespace render {
             button = constants::buttonPtr(new Button({1600.f,940.f},{220.f,100.f},"CONFIRM",sf::Color(215,47,215),nullptr, this->locker));
             this->btnDraft.push_back(button);
 
-            for(int i = 0; i<(int) game->getPlayers().size();i++){
+            for(size_t i = 0; game->getPlayers().size() > i; i++)
+            {
                 command = constants::commandPtr(new engine::Command((engine::CommandID) -1,i));
                 button = constants::buttonPtr(new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker));
                 this->btnFull.push_back(button);
             }
 
-            for(constants::buttonPtr btn: this->btnMain){
+            for(constants::buttonPtr btn: this->btnMain)
+            {
                 btn->setVisible(true);
                 btn->setEnabled(true);
             }
-            for(constants::buttonPtr btn: this->btnDraft){
+            for(constants::buttonPtr btn: this->btnDraft)
+            {
                 btn->setVisible(true);
                 btn->setEnabled(true);
             }
-            for(constants::buttonPtr btn: this->btnPlan){
+            for(constants::buttonPtr btn: this->btnPlan)
+            {
                 btn->setVisible(true);
                 btn->setEnabled(true);
             }
-            for(constants::buttonPtr btn: this->btnFull){
+            for(constants::buttonPtr btn: this->btnFull)
+            {
                 btn->setVisible(true);
                 btn->setEnabled(true);
             }
@@ -163,13 +160,14 @@ namespace render {
 
     /// @brief Setter for current_window
     /// @param window new window
-    void Scene::changeWindow(Window window){
+    void Scene::changeWindow(Window window)
+    {
         this->current_window = window;
         switch(this->current_window)
         {
             case MAIN_WINDOW:
             {
-                for(int i=0;i<8;i++)
+                for(int i = 0; i < 8; i++)
                 {
                     this->btnMain[i]->changeCommand(nullptr);
                 }
@@ -198,14 +196,16 @@ namespace render {
 
     /// @brief Getter for current_window
     /// @return value of current_window
-    Window Scene::getWindow(){
-        return (this->current_window);
+    Window Scene::getWindow()
+    {
+        return this->current_window;
     }
     
     /// @brief Setter for player displayed
     /// @param p_index index of Player to display in players
     /// @param window Window where the info are changed (among MAIN_WINDOW & PLAYER_INFO)
-    void Scene::changePlayerInfoPlayer(int p_index,Window window){
+    void Scene::changePlayerInfoPlayer(int p_index,Window window)
+    {
         //Get Player to be display
         constants::playerPtr player = game->getPlayers()[p_index];
 
@@ -245,14 +245,17 @@ namespace render {
         this->player_renderer[r_id] = pRenderer;
     }
 
-    void Scene::changePlayerInfoPlayer(int p_index){
+    void Scene::changePlayerInfoPlayer(int p_index)
+    {
         changePlayerInfoPlayer(p_index,this->current_window);
     }
 
     /// @brief update the Scene with the current state of the game
     /// @param flags Flags that indicate what should be refreshed.
-    void Scene::update(long flags){
-        if(PLAYER_CURRENT_RESOURCES_CHANGED & flags){
+    void Scene::update(long flags)
+    {
+        if(PLAYER_CURRENT_RESOURCES_CHANGED & flags)
+        {
             btnMain[0]->setText("MATERIAL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::MATERIAL])+")");
             btnMain[1]->setText("ENERGY\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::ENERGY])+")");
             btnMain[2]->setText("SCIENCE\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::SCIENCE])+")");
@@ -291,7 +294,8 @@ namespace render {
     /// @brief Handle the event of clicking on a button, on a given window.
     /// @param event Event that represent what happend (click, key pressed, ...)
     /// @param window Window where the scene belongs to.
-    void Scene::buttonHandle(sf::Event event,sf::RenderWindow& window){
+    void Scene::buttonHandle(sf::Event event,sf::RenderWindow& window)
+    {
         switch (this->current_window)
         {
             case MAIN_WINDOW:
@@ -352,7 +356,7 @@ namespace render {
                 auto cards = p->getToBuildCards();
                 constants::commandPtr command;
                 bool skip =false;
-                for(int i=0; i < (int) cards.size();i++)
+                for(size_t i = 0; cards.size() > i; i++)
                 {
                     if(cards[i] == card)
                     {
@@ -417,7 +421,7 @@ namespace render {
             case DRAFTING_WINDOW:
             {
                 auto cards = p->getDraftingCards();
-                for(int i=0; i < (int) cards.size();i++)
+                for(size_t i = 0; cards.size() > i; i++)
                 {
                     if(cards[i] == card)
                     {
@@ -432,7 +436,7 @@ namespace render {
             case PLANIFICATION_WINDOW:
             {
                 auto cards = p->getDraftCards();
-                for(int i=0; i < (int) cards.size();i++)
+                for(size_t i = 0; cards.size() > i; i++)
                 {
                     if(cards[i] == card)
                     {
@@ -447,7 +451,7 @@ namespace render {
                 }
 
                 cards = p->getToBuildCards();
-                for(int i=0; i < (int) cards.size();i++)
+                for(size_t i = 0; cards.size() > i ; i++)
                 {
                     if(cards[i] == card)
                     {
@@ -470,7 +474,8 @@ namespace render {
 
     /// @brief Draw the complete Scene.
     /// @param window Window where the scene belong to.
-    void Scene::draw(sf::RenderWindow& window){
+    void Scene::draw(sf::RenderWindow& window)
+    {
         switch (this->current_window)
         {
             case MAIN_WINDOW:
@@ -483,7 +488,8 @@ namespace render {
                 this->player_renderer[0]->draw(window);
                 this->player_renderer[1]->draw(window);
                 
-                for (constants::buttonPtr btn: btnMain){
+                for (constants::buttonPtr btn: btnMain)
+                {
                     btn->draw(window);
                 }
 
@@ -493,7 +499,8 @@ namespace render {
             case DRAFTING_WINDOW:
             {
                 //Display players
-                for (int i=4; i < (int) this->player_renderer.size(); i++){
+                for (size_t i = 4; this->player_renderer.size() > i; i++)
+                {
                     this->player_renderer[i]->draw(window);
                 }
                 //Display Drafting Hand
@@ -510,7 +517,8 @@ namespace render {
                 //Display Player
                 this->player_renderer[2]->draw(window);
 
-                for (constants::buttonPtr btn: btnFull){
+                for (constants::buttonPtr btn: btnFull)
+                {
                     btn->draw(window);
                 }
                 break;
@@ -522,7 +530,8 @@ namespace render {
                 //Display Drafted Hand
                 this->player_renderer[3]->draw(window);
 
-                for (constants::buttonPtr btn: btnPlan){
+                for (constants::buttonPtr btn: btnPlan)
+                {
                     btn->draw(window);
                 }
                 break;
@@ -538,7 +547,8 @@ namespace render {
     /// @brief Function to desactivate all buttons from a window.
     /// @param index Index of the button to desactivate
     /// @param window Window where the button is draw.
-    void Scene::desactivateButton(int index, Window window){
+    void Scene::desactivateButton(int index, Window window)
+    {
         switch (window)
         {
             case MAIN_WINDOW:
@@ -565,7 +575,8 @@ namespace render {
 
     /// @brief Setup an observer to make the scene look at 
     /// @param observable New observable.
-    void Scene::setupObserver(state::Observable* observable){
+    void Scene::setupObserver(state::Observable* observable)
+    {
         observable->addObserver(this->game_renderer);
         for(PlayerRenderer* pRenderer: player_renderer)
         {
