@@ -95,7 +95,7 @@ namespace render {
             command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE,0,state::GOLD));
             button = constants::buttonPtr(new Button({170.f,600.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO GOLD",sf::Color::Yellow,command, this->locker));
             this->btnMain.push_back(button);
-            command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE,0,state::MATERIAL));
+            command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE,0,state::EXPLORATION));
             button = constants::buttonPtr(new Button({50.f,720.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO EXPLORATION",sf::Color::Blue,command, this->locker));
             this->btnMain.push_back(button);
 
