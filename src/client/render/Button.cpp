@@ -21,6 +21,7 @@ namespace render
         sf::Font tempoFont;
         tempoFont.loadFromFile("./resources/font/arial.ttf");
         this->font = tempoFont;
+        
         this->rectangle = sf::RectangleShape();
         this->rectangle.setSize(size);
         this->rectangle.setPosition(position);
@@ -31,8 +32,9 @@ namespace render
         this->text.setCharacterSize(20);
         this->text.setFillColor(sf::Color::Black);
 
-        while(this->text.getLocalBounds().width > this->rectangle.getLocalBounds().width && this->text.getCharacterSize()>0){
-            this->text.setCharacterSize(this->text.getCharacterSize()-1);
+        while((this->text.getLocalBounds().width > this->rectangle.getLocalBounds().width) && (0 < this->text.getCharacterSize()))
+        {
+            this->text.setCharacterSize(this->text.getCharacterSize() -1);
         }
         
         // Center the text within the button
@@ -91,32 +93,34 @@ namespace render
             {
                 Json::Value jsonCommand = this->command->toJSON();
                 engine::CommandID cID = this->command->getCommandId();
-                if(cID == (engine::CommandID) -1){        //Catch Actions which are executed by render and not by the engine
+                
+                // If the value is -1, it means that the command is executed by the render (changing the view), not the engine.
+                if((engine::CommandID) -1 == cID)
+                {
                     scene->changePlayerInfoPlayer(jsonCommand["playerIndex"].asInt());
+                    return;
                 }
-                else{
-                    if(cID == engine::CHOOSEDRAFTCARD){
-                        scene->disableButton(0,DRAFTING_WINDOW);
-                    }
-                    if((cID == engine::DISCARDCARD) || (cID == engine::KEEPCARD)){
-                        scene->disableButton(0,PLANIFICATION_WINDOW);
-                        scene->disableButton(1,PLANIFICATION_WINDOW);
-                    }
-                    if((cID == engine::ADDRESOURCE) || (cID == engine::SENDRESOURCETOEMPIRE)){
-                        scene->disableButton(0, MAIN_WINDOW);
-                        scene->disableButton(1, MAIN_WINDOW);
-                        scene->disableButton(2, MAIN_WINDOW);
-                        scene->disableButton(3, MAIN_WINDOW);
-                        scene->disableButton(4, MAIN_WINDOW);
-                        scene->disableButton(5, MAIN_WINDOW);
-                        scene->disableButton(6, MAIN_WINDOW);
-                        scene->disableButton(7, MAIN_WINDOW);
-                    }
-                    // Lock the mutex, send the JSON of the command and unlock the mutex.
-                    this->locker.lock();
-                    engineOfGame->receiveCommand(jsonCommand);
-                    this->locker.unlock();
+                // In the other cases, the command is sent to engine.
+                if(engine::CHOOSEDRAFTCARD == cID)
+                {
+                    scene->disableButton(0,DRAFTING_WINDOW);
                 }
+                if((engine::DISCARDCARD == cID) || (engine::KEEPCARD == cID))
+                {
+                    scene->disableButton(0,PLANIFICATION_WINDOW);
+                    scene->disableButton(1,PLANIFICATION_WINDOW);
+                }
+                if((engine::ADDRESOURCE == cID) || (engine::SENDRESOURCETOEMPIRE == cID))
+                {
+                    for (int i = 0; 8 > i; i++)
+                    {
+                        scene->disableButton(i, MAIN_WINDOW);
+                    }
+                }
+                // Lock the mutex, send the JSON of the command and unlock the mutex.
+                this->locker.lock();
+                engineOfGame->receiveCommand(jsonCommand);
+                this->locker.unlock();
             }
         }
     }

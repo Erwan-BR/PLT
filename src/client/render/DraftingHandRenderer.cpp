@@ -6,8 +6,12 @@
 #include "../../constants/constants/GameConstants.h"
 #include "../../constants/constants/CustomTypes.h"
 
-namespace render {
-    DraftingHandRenderer::DraftingHandRenderer (std::shared_ptr<state::Player> player, sf::Vector2f position) :
+namespace render
+{
+    /// @brief Full constrcutor of the drafting hand renderer
+    /// @param player Player that is playing.
+    /// @param position Position of the element on the main view.
+    DraftingHandRenderer::DraftingHandRenderer (constants::playerPtr player, sf::Vector2f position) :
         player(player),
         textureBackground(constants::ResourceManager::getTexture("./resources/img/player_draft.png")),
         textureHand(constants::ResourceManager::getTexture("./resources/img/pfp_draft.png")),
@@ -45,11 +49,12 @@ namespace render {
     }
     
     /// @brief update the DraftingHandRenderer with the current state of the game
-    void DraftingHandRenderer::update (long flags){
-        //Get Cards
+    /// @param flags Flags used to knwo what changed on a player. Only DRAFTING_CARDS_CHANGED is relevent here.
+    void DraftingHandRenderer::update (long flags)
+    {
 		constants::deckOfCards cards = player->getDraftingCards();
 		        
-        if(flags & DRAFTING_CARDS_CHANGED)
+        if(DRAFTING_CARDS_CHANGED & flags)
         {
             this->devCardRenderers.clear();
             //Create new Cards
@@ -62,6 +67,8 @@ namespace render {
         }
     }
 
+    /// @brief Draw the drafting hand on the main window.
+    /// @param window Window where the hand is displayed.
     void DraftingHandRenderer::draw(sf::RenderWindow& window)
     {
         window.draw(this->spriteBackground);
@@ -74,6 +81,10 @@ namespace render {
 		}
     }
 
+    /// @brief Handle an event that occurs on this view. Call the method for every card inside.
+    /// @param event Event that may occur (click, key press, ...)
+    /// @param window Window where the event occured.
+    /// @param scene Scene (main view) where the card takes place.
     void DraftingHandRenderer::handleEvent (sf::Event event, sf::RenderWindow& window, Scene* scene)
     {
         for(DevelopmentCardRenderer* c: this->devCardRenderers)

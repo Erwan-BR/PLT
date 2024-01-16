@@ -7,22 +7,20 @@ namespace render
 {
     /// @brief Constructor of the card renderer.
     /// @param card Card to render.
-    DevelopmentCardRenderer::DevelopmentCardRenderer (std::shared_ptr<state::DevelopmentCard> card,sf::Vector2f position,float scale) :
-        card(card)
+    /// @param position Position of the card that is displayed.
+    /// @param scale Float that represent how to scale the card in the view.
+    DevelopmentCardRenderer::DevelopmentCardRenderer (std::shared_ptr<state::DevelopmentCard> card, sf::Vector2f position, float scale) :
+        card(card),
+        texture(constants::ResourceManager::getTexture(this->card->getRelativePathToTexture())),
+        paidTexture(constants::ResourceManager::getTexture("./resources/img/resourcesPaid.png")),
+        notPaidTexture(constants::ResourceManager::getTexture("./resources/img/resourcesNotPaid.png"))
     {
-        //Get the Texture form Card
-        this->texture = constants::ResourceManager::getTexture(this->card->getRelativePathToTexture());
-
         //Generate Sprite
         this->sprite.setTexture(this->texture);
         this->sprite.setPosition(position);
         this->sprite.setScale(scale,scale);
 
         this->hitbox = this->sprite.getGlobalBounds();
-
-        // Creating textures for paid and not paid resources.
-		this->paidTexture = constants::ResourceManager::getTexture("./resources/img/resourcesPaid.png");
-		this->notPaidTexture = constants::ResourceManager::getTexture("./resources/img/resourcesNotPaid.png");
 
         //Get number of crosses (ie number of resources to build)
         size_t numberOfSprites = this->card->getCostToBuild().size();
@@ -45,6 +43,7 @@ namespace render
     }
 
     /// @brief Update the render of the Renderer of Card.
+    /// @param flags Flags that indicate what should be updated. Not relevent here, but for other observer it is.
     void DevelopmentCardRenderer::update (long flags)
     {
         // Retrieve the elements to pay.
@@ -62,13 +61,18 @@ namespace render
 
     /// @brief Draw the card on the screen
     /// @param window Window were the card has to be displayed.
-    void DevelopmentCardRenderer::draw(sf::RenderWindow& window){
+    void DevelopmentCardRenderer::draw(sf::RenderWindow& window)
+    {
         window.draw(this->sprite);
         for(int i=0;i<(int) this->vectorOfCrossesSprite.size();i++){
             window.draw(this->vectorOfCrossesSprite[i]);
         }
     }
 
+    /// @brief Handle an event on the card. Allows to check if the card has been clicked by the player.
+    /// @param event Event that may occur (click, key press, ...)
+    /// @param window Window where the event occured.
+    /// @param scene Scene (main view) where the card takes place.
     void DevelopmentCardRenderer::handleEvent (sf::Event event, sf::RenderWindow& window, Scene* scene)
     {
         // Check if the button is enabled, and pressed with a left click
