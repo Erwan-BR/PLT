@@ -1,4 +1,3 @@
-
 set(lib_shared_target shared_static)
 
 # Generate header files from dia UML files
@@ -18,6 +17,6 @@ target_include_directories(${lib_shared_target} PUBLIC
   )
 
 # Link against the constants_interface library
-target_link_libraries(${lib_shared_target} PUBLIC constants_interface)
+target_link_libraries(${lib_shared_target} PUBLIC constants_library)
 
 # vim: set sw=2 sts=2 et:
