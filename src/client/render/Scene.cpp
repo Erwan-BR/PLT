@@ -76,7 +76,7 @@ namespace render {
                 this->btnMain.push_back(button);
             }
 
-            // Buttons to convert a ressource into another one.
+            // Buttons to convert a krystallium into another resource.
             for (size_t index = 0; coordinatesButtonsConvert.size() > index; index++)
             {
                 command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE, this->playerIndex, resourcesType[index]));
@@ -107,8 +107,8 @@ namespace render {
             // Buttons to switch the small view at the top of the main window.
             for(size_t i = 1; game->getPlayers().size() > i; i++)
             {
-                command = constants::commandPtr(new engine::Command((engine::CommandID) -1,this->playerIndex));
-                button = constants::buttonPtr(new Button({300.f,60.f*i},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker));
+                command = constants::commandPtr(new engine::Command((engine::CommandID) -1, i));
+                button = constants::buttonPtr(new Button({300.f,60.f*i},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(), sf::Color(215,47,215), command, this->locker));
                 this->btnMain.push_back(button);
             }
 
@@ -128,7 +128,7 @@ namespace render {
 
             for(size_t i = 0; game->getPlayers().size() > i; i++)
             {
-                command = constants::commandPtr(new engine::Command((engine::CommandID) -1,i));
+                command = constants::commandPtr(new engine::Command((engine::CommandID) -1, i));
                 button = constants::buttonPtr(new Button({550.f+220.f*i, 50.f}, {200.f, 50.f}, "Switch to : " + game->getPlayers()[i]->getName(), sf::Color(215,47,215), command, this->locker));
                 this->btnFull.push_back(button);
             }
