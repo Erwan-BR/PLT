@@ -294,7 +294,7 @@ namespace render {
     /// @brief Handle the event of clicking on a button, on a given window.
     /// @param event Event that represent what happend (click, key pressed, ...)
     /// @param window Window where the scene belongs to.
-    void Scene::buttonHandle(sf::Event event,sf::RenderWindow& window)
+    void Scene::buttonHandle(sf::Event event, sf::RenderWindow& window)
     {
         switch (this->current_window)
         {
@@ -302,9 +302,9 @@ namespace render {
             {
                 for(constants::buttonPtr btn: this->btnMain)
                 {
-                    btn->handleEvent(event,window, this->engineOfGame, this);
+                    btn->handleEvent(event, window, this->engineOfGame, this);
                 }
-                this->player_renderer[0]->handleEvent(event,window,this);
+                this->player_renderer[0]->handleEvent(event, window, this);
                 break;
             }
                 
@@ -312,9 +312,9 @@ namespace render {
             {
                 for(constants::buttonPtr btn: this->btnDraft)
                 {
-                    btn->handleEvent(event,window, this->engineOfGame, this);
+                    btn->handleEvent(event, window, this->engineOfGame, this);
                 }
-                this->drafting_hand_renderer->handleEvent(event,window,this);
+                this->drafting_hand_renderer->handleEvent(event, window, this);
                 break;
             }
                 
@@ -322,9 +322,9 @@ namespace render {
             {
                 for(constants::buttonPtr btn: this->btnPlan)
                 {
-                    btn->handleEvent(event,window, this->engineOfGame, this);
+                    btn->handleEvent(event, window, this->engineOfGame, this);
                 }
-                this->player_renderer[3]->handleEvent(event,window,this);
+                this->player_renderer[3]->handleEvent(event, window, this);
                 break;
             }
                 
@@ -332,7 +332,7 @@ namespace render {
             {
                 for(constants::buttonPtr btn: this->btnFull)
                 {
-                    btn->handleEvent(event,window, this->engineOfGame, this);
+                    btn->handleEvent(event, window, this->engineOfGame, this);
                 }
                 break;
             }
@@ -353,97 +353,85 @@ namespace render {
         {
             case MAIN_WINDOW:
             {
-                auto cards = p->getToBuildCards();
-                for(size_t i = 0; cards.size() > i; i++)
-                {
-                    if(cards[i] == card)
-                    {
-                        std::vector<state::ResourceType> resourceType = {state::MATERIAL, state::ENERGY, state::SCIENCE, state::GOLD, state::EXPLORATION, state::KRYSTALLIUM, state::COLONEL, state::FINANCIER};
+                constants::deckOfCards cards = p->getToBuildCards();
+                std::vector<state::ResourceType> resourceType = {state::MATERIAL, state::ENERGY, state::SCIENCE, state::GOLD, state::EXPLORATION, state::KRYSTALLIUM, state::COLONEL, state::FINANCIER};
 
-                        // Creating commands for adding resource to a card.
-                        for (size_t index = 0; resourceType.size() > index; index++)
-                        {
-                            constants::commandPtr command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,resourceType[index]));
-                            this->btnMain[index]->changeCommand(command);
-                            this->btnMain[index]->setEnabled(true);
-                        }
-                        return ;
+                auto iterator = std::find(cards.begin(), cards.end(), card);
+                
+                // if the card is found, it means that the player choosed a developmentCard. He want to add a resource on it.
+                if (iterator != cards.end())
+                {
+                    int indexOfCard = iterator - cards.begin();
+                    // Creating commands for adding resource to a card.
+                    for (size_t index = 0; resourceType.size() > index; index++)
+                    {
+                        constants::commandPtr command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE, 0, indexOfCard, resourceType[index]));
+                        this->btnMain[index]->changeCommand(command);
+                        this->btnMain[index]->setEnabled(true);
                     }
                 }
-                // Folowing lines are executed only if the card was not found preivously.
-                constants::commandPtr command;
-                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL));
-                this->btnMain[0]->changeCommand(command);
-                this->btnMain[0]->setEnabled(true);
-                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL));
-                this->btnMain[1]->changeCommand(command);
-                this->btnMain[0]->setEnabled(true);
-                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::SCIENCE));
-                this->btnMain[2]->changeCommand(command);
-                this->btnMain[0]->setEnabled(true);
-                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::GOLD));
-                this->btnMain[3]->changeCommand(command);
-                this->btnMain[0]->setEnabled(true);
-                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::EXPLORATION));
-                this->btnMain[4]->changeCommand(command);
-                this->btnMain[0]->setEnabled(true);
-                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::KRYSTALLIUM));
-                this->btnMain[5]->changeCommand(command);
-                this->btnMain[0]->setEnabled(true);
-                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::COLONEL));
-                this->btnMain[6]->changeCommand(command);
-                this->btnMain[0]->setEnabled(true);
-                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::FINANCIER));
-                this->btnMain[7]->changeCommand(command);
-                this->btnMain[0]->setEnabled(true);
-            
+                // If the card is not found, it means that the player clicked on the empire. He wants to send a resource on the empire.
+                else
+                {
+                    // Creating commands for sending a resource to the empire.
+                    for (size_t index = 0; resourceType.size() > index; index++)
+                    {
+                        constants::commandPtr command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE, 0, resourceType[index]));
+                        this->btnMain[index]->changeCommand(command);
+                        this->btnMain[index]->setEnabled(true);
+                    }
+                }
                 break;
             }
             case DRAFTING_WINDOW:
             {
                 auto cards = p->getDraftingCards();
-                for(size_t i = 0; cards.size() > i; i++)
+                auto iterator = std::find(cards.begin(), cards.end(), card);
+                // Checking if the iterator is found on the drafting cards to activate the 'CONFIRM' buton.
+                if (iterator != cards.end())
                 {
-                    if(cards[i] == card)
-                    {
-                        constants::commandPtr command;
-                        command = constants::commandPtr(new engine::Command(engine::CHOOSEDRAFTCARD,0,i));
-                        this->btnDraft[0]->changeCommand(command);
-                        this->btnDraft[0]->setEnabled(true);
-                    }
+                    int indexOfCard = iterator - cards.begin();
+                    // Creating commands for choosing the card to draft
+                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::CHOOSEDRAFTCARD, 0, indexOfCard));
+                    this->btnDraft[0]->changeCommand(command);
+                    this->btnDraft[0]->setEnabled(true);
+                    
                 }
                 break;
             }
             case PLANIFICATION_WINDOW:
             {
                 auto cards = p->getDraftCards();
-                for(size_t i = 0; cards.size() > i; i++)
+                auto iterator = std::find(cards.begin(), cards.end(), card);
+                // Checking if the iterator is found on the drafting cards to activate the 'keep card' and 'discard card butons.
+                if (iterator != cards.end())
                 {
-                    if(cards[i] == card)
-                    {
-                        constants::commandPtr command;
-                        command = constants::commandPtr(new engine::Command(engine::KEEPCARD,0,i,true));
-                        this->btnPlan[0]->changeCommand(command);
-                        this->btnPlan[0]->setEnabled(true);
-                        command = constants::commandPtr(new engine::Command(engine::DISCARDCARD,0,i,true));
-                        this->btnPlan[1]->changeCommand(command);
-                        this->btnPlan[1]->setEnabled(true);
-                    }
+                    int indexOfCard = iterator - cards.begin();
+                    
+                    // Creating the keep card command
+                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::KEEPCARD, 0, indexOfCard,true));
+                    this->btnPlan[0]->changeCommand(command);
+                    this->btnPlan[0]->setEnabled(true);
+                    
+                    // Creating the discard card command
+                    command = constants::commandPtr(new engine::Command(engine::DISCARDCARD, 0, indexOfCard, true));
+                    this->btnPlan[1]->changeCommand(command);
+                    this->btnPlan[1]->setEnabled(true);
+                    return ;
                 }
-
+                // If the card was not found, let's check if it's inside the toBuildCard (cards choosed previously).
                 cards = p->getToBuildCards();
-                for(size_t i = 0; cards.size() > i ; i++)
+                iterator = std::find(cards.begin(), cards.end(), card);
+                if (iterator != cards.end())
                 {
-                    if(cards[i] == card)
-                    {
-                        constants::commandPtr command;
-                        this->btnPlan[0]->setEnabled(false);
-                        command = constants::commandPtr(new engine::Command(engine::DISCARDCARD,0,i,false));
-                        this->btnPlan[1]->changeCommand(command);
-                        this->btnPlan[1]->setEnabled(true);
-                    }
+                    int indexOfCard = iterator - cards.begin();
+
+                    // We can disable the button 'keep' because the card can only be discarded.
+                    this->btnPlan[0]->setEnabled(false);
+                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::DISCARDCARD, 0, indexOfCard, false));
+                    this->btnPlan[1]->changeCommand(command);
+                    this->btnPlan[1]->setEnabled(true);
                 }
-            
                 break;
             }
             default:
