@@ -1,6 +1,7 @@
 #include "GameRenderer.h"
 
 #include "../../constants/constants/GameObserversNotification.h"
+#include "../../constants/constants/GameConstants.h"
 
 namespace render
 {
@@ -17,52 +18,40 @@ namespace render
         this->font.loadFromFile("./resources/font/arial.ttf");
 
         //Generate the Board Part for MATERIAL
-        this->boardMaterialTexture= std::make_shared<sf::Texture>();
-		this->boardMaterialTexture->loadFromFile("./resources/img/board_material.png");
-		this->boardMaterialSprite = std::make_shared<sf::Sprite>();
-		this->boardMaterialSprite->setTexture(*(this->boardMaterialTexture));
-        this->boardMaterialSprite->setPosition(position+sf::Vector2f({400.f,500.f}));
-        this->boardMaterialSprite->setScale({0.2f,0.2f});
+        this->boardMaterialTexture = constants::ResourceManager::getTexture("./resources/img/board_material.png");
+		this->boardMaterialSprite.setTexture(this->boardMaterialTexture);
+        this->boardMaterialSprite.setPosition(position+sf::Vector2f({400.f,500.f}));
+        this->boardMaterialSprite.setScale({0.2f,0.2f});
 
         //Generate the Board Part for ENERGY
-        this->boardEnergyTexture= std::make_shared<sf::Texture>();
-		this->boardEnergyTexture->loadFromFile("./resources/img/board_energy.png");
-		this->boardEnergySprite = std::make_shared<sf::Sprite>();
-		this->boardEnergySprite->setTexture(*(this->boardEnergyTexture));
-        this->boardEnergySprite->setPosition(position+sf::Vector2f({620.f,500.f}));
-        this->boardEnergySprite->setScale({0.2f,0.2f});
-        
-        //Generate the Board Part for GOLD
-        this->boardGoldTexture= std::make_shared<sf::Texture>();
-		this->boardGoldTexture->loadFromFile("./resources/img/board_gold.png");
-		this->boardGoldSprite = std::make_shared<sf::Sprite>();
-		this->boardGoldSprite->setTexture(*(this->boardGoldTexture));
-        this->boardGoldSprite->setPosition(position+sf::Vector2f({1060.f,500.f}));
-        this->boardGoldSprite->setScale({0.2f,0.2f});
+        this->boardEnergyTexture = constants::ResourceManager::getTexture("./resources/img/board_energy.png");
+		this->boardEnergySprite.setTexture(this->boardEnergyTexture);
+        this->boardEnergySprite.setPosition(position+sf::Vector2f({620.f,500.f}));
+        this->boardEnergySprite.setScale({0.2f,0.2f});
 
         //Generate the Board Part for Science
-        this->boardScienceTexture= std::make_shared<sf::Texture>();
-		this->boardScienceTexture->loadFromFile("./resources/img/board_science.png");
-		this->boardScienceSprite = std::make_shared<sf::Sprite>();
-		this->boardScienceSprite->setTexture(*(this->boardScienceTexture));
-        this->boardScienceSprite->setPosition(position+sf::Vector2f({840.f,500.f}));
-        this->boardScienceSprite->setScale({0.2f,0.2f});
+		this->boardScienceTexture = constants::ResourceManager::getTexture("./resources/img/board_science.png");
+		this->boardScienceSprite.setTexture(this->boardScienceTexture);
+        this->boardScienceSprite.setPosition(position+sf::Vector2f({840.f,500.f}));
+        this->boardScienceSprite.setScale({0.2f,0.2f});
+        
+        //Generate the Board Part for GOLD
+		this->boardGoldTexture = constants::ResourceManager::getTexture("./resources/img/board_gold.png");
+		this->boardGoldSprite.setTexture(this->boardGoldTexture);
+        this->boardGoldSprite.setPosition(position+sf::Vector2f({1060.f,500.f}));
+        this->boardGoldSprite.setScale({0.2f,0.2f});
 
         //Generate the Board Part for EXPLORATION
-        this->boardExplorationTexture= std::make_shared<sf::Texture>();
-		this->boardExplorationTexture->loadFromFile("./resources/img/board_exploration.png");
-		this->boardExplorationSprite = std::make_shared<sf::Sprite>();
-		this->boardExplorationSprite->setTexture(*(this->boardExplorationTexture));
-        this->boardExplorationSprite->setPosition(position+sf::Vector2f({1280.f,500.f}));
-        this->boardExplorationSprite->setScale({0.2f,0.2f});
+		this->boardExplorationTexture = constants::ResourceManager::getTexture("./resources/img/board_exploration.png");
+		this->boardExplorationSprite.setTexture(this->boardExplorationTexture);
+        this->boardExplorationSprite.setPosition(position+sf::Vector2f({1280.f,500.f}));
+        this->boardExplorationSprite.setScale({0.2f,0.2f});
 
         //Generate the Turn Token
-        this->boardTurnTexture= std::make_shared<sf::Texture>();
-		this->boardTurnTexture->loadFromFile("./resources/img/turn_1.png");
-		this->boardTurnSprite = std::make_shared<sf::Sprite>();
-		this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
-        this->boardTurnSprite->setPosition(position+sf::Vector2f({900.f,400.f}));
-        this->boardTurnSprite->setScale({0.2f,0.2f});
+		this->boardTurnTexture = constants::ResourceManager::getTexture("./resources/img/turn_1.png");
+		this->boardTurnSprite.setTexture(this->boardTurnTexture);
+        this->boardTurnSprite.setPosition(position+sf::Vector2f({900.f,400.f}));
+        this->boardTurnSprite.setScale({0.2f,0.2f});
 
         //Generate the text for Phase
         this->phaseIndicator = new sf::Text();
@@ -84,20 +73,21 @@ namespace render
         if(GAME_TURN_CHANGED & flags){
             //Update the turn token
             int turn = this->game->getTurn();
-            if (turn < 5){
-                this->boardTurnTexture->loadFromFile("./resources/img/turn_"+std::to_string(turn)+".png");
-                this->boardTurnSprite->setTexture(*(this->boardTurnTexture));
+            if (NUMBER_OF_TURN + 1 > turn)
+            {
+                this->boardTurnTexture = constants::ResourceManager::getTexture("./resources/img/turn_" + std::to_string(turn) + ".png");;
+                this->boardTurnSprite.setTexture(this->boardTurnTexture);
             }
         }
         
-        if((GAME_PHASE_CHANGED & flags) || (GAME_RESOURCE_PRODUCING_CHANGED & flags)){
+        if((GAME_PHASE_CHANGED & flags) || (GAME_RESOURCE_PRODUCING_CHANGED & flags))
+        {
             //Reset the Board of Resources
-            this->boardMaterialSprite->setColor(sf::Color::White);
-            this->boardEnergySprite->setColor(sf::Color::White);
-            this->boardScienceSprite->setColor(sf::Color::White);
-            this->boardGoldSprite->setColor(sf::Color::White);
-            this->boardExplorationSprite->setColor(sf::Color::White);
-
+            this->boardMaterialSprite.setColor(sf::Color::White);
+            this->boardEnergySprite.setColor(sf::Color::White);
+            this->boardScienceSprite.setColor(sf::Color::White);
+            this->boardGoldSprite.setColor(sf::Color::White);
+            this->boardExplorationSprite.setColor(sf::Color::White);
 
             switch (this->game->getPhase()){
                 case state::DRAFT:
@@ -113,28 +103,28 @@ namespace render
                     this->phaseIndicator->setString("PRODUCTION");
                     
                     //Make the Board of Resources darker
-                    this->boardMaterialSprite->setColor(sf::Color(127,127,127));
-                    this->boardEnergySprite->setColor(sf::Color(127,127,127));
-                    this->boardScienceSprite->setColor(sf::Color(127,127,127));
-                    this->boardGoldSprite->setColor(sf::Color(127,127,127));
-                    this->boardExplorationSprite->setColor(sf::Color(127,127,127));
+                    this->boardMaterialSprite.setColor(sf::Color(127,127,127));
+                    this->boardEnergySprite.setColor(sf::Color(127,127,127));
+                    this->boardScienceSprite.setColor(sf::Color(127,127,127));
+                    this->boardGoldSprite.setColor(sf::Color(127,127,127));
+                    this->boardExplorationSprite.setColor(sf::Color(127,127,127));
 
                     //Only ligth up the board of the currently produced resource
                     switch (this->game->getResourceProducing()){
                         case state::MATERIAL:
-                            this->boardMaterialSprite->setColor(sf::Color::White);
+                            this->boardMaterialSprite.setColor(sf::Color::White);
                             break;
                         case state::ENERGY:
-                            this->boardEnergySprite->setColor(sf::Color::White);
+                            this->boardEnergySprite.setColor(sf::Color::White);
                             break;
                         case state::SCIENCE:
-                            this->boardScienceSprite->setColor(sf::Color::White);
+                            this->boardScienceSprite.setColor(sf::Color::White);
                             break;
                         case state::GOLD:
-                            this->boardGoldSprite->setColor(sf::Color::White);
+                            this->boardGoldSprite.setColor(sf::Color::White);
                             break;
                         case state::EXPLORATION:
-                            this->boardExplorationSprite->setColor(sf::Color::White);
+                            this->boardExplorationSprite.setColor(sf::Color::White);
                             break;
                         default:
                             break;
@@ -148,13 +138,14 @@ namespace render
         }
     }
 
-    void GameRenderer::draw(sf::RenderWindow& window){
-        window.draw(*this->boardMaterialSprite);
-        window.draw(*this->boardEnergySprite);
-        window.draw(*this->boardScienceSprite);
-        window.draw(*this->boardGoldSprite);
-        window.draw(*this->boardExplorationSprite);
-        window.draw(*this->boardTurnSprite);
+    void GameRenderer::draw(sf::RenderWindow& window)
+    {
+        window.draw(this->boardMaterialSprite);
+        window.draw(this->boardEnergySprite);
+        window.draw(this->boardScienceSprite);
+        window.draw(this->boardGoldSprite);
+        window.draw(this->boardExplorationSprite);
+        window.draw(this->boardTurnSprite);
         window.draw(*this->phaseIndicator);
     }
 }

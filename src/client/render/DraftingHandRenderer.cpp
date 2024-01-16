@@ -7,45 +7,27 @@
 #include "../../constants/constants/CustomTypes.h"
 
 namespace render {
-    DraftingHandRenderer::DraftingHandRenderer (std::shared_ptr<state::Player> player, sf::Vector2f position){
+    DraftingHandRenderer::DraftingHandRenderer (std::shared_ptr<state::Player> player, sf::Vector2f position) :
+        player(player),
+        textureBackground(constants::ResourceManager::getTexture("./resources/img/player_draft.png")),
+        textureHand(constants::ResourceManager::getTexture("./resources/img/pfp_draft.png")),
+        devCardRenderers({})
+    {
 		//Creation of the Font for the Texts
 		sf::Font f;
 		f.loadFromFile("./resources/font/arial.ttf");
 		this->font = f;
 
-        //Store Player attribute
-		this->player = player;
-
         //Get cards
         constants::deckOfCards cards = player->getDraftingCards();
 
-        //Initialize the vectors
-		this->sprites = {};
-		this->devCardRenderers = {};
-		this->texts = {};
-
-		sf::Texture* texture;
-		sf::Sprite* sprite;
-		sf::Text* text;
-		
-
         //Enter Player board (position 0 in sprites)
-        texture = new sf::Texture();
-        texture->loadFromFile("./resources/img/player_draft.png");
-        this->textures.push_back(texture);					//Texture
-        sprite= new sf::Sprite();
-        sprite->setTexture(*(this->textures[0]));
-        sprite->setPosition(position);
-        this->sprites.push_back(sprite);					//Sprite
+        this->spriteBackground.setTexture(this->textureBackground);
+        this->spriteBackground.setPosition(position);
 
         //Enter Player Profile Picture (position 1 in sprites)
-        texture = new sf::Texture();
-        texture->loadFromFile("./resources/img/pfp_draft.png");
-        this->textures.push_back(texture);					//Texture
-        sprite= new sf::Sprite();
-        sprite->setTexture(*(this->textures[1]));
-        sprite->setPosition(position+sf::Vector2f({10.f,50.f}));
-        this->sprites.push_back(sprite);					//Sprite
+        this->spriteHand.setTexture(this->textureHand);
+        this->spriteHand.setPosition(position + sf::Vector2f({10.f,50.f}));
 
         //Enter Cards (position 2 to 9 in sprites)
         for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (cards.size() > i); i++)
@@ -55,13 +37,11 @@ namespace render {
         }
 
         //Enter Player Name (position 0 in texts)
-        text = new sf::Text();
-        text->setFont(font);
-        text->setString("Drafting Hand");
-        text->setCharacterSize(30);
-        text->setFillColor(sf::Color::White);
-        text->setPosition(position+sf::Vector2f({10.f,10.f}));
-        this->texts.push_back(text);			//Text
+        this->text.setFont(font);
+        this->text.setString("Drafting Hand");
+        this->text.setCharacterSize(30);
+        this->text.setFillColor(sf::Color::White);
+        this->text.setPosition(position+sf::Vector2f({10.f,10.f}));
     }
     
     /// @brief update the DraftingHandRenderer with the current state of the game
@@ -69,32 +49,35 @@ namespace render {
         //Get Cards
 		constants::deckOfCards cards = player->getDraftingCards();
 		        
-        if(flags & DRAFTING_CARDS_CHANGED){
-            this->devCardRenderers = {};
+        if(flags & DRAFTING_CARDS_CHANGED)
+        {
+            this->devCardRenderers.clear();
             //Create new Cards
             for (size_t i = 0; (NUMBER_OF_CARDS_DRAFTED > i) && (cards.size() > i); i++)
             {
-                DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i],sprites[0]->getPosition()+sf::Vector2f(300.f+120.f*(i),0.f),170.f/375.f);
+                DevelopmentCardRenderer* cRenderer = new DevelopmentCardRenderer(cards[i], this->spriteBackground.getPosition() + sf::Vector2f(300.f+120.f*(i),0.f), 170.f/375.f);
                 this->devCardRenderers.push_back(cRenderer);	//Card Renderer
                 cRenderer->update(flags);
             }
         }
     }
 
-    void DraftingHandRenderer::draw(sf::RenderWindow& window){
-        for(size_t i = 0; this->sprites.size() > i; i++){
-			window.draw(*(this->sprites[i]));
-		}
-		for(size_t i = 0; this->texts.size() > i; i++){
-			window.draw(*(this->texts[i]));
-		}
-		for(DevelopmentCardRenderer* cRenderer: this->devCardRenderers){
+    void DraftingHandRenderer::draw(sf::RenderWindow& window)
+    {
+        window.draw(this->spriteBackground);
+        window.draw(this->spriteHand);
+        window.draw(this->text);
+
+		for(DevelopmentCardRenderer* cRenderer: this->devCardRenderers)
+        {
 			cRenderer->draw(window);
 		}
     }
 
-    void DraftingHandRenderer::handleEvent (sf::Event event, sf::RenderWindow& window, Scene* scene){
-        for(DevelopmentCardRenderer* c: this->devCardRenderers){
+    void DraftingHandRenderer::handleEvent (sf::Event event, sf::RenderWindow& window, Scene* scene)
+    {
+        for(DevelopmentCardRenderer* c: this->devCardRenderers)
+        {
 			c->handleEvent(event,window,scene);
 		}
     }
