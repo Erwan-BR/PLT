@@ -354,67 +354,48 @@ namespace render {
             case MAIN_WINDOW:
             {
                 auto cards = p->getToBuildCards();
-                constants::commandPtr command;
-                bool skip =false;
                 for(size_t i = 0; cards.size() > i; i++)
                 {
                     if(cards[i] == card)
                     {
-                        constants::commandPtr command;
-                        command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,state::MATERIAL));
-                        this->btnMain[0]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                        command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,state::ENERGY));
-                        this->btnMain[1]->changeCommand(command);
-                        this->btnMain[1]->setEnabled(true);
-                        command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,state::SCIENCE));
-                        this->btnMain[2]->changeCommand(command);
-                        this->btnMain[2]->setEnabled(true);
-                        command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,state::GOLD));
-                        this->btnMain[3]->changeCommand(command);
-                        this->btnMain[3]->setEnabled(true);
-                        command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,state::EXPLORATION));
-                        this->btnMain[4]->changeCommand(command);
-                        this->btnMain[4]->setEnabled(true);
-                        command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,state::KRYSTALLIUM));
-                        this->btnMain[5]->changeCommand(command);
-                        this->btnMain[5]->setEnabled(true);
-                        command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,state::COLONEL));
-                        this->btnMain[6]->changeCommand(command);
-                        this->btnMain[6]->setEnabled(true);
-                        command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,state::FINANCIER));
-                        this->btnMain[7]->changeCommand(command);
-                        this->btnMain[7]->setEnabled(true);
-                        skip = true;
+                        std::vector<state::ResourceType> resourceType = {state::MATERIAL, state::ENERGY, state::SCIENCE, state::GOLD, state::EXPLORATION, state::KRYSTALLIUM, state::COLONEL, state::FINANCIER};
+
+                        // Creating commands for adding resource to a card.
+                        for (size_t index = 0; resourceType.size() > index; index++)
+                        {
+                            constants::commandPtr command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE,0,i,resourceType[index]));
+                            this->btnMain[index]->changeCommand(command);
+                            this->btnMain[index]->setEnabled(true);
+                        }
+                        return ;
                     }
                 }
-                if(! skip)
-                {
-                    command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL));
-                    this->btnMain[0]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                    command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL));
-                    this->btnMain[1]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                    command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::SCIENCE));
-                    this->btnMain[2]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                    command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::GOLD));
-                    this->btnMain[3]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                    command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::EXPLORATION));
-                    this->btnMain[4]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                    command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::KRYSTALLIUM));
-                    this->btnMain[5]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                    command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::COLONEL));
-                    this->btnMain[6]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                    command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::FINANCIER));
-                    this->btnMain[7]->changeCommand(command);
-                        this->btnMain[0]->setEnabled(true);
-                }
+                // Folowing lines are executed only if the card was not found preivously.
+                constants::commandPtr command;
+                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL));
+                this->btnMain[0]->changeCommand(command);
+                this->btnMain[0]->setEnabled(true);
+                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::MATERIAL));
+                this->btnMain[1]->changeCommand(command);
+                this->btnMain[0]->setEnabled(true);
+                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::SCIENCE));
+                this->btnMain[2]->changeCommand(command);
+                this->btnMain[0]->setEnabled(true);
+                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::GOLD));
+                this->btnMain[3]->changeCommand(command);
+                this->btnMain[0]->setEnabled(true);
+                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::EXPLORATION));
+                this->btnMain[4]->changeCommand(command);
+                this->btnMain[0]->setEnabled(true);
+                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::KRYSTALLIUM));
+                this->btnMain[5]->changeCommand(command);
+                this->btnMain[0]->setEnabled(true);
+                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::COLONEL));
+                this->btnMain[6]->changeCommand(command);
+                this->btnMain[0]->setEnabled(true);
+                command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE,0,state::FINANCIER));
+                this->btnMain[7]->changeCommand(command);
+                this->btnMain[0]->setEnabled(true);
             
                 break;
             }
