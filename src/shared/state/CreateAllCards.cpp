@@ -140,6 +140,7 @@ namespace state
         firstResourceToProduceAFRICA->type = ResourceType::MATERIAL;
         firstResourceToProduceAFRICA->quantity = 2;
         firstResourceToProduceAFRICA->cardType = CardType::NONETYPE;
+        
         constants::resourceProdPtr secondResourceToProduceAFRICA = std::make_shared<ResourceToProduce>();
         secondResourceToProduceAFRICA->type = ResourceType::SCIENCE;
         secondResourceToProduceAFRICA->quantity = 2;
@@ -169,6 +170,7 @@ namespace state
         firstResourceToProduceASIA->type = ResourceType::MATERIAL;
         firstResourceToProduceASIA->quantity = 1;
         firstResourceToProduceASIA->cardType = CardType::NONETYPE;
+
         constants::resourceProdPtr secondResourceToProduceASIA = std::make_shared<ResourceToProduce>();
         secondResourceToProduceASIA->type = ResourceType::GOLD;
         secondResourceToProduceASIA->quantity = 2;
@@ -198,6 +200,7 @@ namespace state
         firstResourceToProduceAZTEC->type = ResourceType::ENERGY;
         firstResourceToProduceAZTEC->quantity = 2;
         firstResourceToProduceAZTEC->cardType = CardType::NONETYPE;
+
         constants::resourceProdPtr secondResourceToProduceAZTEC = std::make_shared<ResourceToProduce>();
         secondResourceToProduceAZTEC->type = ResourceType::EXPLORATION;
         secondResourceToProduceAZTEC->quantity = 1;
@@ -227,14 +230,16 @@ namespace state
         firstResourceToProduceEUROPE->type = ResourceType::MATERIAL;
         firstResourceToProduceEUROPE->quantity = 2;
         firstResourceToProduceEUROPE->cardType = CardType::NONETYPE;
+
         constants::resourceProdPtr secondResourceToProduceEUROPE = std::make_shared<ResourceToProduce>();
         secondResourceToProduceEUROPE->type = ResourceType::ENERGY;
         secondResourceToProduceEUROPE->quantity = 1;
         secondResourceToProduceEUROPE->cardType = CardType::NONETYPE;
+
         constants::resourceProdPtr thirdResourceToProduceEUROPE = std::make_shared<ResourceToProduce>();
-        secondResourceToProduceEUROPE->type = ResourceType::SCIENCE;
-        secondResourceToProduceEUROPE->quantity = 1;
-        secondResourceToProduceEUROPE->cardType = CardType::NONETYPE;
+        thirdResourceToProduceEUROPE->type = ResourceType::SCIENCE;
+        thirdResourceToProduceEUROPE->quantity = 1;
+        thirdResourceToProduceEUROPE->cardType = CardType::NONETYPE;
         constants::resourceProdList productionGainEUROPE = {firstResourceToProduceEUROPE, secondResourceToProduceEUROPE, thirdResourceToProduceEUROPE};
         
         std::string europe_FaceA = "./resources/img/Cards/Empire_Face_A/Europa.png";
@@ -260,6 +265,7 @@ namespace state
         firstResourceToProduceNORAM->type = ResourceType::MATERIAL;
         firstResourceToProduceNORAM->quantity = 3;
         firstResourceToProduceNORAM->cardType = CardType::NONETYPE;
+
         constants::resourceProdPtr secondResourceToProduceNORAM = std::make_shared<ResourceToProduce>();
         secondResourceToProduceNORAM->type = ResourceType::GOLD;
         secondResourceToProduceNORAM->quantity = 1;
@@ -286,10 +292,12 @@ namespace state
         firstResourceToProduce->type = ResourceType::MATERIAL;
         firstResourceToProduce->quantity = 2;
         firstResourceToProduce->cardType = CardType::NONETYPE;
+
         constants::resourceProdPtr secondResourceToProduce = std::make_shared<ResourceToProduce>();
         secondResourceToProduce->type = ResourceType::ENERGY;
         secondResourceToProduce->quantity = 1;
         secondResourceToProduce->cardType = CardType::NONETYPE;
+
         constants::resourceProdPtr thirdResourceToProduce = std::make_shared<ResourceToProduce>();
         thirdResourceToProduce->type = ResourceType::SCIENCE;
         thirdResourceToProduce->quantity = 1;
