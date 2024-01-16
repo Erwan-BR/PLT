@@ -983,7 +983,7 @@ gen_namespace(batch *b, declaration *nsd) {
         }
 
         char* comment = d->u.this_class->key->comment;
-        if(*comment != NULL) {
+        if(NULL != comment && '\0' != *comment) {
             print("%s\n", comment);
             print("\n");
         }
