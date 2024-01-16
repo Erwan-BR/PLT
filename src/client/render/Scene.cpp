@@ -80,7 +80,7 @@ namespace render {
             for (size_t index = 0; coordinatesButtonsConvert.size() > index; index++)
             {
                 command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE, this->playerIndex, resourcesType[index]));
-                button = constants::buttonPtr(new Button(coordinatesButtonsConvert[index], sizeOfSmallButtons, "CONVERT\n" + nameOfResources[index] + "\nTO MATERIAL", colorsOfButtons[index], command, this->locker));
+                button = constants::buttonPtr(new Button(coordinatesButtonsConvert[index], sizeOfSmallButtons, "CONVERT\nKRYSTALLIUM\nTO " + nameOfResources[index], colorsOfButtons[index], command, this->locker));
                 this->btnMain.push_back(button);
             }
 
