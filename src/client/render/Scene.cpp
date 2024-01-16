@@ -21,24 +21,22 @@ namespace render {
         this->background.setTexture(this->background_texture);
 
         PlayerRenderer* pRenderer;
-        constants::buttonPtr button;
-        constants::commandPtr command;
 
         //Get Players
         constants::playersList players = game->getPlayers();
 
         //Generate PlayerRenderer for MAIN_WINDOW
-        pRenderer = new PlayerRenderer(players[0],{525.f,780.f},MAIN_WINDOW);
+        pRenderer = new PlayerRenderer(players[this->playerIndex],{525.f,780.f},MAIN_WINDOW);
         this->player_renderer.push_back(pRenderer);
         pRenderer = new PlayerRenderer(players[1],{525.f,0.f},MAIN_WINDOW);
         this->player_renderer.push_back(pRenderer);
         
         //Generate PlayerRenderer for PLAYER_INFO
-        pRenderer = new PlayerRenderer(players[0],{0.f,0.f},PLAYER_INFO);
+        pRenderer = new PlayerRenderer(players[this->playerIndex],{0.f,0.f},PLAYER_INFO);
         this->player_renderer.push_back(pRenderer);
 
         //Generate PlayerRenderer for PLANIFICATION_WINDOW
-        pRenderer = new PlayerRenderer(players[0],{0.f,0.f},PLANIFICATION_WINDOW);
+        pRenderer = new PlayerRenderer(players[this->playerIndex],{0.f,0.f},PLANIFICATION_WINDOW);
         this->player_renderer.push_back(pRenderer);
 
         //Generate PlayerRenderer for DRAFTING_WINDOW
@@ -49,7 +47,7 @@ namespace render {
         }
 
         //Generate DraftingHandRenederer
-        this->drafting_hand_renderer = new DraftingHandRenderer(players[0],{0.f,900.f});
+        this->drafting_hand_renderer = new DraftingHandRenderer(players[this->playerIndex],{0.f,900.f});
 
         //Generate GameRenderer
         this->game_renderer = new GameRenderer(game,{0.f,0.f});
@@ -57,75 +55,81 @@ namespace render {
         //Generate Buttons for MAIN_WINDOW only if the Player isn't an AI
         if(this->enableInput)
         {
-            button = constants::buttonPtr(new Button({1650.f,480.f},{100.f,100.f},"MATERIAL",sf::Color(180,180,180),nullptr, this->locker));
-            this->btnMain.push_back(button);
-            button = constants::buttonPtr(new Button({1770.f,480.f},{100.f,100.f},"ENERGY",sf::Color(85,76,68),nullptr, this->locker));
-            this->btnMain.push_back(button);
-            button = constants::buttonPtr(new Button({1650.f,600.f},{100.f,100.f},"SCIENCE",sf::Color::Green,nullptr, this->locker));
-            this->btnMain.push_back(button);
-            button = constants::buttonPtr(new Button({1770.f,600.f},{100.f,100.f},"GOLD",sf::Color::Yellow,nullptr, this->locker));
-            this->btnMain.push_back(button);
-            button = constants::buttonPtr(new Button({1650.f,720.f},{100.f,100.f},"EXPLORATION",sf::Color::Blue,nullptr, this->locker));
-            this->btnMain.push_back(button);
-            button = constants::buttonPtr(new Button({1770.f,720.f},{100.f,100.f},"KRYSTALIUM",sf::Color::Red,nullptr, this->locker));
-            this->btnMain.push_back(button);
-            button = constants::buttonPtr(new Button({1650.f,840.f},{100.f,100.f},"COLONEL",sf::Color::Red,nullptr, this->locker));
-            this->btnMain.push_back(button);
-            button = constants::buttonPtr(new Button({1770.f,840.f},{100.f,100.f},"FINANCIER",sf::Color::Cyan,nullptr, this->locker));
+            constants::buttonPtr button;
+            constants::commandPtr command;
+
+            sf::Vector2f sizeOfSmallButtons = {100.f,100.f};
+            sf::Vector2f sizeOfBigButtons = {220.f,100.f};
+
+            // Create vector for buttons
+            const std::vector<std::string> nameOfResources                   = {"MATERIAL", "ENERGY", "SCIENCE", "GOLD", "EXPLORATION", "KRYSTALLIUM", "COLONEL", "FINANCIER"};
+            const std::vector<state::ResourceType> resourcesType             = {state::MATERIAL, state::ENERGY, state::SCIENCE, state::GOLD, state::EXPLORATION, state::COLONEL, state::FINANCIER};
+            const std::vector<sf::Color> colorsOfButtons                     = {sf::Color(180,180,180), sf::Color(85,76,68), sf::Color::Green, sf::Color::Yellow, sf::Color::Blue, sf::Color::Red, sf::Color::Red, sf::Color::Cyan};
+            const std::vector<sf::Vector2f> coordinatesButtonsUseResource    = {{1650.f,480.f}, {1770.f,480.f}, {1650.f,600.f}, {1770.f,600.f}, {1650.f,720.f}, {1770.f,720.f}, {1650.f,840.f}, {1770.f,840.f}};
+            const std::vector<sf::Vector2f> coordinatesButtonsConvert        = {{50.f,480.f}, {170.f,480.f}, {50.f,600.f}, {170.f,600.f}, {50.f,720.f}};
+            const std::vector<sf::Vector2f> coordinatesButtonsPreferredPerso = {{50.f,840.f}, {170.f,840.f}};
+
+            // Buttons to place a resource on a card or to send it to the empire
+            for (size_t index = 0; coordinatesButtonsUseResource.size() > index; index++)
+            {
+                button = constants::buttonPtr(new Button(coordinatesButtonsUseResource[index], sizeOfSmallButtons, nameOfResources[index], colorsOfButtons[index], nullptr, this->locker));
+                this->btnMain.push_back(button);
+            }
+
+            // Buttons to convert a ressource into another one.
+            for (size_t index = 0; coordinatesButtonsConvert.size() > index; index++)
+            {
+                command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE, this->playerIndex, resourcesType[index]));
+                button = constants::buttonPtr(new Button(coordinatesButtonsConvert[index], sizeOfSmallButtons, "CONVERT\n" + nameOfResources[index] + "\nTO MATERIAL", colorsOfButtons[index], command, this->locker));
+                this->btnMain.push_back(button);
+            }
+
+            // Buttons to choose the preffered personnage.
+            for (size_t index = 0; coordinatesButtonsPreferredPerso.size() > index; index++)
+            {
+                int indexWithOffset = index + 6;
+                
+                command = constants::commandPtr(new engine::Command(engine::SETPREFFEREDPERSONNAGE,this->playerIndex, resourcesType[indexWithOffset]));
+                button = constants::buttonPtr(new Button(coordinatesButtonsPreferredPerso[index], sizeOfSmallButtons, "CHOOSE\n" + nameOfResources[indexWithOffset], colorsOfButtons[indexWithOffset], command, this->locker));
+                this->btnMain.push_back(button);
+            }
+
+            // End production button
+            command = constants::commandPtr(new engine::Command(engine::ENDPRODUCTION, this->playerIndex));
+            button = constants::buttonPtr(new Button({1650.f,960.f}, sizeOfBigButtons, "END PROD", sf::Color(215,47,215), command, this->locker));
             this->btnMain.push_back(button);
 
-            command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE,0,state::MATERIAL));
-            button = constants::buttonPtr(new Button({50.f,480.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO MATERIAL",sf::Color(180,180,180),command, this->locker));
-            this->btnMain.push_back(button);
-            command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE,0,state::ENERGY));
-            button = constants::buttonPtr(new Button({170.f,480.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO ENERGY",sf::Color(85,76,68),command, this->locker));
-            this->btnMain.push_back(button);
-            command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE,0,state::SCIENCE));
-            button = constants::buttonPtr(new Button({50.f,600.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO SCIENCE",sf::Color::Green,command, this->locker));
-            this->btnMain.push_back(button);
-            command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE,0,state::GOLD));
-            button = constants::buttonPtr(new Button({170.f,600.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO GOLD",sf::Color::Yellow,command, this->locker));
-            this->btnMain.push_back(button);
-            command = constants::commandPtr(new engine::Command(engine::CONVERTRESOURCE,0,state::EXPLORATION));
-            button = constants::buttonPtr(new Button({50.f,720.f},{100.f,100.f},"CONVERT\nKRYSTALLIUM\nTO EXPLORATION",sf::Color::Blue,command, this->locker));
-            this->btnMain.push_back(button);
-
-            command = constants::commandPtr(new engine::Command(engine::SETPREFFEREDPERSONNAGE,0,state::COLONEL));
-            button = constants::buttonPtr(new Button({50.f,840.f},{100.f,100.f},"CHOOSE\nCOLONEL",sf::Color::Red,command, this->locker));
-            this->btnMain.push_back(button);
-            command = constants::commandPtr(new engine::Command(engine::SETPREFFEREDPERSONNAGE,0,state::FINANCIER));
-            button = constants::buttonPtr(new Button({170.f,840.f},{100.f,100.f},"CHOOSE\nFINANCIER",sf::Color::Cyan,command, this->locker));
-            this->btnMain.push_back(button);
-
-            command = constants::commandPtr(new engine::Command(engine::ENDPRODUCTION,0));
-            button = constants::buttonPtr(new Button({1650.f,960.f},{220.f,100.f},"END PROD",sf::Color(215,47,215),command, this->locker));
-            this->btnMain.push_back(button);
+            // Save game button
             command = constants::commandPtr(new engine::Command(engine::SAVEGAME));
-            button = constants::buttonPtr(new Button({50.f,960.f},{220.f,100.f},"SAVE GAME",sf::Color(215,47,215),command, this->locker));
+            button = constants::buttonPtr(new Button({50.f,960.f}, sizeOfBigButtons, "SAVE GAME", sf::Color(215,47,215), command, this->locker));
             this->btnMain.push_back(button);
 
+            // Buttons to switch the small view at the top of the main window.
             for(size_t i = 1; game->getPlayers().size() > i; i++)
             {
-                command = constants::commandPtr(new engine::Command((engine::CommandID) -1,i));
+                command = constants::commandPtr(new engine::Command((engine::CommandID) -1,this->playerIndex));
                 button = constants::buttonPtr(new Button({300.f,60.f*i},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker));
                 this->btnMain.push_back(button);
             }
 
-            button = constants::buttonPtr(new Button({20.f,780.f},{220.f,100.f},"KEEP",sf::Color(215,47,215),nullptr, this->locker));
-            this->btnPlan.push_back(button);
-            button = constants::buttonPtr(new Button({260.f,780.f},{220.f,100.f},"DISCARD",sf::Color(215,47,215),nullptr, this->locker));
-            this->btnPlan.push_back(button);
-            command = constants::commandPtr(new engine::Command(engine::ENDPLANIFICATION,0));
-            button = constants::buttonPtr(new Button({1680.f,780.f},{220.f,100.f},"END PLAN",sf::Color(215,47,215), command, this->locker));
+
+            button = constants::buttonPtr(new Button({20.f,780.f}, sizeOfBigButtons,"KEEP", sf::Color(215,47,215), nullptr, this->locker));
             this->btnPlan.push_back(button);
 
-            button = constants::buttonPtr(new Button({1600.f,940.f},{220.f,100.f},"CONFIRM",sf::Color(215,47,215),nullptr, this->locker));
+            button = constants::buttonPtr(new Button({260.f,780.f}, sizeOfBigButtons, "DISCARD", sf::Color(215,47,215), nullptr, this->locker));
+            this->btnPlan.push_back(button);
+
+            command = constants::commandPtr(new engine::Command(engine::ENDPLANIFICATION, this->playerIndex));
+            button = constants::buttonPtr(new Button({1680.f,780.f}, sizeOfBigButtons, "END PLAN", sf::Color(215,47,215), command, this->locker));
+            this->btnPlan.push_back(button);
+
+            button = constants::buttonPtr(new Button({1600.f,940.f}, sizeOfBigButtons, "CONFIRM", sf::Color(215,47,215), nullptr, this->locker));
             this->btnDraft.push_back(button);
 
             for(size_t i = 0; game->getPlayers().size() > i; i++)
             {
                 command = constants::commandPtr(new engine::Command((engine::CommandID) -1,i));
-                button = constants::buttonPtr(new Button({550.f+220.f*i,50.f},{200.f,50.f},"Switch to : "+game->getPlayers()[i]->getName(),sf::Color(215,47,215),command, this->locker));
+                button = constants::buttonPtr(new Button({550.f+220.f*i, 50.f}, {200.f, 50.f}, "Switch to : " + game->getPlayers()[i]->getName(), sf::Color(215,47,215), command, this->locker));
                 this->btnFull.push_back(button);
             }
 
@@ -206,7 +210,7 @@ namespace render {
     /// @param window Window where the info are changed (among MAIN_WINDOW & PLAYER_INFO)
     void Scene::changePlayerInfoPlayer(int p_index,Window window)
     {
-        //Get Player to be display
+        // Get Player to be display
         constants::playerPtr player = game->getPlayers()[p_index];
 
         int r_id;
@@ -227,21 +231,20 @@ namespace render {
                 return;
             }
         }
-        //Get Position
+        // Get Position
         sf::Vector2f pos = this->player_renderer[r_id]->getPos();
 
-        //Create Renderer
+        // Create Renderer
         PlayerRenderer* pRenderer = new PlayerRenderer(player,pos,window);
 
-        //Link the renderer (Observer) to its Observable (Game & player) 
+        // Link the renderer (Observer) to its Observable (Game & player) 
         player->addObserver(pRenderer);
         game->addObserver(pRenderer);
 
-        //TODO Destroy previous Renderer?
-
-        //Update the just created Renderer with the current state of the game
+        // Update the just created Renderer with the current state of the game
         pRenderer->update(PLAYER_RESOURCES_PRODUCTION_CHANGED | CARDS_TYPE_LIST_CHANGED |TO_BUILD_CARDS_CHANGED | BUILT_CARDS_CHANGED | PLAYER_CURRENT_RESOURCES_CHANGED);
-        //Put the new Renderer in its place
+        
+        // Put the new Renderer in its place
         this->player_renderer[r_id] = pRenderer;
     }
 
@@ -256,16 +259,16 @@ namespace render {
     {
         if(PLAYER_CURRENT_RESOURCES_CHANGED & flags)
         {
-            btnMain[0]->setText("MATERIAL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::MATERIAL])+")");
-            btnMain[1]->setText("ENERGY\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::ENERGY])+")");
-            btnMain[2]->setText("SCIENCE\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::SCIENCE])+")");
-            btnMain[3]->setText("GOLD\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::GOLD])+")");
-            btnMain[4]->setText("EXPLORATION\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::EXPLORATION])+")");
-            btnMain[5]->setText("KRYSTALLIUM\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::KRYSTALLIUM])+")");
-            btnMain[6]->setText("COLONEL\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::COLONEL])+")");
-            btnMain[7]->setText("FINANCIER\n("+std::to_string(this->game->getPlayers()[0]->getCurrentResources()[state::FINANCIER])+")");
+            std::vector<std::string> nameOfResources = {"MATERIAL\n(", "ENERGY\n(", "SCIENCE\n(", "GOLD\n(", "EXPLORATION\n(", "KRYSTALLIUM\n(", "COLONEL\n(", "FINANCIER\n("};
+            std::vector<state::ResourceType> resources = {state::MATERIAL, state::ENERGY, state::SCIENCE, state::GOLD, state::EXPLORATION, state::KRYSTALLIUM, state::COLONEL, state::FINANCIER};
+
+            for (size_t index = 0; nameOfResources.size() > index; index++)
+            {
+                std::string numberOfRessources = std::to_string(this->game->getPlayers()[this->playerIndex]->getCurrentResources()[resources[index]]);
+                btnMain[index]->setText(nameOfResources[index] + numberOfRessources + ")");
+            }
         }
-        if(flags & GAME_PHASE_CHANGED)
+        if(GAME_PHASE_CHANGED & flags)
         {
             switch(game->getPhase())
             {
@@ -348,7 +351,7 @@ namespace render {
     /// @param card Pointer to the card the player clicked on.
     void Scene::setSelectedCard(std::shared_ptr<state::Card> card)
     {
-        constants::playerPtr p = this->game->getPlayers()[0];
+        constants::playerPtr p = this->game->getPlayers()[this->playerIndex];
         switch (this->current_window)
         {
             case MAIN_WINDOW:
@@ -365,9 +368,11 @@ namespace render {
                     // Creating commands for adding resource to a card.
                     for (size_t index = 0; resourceType.size() > index; index++)
                     {
-                        constants::commandPtr command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE, 0, indexOfCard, resourceType[index]));
+                        bool isRessourceNeeded = this->game->getPlayers()[this->playerIndex]->isResourcePlayable(resourceType[index], indexOfCard);
+
+                        constants::commandPtr command = constants::commandPtr(new engine::Command(engine::ADDRESOURCE, this->playerIndex, indexOfCard, resourceType[index]));
                         this->btnMain[index]->changeCommand(command);
-                        this->btnMain[index]->setEnabled(true);
+                        this->btnMain[index]->setEnabled(isRessourceNeeded);
                     }
                 }
                 // If the card is not found, it means that the player clicked on the empire. He wants to send a resource on the empire.
@@ -376,9 +381,11 @@ namespace render {
                     // Creating commands for sending a resource to the empire.
                     for (size_t index = 0; resourceType.size() > index; index++)
                     {
-                        constants::commandPtr command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE, 0, resourceType[index]));
+                        bool doesPlayerHaveResource = (0 < (this->game->getPlayers()[this->playerIndex]->getCurrentResources(resourceType[index])));
+
+                        constants::commandPtr command = constants::commandPtr(new engine::Command(engine::SENDRESOURCETOEMPIRE, this->playerIndex, resourceType[index]));
                         this->btnMain[index]->changeCommand(command);
-                        this->btnMain[index]->setEnabled(true);
+                        this->btnMain[index]->setEnabled(doesPlayerHaveResource);
                     }
                 }
                 break;
@@ -392,7 +399,7 @@ namespace render {
                 {
                     int indexOfCard = iterator - cards.begin();
                     // Creating commands for choosing the card to draft
-                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::CHOOSEDRAFTCARD, 0, indexOfCard));
+                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::CHOOSEDRAFTCARD, this->playerIndex, indexOfCard));
                     this->btnDraft[0]->changeCommand(command);
                     this->btnDraft[0]->setEnabled(true);
                     
@@ -409,12 +416,12 @@ namespace render {
                     int indexOfCard = iterator - cards.begin();
                     
                     // Creating the keep card command
-                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::KEEPCARD, 0, indexOfCard,true));
+                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::KEEPCARD, this->playerIndex, indexOfCard,true));
                     this->btnPlan[0]->changeCommand(command);
                     this->btnPlan[0]->setEnabled(true);
                     
                     // Creating the discard card command
-                    command = constants::commandPtr(new engine::Command(engine::DISCARDCARD, 0, indexOfCard, true));
+                    command = constants::commandPtr(new engine::Command(engine::DISCARDCARD, this->playerIndex, indexOfCard, true));
                     this->btnPlan[1]->changeCommand(command);
                     this->btnPlan[1]->setEnabled(true);
                     return ;
@@ -428,7 +435,7 @@ namespace render {
 
                     // We can disable the button 'keep' because the card can only be discarded.
                     this->btnPlan[0]->setEnabled(false);
-                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::DISCARDCARD, 0, indexOfCard, false));
+                    constants::commandPtr command = constants::commandPtr(new engine::Command(engine::DISCARDCARD, this->playerIndex, indexOfCard, false));
                     this->btnPlan[1]->changeCommand(command);
                     this->btnPlan[1]->setEnabled(true);
                 }
@@ -475,7 +482,8 @@ namespace render {
                 //Display Drafting Hand
                 this->drafting_hand_renderer->draw(window);
 
-                for (constants::buttonPtr btn: btnDraft){
+                for (constants::buttonPtr btn: btnDraft)
+                {
                     btn->draw(window);
                 }
                 break;
@@ -513,10 +521,10 @@ namespace render {
         }
     }
 
-    /// @brief Function to desactivate all buttons from a window.
-    /// @param index Index of the button to desactivate
+    /// @brief Function to disable all buttons from a window.
+    /// @param index Index of the button to disable
     /// @param window Window where the button is draw.
-    void Scene::desactivateButton(int index, Window window)
+    void Scene::disableButton(int index, Window window)
     {
         switch (window)
         {

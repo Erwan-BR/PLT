@@ -75,7 +75,7 @@ namespace render
 
     }
 
-    /// @brief Handle the event of a click on the window. It will launch the command only if 
+    /// @brief Handle the event of a click on the window. It will launch the command only if event correspond and command is not nullptr.
     /// @param event Event that occurs on the window.
     /// @param window Displayed window to the player.
     /// @param engineOfGame Engine that will receive the game.
@@ -96,21 +96,21 @@ namespace render
                 }
                 else{
                     if(cID == engine::CHOOSEDRAFTCARD){
-                        scene->desactivateButton(0,DRAFTING_WINDOW);
+                        scene->disableButton(0,DRAFTING_WINDOW);
                     }
                     if((cID == engine::DISCARDCARD) || (cID == engine::KEEPCARD)){
-                        scene->desactivateButton(0,PLANIFICATION_WINDOW);
-                        scene->desactivateButton(1,PLANIFICATION_WINDOW);
+                        scene->disableButton(0,PLANIFICATION_WINDOW);
+                        scene->disableButton(1,PLANIFICATION_WINDOW);
                     }
                     if((cID == engine::ADDRESOURCE) || (cID == engine::SENDRESOURCETOEMPIRE)){
-                        scene->desactivateButton(0,MAIN_WINDOW);
-                        scene->desactivateButton(1,MAIN_WINDOW);
-                        scene->desactivateButton(2,MAIN_WINDOW);
-                        scene->desactivateButton(3,MAIN_WINDOW);
-                        scene->desactivateButton(4,MAIN_WINDOW);
-                        scene->desactivateButton(5,MAIN_WINDOW);
-                        scene->desactivateButton(6,MAIN_WINDOW);
-                        scene->desactivateButton(7,MAIN_WINDOW);
+                        scene->disableButton(0, MAIN_WINDOW);
+                        scene->disableButton(1, MAIN_WINDOW);
+                        scene->disableButton(2, MAIN_WINDOW);
+                        scene->disableButton(3, MAIN_WINDOW);
+                        scene->disableButton(4, MAIN_WINDOW);
+                        scene->disableButton(5, MAIN_WINDOW);
+                        scene->disableButton(6, MAIN_WINDOW);
+                        scene->disableButton(7, MAIN_WINDOW);
                     }
                     // Lock the mutex, send the JSON of the command and unlock the mutex.
                     this->locker.lock();
