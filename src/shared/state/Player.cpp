@@ -170,6 +170,12 @@ namespace state {
     /// @return True if the player can play this resource, false either.
     bool Player::isResourcePlayable (ResourceType resource) const
     {
+        // A player cannot had a resource if he does not have the resource.
+        if (0 == this->currentResources.at(resource))
+        {
+            return false;
+        }
+
         for (constants::devCardPtr cardToBuild : this->toBuildCards)
         {
             if (cardToBuild->isResourceAddable(resource))
@@ -178,6 +184,21 @@ namespace state {
             }
         }
         return false;
+    }
+
+    /// @brief Check if a player can add a resource on a given card.
+    /// @param resource Resource that is checked.
+    /// @param cardIndex Index of the card.
+    /// @return True if the player has the resource and can play it on the card. False either.
+    bool Player::isResourcePlayable (ResourceType resource, int cardIndex) const
+    {
+        // A player cannot had a resource if he does not have the resource. We also need to check indexs.
+        if ((0 == this->currentResources.at(resource)) || (0 > cardIndex) || (this->toBuildCards.size() <= (size_t) cardIndex))
+        {
+            return false;
+        }
+
+        return this->toBuildCards[cardIndex]->isResourceAddable(resource);
     }
 
     /// @brief Add a resource to a card that is in toBuildCards.

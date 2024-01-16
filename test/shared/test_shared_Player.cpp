@@ -413,7 +413,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     BOOST_CHECK_EQUAL(myFirstPlayer->getCurrentResources().at(KRYSTALLIUM), 0);
 
     // Checking if resources of a type can be added to a card
-    BOOST_CHECK_EQUAL(myFirstPlayer->isResourcePlayable(ENERGY), true);
+    BOOST_CHECK_EQUAL(myFirstPlayer->isResourcePlayable(ENERGY), false);
     BOOST_CHECK_EQUAL(myFirstPlayer->isResourcePlayable(GOLD), false);
 
     // Constructing cards
@@ -509,6 +509,8 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     myFirstPlayer->endPlanification();
     BOOST_CHECK_EQUAL(myFirstPlayer->getDraftCards().size(), 0);
     BOOST_CHECK_EQUAL(myFirstPlayer->getToBuildCards().size(), 1);
+    
+    (void)myFirstPlayer->isResourcePlayable(ResourceType::SCIENCE, 0);
 
     // Test convertKrystallium
     myFirstPlayer->convertKrystallium(MATERIAL);
@@ -542,6 +544,7 @@ BOOST_AUTO_TEST_CASE(firstPlayerTest)
     (void)myFirstPlayer->getResourcesProduction();
     (void)myFirstPlayer->getCardsTypeList();
     (void)myFirstPlayer->getID();
+    (void)myFirstPlayer->isResourcePlayable(ResourceType::SCIENCE, 0);
 
     (void)myFirstPlayer->isAI();
 
