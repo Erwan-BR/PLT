@@ -34,7 +34,7 @@ void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<sta
 
 void displayMessage();
 void displayTemporaryCommands(bool testing);
-void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt);
+void displayInformationFromAnAI(const std::string& nameOfAI, const std::vector<int>& numberOfPoints, const std::vector<int>& numberOfCardsBuilt);
 
 void addAIToVector(constants::playersList& players, int nmberOfAIToAdd);
 
@@ -400,7 +400,7 @@ render::Scene* instanciateRender(constants::enginePtr& engineOfGame, std::shared
     return scene;
 }
 
-void displayInformationFromAnAI(std::string nameOfAI, std::vector<int> numberOfPoints, std::vector<int> numberOfCardsBuilt)
+void displayInformationFromAnAI(const std::string& nameOfAI, const std::vector<int>& numberOfPoints, const std::vector<int>& numberOfCardsBuilt)
 {
     auto maxScoreElement = std::max_element(numberOfPoints.begin(), numberOfPoints.end());
     double meanScore = std::accumulate(numberOfPoints.begin(), numberOfPoints.end(), 0.0) / numberOfPoints.size();
