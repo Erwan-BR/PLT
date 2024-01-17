@@ -495,7 +495,7 @@ namespace state {
             this->currentResources.at(resourceToReceive) ++;
         }
         
-        if (! this->isAI())
+        if (! this->isAI() || resourceToReceive == ResourceType::COLONEL || resourceToReceive == ResourceType::FINANCIER)
         {
             this->notifyObservers(PLAYER_CURRENT_RESOURCES_CHANGED);
         }
