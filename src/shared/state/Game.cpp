@@ -102,7 +102,7 @@ namespace state {
         if (this->players.size() <= empires.size())
         {
             int empireIndex = 0;
-            for(std::shared_ptr<Player> player : this->players)
+            for(constants::playerPtr player : this->players)
             {
                 // Initialise the empires that will be given to the players
                 player->setEmpire(empires[empireIndex]);
@@ -185,7 +185,7 @@ namespace state {
     ///@brief Initialize the Draft part of the game during which players select their cards
     void Game::initDraft ()
     {
-        for(std::shared_ptr<Player> player : this->players)
+        for(constants::playerPtr player : this->players)
         {
             // Re-Initialise the cards that will be given to the players
             constants::deckOfCards draftingDeck = {};
@@ -247,7 +247,7 @@ namespace state {
         }
 
         
-        for (std::shared_ptr<Player> player : this->players)
+        for (constants::playerPtr player : this->players)
         {
             player->setStatePlaying();
         }
@@ -262,7 +262,7 @@ namespace state {
     ///@brief Initialize the Planification phase during which players choose the cards they will try to build
     void Game::initPlanification ()
     {
-        for (std::shared_ptr<Player> player : this->players)
+        for (constants::playerPtr player : this->players)
         {
             player->setStatePlaying();
         }
@@ -299,7 +299,7 @@ namespace state {
 
         this->produceResource();
         
-        for (std::shared_ptr<Player> player : this->players)
+        for (constants::playerPtr player : this->players)
         {
             player->setStatePlaying();
         }
@@ -320,7 +320,7 @@ namespace state {
         int index = 0;
 
         // Iterating among all players.
-        for(std::shared_ptr<Player> player : this->players)
+        for(constants::playerPtr player : this->players)
         {
             int playerProduction = player->getProductionGain(this->resourceProducing);
 
@@ -410,7 +410,7 @@ namespace state {
 
         // Serialize the vector of players
         Json::Value playersArray;
-        for (const std::shared_ptr<Player>& player : this->players)
+        for (const constants::playerPtr& player : this->players)
         {
             playersArray.append(player->toJSON());
         }
