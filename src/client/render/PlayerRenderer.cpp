@@ -35,7 +35,7 @@ namespace render {
         case MAIN_WINDOW:
             //Enter Player board (position 0 in sprites)
             texture = new sf::Texture();
-            texture->loadFromFile("./resources/img/player.png");
+            *texture = constants::ResourceManager::getTexture("./resources/img/player.png");
             this->textures.push_back(texture);                    //Texture
             sprite= new sf::Sprite();
             sprite->setTexture(*(this->textures[0]));
@@ -46,7 +46,7 @@ namespace render {
             if (nullptr != this->player->getEmpire())
             {
                 texture = new sf::Texture();
-                texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                *texture = constants::ResourceManager::getTexture(this->player->getEmpire()->getRelativePathToTexture());
                 this->textures.push_back(texture);                    //Texture
                 sprite= new sf::Sprite();
                 sprite->setTexture(*(this->textures[1]));
@@ -92,7 +92,7 @@ namespace render {
         case DRAFTING_WINDOW:
             //Enter Player board (position 0 in sprites)
             texture = new sf::Texture();
-            texture->loadFromFile("./resources/img/player_draft.png");
+            *texture = constants::ResourceManager::getTexture("./resources/img/player_draft.png");
             this->textures.push_back(texture);                    //Texture
             sprite= new sf::Sprite();
             sprite->setTexture(*(this->textures[0]));
@@ -103,7 +103,7 @@ namespace render {
             if (nullptr != this->player->getEmpire())
 			{
 				texture = new sf::Texture();
-				texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                *texture = constants::ResourceManager::getTexture(this->player->getEmpire()->getRelativePathToTexture());
 				this->textures.push_back(texture);                    //Texture
 				sprite= new sf::Sprite();
 				sprite->setTexture(*(this->textures[1]));
@@ -127,7 +127,7 @@ namespace render {
         case PLAYER_INFO:
             //Enter Player board (position 0 in sprites)
             texture = new sf::Texture();
-            texture->loadFromFile("./resources/img/player_full.png");
+            *texture = constants::ResourceManager::getTexture("./resources/img/player_full.png");
             this->textures.push_back(texture);                    //Texture
             sprite= new sf::Sprite();
             sprite->setTexture(*(this->textures[0]));
@@ -138,7 +138,7 @@ namespace render {
             if (nullptr != this->player->getEmpire())
             {
                 texture = new sf::Texture();
-                texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                *texture = constants::ResourceManager::getTexture(this->player->getEmpire()->getRelativePathToTexture());
                 this->textures.push_back(texture);                    //Texture
                 sprite= new sf::Sprite();
                 sprite->setTexture(*(this->textures[1]));
@@ -210,7 +210,7 @@ namespace render {
         case PLANIFICATION_WINDOW:
             //Enter Player board (position 0 in sprites)
             texture = new sf::Texture();
-            texture->loadFromFile("./resources/img/player_draft.png");
+            *texture = constants::ResourceManager::getTexture("./resources/img/player_draft.png");
             this->textures.push_back(texture);                    //Texture
             sprite= new sf::Sprite();
             sprite->setTexture(*(this->textures[0]));
@@ -219,7 +219,7 @@ namespace render {
 
             //Enter Player Profile Picture (position 1 in sprites)
             texture = new sf::Texture();
-            texture->loadFromFile("./resources/img/pfp_draft.png");
+            *texture = constants::ResourceManager::getTexture("./resources/img/pfp_draft.png");
             this->textures.push_back(texture);                    //Texture
             sprite= new sf::Sprite();
             sprite->setTexture(*(this->textures[1]));
@@ -228,7 +228,7 @@ namespace render {
 
             //Enter Player board (position 2 in sprites)
             texture = new sf::Texture();
-            texture->loadFromFile("./resources/img/player.png");
+            *texture = constants::ResourceManager::getTexture("./resources/img/player.png");
             this->textures.push_back(texture);                    //Texture
             sprite= new sf::Sprite();
             sprite->setTexture(*(this->textures[2]));
@@ -239,7 +239,7 @@ namespace render {
             if (nullptr != this->player->getEmpire())
             {
                 sf::Texture* texture = new sf::Texture();
-                texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                *texture = constants::ResourceManager::getTexture(this->player->getEmpire()->getRelativePathToTexture());
                 this->textures.push_back(texture);                    //Texture
                 sf::Sprite* sprite= new sf::Sprite();
                 sprite->setTexture(*(this->textures[3]));
@@ -320,7 +320,7 @@ namespace render {
                 if(this->sprites.size() == 1){
                     if (nullptr != this->player->getEmpire()){
                         sf::Texture* texture = new sf::Texture();
-                        texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                        *texture = constants::ResourceManager::getTexture(this->player->getEmpire()->getRelativePathToTexture());
                         this->textures.push_back(texture);                    //Texture
                         sf::Sprite* sprite= new sf::Sprite();
                         sprite->setTexture(*(this->textures[1]));
@@ -368,7 +368,7 @@ namespace render {
                     if (nullptr != this->player->getEmpire())
                     {
                         sf::Texture* texture = new sf::Texture();
-                        texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                        *texture = constants::ResourceManager::getTexture(this->player->getEmpire()->getRelativePathToTexture());
                         this->textures.push_back(texture);                    //Texture
                         sf::Sprite* sprite= new sf::Sprite();
                         sprite->setTexture(*(this->textures[1]));
@@ -435,7 +435,7 @@ namespace render {
                     if (nullptr != this->player->getEmpire())
                     {
                         sf::Texture* texture = new sf::Texture();
-                        texture->loadFromFile(this->player->getEmpire()->getRelativePathToTexture());
+                        *texture = constants::ResourceManager::getTexture(this->player->getEmpire()->getRelativePathToTexture());
                         this->textures.push_back(texture);                    //Texture
                         sf::Sprite* sprite= new sf::Sprite();
                         sprite->setTexture(*(this->textures[3]));
