@@ -1,4 +1,4 @@
-#include "./ResourceManager.h"
+#include "ResourceManager.h"
 
 namespace constants
 {
