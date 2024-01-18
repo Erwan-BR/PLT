@@ -185,4 +185,11 @@ namespace ai
         
         return (bool) randomInt;
     }
+
+    /// @brief Convert a random AI to a json representation. AIRandom doesn't have more attributes, so it just call Player method.
+    /// @return JSON representation of a Random AI.
+    Json::Value AIRandom::toJSON () const
+    {
+        return Player::toJSON();
+    }
 };
