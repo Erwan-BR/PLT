@@ -7,8 +7,7 @@
 #include <chrono>
 
 #include "constants/GameConstants.h"
-// #include "../../constants/constants/GameConstants.h"
-#include "../../constants/constants/GameObserversNotification.h"
+#include "constants/GameObserversNotification.h"
 
 namespace state {
     ///@brief Create a game from a json file.
@@ -310,41 +309,36 @@ namespace state {
     ///@brief Manage the phase of production for all player and one resource
     void Game::produceResource ()
     {
-        // Two integers to find the players that win the most of a resources to give him a bonus.
-        int playerIndexBiggestProduction = -1;
+        // Instanciate two values : one for the player who produce the most, the other for the quantity that he produces.
+        int indexOfMostProducer = -1;
         int biggestProduction = -1;
-        
-        bool multipleBiggestProduction = false;
 
-        // Current index of the loop - to update the player with the biggest production
-        int index = 0;
-
-        // Iterating among all players.
-        for(constants::playerPtr player : this->players)
+        // Iterating amond all players
+        for (size_t index = 0; this->players.size() > index; index++)
         {
-            int playerProduction = player->getProductionGain(this->resourceProducing);
+            // Computing the resource produced by the player
+            const int productionOfCurrentPlayer = this->players[index]->getResourcesProduction(this->resourceProducing);
 
-            player->receiveResources(this->resourceProducing, playerProduction);
+            // Sending the resources.
+            this->players[index]->receiveResources(this->resourceProducing, productionOfCurrentPlayer);
 
-            if (playerProduction > biggestProduction)
+            // If two players produced the same amount of resource, set index at -1 to send the bonus to no one.
+            if (productionOfCurrentPlayer == biggestProduction)
             {
-                // Updating who won the most of the current produced ressource.
-                playerIndexBiggestProduction = index;
-                biggestProduction = playerProduction;
-                multipleBiggestProduction = false;
+                indexOfMostProducer = -1;
             }
-            else if (playerProduction == biggestProduction)
+            // If a player produce more, get the number of resources produced and keep in mind the player index.
+            else if (productionOfCurrentPlayer > biggestProduction)
             {
-                playerIndexBiggestProduction = -1;
-                multipleBiggestProduction = true;
+                indexOfMostProducer = index;
+                biggestProduction = productionOfCurrentPlayer;
             }
-            index++;
         }
 
-        // Checking who won's the most of this resources for the bonus.
-        if (!multipleBiggestProduction)
+        // If there is only 1 who produce the most, he receive his award.
+        if (-1 != indexOfMostProducer)
         {
-            this->sendTokenToMostProducer(playerIndexBiggestProduction);
+            this->sendTokenToMostProducer(indexOfMostProducer);
         }
     }
 
