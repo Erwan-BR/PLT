@@ -3,8 +3,8 @@
 #include "limits"
 #include <algorithm>
 
-#include "../../constants/constants/PlayerObserversNotification.h"
-#include "../state/PlayerState.h"
+#include "constants/PlayerObserversNotification.h"
+#include "state/PlayerState.h"
 
 namespace ai
 {

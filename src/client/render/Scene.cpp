@@ -2,8 +2,8 @@
 
 #include "Scene.h"
 
-#include "../../constants/constants/PlayerObserversNotification.h"
-#include "../../constants/constants/GameObserversNotification.h"
+#include "constants/PlayerObserversNotification.h"
+#include "constants/GameObserversNotification.h"
 
 namespace render {
 

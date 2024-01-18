@@ -1,7 +1,6 @@
 #include "DevelopmentCardRenderer.h"
-#include <iostream>
 
-#include "../../constants/constants/CustomTypes.h"
+#include "constants/CustomTypes.h"
 
 namespace render
 {

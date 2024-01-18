@@ -1,7 +1,7 @@
 #include "GameRenderer.h"
 
-#include "../../constants/constants/GameObserversNotification.h"
-#include "../../constants/constants/GameConstants.h"
+#include "constants/GameObserversNotification.h"
+#include "constants/GameConstants.h"
 
 namespace render
 {

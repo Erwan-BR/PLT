@@ -2,9 +2,9 @@
 
 #include <string>
 
-#include "../../constants/constants/PlayerObserversNotification.h"
-#include "../../constants/constants/GameConstants.h"
-#include "../../constants/constants/CustomTypes.h"
+#include "constants/PlayerObserversNotification.h"
+#include "constants/GameConstants.h"
+#include "constants/CustomTypes.h"
 
 namespace render
 {

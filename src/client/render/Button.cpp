@@ -1,5 +1,4 @@
 #include "Button.h"
-#include <iostream>
 
 namespace render
 {

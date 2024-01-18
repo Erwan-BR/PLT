@@ -1,12 +1,11 @@
 #include "PlayerRenderer.h"
 
 #include <string>
-#include <iostream>
 
-#include "../../constants/constants/PlayerObserversNotification.h"
-#include "../../constants/constants/PlayerRendererMacro.h"
-#include "../../constants/constants/GameConstants.h"
-#include "../../constants/constants/CustomTypes.h"
+#include "constants/PlayerObserversNotification.h"
+#include "constants/PlayerRendererMacro.h"
+#include "constants/GameConstants.h"
+#include "constants/CustomTypes.h"
 
 namespace render {
     /// @brief Full constructor of the PlayerRenderer class.
@@ -508,7 +507,6 @@ namespace render {
                 sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 // Check if the click is inside the Empire Card.
                 if (this->sprites[1]->getGlobalBounds().contains(mousePos)){
-                    std::cout<<"Empire Clicked"<<std::endl;
                     scene->setSelectedCard(this->player->getEmpire());
                 }
             }
