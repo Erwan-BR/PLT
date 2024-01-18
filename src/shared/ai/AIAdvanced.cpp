@@ -8,6 +8,16 @@
 
 namespace ai
 {
+    /// @brief Constructor of advanced AI from a json value.
+    /// @param jsonValue JSON representation of the AI.
+    AIAdvanced::AIAdvanced(Json::Value jsonValue) :
+        Player(jsonValue)
+    {
+        this->initMissingResources();
+
+        // To complete with AIAdvanced attributes.
+    }
+
     /// @brief Full constructor of AIAdvanced, with important information inside.
     /// @param name Name of the AI.
     /// @param id ID of the AI. Should be negative for engine methods.
@@ -318,5 +328,14 @@ namespace ai
     bool AIAdvanced::AICompareDevelopmentCards (const state::DevelopmentCard& card1, const state::DevelopmentCard& card2) const
     {
         return card1.getQuantityResourcesMissing() > card2.getQuantityResourcesMissing();
+    }
+
+    Json::Value AIAdvanced::toJSON () const
+    {
+        Json::Value jsonOfAI = Player::toJSON();
+        
+        // To complete with AIAdvanced attributes.
+
+        return jsonOfAI;
     }
 };

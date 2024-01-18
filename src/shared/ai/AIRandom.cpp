@@ -9,6 +9,14 @@
 
 namespace ai
 {
+    /// @brief Constructor of random AI from a json value. Random AI doesn't have more attributes than playe, so we just call parent consturctor.
+    /// @param jsonValue JSON representation of the AI.
+    AIRandom::AIRandom(Json::Value jsonValue) :
+        Player(jsonValue)
+    {
+        
+    }
+
     /// @brief Full constructor of AIRandom, with important information inside.
     /// @param name Name of the AI.
     /// @param id ID of the AI. Should be negative for engine methods.

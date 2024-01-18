@@ -9,6 +9,9 @@
 #include "constants/GameConstants.h"
 #include "constants/GameObserversNotification.h"
 
+#include "ai/AIRandom.h"
+#include "ai/AIAdvanced.h"
+
 namespace state {
     ///@brief Create a game from a json file.
     Game::Game(Json::Value jsonValue) :
@@ -22,7 +25,24 @@ namespace state {
         
             for (const Json::Value& playerJSON : playersArray)
             {
-                this->players.push_back(std::make_shared<Player>(playerJSON));
+                // Construct an AI if the ID is negative.
+                if (playerJSON["id"].asInt() < 0)
+                {
+                    // If id is odd, make random AI
+                    if (! (playerJSON["id"].asInt() % 2))
+                    {
+                        this->players.push_back(std::make_shared<ai::AIRandom>(playerJSON));
+                    }
+                    // If id is even, make advanced AI
+                    else
+                    {
+                        this->players.push_back(std::make_shared<ai::AIAdvanced>(playerJSON));
+                    }
+                }
+                else
+                {
+                    this->players.push_back(std::make_shared<Player>(playerJSON));
+                }
             }
         }
 
