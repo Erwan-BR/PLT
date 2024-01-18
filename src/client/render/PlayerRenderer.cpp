@@ -242,8 +242,7 @@ namespace render {
                 this->textures.push_back(texture);                    //Texture
                 sf::Sprite* sprite= new sf::Sprite();
                 sprite->setTexture(*(this->textures[3]));
-                sf::Vector2f position = this->sprites[0]->getPosition();
-                sprite->setPosition(position+sf::Vector2f(40.f,60.f));
+                sprite->setPosition(sf::Vector2f(40.f,60.f));
                 sprite->setScale(0.4f,0.4f);
                 this->sprites.push_back(sprite);                    //Sprite
             }
