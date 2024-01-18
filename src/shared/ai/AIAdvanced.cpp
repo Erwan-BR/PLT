@@ -15,7 +15,65 @@ namespace ai
     {
         this->initMissingResources();
 
-        // To complete with AIAdvanced attributes.
+        // Retrieve missingResourcesToConstructAllCards from the JSON
+        const Json::Value& missingResourcesArray = jsonValue["missingResourcesToConstructAllCards"];
+        for (const Json::Value& resourceObject : missingResourcesArray)
+        {
+            state::ResourceType resourceType = static_cast<state::ResourceType> (resourceObject["resourceType"].asInt());
+            int quantity = resourceObject["quantity"].asInt();
+            this->missingResourcesToConstructAllCards[resourceType] = quantity;
+        }
+
+        // Retrieve cardsToBuildIndexesOrdered from the JSON.
+        this->cardsToBuildIndexesOrdered = {};
+        if (jsonValue["cardsToBuildIndexesOrdered"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["cardsToBuildIndexesOrdered"];
+        
+            for (const Json::Value& cardToBuildJSON : cardArray)
+            {
+                this->cardsToBuildIndexesOrdered.push_back(cardToBuildJSON.asInt());
+            }
+        }
+
+        // Retrieve resourcesMissingOrdered from the JSON.
+        this->resourcesMissingOrdered = {};
+        if (jsonValue["resourcesMissingOrdered"].isArray())
+        {
+            const Json::Value missingResourcesArray = jsonValue["resourcesMissingOrdered"];
+        
+            for (const Json::Value& resourcesJSON : missingResourcesArray)
+            {
+                this->resourcesMissingOrdered.push_back(static_cast<state::ResourceType>(resourcesJSON.asInt()));
+            }
+        }
+
+        // Retrieve indexesOfCardsToKeep from the JSON.
+        this->indexesOfCardsToKeep = {};
+        if (jsonValue["indexesOfCardsToKeep"].isArray())
+        {
+            const Json::Value indexArray = jsonValue["indexesOfCardsToKeep"];
+        
+            for (const Json::Value& indexJSON : indexArray)
+            {
+                this->indexesOfCardsToKeep.push_back(indexJSON.asInt());
+            }
+        }
+
+        // Retrieve indexesOfCardsToDiscard from the JSON.
+        this->indexesOfCardsToDiscard = {};
+        if (jsonValue["indexesOfCardsToDiscard"].isArray())
+        {
+            const Json::Value indexArray = jsonValue["indexesOfCardsToDiscard"];
+        
+            for (const Json::Value& indexJSON : indexArray)
+            {
+                this->indexesOfCardsToDiscard.push_back(indexJSON.asInt());
+            }
+        }
+
+        this->currentIndexOfDraft = jsonValue["currentIndexOfDraft"].asInt();
+        this->gameTurn = jsonValue["gameTurn"].asInt();
     }
 
     /// @brief Full constructor of AIAdvanced, with important information inside.
@@ -333,8 +391,52 @@ namespace ai
     Json::Value AIAdvanced::toJSON () const
     {
         Json::Value jsonOfAI = Player::toJSON();
-        
-        // To complete with AIAdvanced attributes.
+
+        // Serialize the map of missingResourcesToConstructAllCards
+        Json::Value missingResourcesToConstructAllCardsArray;
+        for (const auto& entry : this->missingResourcesToConstructAllCards)
+        {
+            Json::Value resourceObject;
+            resourceObject["resourceType"] = static_cast<int>(entry.first);
+            resourceObject["quantity"] = entry.second;
+            missingResourcesToConstructAllCardsArray.append(resourceObject);
+        }
+        jsonOfAI["missingResourcesToConstructAllCards"] = missingResourcesToConstructAllCardsArray;
+
+        // Serialize the vector of resourcesMissingOrdered
+        Json::Value missingResources2Array;
+        for (state::ResourceType resource : this->resourcesMissingOrdered)
+        {
+            missingResources2Array.append(resource);
+        }
+        jsonOfAI["resourcesMissingOrdered"] = missingResources2Array;
+
+        // Serialize the vector of cardsToBuildIndexesOrdered
+        Json::Value cardToBuildArray;
+        for (int index : this->cardsToBuildIndexesOrdered)
+        {
+            cardToBuildArray.append(index);
+        }
+        jsonOfAI["cardsToBuildIndexesOrdered"] = cardToBuildArray;
+
+        // Serialize the vector of indexesOfCardsToKeep
+        Json::Value cardToKeepArray;
+        for (int index : this->indexesOfCardsToKeep)
+        {
+            cardToKeepArray.append(index);
+        }
+        jsonOfAI["indexesOfCardsToKeep"] = cardToKeepArray;
+
+        // Serialize the vector of indexesOfCardsToDiscard
+        Json::Value cardToDiscardArray;
+        for (int index : this->indexesOfCardsToDiscard)
+        {
+            cardToDiscardArray.append(index);
+        }
+        jsonOfAI["indexesOfCardsToDiscard"] = cardToDiscardArray;
+
+        jsonOfAI["currentIndexOfDraft"] = this->currentIndexOfDraft;
+        jsonOfAI["gameTurn"] = this->gameTurn;
 
         return jsonOfAI;
     }
