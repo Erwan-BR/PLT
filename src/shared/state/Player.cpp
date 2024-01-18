@@ -1,6 +1,6 @@
 #include "Player.h"
 
-#include "../../constants/constants/PlayerObserversNotification.h"
+#include "constants/PlayerObserversNotification.h"
 
 namespace state {
 
@@ -761,6 +761,14 @@ namespace state {
     std::map<ResourceType,int> Player::getResourcesProduction () const
     {
         return this->resourcesProduction;
+    }
+
+    /// @brief Return the production of the player for a specific resources.
+    /// @param resource Resources that we want to know the production.
+    /// @return Quantity of the resource produced.
+    int Player::getResourcesProduction (ResourceType resource) const
+    {
+        return this->resourcesProduction.at(resource);
     }
 
     /// @brief Get how much built cards of each type the player has build
