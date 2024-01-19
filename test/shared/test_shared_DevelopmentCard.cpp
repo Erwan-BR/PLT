@@ -10,13 +10,31 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
     // Testing JSON conversion with some empty tables (Card is Reseau de transport)
     // Constructing a card that will be export to JSON
-    DevelopmentCard* cardToExport = new DevelopmentCard ("Reseau de transport",{},"../resources/img/Cards/Development_Cards/reseau_de_transport.png",new CardVictoryPoint{1, CardType::VEHICLE},CardType::STRUCTURE,2,{new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}, new ResourceToPay{ResourceType::MATERIAL, false}},{},ResourceType::MATERIAL);
+    constants::victoryPointsPtr victoryPoints = std::make_shared<CardVictoryPoint>();
+    victoryPoints->numberOfPoints = 1;
+    victoryPoints->cardOrResourceType = CardType::VEHICLE;
+
+    constants::resourcePayPtr resourceToPay1 = std::make_shared<ResourceToPay>();
+    resourceToPay1->isPaid = false;
+    resourceToPay1->type = ResourceType::MATERIAL;
+
+    constants::resourcePayPtr resourceToPay2 = std::make_shared<ResourceToPay>();
+    resourceToPay2->isPaid = false;
+    resourceToPay2->type = ResourceType::MATERIAL;
+
+    constants::resourcePayPtr resourceToPay3 = std::make_shared<ResourceToPay>();
+    resourceToPay3->isPaid = false;
+    resourceToPay3->type = ResourceType::MATERIAL;
+    
+    constants::resourcePayList resourceToPayList = {resourceToPay1, resourceToPay2, resourceToPay3};
+
+    DevelopmentCard* cardToExport = new DevelopmentCard ("Reseau de transport",{},"../resources/img/Cards/Development_Cards/reseau_de_transport.png",victoryPoints,CardType::STRUCTURE,2,resourceToPayList,{},ResourceType::MATERIAL);
 
     Json::Value jsonContent = cardToExport->toJSON();
 
     // Only for debug, the JSON appears in a log file (PLT/build/test/Testing/Temporary/LastTest.log)
-    /*
-    for (int i = 0; i < 7; i++)
+    
+    /*for (int i = 0; i < 7; i++)
     {
         std::cout << std::endl;
     }
@@ -26,20 +44,20 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     for (int i = 0; i < 7; i++)
     {
         std::cout << std::endl;
-    }
-    */
+    }*/
+    
 
     DevelopmentCard* cardFromImport = new DevelopmentCard(jsonContent);
 
     BOOST_CHECK_EQUAL(cardFromImport->getName(), "Reseau de transport");
 
-    std::vector<ResourceToProduce*> importedCardProduction = cardFromImport->getProductionGain();
+    constants::resourceProdList importedCardProduction = cardFromImport->getProductionGain();
 
     BOOST_CHECK_EQUAL(importedCardProduction.size(), 0);
 
     BOOST_CHECK_EQUAL(cardFromImport->getRelativePathToTexture(), "../resources/img/Cards/Development_Cards/reseau_de_transport.png");
 
-    CardVictoryPoint* cardPoints = cardFromImport->getVictoryPoints();
+    constants::victoryPointsPtr cardPoints = cardFromImport->getVictoryPoints();
 
     BOOST_CHECK_EQUAL(cardPoints->numberOfPoints, 1);
     BOOST_CHECK_EQUAL(cardPoints->cardOrResourceType, CardType::VEHICLE);
@@ -47,7 +65,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(cardFromImport->getDiscardGain(), ResourceType::MATERIAL);
     BOOST_CHECK_EQUAL(cardFromImport->getType(), CardType::STRUCTURE);
 
-    std::vector<ResourceToPay*> cardCostToBuild = cardFromImport->getCostToBuild();
+    constants::resourcePayList cardCostToBuild = cardFromImport->getCostToBuild();
 
     BOOST_CHECK_EQUAL(cardCostToBuild[0]->type, ResourceType::MATERIAL);
     BOOST_CHECK_EQUAL(cardCostToBuild[0]->isPaid, false);
@@ -64,7 +82,30 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     // Testing JSON conversion with every no empty table. (Card is sattelites)
     {
     // Constructing a card that will be export to JSON
-    DevelopmentCard* cardToExport = new DevelopmentCard ("Satellites",{new ResourceToProduce{ResourceType::EXPLORATION, 2, CardType::NONETYPE}},"../resources/img/Cards/Development_Cards/satellites.png",new CardVictoryPoint{3, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::COLONEL},ResourceType::EXPLORATION);    
+    constants::resourceProdPtr resourceProduced = std::make_shared<ResourceToProduce>();
+    resourceProduced->type = ResourceType::EXPLORATION;
+    resourceProduced->quantity = 2;
+    resourceProduced->cardType = CardType::NONETYPE;
+
+    constants::resourceProdList resourceProducedList = {resourceProduced};
+
+    constants::victoryPointsPtr victoryPoints = std::make_shared<CardVictoryPoint>();
+    victoryPoints->numberOfPoints = 3;
+    victoryPoints->cardOrResourceType = CardType::NONETYPE;
+    
+    const std::vector<ResourceType> toPayResources = {ResourceType::ENERGY, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::SCIENCE, ResourceType::SCIENCE, ResourceType::SCIENCE};
+    constants::resourcePayList resourceToPayList = {};
+    
+    for (size_t index = 0; toPayResources.size() > index ; index++)
+    {
+        constants::resourcePayPtr resourceToPay = std::make_shared<ResourceToPay>();
+        resourceToPay->isPaid = false;
+        resourceToPay->type = toPayResources[index];
+
+        resourceToPayList.push_back(resourceToPay);
+    }
+
+    DevelopmentCard* cardToExport = new DevelopmentCard ("Satellites", resourceProducedList, "../resources/img/Cards/Development_Cards/satellites.png", victoryPoints, CardType::RESEARCH, 1, resourceToPayList, {ResourceType::COLONEL}, ResourceType::EXPLORATION);    
 
     Json::Value jsonContent = cardToExport->toJSON();
 
@@ -82,7 +123,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
     BOOST_CHECK_EQUAL(cardFromImport->getName(), "Satellites");
 
-    std::vector<ResourceToProduce*> importedCardProduction = cardFromImport->getProductionGain();
+    constants::resourceProdList importedCardProduction = cardFromImport->getProductionGain();
 
     BOOST_CHECK_EQUAL(importedCardProduction[0]->cardType, CardType::NONETYPE);
     BOOST_CHECK_EQUAL(importedCardProduction[0]->quantity, 2);
@@ -90,7 +131,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
     BOOST_CHECK_EQUAL(cardFromImport->getRelativePathToTexture(), "../resources/img/Cards/Development_Cards/satellites.png");
 
-    CardVictoryPoint* cardPoints = cardFromImport->getVictoryPoints();
+    constants::victoryPointsPtr cardPoints = cardFromImport->getVictoryPoints();
 
     BOOST_CHECK_EQUAL(cardPoints->numberOfPoints, 3);
     BOOST_CHECK_EQUAL(cardPoints->cardOrResourceType, CardType::NONETYPE);
@@ -98,7 +139,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(cardFromImport->getDiscardGain(), ResourceType::EXPLORATION);
     BOOST_CHECK_EQUAL(cardFromImport->getType(), CardType::RESEARCH);
 
-    std::vector<ResourceToPay*> cardCostToBuild = cardFromImport->getCostToBuild();
+    constants::resourcePayList cardCostToBuild = cardFromImport->getCostToBuild();
 
     BOOST_CHECK_EQUAL(cardCostToBuild[0]->type, ResourceType::ENERGY);
     BOOST_CHECK_EQUAL(cardCostToBuild[0]->isPaid, false);
@@ -122,8 +163,31 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
 BOOST_AUTO_TEST_CASE(test_ConstructorAndMethods)
 {
-    DevelopmentCard* testDevCard = new DevelopmentCard ("Satellites",{new ResourceToProduce{ResourceType::EXPLORATION, 2, CardType::NONETYPE}},new CardVictoryPoint{3, (int) CardType::NONETYPE},CardType::RESEARCH,1,{new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::ENERGY, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}, new ResourceToPay{ResourceType::SCIENCE, false}},{ResourceType::COLONEL},ResourceType::EXPLORATION);    
+    constants::resourceProdPtr resourceProduced = std::make_shared<ResourceToProduce>();
+    resourceProduced->type = ResourceType::EXPLORATION;
+    resourceProduced->quantity = 2;
+    resourceProduced->cardType = CardType::NONETYPE;
+
+    constants::resourceProdList resourceProducedList = {resourceProduced};
+
+    constants::victoryPointsPtr victoryPoints = std::make_shared<CardVictoryPoint>();
+    victoryPoints->numberOfPoints = 3;
+    victoryPoints->cardOrResourceType = CardType::NONETYPE;
     
+    const std::vector<ResourceType> toPayResources = {ResourceType::ENERGY, ResourceType::ENERGY, ResourceType::SCIENCE, ResourceType::SCIENCE, ResourceType::SCIENCE, ResourceType::SCIENCE};
+    constants::resourcePayList resourceToPayList = {};
+    
+    for (size_t index = 0; toPayResources.size() > index ; index++)
+    {
+        constants::resourcePayPtr resourceToPay = std::make_shared<ResourceToPay>();
+        resourceToPay->isPaid = false;
+        resourceToPay->type = toPayResources[index];
+
+        resourceToPayList.push_back(resourceToPay);
+    }
+
+    DevelopmentCard* testDevCard = new DevelopmentCard ("Satellites", resourceProducedList, victoryPoints, CardType::RESEARCH, 1, resourceToPayList, {ResourceType::COLONEL}, ResourceType::EXPLORATION);    
+
     bool addable = testDevCard->isResourceAddable(ResourceType::ENERGY);
     BOOST_CHECK_EQUAL(addable, true);
 
@@ -133,9 +197,13 @@ BOOST_AUTO_TEST_CASE(test_ConstructorAndMethods)
     (void) testDevCard->addResource(ResourceType::SCIENCE);
     building = testDevCard->addResource(ResourceType::SCIENCE);
     BOOST_CHECK_EQUAL(building, false);
+    BOOST_CHECK_EQUAL(testDevCard->getQuantityResourcesMissing(),1);
 
     building = testDevCard->addResource(ResourceType::SCIENCE);
     BOOST_CHECK_EQUAL(building, true);
+    BOOST_CHECK_EQUAL(testDevCard->getQuantityResourcesMissing(),0);
+    BOOST_CHECK_EQUAL(building, true);
+
     building = testDevCard->addResource(ResourceType::SCIENCE);// For this is paid
     addable = testDevCard->isResourceAddable(ResourceType::ENERGY);// For this is paid
 

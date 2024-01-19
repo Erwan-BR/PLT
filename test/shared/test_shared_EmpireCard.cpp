@@ -10,7 +10,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     // Testing conversion of JSON (face A)
     {
         CreateAllCards* createEmpire = new CreateAllCards();
-        EmpireCard* empireCardToExport = createEmpire->createEmpireAFRICA(true);
+        constants::empireCardPtr empireCardToExport = createEmpire->createEmpireAFRICA(true);
         
         Json::Value jsonContent = empireCardToExport->toJSON();
 
@@ -29,12 +29,12 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
         }
         */
 
-        EmpireCard* empireFromImport = new EmpireCard(jsonContent);
+        constants::empireCardPtr empireFromImport = std::make_shared<EmpireCard>(jsonContent);
 
         // Following lines will check all possible attributes from the card.
         BOOST_CHECK_EQUAL(empireFromImport->getName(), "AFRICA");
 
-        std::vector<ResourceToProduce*> importedCardProduction = empireFromImport->getProductionGain();
+        constants::resourceProdList importedCardProduction = empireFromImport->getProductionGain();
         BOOST_CHECK_EQUAL(importedCardProduction.size(), 2);
 
         BOOST_CHECK_EQUAL(importedCardProduction[0]->type, ResourceType::MATERIAL);
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
         BOOST_CHECK_EQUAL(empireFromImport->getRelativePathToTexture(), "./resources/img/Cards/Empire_Face_A/Panafricaine.png");
 
-        CardVictoryPoint* importedCardPoints = empireFromImport->getVictoryPoints();
+        constants::victoryPointsPtr importedCardPoints = empireFromImport->getVictoryPoints();
 
         BOOST_CHECK_EQUAL(importedCardPoints->numberOfPoints, 2);
         BOOST_CHECK_EQUAL(importedCardPoints->cardOrResourceType, CardType::RESEARCH);
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     // Testing conversion of JSON (face B)
     {
         CreateAllCards* createEmpire = new CreateAllCards();
-        EmpireCard* empireCardToExport = createEmpire->createEmpireAFRICA(false);
+        constants::empireCardPtr empireCardToExport = createEmpire->createEmpireAFRICA(false);
 
         Json::Value jsonContent = empireCardToExport->toJSON();
 
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
         // Following lines will check all possible attributes from the card.
         BOOST_CHECK_EQUAL(empireFromImport->getName(), "AFRICA");
 
-        std::vector<ResourceToProduce*> importedCardProduction = empireFromImport->getProductionGain();
+        constants::resourceProdList importedCardProduction = empireFromImport->getProductionGain();
         BOOST_CHECK_EQUAL(importedCardProduction.size(), 3);
 
         BOOST_CHECK_EQUAL(importedCardProduction[0]->type, ResourceType::MATERIAL);
@@ -94,20 +94,16 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
         BOOST_CHECK_EQUAL(empireFromImport->getRelativePathToTexture(), "./resources/img/Cards/Empire_Face_B/Panafricaine.png");
 
-        CardVictoryPoint* importedCardPoints = empireFromImport->getVictoryPoints();
+        constants::victoryPointsPtr importedCardPoints = empireFromImport->getVictoryPoints();
 
-        BOOST_CHECK_EQUAL(importedCardPoints->numberOfPoints, 0);
-        BOOST_CHECK_EQUAL(importedCardPoints->cardOrResourceType, 0);
+        BOOST_CHECK_EQUAL(importedCardPoints, nullptr);
     }
 }
 
 BOOST_AUTO_TEST_CASE(test_otherMethods)
 {
     CreateAllCards* createEmpire = new CreateAllCards();
-    EmpireCard* empireExample = createEmpire->createEmpireASIA(false);
-
-    delete createEmpire;
-    delete empireExample;
+    constants::empireCardPtr empireExample = createEmpire->createEmpireASIA(false);
 }
 
 /* vim: set sw=2 sts=2 et : */

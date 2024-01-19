@@ -2,7 +2,7 @@
 
 namespace state
 {
-    Json::Value CreateJSONFormatStructures::jsonOfResourceToPay (const ResourceToPay resourceToPay) const
+    Json::Value CreateJSONFormatStructures::jsonOfResourceToPay (const ResourceToPay resourceToPay)
     {
         Json::Value jsonRepresentationOfResourceToPay;
         
@@ -12,7 +12,7 @@ namespace state
         return jsonRepresentationOfResourceToPay;
     }
 
-    Json::Value CreateJSONFormatStructures::jsonOfResourceToProduce (const ResourceToProduce resourceToProduce) const
+    Json::Value CreateJSONFormatStructures::jsonOfResourceToProduce (const ResourceToProduce resourceToProduce)
     {
         Json::Value jsonRepresentationOfResourceToProduce;
         
@@ -23,7 +23,7 @@ namespace state
         return jsonRepresentationOfResourceToProduce;
     }
 
-    Json::Value CreateJSONFormatStructures::jsonOfCardVictoryPoint (const CardVictoryPoint victoryPoints) const
+    Json::Value CreateJSONFormatStructures::jsonOfCardVictoryPoint (const CardVictoryPoint victoryPoints)
     {
         Json::Value jsonRepresentationOfCardVictoryPoint;
         
@@ -33,9 +33,9 @@ namespace state
         return jsonRepresentationOfCardVictoryPoint;
     }
 
-    ResourceToPay* CreateJSONFormatStructures::resourceToPayFromJSON (const Json::Value jsonInput) const
+    constants::resourcePayPtr CreateJSONFormatStructures::resourceToPayFromJSON (const Json::Value jsonInput)
     {
-        ResourceToPay* resourceToPay = new ResourceToPay{};
+        constants::resourcePayPtr resourceToPay = std::make_shared<ResourceToPay>();
 
         resourceToPay->type = static_cast<ResourceType>(jsonInput["type"].asInt());
         resourceToPay->isPaid = jsonInput["isPaid"].asBool();
@@ -43,9 +43,9 @@ namespace state
         return resourceToPay;
     }
 
-    ResourceToProduce* CreateJSONFormatStructures::resourceToProduceFromJSON (const Json::Value jsonInput) const
+    constants::resourceProdPtr CreateJSONFormatStructures::resourceToProduceFromJSON (const Json::Value jsonInput)
     {
-        ResourceToProduce* resourceToProduce = new ResourceToProduce{};
+        constants::resourceProdPtr resourceToProduce = std::make_shared<ResourceToProduce>();
 
         resourceToProduce->type = static_cast<ResourceType>(jsonInput["type"].asInt());
         resourceToProduce->quantity = jsonInput["quantity"].asInt();
@@ -54,9 +54,9 @@ namespace state
         return resourceToProduce;
     }
 
-    CardVictoryPoint* CreateJSONFormatStructures::cardVictoryPointFromJSON (const Json::Value jsonInput) const
+    constants::victoryPointsPtr CreateJSONFormatStructures::cardVictoryPointFromJSON (const Json::Value jsonInput)
     {
-        CardVictoryPoint* cardVictoryPoint = new CardVictoryPoint{};
+        constants::victoryPointsPtr cardVictoryPoint = std::make_shared<CardVictoryPoint>();
 
         cardVictoryPoint->numberOfPoints = jsonInput["numberOfPoints"].asInt();
         cardVictoryPoint->cardOrResourceType = jsonInput["cardOrResourceType"].asInt();

@@ -6,13 +6,15 @@ using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(test_ResourceToPay_Conversion)
 {
-    struct ResourceToPay* resourceToPay = new ResourceToPay{ResourceType::COLONEL, false};
+    constants::resourcePayPtr resourceToPay = std::make_shared<ResourceToPay>();
+    resourceToPay->isPaid = false;
+    resourceToPay->type = ResourceType::COLONEL;
 
     CreateJSONFormatStructures* jsonConversion = new CreateJSONFormatStructures();
 
     Json::Value jsonResource = jsonConversion->jsonOfResourceToPay(*resourceToPay);
 
-    struct ResourceToPay* resourceToPayCopy = jsonConversion->resourceToPayFromJSON(jsonResource);
+    constants::resourcePayPtr resourceToPayCopy = jsonConversion->resourceToPayFromJSON(jsonResource);
 
     BOOST_CHECK_EQUAL(resourceToPayCopy->type, ResourceType::COLONEL);
     BOOST_CHECK_EQUAL(resourceToPayCopy->isPaid, false);
@@ -20,13 +22,16 @@ BOOST_AUTO_TEST_CASE(test_ResourceToPay_Conversion)
 
 BOOST_AUTO_TEST_CASE(test_ResourceToProduce_Conversion)
 {
-    struct ResourceToProduce* resourceToProduce = new ResourceToProduce{ResourceType::GOLD, 10, CardType::PROJECT};
+    constants::resourceProdPtr resourceToProduce = std::make_shared<ResourceToProduce>();
+    resourceToProduce->type = ResourceType::GOLD;
+    resourceToProduce->quantity = 10;
+    resourceToProduce->cardType = CardType::PROJECT;
 
     CreateJSONFormatStructures* jsonConversion = new CreateJSONFormatStructures();
 
     Json::Value jsonResource = jsonConversion->jsonOfResourceToProduce(*resourceToProduce);
 
-    struct ResourceToProduce* resourceToProduceCopy = jsonConversion->resourceToProduceFromJSON(jsonResource);
+    constants::resourceProdPtr resourceToProduceCopy = jsonConversion->resourceToProduceFromJSON(jsonResource);
 
     BOOST_CHECK_EQUAL(resourceToProduceCopy->type, ResourceType::GOLD);
     BOOST_CHECK_EQUAL(resourceToProduceCopy->quantity, 10);
@@ -35,13 +40,15 @@ BOOST_AUTO_TEST_CASE(test_ResourceToProduce_Conversion)
 
 BOOST_AUTO_TEST_CASE(test_CardVictoryPoint_Conversion)
 {
-    struct CardVictoryPoint* cardVictoryPoint = new CardVictoryPoint{10, (int)(ResourceType::FINANCIER)};
+    constants::victoryPointsPtr cardVictoryPoint = std::make_shared<CardVictoryPoint>();
+    cardVictoryPoint->numberOfPoints = 10;
+    cardVictoryPoint->cardOrResourceType = static_cast<int>(ResourceType::FINANCIER);
 
     CreateJSONFormatStructures* jsonConversion = new CreateJSONFormatStructures();
 
     Json::Value jsonResource = jsonConversion->jsonOfCardVictoryPoint(*cardVictoryPoint);
 
-    struct CardVictoryPoint* cardVictoryPointCopy = jsonConversion->cardVictoryPointFromJSON(jsonResource);
+    constants::victoryPointsPtr cardVictoryPointCopy = jsonConversion->cardVictoryPointFromJSON(jsonResource);
 
     BOOST_CHECK_EQUAL(cardVictoryPointCopy->numberOfPoints, 10);
     BOOST_CHECK_EQUAL(cardVictoryPointCopy->cardOrResourceType, (int)(ResourceType::FINANCIER));

@@ -1,9 +1,16 @@
 #include "Game.h"
+
 #include <algorithm>
 #include <random>
 #include <fstream>
 #include <random>
 #include <chrono>
+
+#include "constants/GameConstants.h"
+#include "constants/GameObserversNotification.h"
+
+#include "ai/AIRandom.h"
+#include "ai/AIAdvanced.h"
 
 namespace state {
     ///@brief Create a game from a json file.
@@ -18,7 +25,24 @@ namespace state {
         
             for (const Json::Value& playerJSON : playersArray)
             {
-                this->players.push_back(new Player(playerJSON));
+                // Construct an AI if the ID is negative.
+                if (playerJSON["id"].asInt() < 0)
+                {
+                    // If id is odd, make random AI
+                    if (! (playerJSON["id"].asInt() % 2))
+                    {
+                        this->players.push_back(std::make_shared<ai::AIRandom>(playerJSON));
+                    }
+                    // If id is even, make advanced AI
+                    else
+                    {
+                        this->players.push_back(std::make_shared<ai::AIAdvanced>(playerJSON));
+                    }
+                }
+                else
+                {
+                    this->players.push_back(std::make_shared<Player>(playerJSON));
+                }
             }
         }
 
@@ -33,7 +57,7 @@ namespace state {
         
             for (const Json::Value& developmentCardJSON : deckArray)
             {
-                this->deck.push_back(new DevelopmentCard(developmentCardJSON));
+                this->deck.push_back(std::make_shared<DevelopmentCard>(developmentCardJSON));
             }
         }
 
@@ -45,20 +69,16 @@ namespace state {
 
     ///@brief Create an instance of the class Game with players specified
     ///@param players Vector of pointers which designate the players of the game
-    Game::Game(std::vector<Player*> players) :
+    Game::Game(constants::playersList players) :
         Observable(),
-        players(players),
-        turn(0),
-        phase(PRODUCTION),
-        deck(),
-        isClockwise(true)
+        players(players)
     {
     }
 
     ///@brief Create an instance of the class Game with players specified. isTestingGame passed for the creation of a testing game.
     ///@param players Vector of pointers which designate the players of the game.
     /// @param isTestingGame Define if the game is created to be played or just for testing.
-    Game::Game(std::vector<Player*> players, bool isTestingGame) :
+    Game::Game(constants::playersList players, bool isTestingGame) :
         Observable(),
         players(players),
         isTestingGame(isTestingGame)
@@ -68,23 +88,12 @@ namespace state {
     ///@brief Destructor of the Class Game
     Game::~Game ()
     {
-        // Delete all cards from the deck.
-        for (DevelopmentCard* card : this->deck)
-        {
-            delete card;
-        }
-
-        // Delete all players
-        for (Player* player : this->players)
-        {
-            delete player;
-        }
     }
 
     ///@brief Initialize the game
     void Game::initGame ()
     {
-        std::vector<EmpireCard*> empires = this->initEmpire();
+        constants::deckOfEmpires empires = this->initEmpire();
         this->initCards();
         this->initPlayers(empires);
         this->startGame();
@@ -106,13 +115,13 @@ namespace state {
     }
 
     /// @brief Distributes the empires to the players
-    void Game::initPlayers (std::vector<EmpireCard*> empires)
+    void Game::initPlayers (constants::deckOfEmpires empires)
     {
         // Checking if the number of players is inferior of the number of empires. We should always enter inside.
         if (this->players.size() <= empires.size())
         {
             int empireIndex = 0;
-            for(Player* player : this->players)
+            for(constants::playerPtr player : this->players)
             {
                 // Initialise the empires that will be given to the players
                 player->setEmpire(empires[empireIndex]);
@@ -124,15 +133,14 @@ namespace state {
     /// @brief Create all cards of the game and add them to the deck.
     void Game::createCards()
     {
-        CreateAllCards* developmentCardCreation = new CreateAllCards;
-        this->deck = developmentCardCreation->createAllDevelopmentCards(this->isTestingGame);
+        this->deck = CreateAllCards::createAllDevelopmentCards(this->isTestingGame);
     }
         
     ///@brief Create and Initialize the Empire for the game
-    std::vector<EmpireCard*> Game::initEmpire ()
+    constants::deckOfEmpires Game::initEmpire ()
     {
         CreateAllCards empireCardCreation;
-        std::vector<EmpireCard*> empires = empireCardCreation.createAllEmpireCards(isFaceA);
+        constants::deckOfEmpires empires = empireCardCreation.createAllEmpireCards(isFaceA);
 
         // Shuffle if not a testing game.
         if (! this->isTestingGame)
@@ -174,13 +182,13 @@ namespace state {
                 this->initDraft();
             }
         }
-        this->notifyObservers();
+        this->notifyObservers(GAME_PHASE_CHANGED);
     }
 
     ///@brief Start one of the four turn of the game
     void Game::newTurn ()
     {
-        this->turn = this->turn + 1;
+        this->turn ++;
         if ((2 == this->turn && this->isTestingGame) || (5 == this->turn && ! this->isTestingGame))
         {
             this->endGame();
@@ -190,18 +198,18 @@ namespace state {
         // Invert the sens for the draft phase
         this->isClockwise = ! this->isClockwise;
 
-        this->notifyObservers();
+        this->notifyObservers(GAME_TURN_CHANGED | GAME_CLOCKWISE_CHANGED);
     }
 
     ///@brief Initialize the Draft part of the game during which players select their cards
     void Game::initDraft ()
     {
-        for(Player* player : this->players)
+        for(constants::playerPtr player : this->players)
         {
             // Re-Initialise the cards that will be given to the players
-            std::vector<DevelopmentCard*> draftingDeck = {};
+            constants::deckOfCards draftingDeck = {};
 
-            for(int i = 0; i < 7; i++)
+            for(int i = 0; NUMBER_OF_CARDS_DRAFTED > i; i++)
             {
                 // Add a card to draft and delete it from the deck.
                 draftingDeck.push_back(this->deck.back());
@@ -210,27 +218,28 @@ namespace state {
             
             // Send cards to players.
             player->setDraftingCards(draftingDeck);
+            player->setStatePlaying();
         }
-        this->notifyObservers();
     }
 
     ///@brief Launch the next draft.
     void Game::nextDraft ()
     {
-        // Retrieve the number of cards to draft.
+        // Number of cards that needs to be draft
         int numberOfCardsToDraft = this->players[0]->getDraftingCards().size();
 
         // If there is no cards left, we can continue to play.
         if(0 == numberOfCardsToDraft)
         {
             this->endDraft();
+            return ;
         }
 
         // According of how we are turning cards, behaviour are differents.
         if (this->isClockwise)
         {
             // Memorize the first player deck to give it to the last player.
-            std::vector<DevelopmentCard*> firstPlayerDeck = this->players[0]->getDraftingCards();
+            constants::deckOfCards firstPlayerDeck = this->players[0]->getDraftingCards();
 
             // Iterating among all players (except the last one) to make the draft.
             for (long unsigned int playerIndex = 0; playerIndex < this->players.size() - 1; playerIndex++)
@@ -244,7 +253,7 @@ namespace state {
         else
         {
             // Memorize the last player deck to give it to the first player.
-            std::vector<DevelopmentCard*> lastPlayerDeck = this->players[(this->players.size()-1)]->getDraftingCards();
+            constants::deckOfCards lastPlayerDeck = this->players[(this->players.size()-1)]->getDraftingCards();
 
             // Iterating among all players (except the first one) to make the draft.
             for (long unsigned int playerIndex = (this->players.size()-1); playerIndex > 0; playerIndex--)
@@ -256,8 +265,11 @@ namespace state {
             this->players[0]->setDraftingCards(lastPlayerDeck);
         }
 
-        // Notify observers that the draft is done.
-        this->notifyObservers();
+        
+        for (constants::playerPtr player : this->players)
+        {
+            player->setStatePlaying();
+        }
     }
 
     ///@brief End the current Draft phase
@@ -269,7 +281,10 @@ namespace state {
     ///@brief Initialize the Planification phase during which players choose the cards they will try to build
     void Game::initPlanification ()
     {
-        return ;
+        for (constants::playerPtr player : this->players)
+        {
+            player->setStatePlaying();
+        }
     }
 
     /// @brief End the planification phase to start the next phase.
@@ -282,7 +297,6 @@ namespace state {
     void Game::initProduction ()
     {
         this->resourceProducing = ResourceType::FINANCIER;
-        this->notifyObservers();
         this->nextProduction();
     }
 
@@ -303,47 +317,48 @@ namespace state {
         }
 
         this->produceResource();
-        this->notifyObservers();
+        
+        for (constants::playerPtr player : this->players)
+        {
+            player->setStatePlaying();
+        }
+        
+        this->notifyObservers(GAME_RESOURCE_PRODUCING_CHANGED);
     }
 
     ///@brief Manage the phase of production for all player and one resource
     void Game::produceResource ()
     {
-        // Two integers to find the players that win the most of a resources to give him a bonus.
-        int playerIndexBiggestProduction = -1;
+        // Instanciate two values : one for the player who produce the most, the other for the quantity that he produces.
+        int indexOfMostProducer = -1;
         int biggestProduction = -1;
-        
-        bool multipleBiggestProduction = false;
 
-        // Current index of the loop - to update the player with the biggest production
-        int index = 0;
-
-        // Iterating among all players.
-        for(Player* player : this->players)
+        // Iterating amond all players
+        for (size_t index = 0; this->players.size() > index; index++)
         {
-            int playerProduction = player->getProductionGain(this->resourceProducing);
+            // Computing the resource produced by the player
+            const int productionOfCurrentPlayer = this->players[index]->getResourcesProduction(this->resourceProducing);
 
-            player->receiveResources(this->resourceProducing, playerProduction);
+            // Sending the resources.
+            this->players[index]->receiveResources(this->resourceProducing, productionOfCurrentPlayer);
 
-            if (playerProduction > biggestProduction)
+            // If two players produced the same amount of resource, set index at -1 to send the bonus to no one.
+            if (productionOfCurrentPlayer == biggestProduction)
             {
-                // Updating who won the most of the current produced ressource.
-                playerIndexBiggestProduction = index;
-                biggestProduction = playerProduction;
-                multipleBiggestProduction = false;
+                indexOfMostProducer = -1;
             }
-            else if (playerProduction == biggestProduction)
+            // If a player produce more, get the number of resources produced and keep in mind the player index.
+            else if (productionOfCurrentPlayer > biggestProduction)
             {
-                playerIndexBiggestProduction = -1;
-                multipleBiggestProduction = true;
+                indexOfMostProducer = index;
+                biggestProduction = productionOfCurrentPlayer;
             }
-            index++;
         }
 
-        // Checking who won's the most of this resources for the bonus.
-        if (!multipleBiggestProduction)
+        // If there is only 1 who produce the most, he receive his award.
+        if (-1 != indexOfMostProducer)
         {
-            this->sendTokenToMostProducer(playerIndexBiggestProduction);
+            this->sendTokenToMostProducer(indexOfMostProducer);
         }
     }
 
@@ -365,7 +380,7 @@ namespace state {
         else
         {
             // Retrieve which token the player wants to get, the player can also be an AI.
-            bool chooseColonel ;
+            bool chooseColonel = false;
             
             if (this->players[playerIndexBiggestProduction]->isAI())
             {
@@ -373,7 +388,7 @@ namespace state {
             }
             else
             {
-                chooseColonel = this->players[playerIndexBiggestProduction]->chooseColonelToken();
+                chooseColonel = this->players[playerIndexBiggestProduction]->isPreferedPersonnageColonel();
             }
 
             if (chooseColonel)
@@ -397,7 +412,7 @@ namespace state {
     void Game::endGame ()
     {
         this->phase = GamePhase::FINISHED;
-        this->notifyObservers();
+        this->notifyObservers(GAME_PHASE_CHANGED);
     }
 
     ///@brief Convert the Game to a JSON format. Usefull when the game is saved.
@@ -409,7 +424,7 @@ namespace state {
 
         // Serialize the vector of players
         Json::Value playersArray;
-        for (const Player* player : this->players)
+        for (const constants::playerPtr& player : this->players)
         {
             playersArray.append(player->toJSON());
         }
@@ -420,7 +435,7 @@ namespace state {
 
         // Serialize the vector of drawable cards
         Json::Value cardsArray;
-        for (const DevelopmentCard* card : this->deck)
+        for (const std::shared_ptr<DevelopmentCard>& card : this->deck)
         {
             cardsArray.append(card->toJSON());
         }
@@ -439,7 +454,7 @@ namespace state {
 
     /// @brief Get Players in the game.
     /// @return All players inside the game.
-    std::vector<Player*> Game::getPlayers () const
+    constants::playersList Game::getPlayers () const
     {
         return this->players;
     }

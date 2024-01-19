@@ -2,12 +2,23 @@
 
 namespace engine
 {
+    /// @brief Constructor of the AddResource command from a json. Used by the engine when render send a JSON version of a command.
+    /// @param jsonCommand Json content of the command.
+    AddResource::AddResource (Json::Value jsonCommand) :
+        Command(CommandID::ADDRESOURCE,
+                jsonCommand["playerIndex"].asInt(),
+                jsonCommand["cardIndex"].asInt(),
+                static_cast<state::ResourceType> (jsonCommand["resource"].asInt())
+                )
+    {
+    }
+
     /// @brief Constructor of the command that allows to add a resource on a card.
-    /// @param player Player that did the command.
+    /// @param playerIndex Player that did the command.
     /// @param resource Resource to send to a card.
     /// @param cardIndex Card that receive the resource.
-    AddResource::AddResource (state::Player* player, state::ResourceType resource, int cardIndex) :
-        Command(CommandID::ADDRESOURCE, player, cardIndex, resource)
+    AddResource::AddResource (int playerIndex, state::ResourceType resource, int cardIndex) :
+        Command(CommandID::ADDRESOURCE, playerIndex, cardIndex, resource)
     {
 
     }
@@ -19,8 +30,8 @@ namespace engine
     }
 
     /// @brief Launching the command to add a resource.
-    void AddResource::launchCommand () const
+    void AddResource::launchCommand (constants::gamePtr game) const
     {
-        this->player->addResource(this->resource, this->cardIndex);
+        game->getPlayers()[this->playerIndex]->addResource(this->resource, this->cardIndex);
     }
 }

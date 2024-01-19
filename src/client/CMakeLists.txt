@@ -2,7 +2,6 @@
 set(lib_client_target client_static)
 
 # Generate header files from dia UML files
-generate_dia_header("${CMAKE_CURRENT_SOURCE_DIR}/../client.dia")
 generate_dia_header("${CMAKE_CURRENT_SOURCE_DIR}/../render.dia")
 
 # Find all source files to include in library
@@ -31,4 +30,3 @@ if(BUILD_CODE_COVERAGE)
 endif()
 
 # vim: set sw=2 sts=2 et:
-

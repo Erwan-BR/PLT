@@ -2,14 +2,20 @@
 
 #include "../../src/client/render/Button.h"
 
-#include <memory>
-
-using namespace ::render;
-
-BOOST_AUTO_TEST_CASE(ButtonTest)
+BOOST_AUTO_TEST_CASE(test_Buttons)
 {
-    sf::Vector2f position(16.5f, 24.f);
-    sf::Vector2f size(16.5f, 24.f);
-    std::unique_ptr<Button> testingButton(new Button(position,  size, "Name", sf::Color::White, nullptr));
-    testingButton->setEnabled(true);
+    // Instanciation of the button
+    std::mutex locker ;
+    render::Button* buttonForTest = new render::Button({0, 0}, {10, 10}, "Click Me!", sf::Color::Green, nullptr, locker);
+
+    // Calling different methods, that can't be checked because getters are not implemented.
+    buttonForTest->setEnabled(true);
+    buttonForTest->setText("Click Me Again!");
+    buttonForTest->setVisible(true);
+    buttonForTest->changeCommand(nullptr);
+
+    // Cal the destructor of button
+    delete buttonForTest;
 }
+
+/* vim: set sw=2 sts=2 et : */

@@ -4,8 +4,19 @@
 #include <chrono>
 #include <algorithm>
 
+#include "constants/PlayerObserversNotification.h"
+#include "state/PlayerState.h"
+
 namespace ai
 {
+    /// @brief Constructor of random AI from a json value. Random AI doesn't have more attributes than playe, so we just call parent consturctor.
+    /// @param jsonValue JSON representation of the AI.
+    AIRandom::AIRandom(Json::Value jsonValue) :
+        Player(jsonValue)
+    {
+        
+    }
+
     /// @brief Full constructor of AIRandom, with important information inside.
     /// @param name Name of the AI.
     /// @param id ID of the AI. Should be negative for engine methods.
@@ -24,6 +35,12 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card from the draft phase. It's completely random.
     void AIRandom::AIChooseDraftingCard ()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
+
         // Time-base seed to choose if the card is choosed or not.
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::default_random_engine randomness(seed);
@@ -32,11 +49,18 @@ namespace ai
         // Generate a random integer.
         int randomInt = distribution(randomness);
         this->chooseDraftCard(randomInt);
+        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
     }
 
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
     void AIRandom::AIPlanification ()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
+
         for (int cardIndex = this->draftCards.size() - 1; 0 <= cardIndex; cardIndex--)
         {
             // Time-base seed to choose if the card is choosed or not.
@@ -57,12 +81,19 @@ namespace ai
             }
         }
         this->AIUseProducedResources();
+        this->endPlanification();
     }
 
     /// @brief Method used to implement how the AI uses it's resources (after the planification with instantGains, and after each production).
     void AIRandom::AIUseProducedResources ()
     {
-        const int numberOfCardsToBuild = (const int) this->toBuildCards.size();
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
+
+        size_t numberOfCardsToBuild = this->toBuildCards.size();
         // If no card to build, put all resources on the empire.
         if (0 == numberOfCardsToBuild)
         {
@@ -88,6 +119,13 @@ namespace ai
         // Iterating among all resources that needs to be use.
         for (state::ResourceType currentResource : resourceToPlay)
         {
+            // Recompute the number of card to build (could have change when constructing a card)
+            numberOfCardsToBuild = this->toBuildCards.size();
+            // If no card to build, put all resources on the empire.
+            if (0 == numberOfCardsToBuild)
+            {
+                this->sendAllResourcesToEmpire();
+            }
             // Check if the resource is not playable, to send it directly into the empire.
             if (this->isResourcePlayable(currentResource))
             {
@@ -98,6 +136,7 @@ namespace ai
                 this->sendResourceToEmpire(currentResource);
             }
         }
+        this->notifyObservers(PLAYER_ALL_CHANGED);
         this->endProduction();
     }
 
@@ -146,5 +185,12 @@ namespace ai
         int randomInt = distribution(randomness);
         
         return (bool) randomInt;
+    }
+
+    /// @brief Convert a random AI to a json representation. AIRandom doesn't have more attributes, so it just call Player method.
+    /// @return JSON representation of a Random AI.
+    Json::Value AIRandom::toJSON () const
+    {
+        return Player::toJSON();
     }
 };

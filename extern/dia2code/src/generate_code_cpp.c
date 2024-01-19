@@ -587,6 +587,27 @@ gen_decl (declaration *d)
     if (eq (stype, "CORBANative")) {
         print ("// CORBANative: %s \n\n", name);
 
+    } else if (is_define_stereo (stype)) {
+        while (umla != NULL) {
+            char *literal = umla->key.name;
+            check_umlattr (&umla->key, name);
+            if ((strlen (umla->key.value) <= 0) || (strlen(umla->key.name) <= 0)) {
+                fprintf(stderr, "%s: ignoring define\n", name);
+                umla = umla->next;
+                continue;
+            }
+            /* print comments on define */
+            if (strlen(umla->key.comment)) {
+                print("/// @brief %s\n", umla->key.comment);
+            }
+            
+            print("#define %s %s\n", umla->key.name, umla->key.value);
+            emit ("\n");
+            umla = umla->next;
+        }
+        //indentlevel--;
+        //print ("};\n\n");
+
     } else if (is_const_stereo (stype)) {
         if (umla == NULL) {
             fprintf (stderr, "Error: first attribute not set at %s\n", name);
@@ -674,17 +695,16 @@ gen_decl (declaration *d)
                    These dimensions are given in square brackets, e.g.
                    [3][10]
          */
-        if (umla == NULL) {
-            fprintf (stderr, "Error: first attribute (impl type) not set "
-                             "at typedef %s\n", name);
-            exit (1);
+        indentlevel++;
+        while (umla != NULL) {
+            /* print comments on enum */
+            if (strlen(umla->key.comment)) {
+                print("/// @brief %s\n", umla->key.comment);
+            }
+            print ("typedef %s %s ;\n\n", umla->key.value, cppname (umla->key.type));
+            umla = umla->next;
         }
-        if (strlen (umla->key.name) > 0)  {
-            fprintf (stderr, "Warning: typedef %s: ignoring name field "
-                        "in implementation type attribute\n", name);
-        }
-        print ("typedef %s %s%s;\n\n", cppname (umla->key.type), name,
-                                                umla->key.value);
+        indentlevel--;
     } else {
         gen_class (node);
     }
@@ -959,6 +979,12 @@ gen_namespace(batch *b, declaration *nsd) {
                 }
                 incfile = incfile->next;
             }
+            print("\n");
+        }
+
+        char* comment = d->u.this_class->key->comment;
+        if(NULL != comment && '\0' != *comment) {
+            print("%s\n", comment);
             print("\n");
         }
 

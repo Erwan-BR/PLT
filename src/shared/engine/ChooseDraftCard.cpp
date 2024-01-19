@@ -2,11 +2,18 @@
 
 namespace engine
 {
+    /// @brief Constructor of the ChooseDraftCard command from a json. Used by the engine when render send a JSON version of a command.
+    /// @param jsonCommand Json content of the command.
+    ChooseDraftCard::ChooseDraftCard (Json::Value jsonCommand) :
+        Command(CommandID::CHOOSEDRAFTCARD, jsonCommand["playerIndex"].asInt(), jsonCommand["cardIndex"].asInt())
+    {
+    }
+
     /// @brief Constructor of the command that allows to keep a card from the draft phase.
-    /// @param player Player that did the command.
+    /// @param playerIndex Player that did the command.
     /// @param cardIndex Card that is kept during the drafting phase.
-    ChooseDraftCard::ChooseDraftCard (state::Player* player, int cardIndex) :
-        Command(CommandID::CHOOSEDRAFTCARD, player, cardIndex)
+    ChooseDraftCard::ChooseDraftCard (int playerIndex, int cardIndex) :
+        Command(CommandID::CHOOSEDRAFTCARD, playerIndex, cardIndex)
     {
 
     }
@@ -18,8 +25,8 @@ namespace engine
     }
 
     /// @brief Launching the command to choose the card from the draft cards.
-    void ChooseDraftCard::launchCommand () const
+    void ChooseDraftCard::launchCommand (constants::gamePtr game) const
     {
-        this->player->chooseDraftCard(this->cardIndex);
+        game->getPlayers()[this->playerIndex]->chooseDraftCard(this->cardIndex);
     }
 }
