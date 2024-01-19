@@ -269,6 +269,7 @@ namespace ai
                 }
             }
         }
+        this->endProduction();
         this->notifyObservers(PLAYER_ALL_CHANGED);
     }
 

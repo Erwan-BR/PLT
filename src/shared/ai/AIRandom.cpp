@@ -81,6 +81,7 @@ namespace ai
             }
         }
         this->AIUseProducedResources();
+        this->endPlanification();
     }
 
     /// @brief Method used to implement how the AI uses it's resources (after the planification with instantGains, and after each production).
