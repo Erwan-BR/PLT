@@ -27,7 +27,7 @@
 #include "render.h"
 
 sf::RenderWindow* instanciatePLTWindow();
-render::Scene* instanciateRender(constants::enginePtr& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players, std::mutex& locker);
+render::Scene* instanciateRender(constants::enginePtr& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players, std::mutex& locker, bool isTestingGame);
 
 void handleOpenedWindow(sf::RenderWindow* window, render::Scene* scene, std::shared_ptr<state::Game> game, bool isTestingGame);
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
@@ -75,7 +75,7 @@ int main(int argc,char* argv[])
         constants::enginePtr engineOfGame = nullptr;
         std::mutex locker;
 
-        render::Scene* scene = instanciateRender(engineOfGame, game, players,locker);
+        render::Scene* scene = instanciateRender(engineOfGame, game, players, locker, true);
 
         // Intialization of the game
         game->initGame();
@@ -210,7 +210,7 @@ int main(int argc,char* argv[])
         if ((MIN_NUMBER_OF_PLAYERS-1) > numberOfOpponents || (MAX_NUMBER_OF_PLAYERS-1) < numberOfOpponents)
         {
             std::cout << "./bin/client Player <x>: Run a game where you play! x: Number of opponents." << std::endl;
-            std::cout << "You have to respect " << (MIN_NUMBER_OF_PLAYERS-1) << " < x < "   << (MAX_NUMBER_OF_PLAYERS-1) << std::endl;
+            std::cout << "You have to respect " << (MIN_NUMBER_OF_PLAYERS - 1) << " <= x <= " << (MAX_NUMBER_OF_PLAYERS - 1) << std::endl;
             return EXIT_FAILURE;
         }
 
@@ -228,7 +228,7 @@ int main(int argc,char* argv[])
         std::shared_ptr<state::Game> game = nullptr;
         constants::enginePtr engineOfGame = nullptr;
         std::mutex locker;
-        render::Scene* scene = instanciateRender(engineOfGame, game, players, locker);
+        render::Scene* scene = instanciateRender(engineOfGame, game, players, locker, false);
 
         game->initGame();
 
@@ -388,9 +388,9 @@ sf::RenderWindow* instanciatePLTWindow()
     return window;
 }
 
-render::Scene* instanciateRender(constants::enginePtr& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players,std::mutex& locker)
+render::Scene* instanciateRender(constants::enginePtr& engineOfGame, std::shared_ptr<state::Game>& game, constants::playersList players,std::mutex& locker, bool isTestingGame)
 {
-    game = std::make_shared<state::Game>(players);
+    game = std::make_shared<state::Game>(players, isTestingGame);
     
     engineOfGame = constants::enginePtr(new engine::Engine(game, locker));
     render::Scene* scene = new render::Scene(game, locker, engineOfGame);
