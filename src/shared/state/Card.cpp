@@ -10,8 +10,6 @@ namespace state {
         // Retrive name.
         this->name = jsonValue["name"].asString();
 
-        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
-
         // Retrieve production gain from the JSON.
         this->productionGain = {};
         if (jsonValue["productionGain"].isArray())
@@ -20,12 +18,12 @@ namespace state {
         
             for (const Json::Value& jsonStruct : productionArray)
             {
-                this->productionGain.push_back(createInformations->resourceToProduceFromJSON(jsonStruct));
+                this->productionGain.push_back(CreateJSONFormatStructures::resourceToProduceFromJSON(jsonStruct));
             }
         }
         
         // Retrieve victory points
-		this->victoryPoints = createInformations->cardVictoryPointFromJSON(jsonValue["victoryPoints"]);
+		this->victoryPoints = CreateJSONFormatStructures::cardVictoryPointFromJSON(jsonValue["victoryPoints"]);
 
         // To-do : Use path of images to store it as an attribute, to retrive it and replace folowing lines.
         this->relativePathToTexture = jsonValue["relativePathToTexture"].asString();
@@ -36,13 +34,13 @@ namespace state {
     /// @param productionGain Represent what kind of resource the card can bring.
     /// @param relativePathToTexture Path of the design of the card.
     /// @param victoryPoints Represent what kind of points the card can bring.
-    Card::Card (std::string name, std::vector<ResourceToProduce*> productionGain, std::string relativePathToTexture, CardVictoryPoint* victoryPoints) :
+    Card::Card (std::string name, constants::resourceProdList productionGain, std::string relativePathToTexture, constants::victoryPointsPtr victoryPoints) :
         Observable(),
         name(name),
         victoryPoints(victoryPoints),
         relativePathToTexture(relativePathToTexture)
     {        
-        for(ResourceToProduce* resource : productionGain)
+        for(constants::resourceProdPtr resource : productionGain)
         {
             this->productionGain.push_back(resource);
         }
@@ -52,12 +50,12 @@ namespace state {
     /// @param name Name of the card that will be displayed.
     /// @param productionGain Represent what kind of resource the card can bring.
     /// @param victoryPoints Represent what kind of points the card can bring.
-    Card::Card (std::string name, std::vector<ResourceToProduce*> productionGain, CardVictoryPoint* victoryPoints) :
+    Card::Card (std::string name, constants::resourceProdList productionGain, constants::victoryPointsPtr victoryPoints) :
         Observable(),
         name(name),
         victoryPoints(victoryPoints)
     {        
-        for(ResourceToProduce* resource : productionGain)
+        for(constants::resourceProdPtr resource : productionGain)
         {
             this->productionGain.push_back(resource);
         }
@@ -66,11 +64,6 @@ namespace state {
     /// @brief Card destructor
     Card::~Card()
     {
-        for(ResourceToProduce* resource : this->productionGain)
-        {
-            delete(resource);
-        }
-        delete victoryPoints;
     }
 
     ///@brief Convert the Card to a JSON format. Usefull when the game is saved.
@@ -83,17 +76,15 @@ namespace state {
         // Writing basic information
         cardJson["name"] = this->name;
 
-        CreateJSONFormatStructures* createInformations = new CreateJSONFormatStructures;
-
         // Serialize the vector of resources to produce
         Json::Value productionArray;
-        for (const ResourceToProduce* prodGain : this->productionGain)
+        for (const constants::resourceProdPtr& prodGain : this->productionGain)
         {
-            productionArray.append(createInformations->jsonOfResourceToProduce(*prodGain));
+            productionArray.append(CreateJSONFormatStructures::jsonOfResourceToProduce(*prodGain));
         }
         cardJson["productionGain"] = productionArray;
 
-        cardJson["victoryPoints"] = createInformations->jsonOfCardVictoryPoint(*(this->victoryPoints));
+        cardJson["victoryPoints"] = CreateJSONFormatStructures::jsonOfCardVictoryPoint(*(this->victoryPoints));
 
         cardJson["relativePathToTexture"] = this->relativePathToTexture;
 
@@ -111,14 +102,14 @@ namespace state {
 
     /// @brief Get the vector of resource to produce of the cards.
     /// @return Ressources produced by the card.
-    std::vector<ResourceToProduce*> Card::getProductionGain () const
+    constants::resourceProdList Card::getProductionGain () const
     {
         return this->productionGain;
     }
 
     /// @brief Get how much points the card allows to win, according to the type of the object to have.
     /// @return Pointers to CardVictoryPoint.
-    CardVictoryPoint* Card::getVictoryPoints () const
+    constants::victoryPointsPtr Card::getVictoryPoints () const
     {
         return this->victoryPoints;
     }

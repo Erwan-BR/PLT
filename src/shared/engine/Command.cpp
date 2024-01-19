@@ -5,56 +5,59 @@ namespace engine
     /// @brief Create a command that doesn't require a player.
     /// @param id ID of the command.
     Command::Command(CommandID id) :
-        id(id),
-        player(NULL)
+        id(id)
     {
-
     }
 
     /// @brief Constructor of a command.
     /// @param id ID of the command. List is on CommandID.h file.
-    /// @param player Player that launched the command.
+    /// @param playerIndex Player that launched the command.
     /// @param cardIndex Index of the card where the command might be used.
     /// @param resource Type of the resource that might be used for the command.
-    Command::Command (CommandID id, state::Player* player, int cardIndex, state::ResourceType resource) :
+    Command::Command (CommandID id, int playerIndex, int cardIndex, state::ResourceType resource) :
         id(id),
-        player(player),
+        playerIndex(playerIndex),
         cardIndex(cardIndex),
         resource(resource)        
     {
-
     }
 
     /// @brief Constructor of a command, without the need of resource.
     /// @param id ID of the command.
-    /// @param player Player that launched the command.
+    /// @param playerIndex Player that launched the command.
     /// @param cardIndex Index of the card where the command is used.
-    Command::Command (CommandID id, state::Player* player, int cardIndex) :
+    Command::Command (CommandID id, int playerIndex, int cardIndex) :
         id(id),
-        player(player),
+        playerIndex(playerIndex),
         cardIndex(cardIndex)
     {
-
     }
 
     /// @brief Constructor of a command, without the need of a card.
     /// @param id ID of the command.
-    /// @param player Player that launched the command.
+    /// @param playerIndex Player that launched the command.
     /// @param cardIndex Resource tha tis needed for the command.
-    Command::Command (CommandID id, state::Player* player, state::ResourceType resource) :
+    Command::Command (CommandID id, int playerIndex, state::ResourceType resource) :
         id(id),
-        player(player),
+        playerIndex(playerIndex),
         resource(resource)
     {
-
     }
 
     /// @brief Constructor of a command.
     /// @param id ID of the command. List is on CommandID.h file.
-    /// @param player Player that launched the command.
-    Command::Command (CommandID id, state::Player* player) :
+    /// @param playerIndex Player that launched the command.
+    Command::Command (CommandID id, int playerIndex) :
         id(id),
-        player(player)
+        playerIndex(playerIndex)
+    {
+    }
+
+    Command::Command (CommandID id, int playerIndex, int cardIndex, bool isADraftedCard) :
+        id(id),
+        playerIndex(playerIndex),
+        cardIndex(cardIndex),
+        isADraftedCard(isADraftedCard)
     {
 
     }
@@ -62,7 +65,24 @@ namespace engine
     /// @brief Destructor of the command. Should destruct anything because pointers are shared.
     Command::~Command ()
     {
+    }
 
+    void Command::launchCommand(constants::gamePtr game) const 
+    {
+        return ;
+    }
+
+    Json::Value Command::toJSON() const 
+    {
+        Json::Value jsonContent ;
+
+        jsonContent["id"] = static_cast<int> (this->id);
+        jsonContent["playerIndex"] = this->playerIndex;
+        jsonContent["cardIndex"] = this->cardIndex;
+        jsonContent["resource"] = static_cast<int> (this->resource);
+        jsonContent["isADraftedCard"] = this->isADraftedCard;
+
+        return jsonContent;
     }
 
     /************************************* Setters & Getters *************************************/
@@ -73,6 +93,4 @@ namespace engine
     {
         return this->id;
     }
-
-    void Command::launchCommand() const {}
 }

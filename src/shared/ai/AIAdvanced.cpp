@@ -3,9 +3,79 @@
 #include "limits"
 #include <algorithm>
 
+#include "constants/PlayerObserversNotification.h"
+#include "state/PlayerState.h"
 
 namespace ai
 {
+    /// @brief Constructor of advanced AI from a json value.
+    /// @param jsonValue JSON representation of the AI.
+    AIAdvanced::AIAdvanced(Json::Value jsonValue) :
+        Player(jsonValue)
+    {
+        this->initMissingResources();
+
+        // Retrieve missingResourcesToConstructAllCards from the JSON
+        const Json::Value& missingResourcesArray = jsonValue["missingResourcesToConstructAllCards"];
+        for (const Json::Value& resourceObject : missingResourcesArray)
+        {
+            state::ResourceType resourceType = static_cast<state::ResourceType> (resourceObject["resourceType"].asInt());
+            int quantity = resourceObject["quantity"].asInt();
+            this->missingResourcesToConstructAllCards[resourceType] = quantity;
+        }
+
+        // Retrieve cardsToBuildIndexesOrdered from the JSON.
+        this->cardsToBuildIndexesOrdered = {};
+        if (jsonValue["cardsToBuildIndexesOrdered"].isArray())
+        {
+            const Json::Value cardArray = jsonValue["cardsToBuildIndexesOrdered"];
+        
+            for (const Json::Value& cardToBuildJSON : cardArray)
+            {
+                this->cardsToBuildIndexesOrdered.push_back(cardToBuildJSON.asInt());
+            }
+        }
+
+        // Retrieve resourcesMissingOrdered from the JSON.
+        this->resourcesMissingOrdered = {};
+        if (jsonValue["resourcesMissingOrdered"].isArray())
+        {
+            const Json::Value missingResourcesArray = jsonValue["resourcesMissingOrdered"];
+        
+            for (const Json::Value& resourcesJSON : missingResourcesArray)
+            {
+                this->resourcesMissingOrdered.push_back(static_cast<state::ResourceType>(resourcesJSON.asInt()));
+            }
+        }
+
+        // Retrieve indexesOfCardsToKeep from the JSON.
+        this->indexesOfCardsToKeep = {};
+        if (jsonValue["indexesOfCardsToKeep"].isArray())
+        {
+            const Json::Value indexArray = jsonValue["indexesOfCardsToKeep"];
+        
+            for (const Json::Value& indexJSON : indexArray)
+            {
+                this->indexesOfCardsToKeep.push_back(indexJSON.asInt());
+            }
+        }
+
+        // Retrieve indexesOfCardsToDiscard from the JSON.
+        this->indexesOfCardsToDiscard = {};
+        if (jsonValue["indexesOfCardsToDiscard"].isArray())
+        {
+            const Json::Value indexArray = jsonValue["indexesOfCardsToDiscard"];
+        
+            for (const Json::Value& indexJSON : indexArray)
+            {
+                this->indexesOfCardsToDiscard.push_back(indexJSON.asInt());
+            }
+        }
+
+        this->currentIndexOfDraft = jsonValue["currentIndexOfDraft"].asInt();
+        this->gameTurn = jsonValue["gameTurn"].asInt();
+    }
+
     /// @brief Full constructor of AIAdvanced, with important information inside.
     /// @param name Name of the AI.
     /// @param id ID of the AI. Should be negative for engine methods.
@@ -37,6 +107,11 @@ namespace ai
     /// @brief Method used to implement how the AI choose it's card from the draft phase.
     void AIAdvanced::AIChooseDraftingCard()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
         // If it's the first draft from a turn, we have to substract the production gain from the resources to obtain. 
         if (0 == this->currentIndexOfDraft)
         {
@@ -55,7 +130,7 @@ namespace ai
             // Iterating among all cards to find the one that will earn flat points (without condition), an d which is the less expensive.
             for (size_t index = 0; this->draftingCards.size() > index; index ++)
             {
-                state::CardVictoryPoint* currentVictoryPoints = this->draftingCards[index]->getVictoryPoints();
+                constants::victoryPointsPtr currentVictoryPoints = this->draftingCards[index]->getVictoryPoints();
                 
                 // Searching a card that earns flat points.
                 if ((0 < currentVictoryPoints->numberOfPoints) && (0 == (int) currentVictoryPoints->cardOrResourceType))
@@ -105,6 +180,8 @@ namespace ai
                         // Note the card to discard.
                         this->indexesOfCardsToDiscard.push_back(this->currentIndexOfDraft);
                         this->currentIndexOfDraft ++;
+                        
+                        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
                         return ;
                     }
                 }
@@ -116,11 +193,18 @@ namespace ai
             this->indexesOfCardsToDiscard.push_back(this->currentIndexOfDraft);
             this->currentIndexOfDraft ++;
         }
+
+        this->notifyObservers(DRAFTING_CARDS_CHANGED | DRAFT_CARDS_CHANGED | PLAYER_STATE_CHANGED);
     }
 
     /// @brief Method used to implement how the AI choose it's card during the planification phase.
     void AIAdvanced::AIPlanification()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
         // Re-initialization for the next draft.
         this->currentIndexOfDraft = 0;
 
@@ -146,12 +230,19 @@ namespace ai
         this->indexesOfCardsToDiscard.clear();
         this->updateCardsToBuildIndexesOrdered();
 
+        this->notifyObservers(PLAYER_ALL_CHANGED);
+
         this->endPlanification();
     }
 
     /// @brief Method used to implement how the AI uses it's resources (during the planification with instantGains, and after each production).
     void AIAdvanced::AIUseProducedResources ()
     {
+        // Check used for reload.
+        if (state::PlayerState::PENDING == this->state)
+        {
+            return;
+        }
         // Iterating among all resources that needs to be used.
         for (const auto& pair : this->currentResources)
         {
@@ -178,6 +269,8 @@ namespace ai
                 }
             }
         }
+        this->endProduction();
+        this->notifyObservers(PLAYER_ALL_CHANGED);
     }
 
     /// @brief Choose colonel if the quantity of colonel is superior or equal to the quantity of financier that the player needs.
@@ -214,7 +307,7 @@ namespace ai
         // If the card is going to be constructed, we have to had the neede resources to the mapping and the index in the vector.
         if (isDesiredToBuild)
         {
-            for (state::ResourceToPay* resourceToPay: this->draftingCards[index]->getCostToBuild())
+            for (constants::resourcePayPtr resourceToPay: this->draftingCards[index]->getCostToBuild())
             {
                 this->missingResourcesToConstructAllCards[resourceToPay->type] ++;
             }
@@ -294,5 +387,58 @@ namespace ai
     bool AIAdvanced::AICompareDevelopmentCards (const state::DevelopmentCard& card1, const state::DevelopmentCard& card2) const
     {
         return card1.getQuantityResourcesMissing() > card2.getQuantityResourcesMissing();
+    }
+
+    Json::Value AIAdvanced::toJSON () const
+    {
+        Json::Value jsonOfAI = Player::toJSON();
+
+        // Serialize the map of missingResourcesToConstructAllCards
+        Json::Value missingResourcesToConstructAllCardsArray;
+        for (const auto& entry : this->missingResourcesToConstructAllCards)
+        {
+            Json::Value resourceObject;
+            resourceObject["resourceType"] = static_cast<int>(entry.first);
+            resourceObject["quantity"] = entry.second;
+            missingResourcesToConstructAllCardsArray.append(resourceObject);
+        }
+        jsonOfAI["missingResourcesToConstructAllCards"] = missingResourcesToConstructAllCardsArray;
+
+        // Serialize the vector of resourcesMissingOrdered
+        Json::Value missingResources2Array;
+        for (state::ResourceType resource : this->resourcesMissingOrdered)
+        {
+            missingResources2Array.append(resource);
+        }
+        jsonOfAI["resourcesMissingOrdered"] = missingResources2Array;
+
+        // Serialize the vector of cardsToBuildIndexesOrdered
+        Json::Value cardToBuildArray;
+        for (int index : this->cardsToBuildIndexesOrdered)
+        {
+            cardToBuildArray.append(index);
+        }
+        jsonOfAI["cardsToBuildIndexesOrdered"] = cardToBuildArray;
+
+        // Serialize the vector of indexesOfCardsToKeep
+        Json::Value cardToKeepArray;
+        for (int index : this->indexesOfCardsToKeep)
+        {
+            cardToKeepArray.append(index);
+        }
+        jsonOfAI["indexesOfCardsToKeep"] = cardToKeepArray;
+
+        // Serialize the vector of indexesOfCardsToDiscard
+        Json::Value cardToDiscardArray;
+        for (int index : this->indexesOfCardsToDiscard)
+        {
+            cardToDiscardArray.append(index);
+        }
+        jsonOfAI["indexesOfCardsToDiscard"] = cardToDiscardArray;
+
+        jsonOfAI["currentIndexOfDraft"] = this->currentIndexOfDraft;
+        jsonOfAI["gameTurn"] = this->gameTurn;
+
+        return jsonOfAI;
     }
 };

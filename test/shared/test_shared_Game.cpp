@@ -2,17 +2,18 @@
 
 #include "../../src/shared/state/Game.h"
 #include "../../src/shared/state/CreateAllCards.h"
+#include "../../src/constants/constants/CustomTypes.h"
 
 using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
-    Player* firstPlayerInGame = new Player("Erwan", 10);
-    Player* secondPlayerInGame = new Player("Adrien", 20);
-	std::vector<Player*> playersInGame = {firstPlayerInGame, secondPlayerInGame};
+    std::shared_ptr<Player> firstPlayerInGame = std::make_shared<Player>("Erwan", 10);
+    std::shared_ptr<Player> secondPlayerInGame = std::make_shared<Player>("Adrien", 20);
+	constants::playersList playersInGame = {firstPlayerInGame, secondPlayerInGame};
 
     // Creating a testing game. It won't shuffle cards so it will be easy to know if exportations worked correctly.
-    Game* gameToExport = new Game(playersInGame, true);
+    std::shared_ptr<Game> gameToExport = std::make_shared<Game>(playersInGame, true);
     gameToExport->initGame();
 
     Json::Value gameJSON = gameToExport->toJSON();
@@ -32,7 +33,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     }
 	*/
 
-	Game* gameFromImport = new Game(gameJSON);
+	std::shared_ptr<Game> gameFromImport = std::make_shared<Game>(gameJSON);
 
 	BOOST_CHECK_EQUAL(gameFromImport->getPlayers().size(), 2);
 	BOOST_CHECK_EQUAL(gameFromImport->getPlayers()[0]->getName(), "Erwan");
@@ -40,21 +41,17 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     BOOST_CHECK_EQUAL(gameFromImport->getResourceProducing(), ResourceType::MATERIAL);
     BOOST_CHECK_EQUAL(gameFromImport->getPhase(), GamePhase::DRAFT);
     BOOST_CHECK_EQUAL(gameFromImport->getTurn(), 1);
-
-    // Delete pointers
-    delete gameToExport;
-    delete gameFromImport;
 }
 
 BOOST_AUTO_TEST_CASE(firstGameTest)
 {
     // Creation Arguments
-    Player* firstPlayer = new Player("Maxime", 1);
-    Player* secondPlayer = new Player("Adrien", 2);
+    std::shared_ptr<Player> firstPlayer = std::make_shared<Player>("Maxime", 1);
+    std::shared_ptr<Player> secondPlayer = std::make_shared<Player>("Adrien", 2);
 
-    std::vector<Player*> players = {firstPlayer, secondPlayer};
+    constants::playersList players = {firstPlayer, secondPlayer};
 
-    Game* gameAnotherConstructor = new Game(players, true);
+    std::shared_ptr<Game> gameAnotherConstructor = std::make_shared<Game>(players, true);
     gameAnotherConstructor->initGame();
     //turn 1
     BOOST_CHECK_EQUAL(gameAnotherConstructor->getTurn(), 1);
@@ -108,17 +105,18 @@ BOOST_AUTO_TEST_CASE(firstGameTest)
         gameAnotherConstructor->nextProduction();
     }
     (void) gameAnotherConstructor->getWinners();
-    delete gameAnotherConstructor;
 }
 
 BOOST_AUTO_TEST_CASE(secondGameTest)
 {
     // Creation Arguments
-    Player* firstPlayer = new Player("Maxime", 1);
-    Player* secondPlayer = new Player("Adrien", 2);
+    std::shared_ptr<Player> firstPlayer = std::make_shared<Player>("Maxime", 1);
+    std::shared_ptr<Player> secondPlayer = std::make_shared<Player>("Adrien", 2);
+
+    constants::playersList players = {firstPlayer, secondPlayer};
 
     // Call Constructor
-    Game* mySecondGame = new Game({firstPlayer, secondPlayer});
+    std::shared_ptr<Game> mySecondGame = std::make_shared<Game>(players);
     
     mySecondGame->initGame();
     BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::DRAFT);
@@ -268,9 +266,6 @@ BOOST_AUTO_TEST_CASE(secondGameTest)
 
     BOOST_CHECK_EQUAL(mySecondGame->getPhase(), GamePhase::FINISHED);
     (void)mySecondGame->getWinners();
-
-    // Delete pointers
-    delete mySecondGame;
 }
 
 /* vim: set sw=2 sts=2 et : */

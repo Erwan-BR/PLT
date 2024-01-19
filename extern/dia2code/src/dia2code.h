@@ -215,6 +215,7 @@ int is_enum_stereo (char * stereo);
 int is_struct_stereo (char * stereo);
 int is_typedef_stereo (char * stereo);
 int is_const_stereo (char * stereo);
+int is_define_stereo (char *stereo);
 
 umlattrlist copy_attributes(umlattrlist src);
 

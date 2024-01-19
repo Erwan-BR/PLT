@@ -399,6 +399,13 @@ is_const_stereo (char *stereo)
             !strcmp (stereo, "CORBAConstant"));
 }
 
+int
+is_define_stereo (char *stereo)
+{
+    return (!strcasecmp(stereo, "define") ||
+            !strcmp (stereo, "CORBAConstant"));
+}
+
 /* Added by RK 2003-02-20
    This should become part of the uml_class object. */
 

@@ -1,13 +1,29 @@
 #include <boost/test/unit_test.hpp>
 
 #include "../../src/shared/state/Card.h"
+#include "../../src/constants/constants/CustomTypes.h"
 
 using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 {
     // Constructing a card that will be export to JSON
-    Card* cardToExport = new Card("Marc", {new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::SCIENCE,1, CardType::NONETYPE}}, "../resources/img/background.png", new CardVictoryPoint{1, CardType::VEHICLE});
+    constants::resourceProdPtr resourceProd1 = std::make_shared<ResourceToProduce>();
+    resourceProd1->cardType = CardType::NONETYPE;
+    resourceProd1->type = ResourceType::MATERIAL;
+    resourceProd1->quantity = 1;
+
+    constants::resourceProdPtr resourceProd2 = std::make_shared<ResourceToProduce>();
+    resourceProd2->cardType = CardType::NONETYPE;
+    resourceProd2->type = ResourceType::SCIENCE;
+    resourceProd2->quantity = 1;
+
+    constants::resourceProdList resourceProdVect = {resourceProd1, resourceProd2};
+    constants::victoryPointsPtr victoryPoints = std::make_shared<CardVictoryPoint>();
+    victoryPoints->numberOfPoints = 1;
+    victoryPoints->cardOrResourceType = static_cast<int>(CardType::VEHICLE);
+
+    Card* cardToExport = new Card("Marc", resourceProdVect, "../resources/img/background.png", victoryPoints);
 
     Json::Value jsonContent = cardToExport->toJSON();
 
@@ -28,7 +44,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
     // Following lines will check all possible attributes from the card.
     BOOST_CHECK_EQUAL(cardFromImport->getName(), "Marc");
 
-    std::vector<ResourceToProduce*> secondCardProduction = cardFromImport->getProductionGain();
+    constants::resourceProdList secondCardProduction = cardFromImport->getProductionGain();
 
     BOOST_CHECK_EQUAL(secondCardProduction[0]->type, ResourceType::MATERIAL);
     BOOST_CHECK_EQUAL(secondCardProduction[0]->quantity, 1);
@@ -40,7 +56,7 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
     BOOST_CHECK_EQUAL(cardFromImport->getRelativePathToTexture(), "../resources/img/background.png");
 
-    CardVictoryPoint* cardPoints = cardFromImport->getVictoryPoints();
+    constants::victoryPointsPtr cardPoints = cardFromImport->getVictoryPoints();
 
     BOOST_CHECK_EQUAL(cardPoints->numberOfPoints, 1);
     BOOST_CHECK_EQUAL(cardPoints->cardOrResourceType, CardType::VEHICLE);
@@ -52,11 +68,26 @@ BOOST_AUTO_TEST_CASE(test_ConversionJSON)
 
 BOOST_AUTO_TEST_CASE(test_Constructor)
 {
-    Card* testCard = new Card("Marc", {new ResourceToProduce{ResourceType::MATERIAL,1, CardType::NONETYPE}, new ResourceToProduce{ResourceType::SCIENCE,1, CardType::NONETYPE}}, new CardVictoryPoint{1, CardType::VEHICLE});
+    constants::resourceProdPtr resourceProd1 = std::make_shared<ResourceToProduce>();
+    resourceProd1->cardType = CardType::NONETYPE;
+    resourceProd1->type = ResourceType::MATERIAL;
+    resourceProd1->quantity = 1;
+
+    constants::resourceProdPtr resourceProd2 = std::make_shared<ResourceToProduce>();
+    resourceProd2->cardType = CardType::NONETYPE;
+    resourceProd2->type = ResourceType::SCIENCE;
+    resourceProd2->quantity = 1;
+
+    constants::resourceProdList resourceProdVect = {resourceProd1, resourceProd2};
+    constants::victoryPointsPtr victoryPoints = std::make_shared<CardVictoryPoint>();
+    victoryPoints->numberOfPoints = 1;
+    victoryPoints->cardOrResourceType = static_cast<int>(CardType::VEHICLE);
+
+    Card* testCard = new Card("Marc", resourceProdVect, victoryPoints);
     
     BOOST_CHECK_EQUAL(testCard->getName(), "Marc");
 
-    std::vector<ResourceToProduce*> secondCardProduction = testCard->getProductionGain();
+    constants::resourceProdList secondCardProduction = testCard->getProductionGain();
 
     BOOST_CHECK_EQUAL(secondCardProduction[0]->type, ResourceType::MATERIAL);
     BOOST_CHECK_EQUAL(secondCardProduction[0]->quantity, 1);
@@ -66,7 +97,7 @@ BOOST_AUTO_TEST_CASE(test_Constructor)
     BOOST_CHECK_EQUAL(secondCardProduction[1]->quantity, 1);
     BOOST_CHECK_EQUAL(secondCardProduction[1]->cardType, CardType::NONETYPE);
 
-    CardVictoryPoint* cardPoints = testCard->getVictoryPoints();
+    constants::victoryPointsPtr cardPoints = testCard->getVictoryPoints();
 
     BOOST_CHECK_EQUAL(cardPoints->numberOfPoints, 1);
     BOOST_CHECK_EQUAL(cardPoints->cardOrResourceType, CardType::VEHICLE);
