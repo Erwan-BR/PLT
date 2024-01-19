@@ -8,7 +8,7 @@ namespace render
     /// @param card Card to render.
     /// @param position Position of the card that is displayed.
     /// @param scale Float that represent how to scale the card in the view.
-    DevelopmentCardRenderer::DevelopmentCardRenderer (std::shared_ptr<state::DevelopmentCard> card, sf::Vector2f position, float scale) :
+    DevelopmentCardRenderer::DevelopmentCardRenderer (constants::devCardPtr card, sf::Vector2f position, float scale) :
         card(card),
         texture(constants::ResourceManager::getTexture(this->card->getRelativePathToTexture())),
         paidTexture(constants::ResourceManager::getTexture("./resources/img/resourcesPaid.png")),
