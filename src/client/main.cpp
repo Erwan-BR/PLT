@@ -33,7 +33,7 @@ void handleOpenedWindow(sf::RenderWindow* window, render::Scene* scene, std::sha
 void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<state::Player> p1, std::shared_ptr<state::Player> p2, render::Scene* scene);
 
 void displayMessage();
-void displayTemporaryCommands(bool testing);
+void displayTerminalCommands(bool testing);
 void displayInformationFromAnAI(const std::string& nameOfAI, const std::vector<int>& numberOfPoints, const std::vector<int>& numberOfCardsBuilt);
 
 void addAIToVector(constants::playersList& players, int nmberOfAIToAdd);
@@ -56,7 +56,7 @@ int main(int argc,char* argv[])
     }
 	else if ("engine" == userInput)
     {
-        displayTemporaryCommands(true);
+        displayTerminalCommands(true);
 
         //Creation of the window
         sf::RenderWindow* window = instanciatePLTWindow();
@@ -210,9 +210,11 @@ int main(int argc,char* argv[])
         if ((MIN_NUMBER_OF_PLAYERS-1) > numberOfOpponents || (MAX_NUMBER_OF_PLAYERS-1) < numberOfOpponents)
         {
             std::cout << "./bin/client Player <x>: Run a game where you play! x: Number of opponents." << std::endl;
-            std::cout << "You have to respect" << (MIN_NUMBER_OF_PLAYERS-1) << " < x < "   << (MAX_NUMBER_OF_PLAYERS-1) << std::endl;
+            std::cout << "You have to respect " << (MIN_NUMBER_OF_PLAYERS-1) << " < x < "   << (MAX_NUMBER_OF_PLAYERS-1) << std::endl;
             return EXIT_FAILURE;
         }
+
+        displayTerminalCommands(false);
 
         //Creation of the window
         sf::RenderWindow* window = instanciatePLTWindow();
@@ -256,6 +258,8 @@ int main(int argc,char* argv[])
             perror("Error opening the saved game");
             return EXIT_FAILURE;
         }
+
+        displayTerminalCommands(false);
 
         std::string jsonData((std::istreambuf_iterator<char>(readingFile)), std::istreambuf_iterator<char>());
 
@@ -607,7 +611,7 @@ void next_step(int etape, std::shared_ptr<state::Game> game, std::shared_ptr<sta
     }
 }
 
-void displayTemporaryCommands(bool testing)
+void displayTerminalCommands(bool testing)
 {
     //Print Temporary Manual Commands
     if(testing){
